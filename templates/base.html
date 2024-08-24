@@ -1,0 +1,84 @@
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<!DOCTYPE html>
+<html 
+lang="en" 
+:class="dark && 'dark'" 
+x-data="{ dark: $persist(false).as('dark') }">
+
+  <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% include 'head.html' %}
+
+    {% block styles %}{% endblock %}
+
+    <title>{% block title %}{% endblock %}</title>
+
+  </head>
+
+  <body 
+  hx-boost="true"
+  hx-history="false"
+  hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'>
+
+      <div 
+        id="app" 
+        class="realtive bg-gray-100/80 dark:text-white/80 dark:bg-gray-950" 
+        dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}"
+        x-init="
+        urls.map(el => {
+          return location.pathname.startsWith(el.url) 
+                    ? el.isActive = true 
+                    : el.isActive = false;
+        });
+        "
+        x-data="{
+          asideOpen: false, 
+          modalOpen: true,
+          breadCrumbs: [
+              {
+                text: '{% translate 'home' %}', 
+                href: '{% url 'base:index' %}'
+              },
+          ],
+          urls: [
+            {% if perms.faculties.view_faculty %}
+              {
+                text: '{% translate 'faculties' %}', 
+                url: '{% url 'faculties:index' %}', 
+                isActive: false,
+              },
+            {% endif %}
+          ]
+        }"
+      >
+
+        <span class="hidden" id="no-content"></span>
+        <div id="modal"></div>
+        <c-layout.messages></c-layout.messages>
+        
+        <div class="relative md:grid grid-cols-[300px_1fr]">
+
+          <c-layout.aside></c-layout.aside>
+
+          <div class="px-2 ltr:md:ml-2 rtl:md:mr-2 max-md:min-h-screen">
+            <c-layout.header></c-layout.header>
+            <main class="relative py-6 mx-auto container">
+              <c-layout.spinner></c-layout.spinner>
+              {% block body %}{% endblock %}
+            </main>
+          </div>
+
+        </div>
+
+      </div>
+
+      {% block scripts %}{% endblock %}
+
+  </body>
+
+</html>

@@ -1,0 +1,17 @@
+<c-vars classname="cursor-pointer rounded-lg px-2 py-1 capitalize duration-150 tracking-tighter font-semibold focus:ring-2 outline-none flex items-center justify-center gap-1 text-white bg-[red] hover:bg-red-600 focus:ring-red-700"></c-vars>
+
+{% if datatype == 'href' %}
+    <a class="{{ classname }}" {{ attrs }}>
+        {{ slot }}
+    </a>
+{% elif datatype == 'input' %}
+    <input class="{{ classname }}" {{ attrs }}>
+{% elif datatype == 'button' %}
+    <button class="{{ classname }}" {{ attrs }}>
+        {{ slot }}
+    </button>
+{% else %}
+    <span role="button" class="{{ classname }}" {{ attrs }}>
+        {{ slot }}
+    </span>
+{% endif %}

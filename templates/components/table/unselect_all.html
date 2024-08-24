@@ -1,0 +1,27 @@
+{% load i18n %}
+
+<div x-transition.duration.150 x-cloak x-show="selectedRows.length">
+  <p class="font-light ltr:text-left rtl:text-right p-2 text-sm space-x-[2px]">
+
+    <span class="font-semibold" x-text="selectedRows.length"></span>
+
+    <span>{% translate 'selected objects:' %}</span>
+
+    <!-- start unselect all -->
+    <span
+      class="hover:underline"
+      role="button"
+      @click="
+          const selector = `[data-check]`
+          document
+              .querySelectorAll(selector)
+              .forEach(el => el.checked = false);
+          selectedRows = [];
+          document.getElementById('check-all').checked = false;
+          "
+      >{% translate 'unselect all'|title %}</span
+    >
+    <!-- end unselect all -->
+    {{ slot }}
+  </p>
+</div>

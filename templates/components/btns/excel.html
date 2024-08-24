@@ -1,0 +1,44 @@
+{% load i18n %}
+
+<span
+  role="button"
+  class="cursor-pointer disabled:opacity-25 text-xl duration-150 hover:bg-gray-200 dark:hover:bg-gray-800 block p-1 rounded-full"
+  title="{% translate 'export to xlsx' %}"
+  @click="
+    (async() => {
+
+        const filterForm = document.getElementById('{{ filter_form_id }}');
+        const formData = new FormData();
+
+        filterForm
+          .querySelectorAll('input, select')
+          .forEach(el => formData.append(el.name, el.value));
+
+        const response = await fetch('{{ url }}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'X-CSRFToken': '{{ csrf_token }}'
+            },
+        });
+
+        if (response.status === 200) {
+            const blob = await response.blob();
+
+            const url = URL.createObjectURL(blob);
+
+            const link = document.createElement('a');
+            link.style.display = 'none';
+            link.href = url;
+
+            document.body.appendChild(link);
+            link.click();
+            URL.revokeObjectURL(url);
+            link.remove();
+        }
+
+    })();
+  "
+>
+  <c-icons.excel ratio="1rem"></c-icons.excel>
+</span>

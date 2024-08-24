@@ -1,0 +1,35 @@
+{% load i18n %}
+
+<div
+  hx-swap="outerHTML"
+  hx-include="[data-include]"
+  hx-vals='js:{
+  order: `{% firstof request.GET.order default_column %}` === "{{ default_column }}" ? "-" + "{{ default_column }}" : "{{ default_column }}" }'
+  hx-trigger="click"
+  data-include
+  class="flex items-center gap-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 py-4 px-2 rounded-lg duration-150"
+  {{ attrs }}
+>
+
+  <span>{% translate default_column %}</span>
+
+  <span
+    class="duration-150"
+    :class="
+    let orderValue = document.getElementsByName('order')[0].value;
+    let criteria = orderValue.endsWith('{{ default_column }}');
+    if (criteria) {
+      return !orderValue.startsWith('-') && 'rotate-180';
+    } else {
+      return 'hidden';
+    }
+    "
+  >
+    <c-icons.sort-arrows ratio="1rem"></c-icons.sort-arrows>
+  </span>
+
+  <script>
+    document.getElementsByName
+  </script>
+
+</div>

@@ -1,0 +1,10 @@
+
+<c-vars classname="capitalize text-sm font-semibold block dark:hover:bg-gray-800 hover:bg-gray-100 duration-100 px-4 py-2 ltr:text-left rtl:text-right "></c-vars>
+
+<li>
+  {% if datatype == 'href' %}
+  <a role="button" class="{{ classname }}" {{ attrs }}> {{ slot }} </a>
+  {% else %}
+  <span role="button" class="{{ classname }}" {{ attrs }}> {{ slot }} </span>
+  {% endif %}
+</li>

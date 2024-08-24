@@ -1,0 +1,58 @@
+{% load i18n %}
+{% load widget_tweaks %}
+
+
+<div x-data='{ open: $persist(true).as("filters-open") }'>
+
+    <form class="rounded-lg" {{ attrs }}>
+
+        <div 
+        @click="open = !open"
+        title="{% translate 'filters'|title %}"
+        class="inline-flex items-center justify-start rounded-lg duration-150 p-2 gap-2 my-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
+
+            <c-icons.filter ratio="1.25rem"></c-icons.filter>
+
+            <h1 class="text-xl tracking-tighter capitalize">
+                {% translate 'filters' %}
+            </h1>
+
+            <div x-bind:class="!open && '-rotate-180'" class="duration-150">
+                <c-icons.arrow-down ratio="1rem"></c-icons.arrow-down>
+            </div>
+
+        </div>
+
+        <div class="space-y-4" x-show="open" x-collapse.duration.150ms>
+
+            <div class="flex items-center !flex-shrink-0 flex-1 flex-wrap gap-2">
+                {% for field in filter %}
+                    {% render_field field|add_class:'input !w-auto' %}
+                {% endfor %}
+            </div>
+
+            <div class="flex items-center justify-center gap-2">
+
+                <c-btns.secondary 
+                @click="document.getElementById('page-reset-btn').click()"
+                datatype="input"
+                value="{% translate 'reset' %}" 
+                title="{% translate 'reset'|title %}" 
+                type="reset">
+                </c-btns.secondary>
+
+                <c-btns.primary 
+                datatype="input" 
+                id="filter-submit-btn"
+                value="{% translate 'filter' %}" 
+                title="{% translate 'filter'|title %}" 
+                type="submit">
+                </c-btns.primary>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>

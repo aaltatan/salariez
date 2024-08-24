@@ -1,0 +1,29 @@
+{% load i18n %}
+
+<header
+  class="sticky top-4 left-0 md:mx-auto p-4 shadow-md rounded-lg dark:bg-gray-900 dark:ring-1 dark:ring-gray-700 bg-white z-40"
+>
+  <nav class="flex items-center justify-between">
+
+    <ul class="flex items-center justify-between gap-2">
+
+      <li>
+        <span class="md:hidden">
+          <c-btns.icon 
+          role="button" 
+          @click="asideOpen = true" 
+          title="{% translate 'menu'|title %}">
+            <c-icons.bars ratio="1rem"></c-icons.bars>
+          </c-btns.icon>
+        </span>
+      </li>
+
+    </ul>
+
+    <c-layout.breadcrumb></c-layout.breadcrumb>
+
+    <c-context.user></c-context.user>
+  </nav>
+
+  {{ slot }}
+</header>

@@ -1,0 +1,30 @@
+{% load i18n %}
+
+<div 
+@click.outside="modalOpen = false; if (!modalOpen) document.getElementById('modal').innerHTML = '';"
+class="shadow-md rounded-lg overflow-hidden bg-white dark:bg-gray-950 dark:border dark:border-gray-900">
+
+    <header class="p-4">
+        <p class="font-semibold tracking-tight text-xl">
+            {{ header }} 
+        </p>
+    </header>
+
+    <div 
+    class="p-4 dark:border-t dark:border-b dark:border-gray-900 shadow-inner dark:shadow-none max-h-[300px] overflow-auto !scrollbar-track-gray-200 dark:!scrollbar-track-gray-900">
+        {{ body }}
+    </div>
+
+    <footer class="p-4 flex items-center">
+        <div class="ltr:ml-auto rtl:mr-auto flex items-center gap-1">
+            <c-btns.secondary 
+                @click="modalOpen = false; 
+                if (!modalOpen) document.getElementById('modal').innerHTML = '';"
+            >
+                {% translate 'close' %}
+            </c-btns.secondary>
+            {{ footer }}
+        </div>
+    </footer>
+
+</div>

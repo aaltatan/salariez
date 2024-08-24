@@ -1,0 +1,47 @@
+{% load i18n %}
+
+<c-modal.container>
+
+    <form 
+    hx-post="{{ delete_path }}" 
+    hx-swap="innerHTML"
+    hx-include="[data-include]"
+    @submit="modalOpen = false"
+    data-hit-messages
+    >
+
+        <c-modal.modal>
+
+            <c-slot name="header">
+
+                <span class="capitalize">{% translate 'delete' %}</span>
+                <span>{{ instance.name }}</span>
+                <span>{% translate '?' %}</span>
+
+            </c-slot>
+
+            <c-slot name="body">
+
+                <input type="hidden" name="page" value="{{ page }}">
+                <p class="capitalize">{{ message }}</p>
+
+            </c-slot>
+
+            <c-slot name="footer">
+
+                <c-btns.primary datatype="button" @click="modalOpen = false; if (!modalOpen) document.getElementById('modal').innerHTML = '';">
+                    {% translate 'delete' %}
+                </c-btns.primary>
+
+            </c-slot>
+
+        </c-modal.modal>
+
+    </form>
+
+</c-modal.container>
+
+<script type="module">
+    import { addHitMessagesEventListeners } from '../static/js/main.js';
+    addHitMessagesEventListeners();
+</script>

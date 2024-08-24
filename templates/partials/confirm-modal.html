@@ -1,0 +1,37 @@
+{% load i18n %}
+
+<c-modal.container>
+    <form 
+    hx-post="{{ bulk_path }}" 
+    hx-swap="innerHTML"
+    hx-include="[data-include]"
+    @submit="modalOpen = false"
+    data-hit-messages
+    >
+        <c-modal.modal>
+
+            <c-slot name="header">
+                <span class="capitalize">{% translate 'confirm' %}</span>
+            </c-slot>
+
+            <c-slot name="body">
+                <input type="hidden" name="pks" value="{{ pks }}">
+                {{ modal_content|escape }}
+            </c-slot>
+
+            <c-slot name="footer">
+                <c-btns.primary 
+                datatype="input" 
+                type="submit" 
+                @click="modalOpen = false" 
+                name="bulk_delete" value="{% translate 'confirm' %}"></c-btns.primary>
+            </c-slot>
+
+        </c-modal.modal>
+    </form>
+</c-modal.container>
+
+<script type="module">
+    import { addHitMessagesEventListeners } from '../static/js/main.js';
+    addHitMessagesEventListeners();
+</script>

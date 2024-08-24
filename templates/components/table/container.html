@@ -1,0 +1,26 @@
+{% load i18n %}
+
+<div 
+{{ attrs }}
+hx-indicator="#spinner"
+class="shadow-sm dark:shadow-none rounded-lg overflow-x-auto overflow-y-visible dark:bg-gray-900 bg-white duration-150 scrollbar-thin scrollbar-thumb-orange-500 dark:scrollbar-track-gray-950 scrollbar-track-gray-100/80"
+>
+    {% if filters %}
+    <div class="p-4">
+        {{ filters }}
+    </div>
+    {% endif %}
+
+    <div id="container" class="relative">
+
+        {{ table }}
+    
+        {% if pagination %}
+        <div class="p-4">
+            {{ pagination }}
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>

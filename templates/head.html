@@ -1,0 +1,54 @@
+{% load static %}
+
+<!-- htmx configuration -->
+<meta 
+name="htmx-config" 
+content='{ 
+    "globalViewTransitions": true, 
+    "refreshOnHistoryMiss": true 
+}'>
+
+<!-- css files -->
+<link rel="stylesheet" href="{% static 'css/dist/styles.css' %}">
+
+<!-- global styles -->
+<style>
+[x-cloak] {
+    display: none;
+}
+
+.htmx-request {
+    display: block !important;
+}
+
+[role="modal"] > * {
+    width: min(100%,600px);
+    margin-inline: 1rem;
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-animation {
+    animation: fade 150ms ease-in;
+}
+</style>
+
+<!-- alpine plugins -->
+<script src="{% static 'js/plugins/autosize.min.js' %}" defer></script>
+<script src="{% static 'js/plugins/persist.min.js' %}" defer></script>
+<script src="{% static 'js/plugins/collapse.min.js' %}" defer></script>
+<script src="{% static 'js/plugins/mask.min.js' %}" defer></script>
+
+<!-- js libraries -->
+<script src="{% static 'js/alpine.min.js' %}" defer></script>
+<script src="{% static 'js/htmx.min.js' %}" defer></script>
+
+<!-- javascript files -->
+<script type="module" src="{% static 'js/main.js' %}" defer></script>

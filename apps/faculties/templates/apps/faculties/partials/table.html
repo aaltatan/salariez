@@ -1,0 +1,27 @@
+{% load i18n %}
+
+{% with perms.faculties.add_faculty as can_create %}
+  {% with perms.faculties.delete_faculty as can_delete %}
+    {% with perms.faculties.change_faculty as can_update %}
+      {% with 1 as columns_count %}
+
+        <c-table.container id="faculties-table">
+
+          <c-slot name="filters">
+            {% include 'apps/faculties/partials/table/filters.html' %}
+          </c-slot>
+
+          <c-slot name="table">
+            {% include 'apps/faculties/partials/table/body.html' %}
+          </c-slot>
+
+          <c-slot name="pagination">
+            {% include 'apps/faculties/partials/table/pagination.html' %}
+          </c-slot>
+
+        </c-table.container>
+
+      {% endwith %}
+    {% endwith %}
+  {% endwith %}
+{% endwith %}

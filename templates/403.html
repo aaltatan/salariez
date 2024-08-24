@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% translate 'access denied'|title %}{% endblock %}
+
+{% block body %}
+  <div class="bg-red-200 text-red-700 px-4 py-2 rounded-lg first-letter:capitalize">
+    <span>
+      {% translate 'you don\'t have permissions to access this page, back to' %}
+    </span>
+    <a class="capitalize underline" href="{% url 'base:index' %}">
+      {% translate 'home' %}
+    </a>
+  </div>
+ 
+{% endblock %}

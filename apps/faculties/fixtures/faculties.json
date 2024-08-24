@@ -1,0 +1,162 @@
+[
+    {
+        "model": "faculties.faculty",
+        "pk": 1,
+        "fields": {
+            "name": "طب الأسنان",
+            "slug": "طب-الأسنان"
+        }
+    },
+    {
+        "model": "faculties.faculty",
+        "pk": 2,
+        "fields": {
+            "name": "الصيدلة",
+            "slug": "الصيدلة"
+        }
+    },
+    {
+        "model": "faculties.faculty",
+        "pk": 3,
+        "fields": {
+            "name": "الهندسة المعلوماتية",
+            "slug": "الهندسة-المعلوماتية"
+        }
+    },
+    {
+        "model": "faculties.faculty",
+        "pk": 4,
+        "fields": {
+            "name": "الهندسة المدنية",
+            "slug": "الهندسة-المدنية"
+        }
+    },
+    {
+        "model": "faculties.faculty",
+        "pk": 5,
+        "fields": {
+            "name": "هندسة العمارة والتخطيط العمراني",
+            "slug": "هندسة-العمارة-والتخطيط-العمراني"
+        }
+    },
+    {
+        "model": "faculties.faculty",
+        "pk": 6,
+        "fields": {
+            "name": "العلوم الادارية والمالية",
+            "slug": "العلوم-الادارية-والمالية"
+        }
+    },
+    {
+        "model": "faculties.faculty",
+        "pk": 7,
+        "fields": {
+            "name": "رئاسة الجامعة",
+            "slug": "رئاسة-الجامعة"
+        }
+    },
+    {
+        "model": "faculties.faculty",
+        "pk": 8,
+        "fields": {
+            "name": "الهندسة المائية",
+            "slug": "الهندسة-المائية"
+        }
+    },
+    {
+        "model": "faculties.faculty",
+        "pk": 9,
+        "fields": {
+            "name": "الهندسة البرتوكيميائية",
+            "slug": "الهندسة-البرتوكيميائية"
+        }
+    },
+    {
+        "model": "faculties.faculty",
+        "pk": 10,
+        "fields": {
+            "name": "هندسة البترول",
+            "slug": "هندسة-البترول"
+        }
+    },
+    {
+        "model": "faculties.faculty",
+        "pk": 11,
+        "fields": {
+            "name": "الهندسة الزراعية",
+            "slug": "الهندسة-الزراعية"
+        }
+    },
+    {
+        "model": "faculties.faculty",
+        "pk": 12,
+        "fields": {
+            "name": "الحقوق",
+            "slug": "الحقوق"
+        }
+    },
+    {
+        "model": "faculties.faculty",
+        "pk": 13,
+        "fields": {
+            "name": "الطب البشري",
+            "slug": "الطب-البشري"
+        }
+    },
+    {
+        "model": "faculties.faculty",
+        "pk": 14,
+        "fields": {
+            "name": "الفنون الجميلة",
+            "slug": "الفنون-الجميلة"
+        }
+    },
+    {
+        "model": "faculties.faculty",
+        "pk": 15,
+        "fields": {
+            "name": "الاعلام",
+            "slug": "الاعلام"
+        }
+    },
+    {
+        "model": "faculties.faculty",
+        "pk": 16,
+        "fields": {
+            "name": "الرياضيات",
+            "slug": "الرياضيات"
+        }
+    },
+    {
+        "model": "faculties.faculty",
+        "pk": 17,
+        "fields": {
+            "name": "الكيمياء",
+            "slug": "الكيمياء"
+        }
+    },
+    {
+        "model": "faculties.faculty",
+        "pk": 18,
+        "fields": {
+            "name": "الفيزياء",
+            "slug": "الفيزياء"
+        }
+    },
+    {
+        "model": "faculties.faculty",
+        "pk": 19,
+        "fields": {
+            "name": "الهندسة الطبية",
+            "slug": "الهندسة-الطبية"
+        }
+    },
+    {
+        "model": "faculties.faculty",
+        "pk": 20,
+        "fields": {
+            "name": "المعهد العالي للفنون المسرحية",
+            "slug": "المعهد-العالي-للفنون-المسرحية"
+        }
+    }
+]

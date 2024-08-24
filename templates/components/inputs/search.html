@@ -1,0 +1,46 @@
+{% load i18n %}
+
+<div id="search-container" class="relative" x-data="{ open: false }">
+
+    <div class="relative">
+
+        <input
+        hx-post="{{ path }}"
+        hx-trigger="input changed delay:500ms, search"
+        hx-swap="innerHTML"
+        hx-target="#search-results"
+        hx-indicator="#search-spinner"
+        @keydown="open = true"
+        type="search"
+        class="input peer !pl-8"
+        id="search-input"
+        name="q"
+        placeholder="{{ placeholder }}">
+
+        <span
+        hx-get="{{ path }}"
+        hx-target="#search-container"
+        hx-swap="outerHTML"
+        hx-trigger="click"
+        class="absolute cursor-pointer rtl:left-4 ltr:right-4 top-1/2 -translate-y-1/2 hidden peer-disabled:block">
+            <c-btns.icon>
+                <c-icons.x ratio="1.25rem"></c-icons.x>
+            </c-btns.icon>
+        </span>
+
+        <span 
+        class="absolute rtl:left-12 ltr:right-12 top-1/2 -translate-y-1/2">
+            <c-icons.magnifier ratio="1.25rem"></c-icons.magnifier>
+        </span>
+
+        <span 
+        id="search-spinner"
+        class="absolute hidden animate-spin rtl:right-2 ltr:left-2 top-3">
+            <c-icons.reset ratio="1rem"></c-icons.reset>
+        </span>
+
+    </div>
+
+    <ul x-show="open" x-collapse.duration.150ms id="search-results" class="absolute left-0 top-[calc(100%_+_0.5rem)] w-full bg-white dark:bg-gray-950 divide-y divide-gray-200 dark:divide-gray-900 rounded-lg ring-1 ring-gray-100 dark:ring-gray-900 shadow-md dark:shadow-inner max-h-48 overflow-y-auto empty:hidden"></ul>
+
+</div>

@@ -1,0 +1,60 @@
+{% load i18n %}
+
+<div :class="!asideOpen && 'hidden'" class="fixed w-screen h-screen left-0 top-0 z-[49] md:hidden" @click="asideOpen = false"></div>
+
+<div
+x-cloak
+x-data="{ search: '', localUrls: urls }"
+  :class="asideOpen ? 'ltr:max-md:left-0 rtl:max-md:right-0' : 'ltr:max-md:left-[-400px] rtl:max-md:right-[-400px]'"
+  class="fixed md:sticky md:top-4 w-[min(100%,300px)] h-[calc(100vh_-_2rem)] shadow-md md:shadow-sm rounded-lg m-4 bg-white dark:bg-gray-900 dark:ring-1 dark:ring-gray-700 ltr:ml-2 rtl:mr-2 dark:shadow-none z-50 duration-150 dark:max-md:border dark:max-md:border-gray-800"
+>
+  <aside class="relative p-3 h-full overflow-y-auto overflow-x-hidden">
+
+    <span class="md:hidden flex items-center justify-end">
+      <c-btns.icon role="button" @click="asideOpen = false">
+        <c-icons.x ratio="1rem"></c-icons.x>
+      </c-btns.icon>
+    </span>
+
+    <div>
+      <a href="{% url 'base:index' %}">
+        <h1 class="text-xl text-center mt-8 md:mt-4 mb-4 font-semibold tracking-tighter">
+          {{ project_name }}
+        </h1>
+      </a>
+    </div>
+
+    <div class="px-2 mt-8">
+      <input 
+      type="search"
+      id="aside-search"
+      x-model="search" 
+      x-on:keydown="localUrls = urls.filter(url => url.text.includes(search) || url.url.includes(search))"
+      x-on:search="localUrls = urls.filter(url => url.text.includes(search) || url.url.includes(search))"
+      placeholder="{% translate 'search ...' %}" class="input">
+    </div>
+
+    <ul class="p-2">
+
+      <template x-for="url in localUrls" :key="url.text" x-transition>
+
+        <li class="my-2">
+          <a 
+            :href="url.url"
+            :class="url.isActive && 'dark:bg-gray-950 dark:hover:!bg-black text-orange-500 font-semibold tracking-tighter bg-gray-100 dark:shadow-none'"
+            :hx-indicator="`#spinner-${url.text}`"
+            class="flex items-center gap-2 px-4 py-2 rounded-lg tracking-tight duration-150 hover:bg-gray-200 outline-none focus:ring-2 focus:ring-orange-500 dark:hover:bg-gray-950"
+          >
+            <span x-text="url.text" class="capitalize text-lg"></span>
+            <span :id="`spinner-${url.text}`" class="animate-spin hidden text-orange-500">
+              <c-icons.spinner-two ratio="1rem"></c-icons.spinner-two>
+            </span>
+          </a>
+        </li>
+
+      </template>
+
+    </ul>
+
+  </aside>
+</div>

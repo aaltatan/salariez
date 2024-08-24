@@ -1,0 +1,13 @@
+<td>
+    <div class="flex items-center justify-center">
+        <c-btns.icon
+        @click="
+        let row = $el.parentElement.parentElement.parentElement;
+        let id = row.getAttribute('id');
+        row.remove();
+        totals = totals.filter(el => el.id !== id);
+        ">
+            <c-icons.x ratio="1rem"></c-icons.x>
+        </c-btns.icon>
+    </div>
+</td>

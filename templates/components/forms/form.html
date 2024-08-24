@@ -1,0 +1,63 @@
+{% load widget_tweaks %}
+{% load i18n %}
+
+<div class="shadow-md bg-white dark:bg-gray-900 rounded-lg p-6">
+
+    <div class="max-w-2xl mx-auto">
+        {% if title %}
+        <h1 class="text-4xl tracking-tighter font-semibold my-6 text-center first-letter:capitalize">
+            {{ title }}
+        </h1>
+        {% endif %}
+
+        <div>
+
+            <ul>
+                {% for error in form.non_field_errors %}
+                <li class="bg-red-100 font-semibold text-sm p-4 rounded-lg text-red-600">
+                    {{ error }}
+                </li>
+                {% endfor %}
+            </ul>
+
+            <div class="space-y-4">
+
+                {% for field in form %}
+                <div>
+
+                    <label class="block font-semibold" for="{{ field.id_for_label }}">
+                        {{ field.label }}:
+                    </label>
+
+                    <div class="mb-4 text-gray-500 text-sm first-letter:capitalize">
+                        {{ field.help_text }}
+                    </div>
+                    
+                    {% render_field field|add_class:'input' %}
+
+                    {% if field.errors %}
+                    <ul class="text-[red] text-sm tracking-tight">
+                        {% for error in field.errors %}
+                            <li
+                            class="first-letter:capitalize pl-2 font-semibold my-2">
+                                {{ error }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                </div>
+                {% endfor %}
+
+            </div>
+
+            {% csrf_token %}
+
+        </div>
+
+        <div class="flex items-center justify-center gap-1 my-6">
+            {{ btns }}
+        </div>
+    </div>
+
+</div>

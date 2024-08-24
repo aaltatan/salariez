@@ -1,0 +1,10 @@
+<c-forms.filters
+  id="faculty-filter-form"
+  hx-get="{% url 'faculties:index' %}"
+  hx-target="#container"
+  hx-select="#container"
+  hx-swap="outerHTML"
+  data-include
+    >
+    {{ filter }}
+</c-forms.filters>

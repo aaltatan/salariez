@@ -1,0 +1,18 @@
+<div class="absolute ltr:left-3 rtl:right-3 top-1/2 -translate-y-1/2">
+  <input
+    @change="
+      let isChecked = $event.target.checked;
+      let rowsChecks = document.querySelectorAll(`input[data-check]`);
+      rowsChecks.forEach(el => {
+          el.checked = isChecked;
+          let id = el.getAttribute('id');
+          if (isChecked) selectedRows.push(id);
+      });
+      selectedRows = [...new Set(selectedRows)]
+      if (!isChecked) selectedRows = [];
+    "
+    id="check-all"
+    class="accent-orange-600"
+    type="checkbox"
+  />
+</div>

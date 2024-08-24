@@ -1,0 +1,104 @@
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<div dir="ltr" class="flex max-md:flex-col items-center justify-between gap-2">
+
+    <div class="flex items-center justify-between">
+      {% if page_obj.has_previous %}
+      <c-btns.icon
+        hx-get="{{ url }}?page=1"
+        hx-target="{{ target }}"
+        hx-include="{{ include }}"
+        hx-swap="outerHTML"
+        title="{% translate 'first page'|title %}"
+      >
+        <c-icons.arrow-double-left ratio="1rem"></c-icons.arrow-double-left>
+      </c-btns.icon>
+      {% else %}
+      <span class="text-xl p-1 opacity-45">
+        <c-icons.arrow-double-left ratio="1rem"></c-icons.arrow-double-left>
+      </span>
+      {% endif %} 
+      
+      {% if page_obj.has_previous %}
+      <c-btns.icon
+        hx-get="{{ url }}?page={{ page_obj.previous_page_number }}"
+        hx-target="{{ target }}"
+        hx-include="{{ include }}"
+        hx-swap="outerHTML"
+        title="{% translate 'previous page'|title %}"
+      >
+        <c-icons.arrow-left ratio="1rem"></c-icons.arrow-left>
+      </c-btns.icon>
+      {% else %}
+      <span class="text-xl p-1 opacity-45">
+        <c-icons.arrow-left ratio="1rem"></c-icons.arrow-left>
+      </span>
+      {% endif %} 
+
+      <!--  -->
+      <div class="text-gray-600 text-sm font-semibold mx-2">
+        <span>{{ page_obj.number }}</span>
+        <span>/</span>
+        <span>{{ page_obj.paginator.num_pages }}</span>
+      </div>
+      <!--  -->
+      
+      {% if page_obj.has_next %}
+      <c-btns.icon
+        hx-get="{{ url }}?page={{ page_obj.next_page_number }}"
+        hx-target="{{ target }}"
+        hx-include="{{ include }}"
+        hx-swap="outerHTML"
+        title="{% translate 'next page'|title %}"
+      >
+        <c-icons.arrow-right ratio="1rem"></c-icons.arrow-right>
+      </c-btns.icon>
+      {% else %}
+      <span class="text-xl p-1 opacity-45">
+        <c-icons.arrow-right ratio="1rem"></c-icons.arrow-right>
+      </span>
+      {% endif %} 
+      {% if page_obj.has_next %}
+      <c-btns.icon
+        hx-get="{{ url }}?page={{ page_obj.paginator.num_pages }}"
+        hx-target="{{ target }}"
+        hx-include="{{ include }}"
+        hx-swap="outerHTML"
+        title="{% translate 'last page'|title %}"
+      >
+        <c-icons.arrow-double-right ratio="1rem"></c-icons.arrow-double-right>
+      </c-btns.icon>
+      {% else %}
+      <span class="p-1 opacity-45">
+        <c-icons.arrow-double-right ratio="1rem"></c-icons.arrow-double-right>
+      </span>
+      {% endif %}
+    </div>
+
+    <div class="flex items-center gap-1 justify-center">
+      <c-btns.icon 
+      hx-get="{{ url }}"
+      hx-target="{{ target }}"
+      id="page-reset-btn"
+      title="{% translate 'reset'|title %}">
+        <c-icons.reset ratio="1rem"></c-icons.reset>
+      </c-btns.icon>
+      {{ slot }}
+      <!--  -->
+    </div>
+
+    <div 
+    dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}" 
+    class="text-sm flex items-center justify-center gap-1 text-gray-600">
+
+        <span>{% translate 'record' %}</span>
+        <span>{{ page_obj.start_index }}</span>
+        <span>-</span>
+        <span>{{ page_obj.end_index }}</span>
+        <span>{% translate 'of' %}</span>
+        <span>{{ page_obj.paginator.count }}</span>
+
+    </div>
+
+</div>

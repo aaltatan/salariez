@@ -1,0 +1,83 @@
+{% load i18n %}
+
+{% get_current_language as LANGUAGE_CODE %}
+
+<div 
+x-data='{open: false}' 
+@click="open = true"
+:class="open && 'bg-gray-50 dark:bg-gray-800'"
+class="relative select-none rounded-lg p-2 dark:hover:bg-gray-700 hover:bg-gray-50 duration-150" 
+role="button"
+>
+
+    <div 
+    class="flex items-center justify-center gap-1">
+        <span class="capitalize text-sm font-semibold">
+            {{ request.user.username }}
+        </span>
+        <span :class="open && 'rotate-180'" class='duration-150'>
+            <c-icons.arrow-down ratio="1rem"></c-icons.arrow-down>
+        </span>
+    </div>
+
+    <ul 
+    role="menu"
+    x-show="open"
+    @click.outside="open = false"
+    x-transition:enter="transition ease-out duration-100"
+    x-transition:enter-start="opacity-0 scale-90"
+    x-transition:enter-end="opacity-100 scale-100"
+    x-transition:leave="transition ease-in duration-100"
+    x-transition:leave-start="opacity-100 scale-100"
+    x-transition:leave-end="opacity-0 scale-90"
+    x-cloak
+    class="rounded-lg overflow-hidden py-2 absolute rtl:left-0 ltr:right-0 top-[calc(100%+.5rem)] min-w-[100px] bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-md z-10 ltr:text-left rtl:text-right ltr:origin-top-right rtl:origin-top-left">
+
+        <div class="flex items-center justify-center gap-2 my-4 mx-2">
+            <c-layout.avatar textsize="text-base"></c-layout.avatar>
+            <p class="text-nowrap font-semibold tracking-tighter">
+                {{ request.user.first_name|title }}
+                {{ request.user.last_name|title }}
+            </p>
+        </div>
+
+        <hr class="border-gray-200 dark:border-gray-700 ">
+
+        <div>
+            <button class="w-full capitalize text-sm font-semibold block dark:hover:bg-gray-800 hover:bg-gray-100 duration-100 px-4 py-2 ltr:text-left rtl:text-right " @click="dark = !dark;">
+    
+                <span x-show="dark" title="{% translate 'light theme'|title %}">
+                    {% translate 'light theme' %}
+                </span>
+                <span x-show="!dark" title="{% translate 'dark theme'|title %}">
+                    {% translate 'dark theme' %}
+                </span>
+                
+            </button>
+        </div>
+
+        <c-context.form 
+        btn_title="{% if LANGUAGE_CODE == 'ar' %}English{% else %}Arabic{% endif %}" 
+        action="{% url 'set_language' %}" 
+        method="post">
+            <input name="next" type="hidden" value="{{ redirect_to }}">
+            <input 
+            type="hidden" 
+            name="language" 
+            value="{% if LANGUAGE_CODE == 'ar' %}en{% else %}ar{% endif %}">
+        </c-context.form>
+
+        <hr class="border-gray-200 dark:border-gray-700 ">
+
+        <c-context.btn datatype="href" href="{% url 'password_change' %}">
+            {% translate 'change password' %}
+        </c-context.btn>
+
+        <c-context.form 
+        method="POST" 
+        action="{% url 'logout' %}" 
+        btn_title="{% translate 'logout'|title %}"></c-context.form>
+
+    </ul>
+
+</div>
