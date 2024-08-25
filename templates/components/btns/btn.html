@@ -1,0 +1,35 @@
+<c-vars 
+base="cursor-pointer w-full sm:w-auto rounded-lg px-4 py-2 capitalize duration-150 tracking-tight font-semibold focus:ring-2 outline-none flex items-center justify-center gap-1 hover:opacity-85"
+primary="text-white bg-blue-500 focus:ring-blue-400"
+secondary="focus:ring-gray-200 dark:text-white text-black"
+danger="text-white bg-[red] focus:ring-red-400"
+></c-vars>
+
+{% if datatype == 'href' %}
+
+    <a {{ attrs }}
+    class="{{ base }} {% include 'components/btns/includes/logic.html' %}" >
+        {{ slot }}
+    </a>
+
+{% elif datatype == 'input' %}
+
+    <input {{ attrs }}
+    class="{{ base }} {% include 'components/btns/includes/logic.html' %}">
+
+{% elif datatype == 'button' %}
+
+    <button {{ attrs }} 
+    class="{{ base }} {% include 'components/btns/includes/logic.html' %}">
+        {{ slot }}
+    </button>
+
+{% else %}
+
+    <span {{ attrs }} 
+    role="button" 
+    class="{{ base }} {% include 'components/btns/includes/logic.html' %}" >
+        {{ slot }}
+    </span>
+    
+{% endif %}

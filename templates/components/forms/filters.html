@@ -31,23 +31,24 @@
                 {% endfor %}
             </div>
 
-            <div class="flex items-center justify-center gap-2">
+            <div class="flex items-center max-sm:flex-col justify-center gap-2">
 
-                <c-btns.secondary 
-                @click="document.getElementById('page-reset-btn').click()"
-                datatype="input"
-                value="{% translate 'reset' %}" 
-                title="{% translate 'reset'|title %}" 
-                type="reset">
-                </c-btns.secondary>
-
-                <c-btns.primary 
+                <c-btns.btn 
                 datatype="input" 
                 id="filter-submit-btn"
                 value="{% translate 'filter' %}" 
                 title="{% translate 'filter'|title %}" 
                 type="submit">
-                </c-btns.primary>
+                </c-btns.btn>
+
+                <c-btns.btn 
+                datatype="input"
+                datatheme="secondary"
+                @click="document.getElementById('page-reset-btn').click()"
+                value="{% translate 'reset' %}" 
+                title="{% translate 'reset'|title %}" 
+                type="reset">
+                </c-btns.btn>
 
             </div>
 

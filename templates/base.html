@@ -61,16 +61,22 @@ x-data="{ dark: $persist(false).as('dark') }">
         <div id="modal"></div>
         <c-layout.messages></c-layout.messages>
         
-        <div class="relative md:grid grid-cols-[300px_1fr]">
+        <div class="relative lg:grid grid-cols-[300px_1fr]">
 
           <c-layout.aside></c-layout.aside>
 
-          <div class="px-2 ltr:md:ml-2 rtl:md:mr-2 max-md:min-h-screen">
+          <div class="px-2 ltr:lg:ml-2 rtl:lg:mr-2 max-lg:min-h-screen">
+
             <c-layout.header></c-layout.header>
-            <main class="relative py-6 mx-auto container">
+
+            <main class="relative pb-6 lg:pt-6 mx-auto container">
+              <div class="mt-8 mb-4 lg:hidden">
+                <c-layout.breadcrumb></c-layout.breadcrumb>
+              </div>
               <c-layout.spinner></c-layout.spinner>
               {% block body %}{% endblock %}
             </main>
+
           </div>
 
         </div>

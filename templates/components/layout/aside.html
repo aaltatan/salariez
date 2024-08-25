@@ -1,12 +1,12 @@
 {% load i18n %}
 
-<div :class="!asideOpen && 'hidden'" class="fixed w-screen h-screen left-0 top-0 z-[49] md:hidden" @click="asideOpen = false"></div>
+<div :class="!asideOpen && 'hidden'" class="fixed w-screen h-screen left-0 top-0 z-[49] lg:hidden" @click="asideOpen = false"></div>
 
 <div
 x-cloak
 x-data="{ search: '', localUrls: urls }"
-  :class="asideOpen ? 'ltr:max-md:left-0 rtl:max-md:right-0' : 'ltr:max-md:left-[-400px] rtl:max-md:right-[-400px]'"
-  class="fixed md:sticky md:top-4 w-[min(100%,300px)] h-[calc(100vh_-_2rem)] shadow-md md:shadow-sm rounded-lg m-4 bg-white dark:bg-gray-900 dark:ring-1 dark:ring-gray-700 ltr:ml-2 rtl:mr-2 dark:shadow-none z-50 duration-150 dark:max-md:border dark:max-md:border-gray-800"
+  :class="asideOpen ? 'ltr:max-lg:left-0 rtl:max-lg:right-0' : 'ltr:max-lg:left-[-400px] rtl:max-lg:right-[-400px]'"
+  class="fixed lg:sticky lg:top-4 w-[min(100%,300px)] h-[calc(100vh_-_2rem)] shadow-lg rounded-lg m-4 bg-white dark:bg-gray-900 dark:ring-1 dark:ring-gray-800 ltr:ml-2 rtl:mr-2 dark:shadow-none z-50 duration-150"
 >
   <aside class="relative p-3 h-full overflow-y-auto overflow-x-hidden">
 
@@ -18,7 +18,7 @@ x-data="{ search: '', localUrls: urls }"
 
     <div>
       <a href="{% url 'base:index' %}">
-        <h1 class="text-xl text-center mt-8 md:mt-4 mb-4 font-semibold tracking-tighter">
+        <h1 class="text-3xl text-center mt-8 md:mt-4 mb-4 font-semibold tracking-tighter first-letter:capitalize">
           {{ project_name }}
         </h1>
       </a>
@@ -41,12 +41,12 @@ x-data="{ search: '', localUrls: urls }"
         <li class="my-2">
           <a 
             :href="url.url"
-            :class="url.isActive && 'dark:bg-gray-950 dark:hover:!bg-black text-orange-500 font-semibold tracking-tighter bg-gray-100 dark:shadow-none'"
+            :class="url.isActive && 'text-blue-500 font-semibold'"
             :hx-indicator="`#spinner-${url.text}`"
-            class="flex items-center gap-2 px-4 py-2 rounded-lg tracking-tight duration-150 hover:bg-gray-200 outline-none focus:ring-2 focus:ring-orange-500 dark:hover:bg-gray-950"
+            class="flex items-center gap-2 px-4 py-2 rounded-lg duration-150 hover:bg-gray-100 outline-none focus:ring-2 focus:ring-blue-500 dark:hover:bg-gray-800"
           >
             <span x-text="url.text" class="capitalize text-lg"></span>
-            <span :id="`spinner-${url.text}`" class="animate-spin hidden text-orange-500">
+            <span :id="`spinner-${url.text}`" class="animate-spin hidden text-blue-500">
               <c-icons.spinner-two ratio="1rem"></c-icons.spinner-two>
             </span>
           </a>

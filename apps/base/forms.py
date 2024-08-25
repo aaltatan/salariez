@@ -22,7 +22,7 @@ class PaginatedByForm(forms.Form):
         super().__init__(*args, **kwargs)
             
         self.fields['per_page'].widget.attrs['class'] = (
-            'px-2 py-1 rounded-lg bg-gray-50 dark:bg-gray-800 outline-none focus:ring-1 focus:ring-orange-500 border-none duration-150'
+            'px-1 rounded-lg bg-gray-50 dark:bg-gray-900 outline-none focus:ring-1 focus:ring-blue-500 border-none duration-150'
         )
         self.fields['per_page'].widget.attrs['hx-include'] = '[data-include]'
         self.fields['per_page'].widget.attrs['hx-swap']= 'outerHTML'

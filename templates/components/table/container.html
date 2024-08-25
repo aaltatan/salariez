@@ -3,7 +3,7 @@
 <div 
 {{ attrs }}
 hx-indicator="#spinner"
-class="shadow-sm dark:shadow-none rounded-lg overflow-x-auto overflow-y-visible dark:bg-gray-900 bg-white duration-150 scrollbar-thin scrollbar-thumb-orange-500 dark:scrollbar-track-gray-950 scrollbar-track-gray-100/80"
+class="shadow-sm dark:shadow-none rounded-lg overflow-x-auto overflow-y-visible dark:bg-gray-900 bg-white duration-150 scrollbar-thin scrollbar-thumb-blue-500 dark:scrollbar-track-gray-950 scrollbar-track-gray-100/80"
 >
     {% if filters %}
     <div class="p-4">
@@ -16,7 +16,7 @@ class="shadow-sm dark:shadow-none rounded-lg overflow-x-auto overflow-y-visible 
         {{ table }}
     
         {% if pagination %}
-        <div class="p-4">
+        <div class="p-6">
             {{ pagination }}
         </div>
         {% endif %}

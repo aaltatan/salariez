@@ -6,14 +6,14 @@
 x-data='{open: false}' 
 @click="open = true"
 :class="open && 'bg-gray-50 dark:bg-gray-800'"
-class="relative select-none rounded-lg p-2 dark:hover:bg-gray-700 hover:bg-gray-50 duration-150" 
+class="relative select-none rounded-lg px-4 py-2 dark:hover:bg-gray-800 hover:bg-gray-100 duration-150" 
 role="button"
 >
 
     <div 
     class="flex items-center justify-center gap-1">
-        <span class="capitalize text-sm font-semibold">
-            {{ request.user.username }}
+        <span class="text-sm font-semibold">
+            {{ user.username }}
         </span>
         <span :class="open && 'rotate-180'" class='duration-150'>
             <c-icons.arrow-down ratio="1rem"></c-icons.arrow-down>
@@ -31,14 +31,25 @@ role="button"
     x-transition:leave-start="opacity-100 scale-100"
     x-transition:leave-end="opacity-0 scale-90"
     x-cloak
-    class="rounded-lg overflow-hidden py-2 absolute rtl:left-0 ltr:right-0 top-[calc(100%+.5rem)] min-w-[100px] bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-md z-10 ltr:text-left rtl:text-right ltr:origin-top-right rtl:origin-top-left">
+    class="rounded-lg overflow-hidden py-2 absolute rtl:left-0 ltr:right-0 top-[calc(100%+.5rem)] bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-md z-10 ltr:text-left rtl:text-right ltr:origin-top-right rtl:origin-top-left w-[max-content]">
 
-        <div class="flex items-center justify-center gap-2 my-4 mx-2">
-            <c-layout.avatar textsize="text-base"></c-layout.avatar>
-            <p class="text-nowrap font-semibold tracking-tighter">
-                {{ request.user.first_name|title }}
-                {{ request.user.last_name|title }}
-            </p>
+        <div class="flex items-center gap-x-2 text-nowrap p-4">
+            
+            <div class="object-cover w-12 h-12 rounded-full flex items-center justify-center bg-blue-500 text-white font-semibold tracking-tighter">
+                {{ user.first_name|first|title }}
+                {{ user.last_name|first|title }}
+            </div>
+            
+            <div>
+                <h1 class="text-lg font-semibold text-gray-700 capitalize dark:text-white tracking-tighter">
+                    {{ user.first_name|title }}
+                    {{ user.last_name|title }}
+                </h1>
+
+                <p class="text-sm text-gray-500 dark:text-gray-400">
+                    @{{ user.username }}
+                </p>
+            </div>
         </div>
 
         <hr class="border-gray-200 dark:border-gray-700 ">

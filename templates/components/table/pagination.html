@@ -1,7 +1,7 @@
 {% load i18n %}
 {% get_current_language as LANGUAGE_CODE %}
 
-<div dir="ltr" class="flex max-md:flex-col items-center justify-between gap-2">
+<div dir="ltr" class="flex max-md:flex-col items-center justify-between gap-4">
 
     <div class="flex items-center justify-between">
       {% if page_obj.has_previous %}
@@ -37,10 +37,13 @@
       {% endif %} 
 
       <!--  -->
-      <div class="text-gray-600 text-sm font-semibold mx-2">
-        <span>{{ page_obj.number }}</span>
-        <span>/</span>
-        <span>{{ page_obj.paginator.num_pages }}</span>
+      <div class="font-semibold mx-2 flex items-center gap-4">
+        <div>
+          <span>{{ page_obj.number }}</span>
+          <span>/</span>
+          <span>{{ page_obj.paginator.num_pages }}</span>
+        </div>
+        {{ pagination_form }}
       </div>
       <!--  -->
       
@@ -88,16 +91,15 @@
       <!--  -->
     </div>
 
-    <div 
-    dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}" 
-    class="text-sm flex items-center justify-center gap-1 text-gray-600">
+    <div class="flex items-center justify-center gap-1 text-gray-600 dark:text-gray-400"
+    dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}">
 
-        <span>{% translate 'record' %}</span>
-        <span>{{ page_obj.start_index }}</span>
-        <span>-</span>
-        <span>{{ page_obj.end_index }}</span>
-        <span>{% translate 'of' %}</span>
-        <span>{{ page_obj.paginator.count }}</span>
+      <span>{{ page_obj.start_index }}</span>
+      <span>-</span>
+      <span>{{ page_obj.end_index }}</span>
+      <span>{% translate 'of' %}</span>
+      <span>{{ page_obj.paginator.count }}</span>
+      <span>{% translate 'record' %}</span>
 
     </div>
 

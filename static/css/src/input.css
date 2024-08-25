@@ -5,7 +5,7 @@
 
 @layer utilities {
     .input {
-        @apply rounded-md px-4 py-2 ring-1 ring-gray-200 dark:ring-gray-800 w-full outline-none dark:focus:ring-orange-600 focus:ring-orange-500 dark:bg-inherit duration-75 aria-[invalid]:!ring-[red] placeholder:capitalize disabled:opacity-90 dark:disabled:opacity-50 disabled:text-orange-500;
+        @apply block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-500 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300 outline-none dark:bg-inherit duration-75 aria-[invalid]:!ring-[red] placeholder:capitalize disabled:opacity-90 dark:disabled:opacity-50 disabled:text-blue-500;
     }
 }
 
@@ -21,5 +21,5 @@
  
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    @apply bg-orange-500 rounded-md;
+    @apply bg-blue-500 rounded-md;
 }

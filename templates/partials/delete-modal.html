@@ -29,9 +29,9 @@
 
             <c-slot name="footer">
 
-                <c-btns.primary datatype="button" @click="modalOpen = false; if (!modalOpen) document.getElementById('modal').innerHTML = '';">
+                <c-btns.btn datatype="button" @click="modalOpen = false; if (!modalOpen) document.getElementById('modal').innerHTML = '';">
                     {% translate 'delete' %}
-                </c-btns.primary>
+                </c-btns.btn>
 
             </c-slot>
 
