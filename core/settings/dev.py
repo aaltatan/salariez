@@ -5,24 +5,25 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-MIDDLEWARE += [
-    "querycount.middleware.QueryCountMiddleware"
-]
-
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-QUERYCOUNT = {
-    'THRESHOLDS': {
-        'MEDIUM': 4,
-        'HIGH': 200,
-        'MIN_TIME_TO_LOG':0,
-        'MIN_QUERY_COUNT_TO_LOG':10
-    },
-    'IGNORE_REQUEST_PATTERNS': [],
-    'IGNORE_SQL_PATTERNS': [],
-    'DISPLAY_DUPLICATES': 1,
-    'RESPONSE_HEADER': 'X-DjangoQueryCount-Count'
-}
+# MIDDLEWARE += [
+#     "querycount.middleware.QueryCountMiddleware"
+# ]
+
+
+# QUERYCOUNT = {
+#     'THRESHOLDS': {
+#         'MEDIUM': 4,
+#         'HIGH': 200,
+#         'MIN_TIME_TO_LOG':0,
+#         'MIN_QUERY_COUNT_TO_LOG':10
+#     },
+#     'IGNORE_REQUEST_PATTERNS': [],
+#     'IGNORE_SQL_PATTERNS': [],
+#     'DISPLAY_DUPLICATES': 1,
+#     'RESPONSE_HEADER': 'X-DjangoQueryCount-Count'
+# }
 
 
 # LOGGING = {

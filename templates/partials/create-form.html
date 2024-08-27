@@ -4,6 +4,7 @@
 hx-post="{{ instance.get_create_path }}"
 hx-target="this"
 hx-swap="outerHTML"
+hx-disabled-elt="*[data-disabled]"
 data-hit-messages
 >
 
@@ -17,6 +18,7 @@ data-hit-messages
                 datatype="input"
                 type="submit" 
                 title="{% translate 'save'|title %}"
+                data-disabled
                 name="save" 
                 value="{% translate 'save' %}"></c-btns.btn>
 
@@ -24,6 +26,7 @@ data-hit-messages
                 datatype="input"
                 type="submit" 
                 data-hit-messages
+                data-disabled
                 title="{% translate 'save and add another'|title %}"
                 value="{% translate 'save and add another' %}" 
                 name="save_and_add_another"></c-btns.btn>
@@ -34,12 +37,14 @@ data-hit-messages
                 hx-target="closest form"
                 hx-swap="outerHTML"
                 hx-indicator="#reset-loading"
+                data-disabled
                 title="{% translate 'reset'|title %}">
-                    <div id="reset-loading" class="animate-spin hidden">
+                    <div id="reset-loading" class="[&.htmx-request]:animate-spin">
                         <c-icons.reset ratio="1rem"></c-icons.reset>
                     </div>
                     <span>{% translate 'reset' %}</span>
                 </c-btns.btn>
+
 
             </c-slot>
 

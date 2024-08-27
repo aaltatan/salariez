@@ -12,7 +12,7 @@ class BulkDeleteMixin(AbstractBulkAction):
 
     def modal_action(self, pks: list[int]):
         self.model.objects.filter(pk__in=pks).delete()
-        messages.info(self.request, _('done'), 'bg-green-600')
+        messages.success(self.request, _('done'))
 
     def get_bulk_path(self):
         return reverse('faculties:bulk-delete')
@@ -20,11 +20,9 @@ class BulkDeleteMixin(AbstractBulkAction):
     def get_modal_content(self):
         
         pks = self.get_get_pks()
-        
         context = {
             'qs': self.model.objects.filter(pk__in=pks)
         }
-        
         return render_to_string(
             'apps/faculties/partials/bulk-contents/delete.html',
             context,
@@ -40,10 +38,9 @@ class CannotDeleteFacultyMixin:
         
         if 1 == 2:
             response = HttpResponse('')
-            messages.info(
+            messages.error(
                 request, 
                 _('you can\'t delete this ({}) because there is one or more models related to it.').format(instance.name),
-                'bg-red-600'
             )
             response['Hx-Retarget'] = '#no-content'
             response['Hx-Reswap'] = 'innerHTML'

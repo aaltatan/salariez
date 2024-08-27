@@ -17,10 +17,11 @@ class FacultyFilterSet(FiltersMixins, filters.FilterSet):
         widget=widgets.TextInput(
             attrs={
                 "autocomplete": "off",
-                "autofocus": "",
+                "autofocus": "on",
                 "placeholder": _("search by the name"),
                 "type": "search",
                 "data-disabled": "",
+                "hx-preserve": "",
             }
         ),
     )

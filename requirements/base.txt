@@ -4,8 +4,7 @@ django-filter
 django-cotton
 django-htmx
 django-dotenv
-django-excel-response
 django-widget-tweaks
 django-excel-response
-six
+django-import-export
 mysqlclient

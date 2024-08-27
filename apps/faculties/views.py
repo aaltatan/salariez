@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import (
     PermissionRequiredMixin
 )
 
-from . import models, forms, filters, mixins
+from . import models, forms, filters, mixins, resources
 
 from apps.base import forms as base_forms
 from apps.base.mixins import (
@@ -17,6 +17,7 @@ from apps.base.mixins import (
     BulkModalMixin,
     BulkMapperMixin,
     SearchMixin,
+    ExportMixin,
 )
 
 
@@ -35,8 +36,6 @@ class ListTableView(
     
     permission_required = 'faculties.view_faculty'
     
-    export_fields = ['name']
-    
     model = models.Faculty
     filter_class = filters.FacultyFilterSet
     
@@ -48,6 +47,13 @@ class ListTableView(
         'hx-get': reverse_lazy('faculties:index'),
         'hx-target': '#faculties-table',
     }
+
+
+class ExportView(LoginRequiredMixin, ExportMixin, View):
+    
+    resource_class = resources.FacultyRecourse
+    filter_class = filters.FacultyFilterSet
+    filename = 'faculties'
 
 
 class BulkModalView(LoginRequiredMixin, BulkMapperMixin, RedirectView):

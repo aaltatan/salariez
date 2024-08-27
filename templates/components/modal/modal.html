@@ -1,7 +1,8 @@
 {% load i18n %}
 
 <div 
-@click.outside="modalOpen = false; if (!modalOpen) document.getElementById('modal').innerHTML = '';"
+@click.outside="modalOpen = false"
+@click.outside.debounce.200="document.getElementById('modal').innerHTML = ''"
 class="shadow-md rounded-lg overflow-hidden bg-white dark:bg-gray-950 dark:border dark:border-gray-900">
 
     <header class="p-4">
@@ -18,10 +19,12 @@ class="shadow-md rounded-lg overflow-hidden bg-white dark:bg-gray-950 dark:borde
     <footer class="p-4 flex items-center">
         <div class="ltr:ml-auto rtl:mr-auto flex items-center gap-1">
             <c-btns.btn 
+                autofocus
+                datatype="button"
+                type="button"
                 datatheme="secondary"
-                @click="modalOpen = false; 
-                if (!modalOpen) document.getElementById('modal').innerHTML = '';"
-            >
+                @click="modalOpen = false"
+                @click.debounce.200="document.getElementById('modal').innerHTML = ''">
                 {% translate 'close' %}
             </c-btns.btn>
             {{ footer }}

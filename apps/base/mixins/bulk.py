@@ -6,7 +6,6 @@ from urllib.parse import urlencode
 from django.http import HttpRequest, HttpResponse
 from django.utils.translation import gettext_lazy as _
 from django.shortcuts import redirect, render
-from django.contrib import messages
 from django.urls import reverse
 
 from . import utils

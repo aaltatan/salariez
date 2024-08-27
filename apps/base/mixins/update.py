@@ -63,7 +63,7 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
         if form.is_valid():
             
             form.save()
-            messages.info(request, _('done'), 'bg-green-600')
+            messages.success(request, _('done'))
             
             if request.POST.get('update'):
                 return self.get_success_save_update_response()

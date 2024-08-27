@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{{ project_name }}{% endblock %}
+{% block title %}{{ project_name|title }}{% endblock %}
 
 {% block body %}
 
-{% lorem 10 %}
+{% lorem 100 %}
 
 {% endblock %}

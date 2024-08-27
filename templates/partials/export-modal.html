@@ -1,0 +1,17 @@
+{% load i18n %}
+
+<c-modal.container>
+  <form hx-get="{{ path }}" hx-include="[data-include]">
+    <c-modal.modal>
+      <c-slot name="header">
+        <span class="capitalize"> {% translate 'export' %} </span>
+      </c-slot>
+      <c-slot name="body">
+        <div class="flex items-center flex-wrap gap-2">
+            <c-btns.btn datatype="input" type="submit" name="extension" value="csv" />
+            <c-btns.btn datatype="input" type="submit" name="extension" value="json" />
+        </div>
+      </c-slot>
+    </c-modal.modal>
+  </form>
+</c-modal.container>

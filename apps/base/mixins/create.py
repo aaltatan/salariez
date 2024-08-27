@@ -55,7 +55,7 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
         
         if form.is_valid():
             form.save()
-            messages.info(request, _('done'), 'bg-green-600')
+            messages.success(request, _('done'))
             
             if request.POST.get('save'):
                 return self.get_success_save_update_response()

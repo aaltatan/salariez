@@ -6,7 +6,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href='{% static "css/styles.css" %}' />
+
+    {% include 'head.html' %}
+
     <title>{% translate 'login'|title %}</title>
   </head>
   <body>
@@ -26,7 +28,7 @@
     <form action="{% url 'login' %}" method="post">
 
       <div 
-      class="w-[600px] mx-auto px-8 py-16">
+      class="w-[min(100%, 400px)] mx-auto px-8 py-16">
 
         <c-forms.form title="login" >
 

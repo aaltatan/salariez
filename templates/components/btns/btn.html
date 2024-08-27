@@ -1,21 +1,22 @@
 <c-vars 
-base="cursor-pointer w-full sm:w-auto rounded-lg px-4 py-2 capitalize duration-150 tracking-tight font-semibold focus:ring-2 outline-none flex items-center justify-center gap-1 hover:opacity-85"
+base="cursor-pointer w-full sm:w-auto rounded-lg px-4 py-2 capitalize duration-150 tracking-tight font-semibold focus:ring-2 outline-none flex items-center justify-center gap-1 hover:opacity-85 disabled:opacity-50 disabled:cursor-no-drop"
 primary="text-white bg-blue-500 focus:ring-blue-400"
-secondary="focus:ring-gray-200 dark:text-white text-black"
+secondary="focus:ring-gray-200 bg-gray-100 dark:bg-gray-800 dark:text-white text-black"
 danger="text-white bg-[red] focus:ring-red-400"
 ></c-vars>
 
 {% if datatype == 'href' %}
 
     <a {{ attrs }}
-    class="{{ base }} {% include 'components/btns/includes/logic.html' %}" >
+    class="{{ base }}  {% include 'components/btns/includes/logic.html' %}" >
         {{ slot }}
     </a>
 
 {% elif datatype == 'input' %}
 
     <input {{ attrs }}
-    class="{{ base }} {% include 'components/btns/includes/logic.html' %}">
+    type="button"
+    class="{{ base }} {% include 'components/btns/includes/logic.html' %}" />
 
 {% elif datatype == 'button' %}
 
@@ -28,7 +29,7 @@ danger="text-white bg-[red] focus:ring-red-400"
 
     <span {{ attrs }} 
     role="button" 
-    class="{{ base }} {% include 'components/btns/includes/logic.html' %}" >
+    class="{{ base }} [&[disabled]]:opacity-50 [&[disabled]]:cursor-no-drop {% include 'components/btns/includes/logic.html' %}" >
         {{ slot }}
     </span>
     

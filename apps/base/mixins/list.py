@@ -3,20 +3,14 @@ from abc import ABC, abstractmethod
 
 from django.utils.translation import gettext_lazy as _
 from django.shortcuts import render
-from django.http import HttpResponse, HttpRequest, Http404
+from django.http import HttpResponse, HttpRequest
 from django.core.paginator import Paginator
 from django.db.models import QuerySet
-
-from excel_response import ExcelResponse
 
 from .utils import HelperMixin
 
 
 class AbstractList(ABC):
-    
-    @property
-    @abstractmethod
-    def export_fields(self): ...
     
     @property
     @abstractmethod
@@ -72,16 +66,6 @@ class ListMixin(HelperMixin, AbstractList):
             return render(request, self.index_template_name, {})
         
         return super().get(request, *args, **kwargs)
-    
-    def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        
-        file_name = self.get_app_name()
-        qs = self.get_queryset().values(*self.export_fields)
-        
-        if not qs.count():
-            raise Http404()
-        
-        return ExcelResponse(qs, file_name)
     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         

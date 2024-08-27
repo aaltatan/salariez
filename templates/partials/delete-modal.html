@@ -28,11 +28,12 @@
             </c-slot>
 
             <c-slot name="footer">
-
-                <c-btns.btn datatype="button" @click="modalOpen = false; if (!modalOpen) document.getElementById('modal').innerHTML = '';">
+                <c-btns.btn 
+                datatype="button"
+                type="submit"
+                value="{% translate 'delete' %}">
                     {% translate 'delete' %}
                 </c-btns.btn>
-
             </c-slot>
 
         </c-modal.modal>

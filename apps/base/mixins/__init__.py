@@ -5,6 +5,7 @@ from .filters import FiltersMixins
 from .list import ListMixin
 from .search import SearchMixin
 from .update import UpdateMixin
+from .export import ExportMixin
 
 
 __all__ = [
@@ -16,4 +17,5 @@ __all__ = [
     ListMixin,
     SearchMixin,
     UpdateMixin,
+    ExportMixin,
 ]

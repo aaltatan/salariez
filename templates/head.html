@@ -17,10 +17,6 @@ content='{
     display: none;
 }
 
-.htmx-request {
-    display: block !important;
-}
-
 [role="modal"] > * {
     width: min(100%,600px);
     margin-inline: 1rem;
@@ -41,6 +37,7 @@ content='{
 </style>
 
 <!-- alpine plugins -->
+<script src="{% static 'js/plugins/focus.min.js' %}" defer></script>
 <script src="{% static 'js/plugins/autosize.min.js' %}" defer></script>
 <script src="{% static 'js/plugins/persist.min.js' %}" defer></script>
 <script src="{% static 'js/plugins/collapse.min.js' %}" defer></script>

@@ -23,6 +23,7 @@ x-data="{ dark: $persist(false).as('dark') }">
   <body 
   hx-boost="true"
   hx-history="false"
+  hx-indicator="#spinner"
   hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'>
 
       <div 
@@ -58,6 +59,7 @@ x-data="{ dark: $persist(false).as('dark') }">
       >
 
         <span class="hidden" id="no-content"></span>
+        <c-layout.spinner></c-layout.spinner>
         <div id="modal"></div>
         <c-layout.messages></c-layout.messages>
         
@@ -73,7 +75,6 @@ x-data="{ dark: $persist(false).as('dark') }">
               <div class="mt-8 mb-4 lg:hidden">
                 <c-layout.breadcrumb></c-layout.breadcrumb>
               </div>
-              <c-layout.spinner></c-layout.spinner>
               {% block body %}{% endblock %}
             </main>
 

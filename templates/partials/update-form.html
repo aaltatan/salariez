@@ -4,6 +4,7 @@
 hx-post="{{ instance.get_update_path }}"
 hx-target="this"
 hx-swap="outerHTML"
+hx-disabled-elt="*[data-disabled]"
 data-hit-messages
 >
 
@@ -18,16 +19,21 @@ data-hit-messages
                 name="update" 
                 value="{% translate 'update' %}"
                 title="{% translate 'update'|title %}"
+                data-disabled
                 type="submit"></c-btns.btn> 
         
                 <c-btns.btn
                 datatheme="secondary"
                 hx-delete="{{ instance.get_update_path }}"
                 hx-target="closest form"
+                hx-indicator="#reset-spinner"
                 hx-swap="outerHTML"
+                data-disabled
                 title="{% translate 'reset'|title %}"
                 >
-                    <c-icons.reset ratio="1rem"></c-icons.reset>
+                    <div id="reset-spinner" class="htmx-request:animate-spin">
+                        <c-icons.reset ratio="1rem"></c-icons.reset>
+                    </div>
                     <span>{% translate 'reset' %}</span>
                 </c-btns.btn>
 

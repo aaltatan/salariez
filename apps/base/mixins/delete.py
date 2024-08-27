@@ -7,6 +7,8 @@ from django.http import HttpResponse, HttpRequest
 from django.contrib import messages
 from django.urls import reverse
 
+from icecream import ic
+
 from . import utils
 
 
@@ -45,6 +47,8 @@ class DeleteMixin(utils.HelperMixin, AbstractDelete):
             'page': request.GET.get('page'),
         }
         
+        ic(context)
+        
         modal_template_name = self.get_modal_template_name()
         
         return render(request, modal_template_name, context)
@@ -62,7 +66,7 @@ class DeleteMixin(utils.HelperMixin, AbstractDelete):
             return cannot_delete_response
         
         instance.delete()
-        messages.info(request, _('done'), 'bg-green-600')
+        messages.success(request, _('done'))
         
         hx_location = {
             'path': reverse(self.get_hx_location_path()),

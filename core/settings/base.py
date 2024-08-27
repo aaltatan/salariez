@@ -21,7 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY') or "django-insecure-u9-*tjmrr(bij0p58wtk^8&v6sx*2=$ugu$ecjc^@v_4%&)9bp"
+SECRET_KEY = (
+    os.getenv("SECRET_KEY")
+    or "django-insecure-u9-*tjmrr(bij0p58wtk^8&v6sx*2=$ugu$ecjc^@v_4%&)9bp"
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
@@ -34,16 +37,17 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'django.contrib.humanize',
+    "django.contrib.humanize",
     # externals
-    'django_htmx',
-    'django_cotton',
-    'django_filters',
-    'django_extensions',
-    'widget_tweaks',
+    "django_htmx",
+    "django_cotton",
+    "django_filters",
+    "django_extensions",
+    "widget_tweaks",
+    "import_export",
     # apps
-    'apps.base',
-    'apps.faculties',
+    "apps.base",
+    "apps.faculties",
 ]
 
 MIDDLEWARE = [
@@ -64,7 +68,7 @@ ROOT_URLCONF = "core.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / 'templates'],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": False,
         "OPTIONS": {
             "context_processors": [
@@ -74,13 +78,13 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "core.context_processors.project_context",
             ],
-            'loaders': [
-                'django_cotton.cotton_loader.Loader',
+            "loaders": [
+                "django_cotton.cotton_loader.Loader",
                 "django.template.loaders.filesystem.Loader",
                 "django.template.loaders.app_directories.Loader",
             ],
-            'builtins': [
-                'django_cotton.templatetags.cotton',
+            "builtins": [
+                "django_cotton.templatetags.cotton",
             ],
         },
     },
@@ -95,13 +99,13 @@ WSGI_APPLICATION = "core.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": os.getenv('DB_NAME'),
-        "USER": os.getenv('DB_USER'),
-        "PASSWORD": os.getenv('DB_PASSWORD'),
-        "HOST": os.getenv('DB_HOST'),
-        "PORT": os.getenv('DB_PORT'),
-        'OPTIONS': {
-            'sql_mode': 'traditional',
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "HOST": os.getenv("DB_HOST"),
+        "PORT": os.getenv("DB_PORT"),
+        "OPTIONS": {
+            "sql_mode": "traditional",
         },
     }
 }
@@ -131,11 +135,11 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = "en-us"
 
 LANGUAGES = (
-    ('en', 'English'),
-    ('ar', 'Arabic'),
+    ("en", "English"),
+    ("ar", "Arabic"),
 )
 
-LOCALE_PATH = BASE_DIR / 'locale'
+LOCALE_PATH = BASE_DIR / "locale"
 
 TIME_ZONE = "UTC"
 
@@ -148,17 +152,18 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-COTTON_DIR = 'components'
+COTTON_DIR = "components"
 
-LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/accounts/login/'
+LOGIN_URL = "/accounts/login/"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/accounts/login/"
 
-LOCALE_PATHS = [
-    BASE_DIR / 'locale'
-]
+LOCALE_PATHS = [BASE_DIR / "locale"]
