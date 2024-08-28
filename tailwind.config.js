@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
+const plugin = require('tailwindcss/plugin')
+
 module.exports = {
   content: [
     'apps/**/*.{html,py}',
@@ -35,7 +37,9 @@ module.exports = {
   },
   plugins: [
     require('tailwind-scrollbar')({ nocompatible: true }),
-    require('tailwind-htmx'),
+    plugin(function ({ addVariant }) {
+      addVariant('hx-request', ['&.htmx-request'])
+    })
 ],
 }
 

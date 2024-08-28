@@ -11,7 +11,6 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "tailwind-htmx": "^0.1.2",
     "tailwind-scrollbar": "^3.1.0",
     "tailwindcss": "^3.4.4"
   }
