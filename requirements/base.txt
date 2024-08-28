@@ -5,6 +5,5 @@ django-cotton
 django-htmx
 django-dotenv
 django-widget-tweaks
-django-excel-response
-django-import-export
+django-import-export[xlsx]
 mysqlclient

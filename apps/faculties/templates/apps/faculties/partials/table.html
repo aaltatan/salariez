@@ -6,11 +6,13 @@
 {% with perms.faculties.add_faculty as can_create %}
 {% with perms.faculties.delete_faculty as can_delete %}
 {% with perms.faculties.change_faculty as can_update %}
+{% with perms.faculties.can_export as can_export %}
 {% with 1 as columns_count %}
 
 {% url 'faculties:index' as index_path %}
 {% url 'faculties:bulk' as bulk_path %}
 {% url 'faculties:create' as create_path %}
+{% url 'faculties:export' as export_path %}
 
 <c-table.container id="faculties-table">
 
@@ -134,8 +136,9 @@
       target="{{ target }}"
       include="[data-include]">
 
+      {% if can_export %}
       <c-btns.icon 
-        hx-post="{% url 'faculties:export' %}"
+        hx-post="{{ export_path }}"
         hx-target="#modal"
         hx-swap="innerHTML"
         @click="modalOpen = true"
@@ -143,6 +146,7 @@
         hx-include="[data-include]">
           <c-icons.download ratio="1.25rem"></c-icons.download>
       </c-btns.icon>
+      {% endif %}
 
       {% if can_create %}
       <c-btns.icon
@@ -158,6 +162,7 @@
 
 </c-table.container>
 
+{% endwith %}
 {% endwith %}
 {% endwith %}
 {% endwith %}

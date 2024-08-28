@@ -39,7 +39,10 @@ module.exports = {
     require('tailwind-scrollbar')({ nocompatible: true }),
     plugin(function ({ addVariant }) {
       addVariant('hx-request', ['&.htmx-request'])
-    })
+    }),
+    plugin(function ({ addVariant }) {
+      addVariant('has-checked', ['&:has(input[type="checkbox"]:checked)'])
+    }),
 ],
 }
 

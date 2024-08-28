@@ -3,6 +3,8 @@ from django.utils.text import slugify
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
+from import_export.admin import ImportExportModelAdmin
+
 from . import models
 
 
@@ -19,7 +21,7 @@ def reslugify_action(modeladmin, request, queryset):
 
 
 @admin.register(models.Faculty)
-class FacultyAdmin(admin.ModelAdmin):
+class FacultyAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ["name", "slug"]
     prepopulated_fields = {"slug": ["name"]}
     actions = [reslugify_action]

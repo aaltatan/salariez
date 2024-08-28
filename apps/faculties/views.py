@@ -28,10 +28,7 @@ class SearchView(LoginRequiredMixin, SearchMixin, View):
 
 
 class ListTableView(
-    LoginRequiredMixin, 
-    PermissionRequiredMixin, 
-    ListMixin, 
-    ListView
+    LoginRequiredMixin, PermissionRequiredMixin, ListMixin, ListView
 ):
     
     permission_required = 'faculties.view_faculty'
@@ -49,11 +46,13 @@ class ListTableView(
     }
 
 
-class ExportView(LoginRequiredMixin, ExportMixin, View):
+class ExportView(
+    LoginRequiredMixin, PermissionRequiredMixin, ExportMixin, View
+):
     
+    permission_required = 'faculties.can_export'
     resource_class = resources.FacultyRecourse
     filter_class = filters.FacultyFilterSet
-    filename = 'faculties'
 
 
 class BulkModalView(LoginRequiredMixin, BulkMapperMixin, RedirectView):
@@ -76,10 +75,7 @@ class BulkDeleteView(
 
 
 class CreateView(
-    LoginRequiredMixin, 
-    PermissionRequiredMixin, 
-    CreateMixin, 
-    View
+    LoginRequiredMixin, PermissionRequiredMixin, CreateMixin, View
 ):
     
     permission_required = 'faculties.add_faculty'
@@ -88,10 +84,7 @@ class CreateView(
 
 
 class UpdateView(
-    LoginRequiredMixin, 
-    PermissionRequiredMixin, 
-    UpdateMixin, 
-    View
+    LoginRequiredMixin, PermissionRequiredMixin, UpdateMixin, View
 ):
     
     permission_required = 'faculties.change_faculty'

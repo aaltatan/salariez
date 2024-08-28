@@ -12,3 +12,5 @@ class FacultyRecourse(resources.ModelResource):
     class Meta:
         model = models.Faculty
         fields = ["name"]
+    
+    # def dehydrate_name(self, obj):

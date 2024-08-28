@@ -30,6 +30,9 @@ class Faculty(models.Model):
     class Meta:
         verbose_name_plural = _('faculties')
         ordering = ['name']
+        permissions = [
+            ['can_export', 'Can export data']
+        ]
     
     @property
     def get_create_path(self):
