@@ -4,19 +4,22 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 
-class AbstractList(ABC):
+class AbstractExport(ABC):
     
     @property
     @abstractmethod
     def resource_class(self): ...
-    
-    @property
-    @abstractmethod
-    def filter_class(self): ...
-    
 
 
-class ExportMixin(AbstractList):
+class ExportMixin(AbstractExport):
+    """
+    utility mixin to achieve export functionality.  
+    ### required attributes:  
+    - `resource_class: ModelResource`  
+    ### optional attributes:  
+    - `filename: str`
+    - `filter_class: FilterSet`
+    """
     
     def get(self, request, *args, **kwargs):
         
@@ -35,8 +38,8 @@ class ExportMixin(AbstractList):
         
         if extension not in allowed_extensions:
             extension = 'xlsx'
-            
-        qs = self.filter_class(data=request.GET or None).qs
+        
+        qs = self.get_queryset()
         
         dataset = self.resource_class().export(qs)
         
@@ -59,11 +62,27 @@ class ExportMixin(AbstractList):
     
     def get_filename(self):
         
-        app_label = self.filter_class._meta.model._meta.app_label
+        app_label = self.get_model_class()._meta.app_label
         filename = getattr(self, 'filename', app_label)
         
         if filename == '':
             return app_label
         
         return filename
+    
+    def get_model_class(self):
         
+        Klass = self.resource_class._meta.model
+        
+        return Klass
+    
+    def get_queryset(self):
+        
+        Klass = self.get_model_class()
+        
+        qs = Klass.objects.all()
+        
+        if getattr(self, 'filter_class', None):
+            qs = self.filter_class(data=self.request.GET or None).qs
+        
+        return qs

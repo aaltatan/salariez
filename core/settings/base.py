@@ -45,9 +45,11 @@ INSTALLED_APPS = [
     "django_extensions",
     "widget_tweaks",
     "import_export",
+    "mptt",
     # apps
     "apps.base",
     "apps.faculties",
+    "apps.departments",
 ]
 
 MIDDLEWARE = [
@@ -141,7 +143,7 @@ LANGUAGES = (
 
 LOCALE_PATH = BASE_DIR / "locale"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Damascus"
 
 USE_I18N = True
 
@@ -167,3 +169,5 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/accounts/login/"
 
 LOCALE_PATHS = [BASE_DIR / "locale"]
+
+MPTT_ADMIN_LEVEL_INDENT = 20

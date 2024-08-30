@@ -1,22 +1,9 @@
-<li class="p-2 hover:bg-gray-100  focus-within:bg-gray-200 dark:focus-within:bg-gray-800 dark:hover:bg-gray-800">
-    <span 
+<li class="p-2 hover:bg-gray-100 focus-within:bg-gray-200 dark:focus-within:bg-gray-800 dark:hover:bg-gray-800">
+    <div 
     {{ attrs }}
+    @click="open = false"
     role="button"
-    class="cursor-pointer focus:outline-none w-full ltr:text-left rtl:text-right"
-    @click="
-    let searchInputElement = document.getElementById('search-input');
-
-    let id = $el.getAttribute('data-id');
-    let name = $el.getAttribute('data-name');
-    let innerText = $el.innerText.trim();
-
-    searchInputElement.setAttribute('id', id);
-    searchInputElement.setAttribute('name', name);
-    searchInputElement.disabled = true;
-    searchInputElement.value = innerText;
-
-    open = false;
-    ">
+    class="cursor-pointer focus:outline-none w-full ltr:text-left rtl:text-right">
         {{ slot }}
-    </span>
+    </div>
 </li>

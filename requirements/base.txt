@@ -6,4 +6,5 @@ django-htmx
 django-dotenv
 django-widget-tweaks
 django-import-export[xlsx]
+django-mptt
 mysqlclient

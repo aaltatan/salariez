@@ -54,6 +54,13 @@ x-data="{ dark: $persist(false).as('dark') }">
                 isActive: false,
               },
             {% endif %}
+            {% if perms.departments.view_faculty %}
+              {
+                text: '{% translate 'departments' %}', 
+                url: '{% url 'departments:index' %}', 
+                isActive: false,
+              },
+            {% endif %}
           ]
         }"
       >
@@ -83,6 +90,21 @@ x-data="{ dark: $persist(false).as('dark') }">
         </div>
 
       </div>
+
+      {% if debug %}
+      <script>
+        if (typeof window.htmx !== undefined) {
+          htmx.on("htmx:afterSettle", function(detail) {
+              if (
+                  typeof window.djdt !== "undefined"
+                  && detail.target instanceof HTMLBodyElement
+              ) {
+                  djdt.show_toolbar();
+              }
+          });
+      }
+      </script>
+      {% endif %}
 
       {% block scripts %}{% endblock %}
 

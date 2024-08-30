@@ -23,7 +23,7 @@
             <div class="space-y-4">
 
                 {% for field in form %}
-                <div>
+                <div data-field>
 
                     <label class="block font-semibold" for="{{ field.id_for_label }}">
                         {{ field.label }}:
@@ -36,7 +36,7 @@
                     {% render_field field|add_class:'input' %}
 
                     {% if field.errors %}
-                    <ul class="text-[red] text-sm tracking-tight">
+                    <ul data-form-errors class="text-[red] text-sm tracking-tight">
                         {% for error in field.errors %}
                             <li
                             class="first-letter:capitalize pl-2 font-semibold my-2">

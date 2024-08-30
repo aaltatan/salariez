@@ -5,8 +5,11 @@ from django.http import HttpRequest, HttpResponse
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404
 
+from mptt.exceptions import InvalidMove
+
 from . import utils
 
+from apps.departments.forms import DepartmentForm
 
 class AbstractUpdate(ABC):
     
@@ -57,17 +60,22 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
             
         instance = get_object_or_404(self.get_model_class(), slug=slug)
         
-        form = self.form_class(data=request.POST, instance=instance)
-        context = {'form': form, 'instance': instance}
+        form: DepartmentForm = self.form_class(
+            data=request.POST, 
+            instance=instance
+        )
         
         if form.is_valid():
-            
-            form.save()
-            messages.success(request, _('done'))
-            
-            if request.POST.get('update'):
-                return self.get_success_save_update_response()
-            
+            try:
+                form.save()
+                messages.success(request, _('done'))
+                
+                if request.POST.get('update'):
+                    return self.get_success_save_update_response()
+            except InvalidMove as error:
+                form.add_error('parent', error)
+
         form_template_name = self.get_form_template_name('update')
-            
+        context = {'form': form, 'instance': instance}
+        
         return render(request, form_template_name, context)

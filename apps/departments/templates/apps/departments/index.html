@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% translate 'departments'|title %}{% endblock %}
+
+{% block body %}
+
+<span
+hx-get="{% url 'departments:index' %}"
+hx-trigger="load"
+hx-target="#departments-body"
+class="hidden"
+x-init="breadCrumbs.push(
+    {
+        text: '{% translate 'departments' %}', 
+        href: '{% url 'departments:index' %}'
+    }
+)"  
+></span>
+
+<div id="departments-body"></div>
+
+<script type="module">
+    import { addHitMessagesEventListeners } from '../static/js/main.js';
+    addHitMessagesEventListeners();
+</script>
+
+{% endblock %}

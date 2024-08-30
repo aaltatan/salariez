@@ -47,8 +47,6 @@ class DeleteMixin(utils.HelperMixin, AbstractDelete):
             'page': request.GET.get('page'),
         }
         
-        ic(context)
-        
         modal_template_name = self.get_modal_template_name()
         
         return render(request, modal_template_name, context)

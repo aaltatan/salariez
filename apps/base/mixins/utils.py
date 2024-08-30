@@ -33,9 +33,9 @@ class HelperMixin:
         model_class = self.form_class._meta.model
         return model_class
     
-    def get_app_name(self):
+    def get_app_label(self):
         """
-        get app name from model class
+        get app label from model class
         """
         model_class = self.get_model_class()
         app_name: str = model_class._meta.app_label
@@ -68,7 +68,7 @@ class HelperMixin:
         if hasattr(self, 'success_path'):
             return self.success_path
         
-        app_name = self.get_app_name()
+        app_name = self.get_app_label()
         return f'{app_name}:index'
     
     def get_hx_location_path(self):
@@ -78,7 +78,7 @@ class HelperMixin:
         if hasattr(self, 'hx_location_path'):
             return self.hx_location_path
         
-        app_name = self.get_app_name()
+        app_name = self.get_app_label()
         return f'{app_name}:index'
     
     def get_hx_location_target(self):
@@ -88,7 +88,7 @@ class HelperMixin:
         if hasattr(self, 'hx_location_target'):
             return self.hx_location_target
         
-        app_name = self.get_app_name()
+        app_name = self.get_app_label()
         return f'#{app_name}-table'
     
     def _get_index_template_name(self):
@@ -96,6 +96,6 @@ class HelperMixin:
         if hasattr(self, 'index_template_name'):
             return self.index_template_name
         
-        app_name = self.get_app_name()
+        app_name = self.get_app_label()
         
         return f'apps/{app_name}/index.html'

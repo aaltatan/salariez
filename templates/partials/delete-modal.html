@@ -22,7 +22,9 @@
 
             <c-slot name="body">
 
+                {% if page %}
                 <input type="hidden" name="page" value="{{ page }}">
+                {% endif %}
                 <p class="capitalize">{{ message }}</p>
 
             </c-slot>

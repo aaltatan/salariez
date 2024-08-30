@@ -1,0 +1,89 @@
+{% load mptt_tags %}
+{% load i18n %}
+
+<c-layout.app-container id="departments-body">
+
+    <c-slot name="body">
+        <div class="bg-white dark:bg-gray-900 p-4">
+            <ul class="divide-y divide-gray-100 dark:divide-gray-800">
+                {% recursetree qs %}
+            
+                    <li 
+                    x-data="{parentOpen: false}"
+                    class="
+                  text-gray-800 dark:text-inherit
+                    ltr:pl-6 rtl:pr-6
+                    [&:not(:has(li))_>_div]:!font-normal
+                    [&:not(:has(li))_>_div]:!text-inherit
+                    [&:not(:has(li))_*[data-button]]:hidden 
+                    ">
+            
+                        <div 
+                        :class="parentOpen && 'font-semibold text-blue-500'" 
+                        class="relative">
+                            <div class="absolute ltr:-left-8 rtl:-right-8 top-1/2 -translate-y-1/2">
+                                <c-btns.icon data-button @click="parentOpen = !parentOpen">
+                                    <span :class="parentOpen && 'hidden'">
+                                        <c-icons.plus-square ratio="1.25rem" />
+                                    </span>
+                                    <span :class="!parentOpen && 'hidden'">
+                                        <c-icons.minus-square ratio="1.25rem" />
+                                    </span>
+                                </c-btns.icon>
+                            </div>
+                            <a 
+                            class="hover:underline block p-2 hover:dark:bg-gray-800 hover:bg-gray-100" 
+                            href="{{ node.get_update_path }}">
+                                <p data-name>
+                                    {{ node.name }}
+                                </p>
+                            </a>
+                            <div class="absolute ltr:right-8 rtl:left-8 top-1/2 -translate-y-1/2">
+                                <c-btns.icon
+                                hx-get="{% url 'departments:delete' slug=node.slug %}"
+                                hx-target="#modal"
+                                hx-swap="innerHTML"
+                                @click="modalOpen = true">
+                                    <c-icons.trash ratio="1rem" />
+                                </c-btns.icon>
+                            </div>
+                        </div>
+            
+                        {% if not node.is_leaf_node %}
+                            <ul class="divide-y divide-gray-100 dark:divide-gray-800" x-show="parentOpen" x-collapse>
+                                {{ children }}
+                            </ul>
+                        {% endif %}
+            
+                    </li>
+            
+                {% endrecursetree %}
+            </ul>
+        </div>
+    </c-slot>
+    
+    <c-slot name="footer">
+        <div class="flex items-center justify-center gap-1">
+            <c-btns.icon 
+            title="{% translate 'reset'|title %}"
+            hx-get="{% url 'departments:index' %}"
+            hx-target="#departments-body">
+                <c-icons.reset ratio="1rem" />
+            </c-btns.icon>
+            <c-btns.icon 
+            title="{% translate 'export'|title %}"
+            @click="modalOpen = true"
+            hx-post="{% url 'departments:export' %}"
+            hx-target="#modal">
+                <c-icons.download ratio="1.25rem" />
+            </c-btns.icon>
+            <c-btns.icon 
+            title="{% translate 'add new record'|title %}"
+            href="{% url 'departments:create' %}"
+            datatype="href">
+                <c-icons.plus ratio="1rem" />
+            </c-btns.icon>
+        </div>
+    </c-slot>
+
+</c-layout.app-container>

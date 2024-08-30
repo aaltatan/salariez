@@ -14,7 +14,7 @@
 {% url 'faculties:create' as create_path %}
 {% url 'faculties:export' as export_path %}
 
-<c-table.container id="faculties-table">
+<c-layout.app-container id="faculties-table">
 
   <c-slot name="filters">
     <c-forms.filters
@@ -29,7 +29,7 @@
     </c-forms.filters>
   </c-slot>
 
-  <c-slot name="table">
+  <c-slot name="body">
 
     <form 
     hx-get="{{ bulk_path }}" 
@@ -160,7 +160,7 @@
     </c-table.pagination>
   </c-slot>
 
-</c-table.container>
+</c-layout.app-container>
 
 {% endwith %}
 {% endwith %}

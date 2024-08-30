@@ -1,0 +1,11 @@
+{% load i18n %}
+
+{% for obj in qs %}
+
+   <c-inputs.search-item
+   hx-get="{{ path }}?name=parent&id={{ obj.id }}"
+   hx-target="#search-container">
+        {{ obj.name }}
+   </c-inputs.search-item>
+
+{% endfor %}

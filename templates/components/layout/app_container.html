@@ -13,7 +13,7 @@ class="shadow-sm dark:shadow-none rounded-lg overflow-x-auto overflow-y-visible 
 
     <div id="container" class="relative">
 
-        {{ table }}
+        {{ body }}
     
         {% if pagination %}
         <div class="p-6">
@@ -22,5 +22,12 @@ class="shadow-sm dark:shadow-none rounded-lg overflow-x-auto overflow-y-visible 
         {% endif %}
 
     </div>
+
+    {% if footer %}
+    <hr class="dark:border-gray-800 border-gray-200">
+    <div class="p-6">
+        {{ footer }}
+    </div>
+    {% endif %}
 
 </div>

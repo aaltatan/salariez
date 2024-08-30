@@ -1,3 +1,4 @@
+import sys
 from .base import *
 
 
@@ -7,23 +8,32 @@ ALLOWED_HOSTS = []
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-# MIDDLEWARE += [
-#     "querycount.middleware.QueryCountMiddleware"
+INSTALLED_APPS += ['silk']
+
+MIDDLEWARE = [
+    'silk.middleware.SilkyMiddleware',
+    *MIDDLEWARE,
+]
+
+# DEBUG_TOOLBAR_CONFIG = {
+#     "ROOT_TAG_EXTRA_ATTRS": "hx-preserve"
+# }
+
+# INTERNAL_IPS = [
+#     "127.0.0.1",
 # ]
 
+# TESTING = "test" in sys.argv
 
-# QUERYCOUNT = {
-#     'THRESHOLDS': {
-#         'MEDIUM': 4,
-#         'HIGH': 200,
-#         'MIN_TIME_TO_LOG':0,
-#         'MIN_QUERY_COUNT_TO_LOG':10
-#     },
-#     'IGNORE_REQUEST_PATTERNS': [],
-#     'IGNORE_SQL_PATTERNS': [],
-#     'DISPLAY_DUPLICATES': 1,
-#     'RESPONSE_HEADER': 'X-DjangoQueryCount-Count'
-# }
+# if not TESTING:
+#     INSTALLED_APPS = [
+#         *INSTALLED_APPS,
+#         "debug_toolbar",
+#     ]
+#     MIDDLEWARE = [
+#         "debug_toolbar.middleware.DebugToolbarMiddleware",
+#         *MIDDLEWARE,
+#     ]
 
 
 # LOGGING = {

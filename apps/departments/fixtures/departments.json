@@ -1,0 +1,1416 @@
+[
+    {
+        "model": "departments.department",
+        "pk": 8,
+        "fields": {
+            "name": "رئاسة الجامعة",
+            "slug": "رئاسة-الجامعة",
+            "description": "",
+            "parent": null,
+            "lft": 1,
+            "rght": 46,
+            "tree_id": 11,
+            "level": 0
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 14,
+        "fields": {
+            "name": "مكتب رئيس الجامعة",
+            "slug": "مكتب-رئيس-الجامعة",
+            "description": "",
+            "parent": 8,
+            "lft": 44,
+            "rght": 45,
+            "tree_id": 11,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 15,
+        "fields": {
+            "name": "مديرية المالية",
+            "slug": "مديرية-المالية",
+            "description": "",
+            "parent": 8,
+            "lft": 2,
+            "rght": 11,
+            "tree_id": 11,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 16,
+        "fields": {
+            "name": "مديرية شؤون الطلاب",
+            "slug": "مديرية-شؤون-الطلاب",
+            "description": "",
+            "parent": 8,
+            "lft": 12,
+            "rght": 13,
+            "tree_id": 11,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 17,
+        "fields": {
+            "name": "مديرية الامتحانات",
+            "slug": "مديرية-الامتحانات",
+            "description": "",
+            "parent": 8,
+            "lft": 14,
+            "rght": 15,
+            "tree_id": 11,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 18,
+        "fields": {
+            "name": "الموارد البشرية",
+            "slug": "الموارد-البشرية",
+            "description": "",
+            "parent": 8,
+            "lft": 16,
+            "rght": 17,
+            "tree_id": 11,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 19,
+        "fields": {
+            "name": "المكتب الهندسي",
+            "slug": "المكتب-الهندسي",
+            "description": "",
+            "parent": 8,
+            "lft": 18,
+            "rght": 19,
+            "tree_id": 11,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 20,
+        "fields": {
+            "name": "مديرية الاعلام",
+            "slug": "مديرية-الاعلام",
+            "description": "",
+            "parent": 8,
+            "lft": 20,
+            "rght": 23,
+            "tree_id": 11,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 21,
+        "fields": {
+            "name": "الأنشطة الطلابية",
+            "slug": "الأنشطة-الطلابية",
+            "description": "",
+            "parent": 8,
+            "lft": 24,
+            "rght": 25,
+            "tree_id": 11,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 22,
+        "fields": {
+            "name": "مديرية نظم المعلومات",
+            "slug": "مديرية-نظم-المعلومات",
+            "description": "",
+            "parent": 8,
+            "lft": 26,
+            "rght": 27,
+            "tree_id": 11,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 23,
+        "fields": {
+            "name": "الجودة والاعتمادية",
+            "slug": "الجودة-والاعتمادية",
+            "description": "",
+            "parent": 8,
+            "lft": 28,
+            "rght": 29,
+            "tree_id": 11,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 24,
+        "fields": {
+            "name": "قسم الزراعة",
+            "slug": "قسم-الزراعة",
+            "description": "",
+            "parent": 8,
+            "lft": 30,
+            "rght": 31,
+            "tree_id": 11,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 25,
+        "fields": {
+            "name": "قسم الحراسة",
+            "slug": "قسم-الحراسة",
+            "description": "",
+            "parent": 8,
+            "lft": 32,
+            "rght": 33,
+            "tree_id": 11,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 26,
+        "fields": {
+            "name": "المكتبة المركزية",
+            "slug": "المكتبة-المركزية",
+            "description": "",
+            "parent": 8,
+            "lft": 34,
+            "rght": 35,
+            "tree_id": 11,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 27,
+        "fields": {
+            "name": "التمريض",
+            "slug": "التمريض",
+            "description": "",
+            "parent": 8,
+            "lft": 36,
+            "rght": 37,
+            "tree_id": 11,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 28,
+        "fields": {
+            "name": "الديوان",
+            "slug": "الديوان",
+            "description": "",
+            "parent": 8,
+            "lft": 38,
+            "rght": 39,
+            "tree_id": 11,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 29,
+        "fields": {
+            "name": "مكتب نائب رئيس الجامعة للشؤون العلمية",
+            "slug": "مكتب-نائب-رئيس-الجامعة-للشؤون-العلمية",
+            "description": "",
+            "parent": 8,
+            "lft": 40,
+            "rght": 41,
+            "tree_id": 11,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 30,
+        "fields": {
+            "name": "مكتب نائب رئيس  الجامعة للشؤون الادارية",
+            "slug": "مكتب-نائب-رئيس-الجامعة-للشؤون-الادارية",
+            "description": "",
+            "parent": 8,
+            "lft": 42,
+            "rght": 43,
+            "tree_id": 11,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 31,
+        "fields": {
+            "name": "المخازن والمستودعات",
+            "slug": "المخازن-والمستودعات",
+            "description": "",
+            "parent": 15,
+            "lft": 9,
+            "rght": 10,
+            "tree_id": 11,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 32,
+        "fields": {
+            "name": "محاسبة الطلبة",
+            "slug": "محاسبة-الطلبة",
+            "description": "",
+            "parent": 15,
+            "lft": 3,
+            "rght": 4,
+            "tree_id": 11,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 33,
+        "fields": {
+            "name": "الرواتب والنفقات",
+            "slug": "الرواتب-والنفقات",
+            "description": "",
+            "parent": 15,
+            "lft": 5,
+            "rght": 6,
+            "tree_id": 11,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 34,
+        "fields": {
+            "name": "التدقيق",
+            "slug": "التدقيق",
+            "description": "",
+            "parent": 15,
+            "lft": 7,
+            "rght": 8,
+            "tree_id": 11,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 35,
+        "fields": {
+            "name": "الموقع الالكتروني",
+            "slug": "الموقع-الالكتروني",
+            "description": "",
+            "parent": 20,
+            "lft": 21,
+            "rght": 22,
+            "tree_id": 11,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 71,
+        "fields": {
+            "name": "طب الأسنان",
+            "slug": "طب-الأسنان",
+            "description": "",
+            "parent": null,
+            "lft": 1,
+            "rght": 26,
+            "tree_id": 5,
+            "level": 0
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 72,
+        "fields": {
+            "name": "عمادة كلية طب الأسنان",
+            "slug": "عمادة-كلية-طب-الأسنان",
+            "description": "",
+            "parent": 71,
+            "lft": 24,
+            "rght": 25,
+            "tree_id": 5,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 73,
+        "fields": {
+            "name": "القسم الإداري طب الأسنان",
+            "slug": "القسم-الإداري-طب-الأسنان",
+            "description": "",
+            "parent": 71,
+            "lft": 2,
+            "rght": 15,
+            "tree_id": 5,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 74,
+        "fields": {
+            "name": "سكرتاريا طب الأسنان",
+            "slug": "سكرتاريا-طب-الأسنان",
+            "description": "",
+            "parent": 73,
+            "lft": 13,
+            "rght": 14,
+            "tree_id": 5,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 75,
+        "fields": {
+            "name": "امتحانات طب الأسنان",
+            "slug": "امتحانات-طب-الأسنان",
+            "description": "",
+            "parent": 73,
+            "lft": 3,
+            "rght": 4,
+            "tree_id": 5,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 76,
+        "fields": {
+            "name": "شؤون طلاب طب الأسنان",
+            "slug": "شؤون-طلاب-طب-الأسنان",
+            "description": "",
+            "parent": 73,
+            "lft": 5,
+            "rght": 6,
+            "tree_id": 5,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 77,
+        "fields": {
+            "name": "مكتبة طب الأسنان",
+            "slug": "مكتبة-طب-الأسنان",
+            "description": "",
+            "parent": 73,
+            "lft": 7,
+            "rght": 8,
+            "tree_id": 5,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 78,
+        "fields": {
+            "name": "مكتب الجودة طب الأسنان",
+            "slug": "مكتب-الجودة-طب-الأسنان",
+            "description": "",
+            "parent": 73,
+            "lft": 9,
+            "rght": 10,
+            "tree_id": 5,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 79,
+        "fields": {
+            "name": "البوفيه طب الأسنان",
+            "slug": "البوفيه-طب-الأسنان",
+            "description": "",
+            "parent": 73,
+            "lft": 11,
+            "rght": 12,
+            "tree_id": 5,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 80,
+        "fields": {
+            "name": "القسم الأكاديمي طب الأسنان",
+            "slug": "القسم-الأكاديمي-طب-الأسنان",
+            "description": "",
+            "parent": 71,
+            "lft": 16,
+            "rght": 23,
+            "tree_id": 5,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 81,
+        "fields": {
+            "name": "قسم 1 طب الأسنان",
+            "slug": "قسم-1-طب-الأسنان",
+            "description": "",
+            "parent": 80,
+            "lft": 21,
+            "rght": 22,
+            "tree_id": 5,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 82,
+        "fields": {
+            "name": "قسم 2 طب الأسنان",
+            "slug": "قسم-2-طب-الأسنان",
+            "description": "",
+            "parent": 80,
+            "lft": 17,
+            "rght": 18,
+            "tree_id": 5,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 83,
+        "fields": {
+            "name": "قسم 3 طب الأسنان",
+            "slug": "قسم-3-طب-الأسنان",
+            "description": "",
+            "parent": 80,
+            "lft": 19,
+            "rght": 20,
+            "tree_id": 5,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 84,
+        "fields": {
+            "name": "الصيدلة",
+            "slug": "الصيدلة",
+            "description": "",
+            "parent": null,
+            "lft": 1,
+            "rght": 26,
+            "tree_id": 6,
+            "level": 0
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 85,
+        "fields": {
+            "name": "عمادة كلية الصيدلة",
+            "slug": "عمادة-كلية-الصيدلة",
+            "description": "",
+            "parent": 84,
+            "lft": 24,
+            "rght": 25,
+            "tree_id": 6,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 86,
+        "fields": {
+            "name": "القسم الإداري الصيدلة",
+            "slug": "القسم-الإداري-الصيدلة",
+            "description": "",
+            "parent": 84,
+            "lft": 2,
+            "rght": 15,
+            "tree_id": 6,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 87,
+        "fields": {
+            "name": "سكرتاريا الصيدلة",
+            "slug": "سكرتاريا-الصيدلة",
+            "description": "",
+            "parent": 86,
+            "lft": 13,
+            "rght": 14,
+            "tree_id": 6,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 88,
+        "fields": {
+            "name": "امتحانات الصيدلة",
+            "slug": "امتحانات-الصيدلة",
+            "description": "",
+            "parent": 86,
+            "lft": 3,
+            "rght": 4,
+            "tree_id": 6,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 89,
+        "fields": {
+            "name": "شؤون طلاب الصيدلة",
+            "slug": "شؤون-طلاب-الصيدلة",
+            "description": "",
+            "parent": 86,
+            "lft": 5,
+            "rght": 6,
+            "tree_id": 6,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 90,
+        "fields": {
+            "name": "مكتبة الصيدلة",
+            "slug": "مكتبة-الصيدلة",
+            "description": "",
+            "parent": 86,
+            "lft": 7,
+            "rght": 8,
+            "tree_id": 6,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 91,
+        "fields": {
+            "name": "مكتب الجودة الصيدلة",
+            "slug": "مكتب-الجودة-الصيدلة",
+            "description": "",
+            "parent": 86,
+            "lft": 9,
+            "rght": 10,
+            "tree_id": 6,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 92,
+        "fields": {
+            "name": "البوفيه الصيدلة",
+            "slug": "البوفيه-الصيدلة",
+            "description": "",
+            "parent": 86,
+            "lft": 11,
+            "rght": 12,
+            "tree_id": 6,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 93,
+        "fields": {
+            "name": "القسم الأكاديمي الصيدلة",
+            "slug": "القسم-الأكاديمي-الصيدلة",
+            "description": "",
+            "parent": 84,
+            "lft": 16,
+            "rght": 23,
+            "tree_id": 6,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 94,
+        "fields": {
+            "name": "قسم 1 الصيدلة",
+            "slug": "قسم-1-الصيدلة",
+            "description": "",
+            "parent": 93,
+            "lft": 21,
+            "rght": 22,
+            "tree_id": 6,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 95,
+        "fields": {
+            "name": "قسم 2 الصيدلة",
+            "slug": "قسم-2-الصيدلة",
+            "description": "",
+            "parent": 93,
+            "lft": 17,
+            "rght": 18,
+            "tree_id": 6,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 96,
+        "fields": {
+            "name": "قسم 3 الصيدلة",
+            "slug": "قسم-3-الصيدلة",
+            "description": "",
+            "parent": 93,
+            "lft": 19,
+            "rght": 20,
+            "tree_id": 6,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 97,
+        "fields": {
+            "name": "هندسة العمارة والتخطيط العمراني",
+            "slug": "هندسة-العمارة-والتخطيط-العمراني",
+            "description": "",
+            "parent": null,
+            "lft": 1,
+            "rght": 26,
+            "tree_id": 7,
+            "level": 0
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 98,
+        "fields": {
+            "name": "عمادة كلية هندسة العمارة",
+            "slug": "عمادة-كلية-هندسة-العمارة",
+            "description": "",
+            "parent": 97,
+            "lft": 24,
+            "rght": 25,
+            "tree_id": 7,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 99,
+        "fields": {
+            "name": "القسم الإداري هندسة العمارة",
+            "slug": "القسم-الإداري-هندسة-العمارة",
+            "description": "",
+            "parent": 97,
+            "lft": 2,
+            "rght": 15,
+            "tree_id": 7,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 100,
+        "fields": {
+            "name": "سكرتاريا هندسة العمارة",
+            "slug": "سكرتاريا-هندسة-العمارة",
+            "description": "",
+            "parent": 99,
+            "lft": 13,
+            "rght": 14,
+            "tree_id": 7,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 101,
+        "fields": {
+            "name": "امتحانات هندسة العمارة",
+            "slug": "امتحانات-هندسة-العمارة",
+            "description": "",
+            "parent": 99,
+            "lft": 3,
+            "rght": 4,
+            "tree_id": 7,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 102,
+        "fields": {
+            "name": "شؤون طلاب هندسة العمارة",
+            "slug": "شؤون-طلاب-هندسة-العمارة",
+            "description": "",
+            "parent": 99,
+            "lft": 5,
+            "rght": 6,
+            "tree_id": 7,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 103,
+        "fields": {
+            "name": "مكتبة هندسة العمارة",
+            "slug": "مكتبة-هندسة-العمارة",
+            "description": "",
+            "parent": 99,
+            "lft": 7,
+            "rght": 8,
+            "tree_id": 7,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 104,
+        "fields": {
+            "name": "مكتب الجودة هندسة العمارة",
+            "slug": "مكتب-الجودة-هندسة-العمارة",
+            "description": "",
+            "parent": 99,
+            "lft": 9,
+            "rght": 10,
+            "tree_id": 7,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 105,
+        "fields": {
+            "name": "البوفيه هندسة العمارة",
+            "slug": "البوفيه-هندسة-العمارة",
+            "description": "",
+            "parent": 99,
+            "lft": 11,
+            "rght": 12,
+            "tree_id": 7,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 106,
+        "fields": {
+            "name": "القسم الأكاديمي هندسة العمارة",
+            "slug": "القسم-الأكاديمي-هندسة-العمارة",
+            "description": "",
+            "parent": 97,
+            "lft": 16,
+            "rght": 23,
+            "tree_id": 7,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 107,
+        "fields": {
+            "name": "قسم 1 هندسة العمارة",
+            "slug": "قسم-1-هندسة-العمارة",
+            "description": "",
+            "parent": 106,
+            "lft": 21,
+            "rght": 22,
+            "tree_id": 7,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 108,
+        "fields": {
+            "name": "قسم 2 هندسة العمارة",
+            "slug": "قسم-2-هندسة-العمارة",
+            "description": "",
+            "parent": 106,
+            "lft": 17,
+            "rght": 18,
+            "tree_id": 7,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 109,
+        "fields": {
+            "name": "قسم 3 هندسة العمارة",
+            "slug": "قسم-3-هندسة-العمارة",
+            "description": "",
+            "parent": 106,
+            "lft": 19,
+            "rght": 20,
+            "tree_id": 7,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 110,
+        "fields": {
+            "name": "الهندسة المدنية",
+            "slug": "الهندسة-المدنية",
+            "description": "",
+            "parent": null,
+            "lft": 1,
+            "rght": 26,
+            "tree_id": 8,
+            "level": 0
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 111,
+        "fields": {
+            "name": "عمادة كلية الهندسة المدنية",
+            "slug": "عمادة-كلية-الهندسة-المدنية",
+            "description": "",
+            "parent": 110,
+            "lft": 24,
+            "rght": 25,
+            "tree_id": 8,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 112,
+        "fields": {
+            "name": "القسم الإداري الهندسة المدنية",
+            "slug": "القسم-الإداري-الهندسة-المدنية",
+            "description": "",
+            "parent": 110,
+            "lft": 2,
+            "rght": 15,
+            "tree_id": 8,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 113,
+        "fields": {
+            "name": "سكرتاريا الهندسة المدنية",
+            "slug": "سكرتاريا-الهندسة-المدنية",
+            "description": "",
+            "parent": 112,
+            "lft": 13,
+            "rght": 14,
+            "tree_id": 8,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 114,
+        "fields": {
+            "name": "امتحانات الهندسة المدنية",
+            "slug": "امتحانات-الهندسة-المدنية",
+            "description": "",
+            "parent": 112,
+            "lft": 3,
+            "rght": 4,
+            "tree_id": 8,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 115,
+        "fields": {
+            "name": "شؤون طلاب الهندسة المدنية",
+            "slug": "شؤون-طلاب-الهندسة-المدنية",
+            "description": "",
+            "parent": 112,
+            "lft": 5,
+            "rght": 6,
+            "tree_id": 8,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 116,
+        "fields": {
+            "name": "مكتبة الهندسة المدنية",
+            "slug": "مكتبة-الهندسة-المدنية",
+            "description": "",
+            "parent": 112,
+            "lft": 7,
+            "rght": 8,
+            "tree_id": 8,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 117,
+        "fields": {
+            "name": "مكتب الجودة الهندسة المدنية",
+            "slug": "مكتب-الجودة-الهندسة-المدنية",
+            "description": "",
+            "parent": 112,
+            "lft": 9,
+            "rght": 10,
+            "tree_id": 8,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 118,
+        "fields": {
+            "name": "البوفيه الهندسة المدنية",
+            "slug": "البوفيه-الهندسة-المدنية",
+            "description": "",
+            "parent": 112,
+            "lft": 11,
+            "rght": 12,
+            "tree_id": 8,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 119,
+        "fields": {
+            "name": "القسم الأكاديمي الهندسة المدنية",
+            "slug": "القسم-الأكاديمي-الهندسة-المدنية",
+            "description": "",
+            "parent": 110,
+            "lft": 16,
+            "rght": 23,
+            "tree_id": 8,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 120,
+        "fields": {
+            "name": "قسم 1 الهندسة المدنية",
+            "slug": "قسم-1-الهندسة-المدنية",
+            "description": "",
+            "parent": 119,
+            "lft": 21,
+            "rght": 22,
+            "tree_id": 8,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 121,
+        "fields": {
+            "name": "قسم 2 الهندسة المدنية",
+            "slug": "قسم-2-الهندسة-المدنية",
+            "description": "",
+            "parent": 119,
+            "lft": 17,
+            "rght": 18,
+            "tree_id": 8,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 122,
+        "fields": {
+            "name": "قسم 3 الهندسة المدنية",
+            "slug": "قسم-3-الهندسة-المدنية",
+            "description": "",
+            "parent": 119,
+            "lft": 19,
+            "rght": 20,
+            "tree_id": 8,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 123,
+        "fields": {
+            "name": "الهندسة المعلوماتية",
+            "slug": "الهندسة-المعلوماتية",
+            "description": "",
+            "parent": null,
+            "lft": 1,
+            "rght": 26,
+            "tree_id": 9,
+            "level": 0
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 124,
+        "fields": {
+            "name": "عمادة كلية الهندسة المعلوماتية",
+            "slug": "عمادة-كلية-الهندسة-المعلوماتية",
+            "description": "",
+            "parent": 123,
+            "lft": 24,
+            "rght": 25,
+            "tree_id": 9,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 125,
+        "fields": {
+            "name": "القسم الإداري الهندسة المعلوماتية",
+            "slug": "القسم-الإداري-الهندسة-المعلوماتية",
+            "description": "",
+            "parent": 123,
+            "lft": 2,
+            "rght": 15,
+            "tree_id": 9,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 126,
+        "fields": {
+            "name": "سكرتاريا الهندسة المعلوماتية",
+            "slug": "سكرتاريا-الهندسة-المعلوماتية",
+            "description": "",
+            "parent": 125,
+            "lft": 13,
+            "rght": 14,
+            "tree_id": 9,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 127,
+        "fields": {
+            "name": "امتحانات الهندسة المعلوماتية",
+            "slug": "امتحانات-الهندسة-المعلوماتية",
+            "description": "",
+            "parent": 125,
+            "lft": 3,
+            "rght": 4,
+            "tree_id": 9,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 128,
+        "fields": {
+            "name": "شؤون طلاب الهندسة المعلوماتية",
+            "slug": "شؤون-طلاب-الهندسة-المعلوماتية",
+            "description": "",
+            "parent": 125,
+            "lft": 5,
+            "rght": 6,
+            "tree_id": 9,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 129,
+        "fields": {
+            "name": "مكتبة الهندسة المعلوماتية",
+            "slug": "مكتبة-الهندسة-المعلوماتية",
+            "description": "",
+            "parent": 125,
+            "lft": 7,
+            "rght": 8,
+            "tree_id": 9,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 130,
+        "fields": {
+            "name": "مكتب الجودة الهندسة المعلوماتية",
+            "slug": "مكتب-الجودة-الهندسة-المعلوماتية",
+            "description": "",
+            "parent": 125,
+            "lft": 9,
+            "rght": 10,
+            "tree_id": 9,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 131,
+        "fields": {
+            "name": "البوفيه الهندسة المعلوماتية",
+            "slug": "البوفيه-الهندسة-المعلوماتية",
+            "description": "",
+            "parent": 125,
+            "lft": 11,
+            "rght": 12,
+            "tree_id": 9,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 132,
+        "fields": {
+            "name": "القسم الأكاديمي الهندسة المعلوماتية",
+            "slug": "القسم-الأكاديمي-الهندسة-المعلوماتية",
+            "description": "",
+            "parent": 123,
+            "lft": 16,
+            "rght": 23,
+            "tree_id": 9,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 133,
+        "fields": {
+            "name": "قسم 1 الهندسة المعلوماتية",
+            "slug": "قسم-1-الهندسة-المعلوماتية",
+            "description": "",
+            "parent": 132,
+            "lft": 21,
+            "rght": 22,
+            "tree_id": 9,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 134,
+        "fields": {
+            "name": "قسم 2 الهندسة المعلوماتية",
+            "slug": "قسم-2-الهندسة-المعلوماتية",
+            "description": "",
+            "parent": 132,
+            "lft": 17,
+            "rght": 18,
+            "tree_id": 9,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 135,
+        "fields": {
+            "name": "قسم 3 الهندسة المعلوماتية",
+            "slug": "قسم-3-الهندسة-المعلوماتية",
+            "description": "",
+            "parent": 132,
+            "lft": 19,
+            "rght": 20,
+            "tree_id": 9,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 136,
+        "fields": {
+            "name": "العلوم الادارية والمالية",
+            "slug": "العلوم-الادارية-والمالية",
+            "description": "",
+            "parent": null,
+            "lft": 1,
+            "rght": 26,
+            "tree_id": 10,
+            "level": 0
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 137,
+        "fields": {
+            "name": "عمادة كلية العلوم الادارية والمالية",
+            "slug": "عمادة-كلية-العلوم-الادارية-والمالية",
+            "description": "",
+            "parent": 136,
+            "lft": 24,
+            "rght": 25,
+            "tree_id": 10,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 138,
+        "fields": {
+            "name": "القسم الإداري العلوم الادارية والمالية",
+            "slug": "القسم-الإداري-العلوم-الادارية-والمالية",
+            "description": "",
+            "parent": 136,
+            "lft": 2,
+            "rght": 15,
+            "tree_id": 10,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 139,
+        "fields": {
+            "name": "سكرتاريا العلوم الادارية والمالية",
+            "slug": "سكرتاريا-العلوم-الادارية-والمالية",
+            "description": "",
+            "parent": 138,
+            "lft": 13,
+            "rght": 14,
+            "tree_id": 10,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 140,
+        "fields": {
+            "name": "امتحانات العلوم الادارية والمالية",
+            "slug": "امتحانات-العلوم-الادارية-والمالية",
+            "description": "",
+            "parent": 138,
+            "lft": 3,
+            "rght": 4,
+            "tree_id": 10,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 141,
+        "fields": {
+            "name": "شؤون طلاب العلوم الادارية والمالية",
+            "slug": "شؤون-طلاب-العلوم-الادارية-والمالية",
+            "description": "",
+            "parent": 138,
+            "lft": 5,
+            "rght": 6,
+            "tree_id": 10,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 142,
+        "fields": {
+            "name": "مكتبة العلوم الادارية والمالية",
+            "slug": "مكتبة-العلوم-الادارية-والمالية",
+            "description": "",
+            "parent": 138,
+            "lft": 7,
+            "rght": 8,
+            "tree_id": 10,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 143,
+        "fields": {
+            "name": "مكتب الجودة العلوم الادارية والمالية",
+            "slug": "مكتب-الجودة-العلوم-الادارية-والمالية",
+            "description": "",
+            "parent": 138,
+            "lft": 9,
+            "rght": 10,
+            "tree_id": 10,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 144,
+        "fields": {
+            "name": "البوفيه العلوم الادارية والمالية",
+            "slug": "البوفيه-العلوم-الادارية-والمالية",
+            "description": "",
+            "parent": 138,
+            "lft": 11,
+            "rght": 12,
+            "tree_id": 10,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 145,
+        "fields": {
+            "name": "القسم الأكاديمي العلوم الادارية والمالية",
+            "slug": "القسم-الأكاديمي-العلوم-الادارية-والمالية",
+            "description": "",
+            "parent": 136,
+            "lft": 16,
+            "rght": 23,
+            "tree_id": 10,
+            "level": 1
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 146,
+        "fields": {
+            "name": "قسم 1 العلوم الادارية والمالية",
+            "slug": "قسم-1-العلوم-الادارية-والمالية",
+            "description": "",
+            "parent": 145,
+            "lft": 21,
+            "rght": 22,
+            "tree_id": 10,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 147,
+        "fields": {
+            "name": "قسم 2 العلوم الادارية والمالية",
+            "slug": "قسم-2-العلوم-الادارية-والمالية",
+            "description": "",
+            "parent": 145,
+            "lft": 17,
+            "rght": 18,
+            "tree_id": 10,
+            "level": 2
+        }
+    },
+    {
+        "model": "departments.department",
+        "pk": 148,
+        "fields": {
+            "name": "قسم 3 العلوم الادارية والمالية",
+            "slug": "قسم-3-العلوم-الادارية-والمالية",
+            "description": "",
+            "parent": 145,
+            "lft": 19,
+            "rght": 20,
+            "tree_id": 10,
+            "level": 2
+        }
+    }
+]
