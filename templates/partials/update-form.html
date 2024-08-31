@@ -26,6 +26,7 @@ data-hit-messages
                 hx-delete="{{ instance.get_update_path }}"
                 hx-target="closest form"
                 hx-indicator="#reset-spinner"
+                hx-disabled-elt="*[data-disabled]"
                 hx-swap="outerHTML"
                 data-disabled
                 title="{% translate 'reset'|title %}"

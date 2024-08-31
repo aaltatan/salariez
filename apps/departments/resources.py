@@ -25,3 +25,6 @@ class DepartmentResource(ModelResource):
         fields = [
             'name', 'description', 'parent'
         ]
+        export_order = [
+            'tree_id', 'level', 'id'
+        ]

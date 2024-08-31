@@ -1,11 +1,11 @@
 {% load widget_tweaks %}
 {% load i18n %}
 
-<div class="shadow-md bg-white dark:bg-gray-900 rounded-lg p-6">
+<div class="p-3 lg:p-6">
 
-    <div class="max-w-2xl mx-auto">
+    <div class="max-w-lg mx-auto">
         {% if title %}
-        <h1 class="text-4xl tracking-tighter font-semibold mb-6 text-center first-letter:capitalize">
+        <h1 class="text-4xl tracking-tighter font-semibold mb-6 rtl:text-right ltr:text-left first-letter:capitalize">
             {{ title }}
         </h1>
         {% endif %}
@@ -25,9 +25,12 @@
                 {% for field in form %}
                 <div data-field>
 
-                    <label class="block font-semibold" for="{{ field.id_for_label }}">
-                        {{ field.label }}:
+                    <label class="font-semibold" 
+                    for="{{ field.id_for_label }}">
+                        <span>{{ field.label }}:</span>
                     </label>
+
+                    <span class="hidden [&:has(~_input[required])]:inline-block text-[red] text-lg" title="{% translate 'required'|title %}">*</span>
 
                     <div class="mb-4 text-gray-500 text-sm first-letter:capitalize">
                         {{ field.help_text }}
@@ -55,7 +58,7 @@
 
         </div>
 
-        <div class="flex items-center max-sm:flex-col justify-end gap-2 my-6">
+        <div class="flex items-center max-sm:flex-col justify-end gap-x-1 gap-y-2 my-6">
             {{ btns }}
         </div>
     </div>

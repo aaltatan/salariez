@@ -36,6 +36,7 @@ data-hit-messages
                 hx-target="closest form"
                 hx-swap="outerHTML"
                 hx-indicator="#reset-loading"
+                hx-disabled-elt="*[data-disabled]"
                 data-disabled
                 title="{% translate 'reset'|title %}">
                     <div id="reset-loading" class="hx-request:animate-spin">

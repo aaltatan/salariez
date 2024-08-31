@@ -4,6 +4,8 @@
 
    <c-inputs.search-item
    hx-get="{{ path }}?name=parent&id={{ obj.id }}"
+   hx-indicator="#search-spinner"
+   hx-disabled-elt="*[data-disabled]"
    hx-target="#search-container">
         {{ obj.name }}
    </c-inputs.search-item>

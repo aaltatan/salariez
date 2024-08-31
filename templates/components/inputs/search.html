@@ -4,11 +4,7 @@
 theme="input select-none peer ltr:!pl-12 rtl:!pr-12"
 />
 
-<div 
-id="search-container" 
-class="relative" 
-x-data="{ open: false }"
-@click.outside="open = false">
+<div id="search-container" class="relative">
 
     <div class="relative">
 
@@ -19,8 +15,8 @@ x-data="{ open: false }"
             hx-swap="innerHTML"
             hx-target="#search-results"
             hx-indicator="#search-spinner"
-            @keydown="open = true"
-            type="text"
+            hx-disabled-elt="*[data-disabled]"
+            type="search"
             class="{{ theme }}"
             id="search-input"
             name="q"
@@ -47,23 +43,28 @@ x-data="{ open: false }"
         <span
         hx-get="{{ path }}"
         hx-target="#search-container"
-        hx-indicator="#no-content"
         hx-swap="outerHTML"
         hx-trigger="click"
+        hx-indicator="#search-spinner"
+        hx-disabled-elt="*[data-disabled]"
         class="absolute cursor-pointer rtl:left-4 ltr:right-4 top-1/2 -translate-y-1/2 z-20 hidden peer-aria-disabled:block">
             <c-btns.icon>
-                <c-icons.x ratio="1.25rem"></c-icons.x>
+                <c-icons.x ratio="1.25rem" />
             </c-btns.icon>
         </span>
 
         <div 
-        id="search-spinner"
-        class="block absolute rtl:right-4 ltr:left-4 top-1/2 -translate-y-1/2 hx-request:animate-slow-pulse">
-            <c-icons.magnifier ratio="1.25rem"></c-icons.magnifier>
+        class="block absolute rtl:right-4 ltr:left-4 top-1/2 -translate-y-1/2">
+            <div id="search-spinner" class="hx-request:hidden">
+                <c-icons.magnifier ratio="1.25rem" />
+            </div>
+            <div id="search-spinner" class="hidden hx-request:block hx-request:animate-spin">
+                <c-icons.reset ratio="1.25rem" />
+            </div>
         </div>
 
     </div>
 
-    <ul x-show="open" x-collapse.duration.150ms id="search-results" class="absolute left-0 top-[calc(100%_+_0.5rem)] w-full bg-white dark:bg-gray-950 divide-y divide-gray-200 dark:divide-gray-900 rounded-lg ring-1 ring-gray-100 dark:ring-gray-900 shadow-md dark:shadow-inner max-h-48 overflow-y-auto empty:hidden"></ul>
+    <ul id="search-results" class="absolute left-0 top-[calc(100%_+_0.5rem)] w-full bg-white dark:bg-gray-950 divide-y divide-gray-200 dark:divide-gray-900 rounded-lg ring-1 ring-gray-100 dark:ring-gray-900 shadow-md dark:shadow-inner max-h-36 overflow-y-auto empty:hidden"></ul>
 
 </div>

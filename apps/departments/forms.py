@@ -9,18 +9,22 @@ class DepartmentForm(forms.ModelForm):
 
     class Meta:
         model = models.Department
-        exclude = ["slug"]
+        fields = [
+            'name', 'parent', 'description'
+        ]
         widgets = {
             "name": forms.TextInput(
                 attrs={
                     "placeholder": _("department's name"),
                     "autofocus": "on",
+                    "autocomplete": "on",
                 }
             ),
             "description": forms.Textarea(
                 attrs={
                     "x-autosize": "",
                     "rows": "1",
+                    "autocomplete": "on",
                     "placeholder": _("department's description"),
                 }
             ),
@@ -44,5 +48,6 @@ class DepartmentForm(forms.ModelForm):
                 "hx-get": hx_get_path ,
                 "hx-trigger": "load",
                 "hx-target": "this",
+                "autocomplete": "on",
             }
         )
