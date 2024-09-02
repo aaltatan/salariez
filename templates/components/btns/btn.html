@@ -3,12 +3,12 @@ base="cursor-pointer w-full sm:w-auto rounded-md text-sm px-3 py-1.5 capitalize 
 primary="text-white bg-blue-500 focus:ring-blue-400"
 secondary="focus:ring-gray-200 hover:bg-gray-200 hover:dark:bg-gray-800 dark:text-white text-black"
 danger="text-white bg-[red] focus:ring-red-400"
-></c-vars>
+/>
 
 {% if datatype == 'href' %}
 
     <a {{ attrs }}
-    class="{{ base }}  {% include 'components/btns/includes/logic.html' %}" >
+    class="{{ base }} {% include 'components/btns/includes/logic.html' %}" >
         {{ slot }}
     </a>
 
@@ -16,7 +16,7 @@ danger="text-white bg-[red] focus:ring-red-400"
 
     <input {{ attrs }}
     type="button"
-    class="{{ base }} {% include 'components/btns/includes/logic.html' %}" />
+    class="{{ base }} {% include 'components/btns/includes/logic.html' %}" >
 
 {% elif datatype == 'button' %}
 

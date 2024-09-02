@@ -11,14 +11,14 @@
         title="{% translate 'filters'|title %}"
         class="inline-flex items-center justify-start rounded-lg duration-150 p-2 gap-2 my-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
 
-            <c-icons.filter ratio="1.25rem"></c-icons.filter>
+            <c-icons.filter ratio="1.25rem" />
 
             <h1 class="text-xl tracking-tighter capitalize">
                 {% translate 'filters' %}
             </h1>
 
             <div x-bind:class="!open && '-rotate-180'" class="duration-150">
-                <c-icons.arrow-down ratio="1rem"></c-icons.arrow-down>
+                <c-icons.arrow-down ratio="1rem" />
             </div>
 
         </div>
@@ -34,12 +34,12 @@
             <div class="flex items-center max-sm:flex-col justify-center gap-2">
 
                 <c-btns.btn 
-                datatype="input" 
+                datatype="input"
+                datatheme="primary"
                 id="filter-submit-btn"
                 value="{% translate 'filter' %}" 
                 title="{% translate 'filter'|title %}" 
-                type="submit">
-                </c-btns.btn>
+                type="submit" />
 
                 <c-btns.btn 
                 datatype="input"
@@ -47,8 +47,7 @@
                 @click="document.getElementById('page-reset-btn').click()"
                 value="{% translate 'reset' %}" 
                 title="{% translate 'reset'|title %}" 
-                type="reset">
-                </c-btns.btn>
+                type="reset" />
 
             </div>
 
