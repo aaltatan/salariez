@@ -2,9 +2,9 @@
 {% load i18n %}
 {% load math_filters %}
 
-<c-layout.app-container id="departments-body">
+<c-layout.app-container id="departments-body" app_title="{% translate 'departments' %}">
   <c-slot name="body">
-    <div class="bg-white dark:bg-gray-900 p-4">
+    <div class="bg-white dark:bg-gray-900">
       <ul class="divide-y divide-gray-100 dark:divide-gray-800">
 
         {% recursetree qs %}

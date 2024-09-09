@@ -14,9 +14,12 @@
 {% url 'faculties:create' as create_path %}
 {% url 'faculties:export' as export_path %}
 
-<c-layout.app-container id="faculties-table">
+<c-layout.app-container 
+id="faculties-table" 
+app_title="{% translate 'faculties' %}">
 
   <c-slot name="filters">
+
     <c-forms.filters
       id="{{ filter_form }}"
       hx-get="{{ index_path }}"
@@ -27,10 +30,10 @@
       data-include>
         {{ filter }}
     </c-forms.filters>
+
   </c-slot>
 
   <c-slot name="body">
-
     <form 
     hx-get="{{ bulk_path }}" 
     hx-swap="innerHTML"

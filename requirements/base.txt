@@ -1,7 +1,7 @@
 django==5.0.0
 django-extensions
 django-filter
-django-cotton
+django-cotton==0.9.22
 django-htmx
 django-dotenv
 django-widget-tweaks

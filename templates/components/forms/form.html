@@ -32,9 +32,11 @@
 
                     <span class="hidden [&:has(~_input[required])]:inline-block text-[red] text-lg" title="{% translate 'required'|title %}">*</span>
 
+                    {% if field.help_text %}
                     <div class="mb-4 text-gray-500 text-sm first-letter:capitalize">
                         {{ field.help_text }}
                     </div>
+                    {% endif %}
                     
                     {% render_field field|add_class:'input' %}
 
