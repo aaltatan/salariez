@@ -68,7 +68,6 @@ x-data="{ dark: $persist(false).as('dark') }">
         <span class="hidden" id="no-content"></span>
         <c-layout.spinner></c-layout.spinner>
         <div id="modal"></div>
-        <c-layout.messages></c-layout.messages>
         
         <div class="relative lg:grid grid-cols-[300px_1fr]">
 
@@ -82,6 +81,7 @@ x-data="{ dark: $persist(false).as('dark') }">
               <div class="mt-8 mb-4 lg:hidden">
                 <c-layout.breadcrumb></c-layout.breadcrumb>
               </div>
+              <c-layout.messages></c-layout.messages>
               {% block body %}{% endblock %}
             </main>
 

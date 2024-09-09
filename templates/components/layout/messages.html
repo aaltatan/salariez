@@ -1,25 +1,19 @@
-<ul
-  hx-get="{% url 'base:messages' %}"
-  hx-swap="outerHTML"
-  hx-target="this"
-  hx-trigger="click"
-  hx-indicator="#no-content"
-  id="messages"
-  class="min-w-64 rounded-md fixed ltr:right-4 rtl:left-4 bottom-4 z-[150] duration-150 scale-100"
->
+{% if messages %}
+<ul class="rounded-md duration-150 space-y-2">
   {% for message in messages %}
   <li
-    class="{% if message.tags %} {{ message.tags }} {% endif %} text-white px-4 py-2 text-sm font-semibold text-center capitalize rounded-lg"
+    class="{% if message.tags %} {{ message.tags }} {% endif %} text-white px-4 py-2 text-sm font-semibold my-2 text-center capitalize rounded-lg"
+    x-data="{open: true}"
+    x-show="open"
+    x-collapse.duration.150
   >
-    {{ message }}
+    <div class="flex items-center justify-between">
+      <span>{{ message }}</span>
+      <c-btns.icon @click="open = false">
+        <c-icons.x ratio="1rem" />
+      </c-btns.icon>
+    </div>
   </li>
   {% endfor %}
 </ul>
-
-<script>
-  var messages = document.getElementById("messages");
-  setTimeout(() => {
-    messages.classList.remove("bottom-4");
-    messages.classList.add("-bottom-32");
-  }, 3_000);
-</script>
+{% endif %}
