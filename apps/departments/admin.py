@@ -15,8 +15,9 @@ def reslugify_action(modeladmin, request, queryset):
 @admin.register(models.Department)
 class DepartmentAdmin(MPTTModelAdmin):
     
+    ordering = ['department_id']
     list_display = [
-        'name', 'id', 'slug', 'description'
+        'name', 'id', 'department_id', 'slug', 'description'
     ]
     prepopulated_fields = {
         'slug': ['name']

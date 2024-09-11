@@ -1,6 +1,24 @@
+{% if data_check == 'all' %}
+<input
+  @change="
+      let isChecked = $event.target.checked;
+      let rowsChecks = document.querySelectorAll(`input[data-check]`);
+      rowsChecks.forEach(el => {
+          el.checked = isChecked;
+          let id = el.getAttribute('id');
+          if (isChecked) selectedRows.push(id);
+      });
+      selectedRows = [...new Set(selectedRows)]
+      if (!isChecked) selectedRows = [];
+    "
+  id="check-all"
+  class="before:content[''] block relative size-4 cursor-pointer appearance-none overflow-hidden rounded border border-gray-300 bg-white before:absolute before:inset-0 checked:border-blue-500 checked:before:bg-blue-500 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-gray-800 checked:focus:outline-blue-500 active:outline-offset-0 dark:border-gray-700 dark:bg-gray-800 dark:checked:border-blue-500 dark:checked:before:bg-blue-500 dark:focus:outline-gray-300 dark:checked:focus:outline-blue-500"
+  type="checkbox"
+/>
+{% else %}
 <input
   type="checkbox"
-  class="before:content[''] peer relative size-4 cursor-pointer appearance-none overflow-hidden rounded border border-gray-300 bg-white before:absolute before:inset-0 checked:border-blue-500 checked:before:bg-blue-500 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-gray-800 checked:focus:outline-blue-500 active:outline-offset-0 dark:border-gray-700 dark:bg-gray-800 dark:checked:border-blue-500 dark:checked:before:bg-blue-500 dark:focus:outline-gray-300 dark:checked:focus:outline-blue-500 p-2"
+  class="before:content[''] block relative size-4 cursor-pointer appearance-none overflow-hidden rounded border border-gray-300 bg-white before:absolute before:inset-0 checked:border-blue-500 checked:before:bg-blue-500 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-gray-800 checked:focus:outline-blue-500 active:outline-offset-0 dark:border-gray-700 dark:bg-gray-800 dark:checked:border-blue-500 dark:checked:before:bg-blue-500 dark:focus:outline-gray-300 dark:checked:focus:outline-blue-500"
   name="obj-{{ obj.id }}-selected"
   data-check
   id="{{ obj.id }}"
@@ -13,14 +31,4 @@
         selectedRows.push(targetId);
     }"
 />
-<svg
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 24 24"
-  aria-hidden="true"
-  stroke="currentColor"
-  fill="none"
-  stroke-width="4"
-  class="pointer-events-none invisible absolute left-1/2 top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 peer-checked:visible text-white"
->
-  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-</svg>
+{% endif %}

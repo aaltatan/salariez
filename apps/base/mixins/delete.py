@@ -23,7 +23,18 @@ class DeleteMixin(utils.HelperMixin, AbstractDelete):
     
     """
     utility class to implement delete record functionality.  
-    you need to set `model` attribute in derived class,  and you need to implement `CannotDeleteMixin` class and `cannot_delete` method in it locally in `apps.<app_name>.mixins` to create cannot_delete functionality in case the object has been in relation with other models.
+    
+    # Note
+    you need to implement `CannotDeleteMixin` class and `cannot_delete` method in it locally in `apps.<app_name>.mixins` to create cannot_delete functionality in case the object has been in relation with other models.
+        
+    ### required attributes:  
+    - `model: Model`  
+    
+    ### optional attributes:  
+    - `modal_template_name: str` like: `'partials/delete-modal.html'`
+    - `hx_location_path: str` like: `'<app_name>:index'`
+    - `hx_location_target: str` like: `'#<app_name>-table'`
+     
     """
     
     def get(self, request, *args, **kwargs):
@@ -47,7 +58,7 @@ class DeleteMixin(utils.HelperMixin, AbstractDelete):
             'page': request.GET.get('page'),
         }
         
-        modal_template_name = self.get_modal_template_name()
+        modal_template_name = self._get_modal_template_name()
         
         return render(request, modal_template_name, context)
     
@@ -67,11 +78,14 @@ class DeleteMixin(utils.HelperMixin, AbstractDelete):
         messages.success(request, _('done'))
         
         hx_location = {
-            'path': reverse(self.get_hx_location_path()),
+            'path': reverse(self._get_hx_location_path()),
             'values': {**request.POST},
-            'target': self.get_hx_location_target(),
+            'target': self._get_hx_location_target(),
             'swap': 'outerHTML',
         }
+        
+        ic(hx_location)
+        
         response['Hx-Location'] = json.dumps(hx_location)
         
         return response

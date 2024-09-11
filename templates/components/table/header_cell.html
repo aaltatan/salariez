@@ -7,7 +7,7 @@
   order: `{% firstof request.GET.order default_column %}` === "{{ default_column }}" ? "-" + "{{ default_column }}" : "{{ default_column }}" }'
   hx-trigger="click"
   data-include
-  class="flex items-center gap-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 py-4 px-2 rounded-lg duration-150"
+  class="flex items-center gap-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 duration-150 px-2 py-4"
   {{ attrs }}
 >
 
@@ -27,9 +27,5 @@
   >
     <c-icons.triangle ratio="0.5rem"></c-icons.triangle>
   </span>
-
-  <script>
-    document.getElementsByName
-  </script>
 
 </div>

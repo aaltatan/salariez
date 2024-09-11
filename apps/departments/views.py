@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import (
     PermissionRequiredMixin,
 )
 
-from . import models, forms, mixins, resources
+from . import models, forms, resources, mixins
 
 from apps.base.mixins import (
     CreateMixin,
@@ -42,7 +42,8 @@ class TreeView(
     
     def _get_app_label(self) -> str:
         
-        return self.model._meta.app_label
+        app_label = self.model._meta.app_label
+        return app_label
     
     def _get_template_name(self) -> str:
         
@@ -50,6 +51,7 @@ class TreeView(
             return self.template_name
         
         app_label = self._get_app_label()
+        
         return f'apps/{app_label}/index.html'
     
     def _get_body_template_name(self) -> str:
@@ -80,7 +82,7 @@ class CreateView(
     permission_required = 'departments.add_department'
     form_class = forms.DepartmentForm
     template_name = 'apps/departments/create.html'
-    
+
 
 class DeleteView(
     LoginRequiredMixin, 
@@ -93,7 +95,7 @@ class DeleteView(
     permission_required = 'departments.delete_department'
     model = models.Department
     hx_location_target = '#departments-body'
-    
+
 
 class UpdateView(
     LoginRequiredMixin,

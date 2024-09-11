@@ -1,0 +1,11 @@
+<td class="px-2 py-1">
+  {% if href %}
+  <a class="hover:underline" href="{{ href }}">
+    {{ slot }}
+  </a>
+  {% else %}
+  <span>
+    {{ slot }}
+  </span>
+  {% endif %}
+</td>

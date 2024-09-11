@@ -12,20 +12,16 @@
         <c-modal.modal>
 
             <c-slot name="header">
-
                 <span class="capitalize">{% translate 'delete' %}</span>
                 <span>{{ instance.name }}</span>
                 <span>{% translate '?' %}</span>
-
             </c-slot>
 
             <c-slot name="body">
-
                 {% if page %}
                 <input type="hidden" name="page" value="{{ page }}">
                 {% endif %}
                 <p class="capitalize">{{ message }}</p>
-
             </c-slot>
 
             <c-slot name="footer">
@@ -42,8 +38,3 @@
     </form>
 
 </c-modal.container>
-
-<script type="module">
-    import { addHitMessagesEventListeners } from '../static/js/main.js';
-    addHitMessagesEventListeners();
-</script>

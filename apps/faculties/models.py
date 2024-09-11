@@ -15,7 +15,7 @@ class Faculty(models.Model):
         unique=True,
         max_length=255,
         help_text=_('faculty name must be more than 3 characters'),
-        validators=[validators.four_chars]
+        validators=[validators.four_chars_validator]
     )
     slug = models.SlugField(
         unique=True,

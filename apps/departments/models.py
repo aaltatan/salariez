@@ -1,19 +1,47 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext as _
+from django.db.models import Value, F
+from django.db.models.functions import Concat
 from django.db.models.signals import pre_save
 
 from mptt.models import MPTTModel, TreeForeignKey
 
-from apps.base import validators, managers, utils
+from . import utils
+
+from apps.base import validators, utils as base_utils
+
+
+class SearchManager(models.Manager):
+    
+    def get_queryset(self) -> models.QuerySet:
+        return super().get_queryset().annotate(
+            search=Concat(
+                F('name'), 
+                Value(' '), 
+                F('department_id'), 
+                Value(' '), 
+                F('name'),
+                Value(' '), 
+                F('department_id'), 
+            ),
+        )
 
 
 class Department(MPTTModel):
     
+    department_id = models.CharField(
+        name=_('department_id'),
+        max_length=255,
+        unique=True,
+        validators=[validators.numeric_validator],
+        default='',
+        blank=True
+    )
     name = models.CharField(
         name=_('name'),
         max_length=255,
-        validators=[validators.four_chars],
+        validators=[validators.four_chars_validator],
         help_text=_('name must be more than 3 chars')
     )
     slug = models.SlugField(
@@ -36,8 +64,8 @@ class Department(MPTTModel):
         related_name='children'
     )
     
-    objects = managers.SearchManager()
-    
+    objects = SearchManager()
+            
     @property
     def get_create_path(self) -> str:
         return reverse('departments:create')
@@ -54,15 +82,17 @@ class Department(MPTTModel):
         return self.name
     
     class MPTTMeta:
-        order_insertion_by = ['id']
+        order_insertion_by = ['department_id']
         
     class Meta:
+        ordering = ['department_id']
         permissions = [
             ['can_export', 'Can export data']
         ]
-        
 
-def faculty_pre_save(sender, instance, *args, **kwargs):
-    utils.slugify_instance(instance)
 
-pre_save.connect(faculty_pre_save, Department)
+def department_pre_save(sender, instance, *args, **kwargs):
+    base_utils.slugify_instance(instance)
+    utils.generate_department_id(instance)
+
+pre_save.connect(department_pre_save, Department)

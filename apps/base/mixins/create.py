@@ -20,13 +20,18 @@ class AbstractCreate(ABC):
 
 
 class CreateMixin(utils.HelperMixin, AbstractCreate):
-    
     """
     utility class to implement add new record.  
-    you need to set those attributes on derived class:  
+    
+    ### required attributes:  
     - `form_class: ModelForm` to use it inside form_template_name
-    - `form_template_name: str` to use it as partial form template
     - `template_name: str` to use it as main template  
+    
+    ### optional attributes:  
+    - `form_template_name: str` like: `'partials/create-form.html'`
+    - `index_template_name: str` like: `'apps/<app_name>/index.html'`  
+    - `success_path: str` like: `'<app_name>:index'` 
+     
     also you need to implement `get_create_path` property in the model which the `form_class` inherit from.
     """
     
@@ -43,7 +48,7 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
     
     def delete(self, request: HttpRequest) -> HttpResponse:
         
-        form_template_name = self.get_form_template_name()
+        form_template_name = self._get_form_template_name()
         context = {'form': self.form_class()}
         
         return render(request, form_template_name, context)
@@ -58,11 +63,11 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
             messages.success(request, _('done'))
             
             if request.POST.get('save'):
-                return self.get_success_save_update_response()
+                return self._get_success_save_update_response()
             
             if request.POST.get('save_and_add_another'):
                 context = {'form': self.form_class()}
         
-        form_template_name = self.get_form_template_name()
+        form_template_name = self._get_form_template_name()
         
         return render(request, form_template_name, context)

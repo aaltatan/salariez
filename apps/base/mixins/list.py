@@ -41,8 +41,8 @@ class ListMixin(HelperMixin, AbstractList):
     
     """
     utility class to implement list(table) view and its functionality.  
-    you need to set the following attributes on derived class:  
-    - `export_fields: list[str]` to select which columns you want to export them as excel file  
+    
+    ### required attributes:  
     - `model: Model`
     - `filter_class: FilterSet`
     - `template_name: str` table template path like `apps/<app_name>/partials/table.html`
@@ -50,6 +50,7 @@ class ListMixin(HelperMixin, AbstractList):
     - `paginate_by_form: Form`
     - `paginate_by_form_attributes: dict[str, reverse_lazy | str]` to set hx-get and hx-target attrs on form attributes  
     
+    # Note:  
     and also you need to implement `get_delete_path`, `get_delete_path` and `get_create_path` in the model which you will use in the view.
     """
     
@@ -104,7 +105,7 @@ class ListMixin(HelperMixin, AbstractList):
         filtering the queryset by filter_class
         """
         
-        default_ordering = self.get_default_ordering()
+        default_ordering = self._get_default_ordering()
         request_ordering = self.request.GET.get('order')
         
         order = default_ordering

@@ -43,7 +43,8 @@ class AbstractBulkMapper(ABC):
 class BulkMapperMixin(AbstractBulkMapper):
     """
     utility class to implement redirection between bulk template and bulk action.  
-    you need to set `mapper: dict` attribute to derived class
+    ### required attributes:  
+    - `mapper: dict`  
     """
     
     def get(self, request: HttpRequest, *args, **kwargs):
@@ -100,9 +101,9 @@ class BulkModalMixin(utils.HelperMixin, AbstractBulkModal):
         self.modal_action(pks)
         
         hx_location = {
-            'path': reverse(self.get_hx_location_path()),
+            'path': reverse(self._get_hx_location_path()),
             'values': {**request.POST},
-            'target': self.get_hx_location_target(),
+            'target': self._get_hx_location_target(),
             'swap': 'outerHTML',
         }
         response['Hx-Location'] = json.dumps(hx_location)

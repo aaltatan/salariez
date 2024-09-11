@@ -1,6 +1,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse, reverse_lazy
+from django.shortcuts import get_object_or_404
 
 from . import models
 
@@ -10,7 +11,7 @@ class DepartmentForm(forms.ModelForm):
     class Meta:
         model = models.Department
         fields = [
-            'name', 'parent', 'description'
+            'name', 'parent', 'department_id', 'description'
         ]
         widgets = {
             "name": forms.TextInput(
@@ -34,13 +35,19 @@ class DepartmentForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         hx_get_path = reverse_lazy("departments:search")
-        parent = self.initial.get("parent")
         
+        parent = self.initial.get("parent")
         parent = self.data.get('parent', parent)
+        
+        value = ''
+        
+        if parent:
+            parent_obj = get_object_or_404(models.Department, id=parent)
+            value = f'{parent_obj.department_id} - {parent_obj.name}'
         
         if parent:
             hx_get_path = (
-                f'{reverse("departments:search")}?id={parent}&name=parent'
+                f'{reverse("departments:search")}?id={parent}&name=parent&value={value}'
             )
 
         self.fields["parent"].widget = forms.TextInput(

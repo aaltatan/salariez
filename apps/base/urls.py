@@ -5,5 +5,4 @@ app_name = 'base'
 
 urlpatterns = [
   path('', view=views.index, name='index'),
-  path('messages/', view=views.get_messages, name='messages'),
 ]

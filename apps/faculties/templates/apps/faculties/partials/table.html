@@ -7,165 +7,28 @@
 {% with perms.faculties.delete_faculty as can_delete %}
 {% with perms.faculties.change_faculty as can_update %}
 {% with perms.faculties.can_export as can_export %}
-{% with 1 as columns_count %}
 
 {% url 'faculties:index' as index_path %}
 {% url 'faculties:bulk' as bulk_path %}
 {% url 'faculties:create' as create_path %}
 {% url 'faculties:export' as export_path %}
 
-<c-layout.app-container 
-id="faculties-table" 
-app_title="{% translate 'faculties' %}">
+<c-layout.app-container id="faculties-table" app_title="{% translate 'faculties' %}">
 
   <c-slot name="filters">
-
-    <c-forms.filters
-      id="{{ filter_form }}"
-      hx-get="{{ index_path }}"
-      hx-target="#container"
-      hx-select="#container"
-      hx-swap="outerHTML"
-      hx-disabled-elt="*[data-disabled]"
-      data-include>
-        {{ filter }}
-    </c-forms.filters>
-
+    {% include 'apps/faculties/partials/table/filters.html' %}
   </c-slot>
 
   <c-slot name="body">
-    <form 
-    hx-get="{{ bulk_path }}" 
-    hx-swap="innerHTML"
-    hx-include="[data-include]"
-    x-data="{ selectedRows: [] }">
-    
-    <c-table.table>
-    
-        <!-- start header -->
-        <c-table.row cols="{{ columns_count }}" header default_column="name">
-    
-          {% if can_delete %}
-            <c-table.check-all></c-table.check-all>
-          {% endif %}
-    
-          <c-table.column-header 
-          hx-get="{{ index_path }}"
-          hx-target="{{ target }}"
-          default_column="name"></c-table.column-header>
-    
-        </c-table.row>
-    
-        {% if can_delete %}
-        <c-table.unselect-all>
-          {% if can_delete %}
-            <c-table.action-input
-              name="bulk_delete"
-              value="{% translate 'delete'|title %}"
-              title="{% translate 'delete'|title %}" />
-          {% endif %}
-          </c-table.unselect-all>
-        {% endif %}
-        <!-- end header -->
-    
-        <!-- start rows -->
-        <c-table.body>
-    
-            {% for obj in qs %}
-              <c-table.row 
-              cols="{{ columns_count }}" 
-              id="instance-{{ obj.pk }}">
-    
-                  {% if can_delete %}
-                    <c-table.absolute direction="left">
-                      <c-table.check />
-                    </c-table.absolute>
-                  {% endif %}
-    
-                  {% if can_update %}
-                    <a 
-                    class="hover:underline" 
-                    href="{{ obj.get_update_path }}">{{ obj.name }}</a>
-                  {% else %}
-                    <div>{{ obj.name }}</div>
-                  {% endif %}
-    
-                  <c-table.absolute direction="right">
-    
-                    {% if can_delete or can_update %}
-                      <c-context.context 
-                      class="ltr:right-[calc(100%+4px)] rtl:left-[calc(100%+4px)] bottom-2 min-w-[100px]">
-    
-                        {% if can_delete %}
-                          <c-context.btn
-                              hx-get="{{ obj.get_delete_path }}"
-                              hx-vals="js:{page: '{{ page_obj.number }}'}"
-                              hx-target="#modal"
-                              hx-swap="innerHTML"
-                              @click="modalOpen = true">
-                              {% translate 'delete' %}
-                          </c-context.btn>
-                        {% endif %}
-    
-                        {% if can_update %}
-                          <c-context.btn 
-                          href="{{ obj.get_update_path }}"
-                          datatype="href">
-                              {% translate 'update' %}
-                          </c-context.btn>
-                        {% endif %}
-    
-                      </c-context.context>
-                    {% endif %}
-    
-                  </c-table.absolute>
-    
-              </c-table.row>
-            {% empty %}
-              <c-table.empty-row />
-            {% endfor %}
-    
-        </c-table.body>
-        <!-- end rows -->
-    
-    </c-table.table>
-    
-    </form>
+    {% include 'apps/faculties/partials/table/table.html' %}
   </c-slot>
 
   <c-slot name="pagination">
-    <c-table.pagination
-      url="{{ index_path }}"
-      target="{{ target }}"
-      include="[data-include]">
-
-      {% if can_export %}
-      <c-btns.icon 
-        hx-post="{{ export_path }}"
-        hx-target="#modal"
-        hx-swap="innerHTML"
-        @click="modalOpen = true"
-        title="{% translate 'export'|title %}"
-        hx-include="[data-include]">
-          <c-icons.download ratio="1.25rem"></c-icons.download>
-      </c-btns.icon>
-      {% endif %}
-
-      {% if can_create %}
-      <c-btns.icon
-          datatype="href"
-          title="{% translate 'add new record'|title %}"
-          href="{{ create_path }}">
-          <c-icons.plus ratio="1rem"></c-icons.plus>
-      </c-btns.icon>
-      {% endif %} 
-
-    </c-table.pagination>
+    {% include 'apps/faculties/partials/table/pagination.html' %}
   </c-slot>
 
 </c-layout.app-container>
 
-{% endwith %}
 {% endwith %}
 {% endwith %}
 {% endwith %}

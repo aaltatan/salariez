@@ -1,7 +1,7 @@
 {% load i18n %}
 
-<div x-transition.duration.150 x-cloak x-show="selectedRows.length">
-  <p class="font-light ltr:text-left rtl:text-right p-2 text-sm space-x-[2px]">
+<tr x-transition.duration.150 x-cloak x-show="selectedRows.length">
+  <td class="font-light ltr:text-left rtl:text-right p-2 text-sm space-x-[2px]" {{ attrs }}>
 
     <span class="font-semibold" x-text="selectedRows.length"></span>
 
@@ -23,5 +23,5 @@
     >
     <!-- end unselect all -->
     {{ slot }}
-  </p>
-</div>
+  </td>
+</tr>

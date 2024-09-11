@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.db.models import Q
 
 from . import utils
 
@@ -34,7 +35,7 @@ class SearchMixin(utils.HelperMixin, AbstractSearch):
         search_path = getattr(self, 'search_path', None)
         
         if search_path is None:
-            app_label = self.get_app_label()
+            app_label = self._get_app_label()
             search_path = reverse(f'{app_label}:search')
             
         return search_path
@@ -42,15 +43,16 @@ class SearchMixin(utils.HelperMixin, AbstractSearch):
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         
         name = request.GET.get('name')
+        value = request.GET.get('value')
         id = request.GET.get('id')
+        placeholder = request.GET.get('placeholder')
+        
+        if placeholder is None:
+            placeholder = self.input_placeholder
         
         obj = None
         if id:
             obj = get_object_or_404(self.model, id=int(id))
-        
-        placeholder = request.GET.get('placeholder')
-        if placeholder is None:
-            placeholder = self.input_placeholder
         
         search_path = self._get_search_path()
         
@@ -58,6 +60,7 @@ class SearchMixin(utils.HelperMixin, AbstractSearch):
             'path': search_path,
             'placeholder': placeholder,
             'name': name,
+            'value': value,
             'obj': obj,
             'id': id,
         } 
@@ -74,12 +77,16 @@ class SearchMixin(utils.HelperMixin, AbstractSearch):
         if q is None or q == '':
             context['qs'] = self.model.objects.none()
         else:
-            context['qs'] = self.model.objects.filter(search__contains=q)
+            keywords = q.split(" ")
+            stmt = Q()
+            for keyword in keywords:
+                stmt &= Q(search__contains=keyword)
+            context['qs'] = self.model.objects.filter(stmt)
             
         template_name = getattr(self, 'search_results_template', None)
         
         if template_name is None:
-            app_label = self.get_app_label()
+            app_label = self._get_app_label()
             template_name = f'apps/{app_label}/partials/search-results.html'
         
         return render(request, template_name , context)

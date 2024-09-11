@@ -14,8 +14,10 @@ class AbstractExport(ABC):
 class ExportMixin(AbstractExport):
     """
     utility mixin to achieve export functionality.  
+    
     ### required attributes:  
     - `resource_class: ModelResource`  
+    
     ### optional attributes:  
     - `filename: str`
     - `filter_class: FilterSet`
@@ -39,7 +41,7 @@ class ExportMixin(AbstractExport):
         if extension not in allowed_extensions:
             extension = 'xlsx'
         
-        qs = self.get_queryset()
+        qs = self._get_queryset()
         
         dataset = self.resource_class().export(qs)
         
@@ -48,7 +50,7 @@ class ExportMixin(AbstractExport):
             content_type=content_types[extension]
         )
         response['Content-Disposition'] = (
-            f'attachment; filename="{self.get_filename()}.{extension}"'
+            f'attachment; filename="{self._get_filename()}.{extension}"'
         )
         return response
     
@@ -60,9 +62,9 @@ class ExportMixin(AbstractExport):
         
         return render(request, 'partials/export-modal.html', context)
     
-    def get_filename(self):
+    def _get_filename(self):
         
-        app_label = self.get_model_class()._meta.app_label
+        app_label = self._get_model_class()._meta.app_label
         filename = getattr(self, 'filename', app_label)
         
         if filename == '':
@@ -70,15 +72,15 @@ class ExportMixin(AbstractExport):
         
         return filename
     
-    def get_model_class(self):
+    def _get_model_class(self):
         
         Klass = self.resource_class._meta.model
         
         return Klass
     
-    def get_queryset(self):
+    def _get_queryset(self):
         
-        Klass = self.get_model_class()
+        Klass = self._get_model_class()
         
         qs = Klass.objects.all()
         

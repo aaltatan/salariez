@@ -3,14 +3,15 @@
 {% load math_filters %}
 
 <c-layout.app-container id="departments-body" app_title="{% translate 'departments' %}">
+
   <c-slot name="body">
     <div class="bg-white dark:bg-gray-900">
-      <ul class="divide-y divide-gray-100 dark:divide-gray-800">
+      <ul class="divide-y divide-gray-100 dark:divide-gray-800 text-sm">
 
         {% recursetree qs %}
 
         <li
-          class="text-gray-800 dark:text-inherit [&:not(:has(li))_>_div]:!font-normal ltr:pl-{{ node.get_level|multiply:'3' }} rtl:pr-{{ node.get_level|multiply:'3' }} [&:not(:has(li))_>_div]:!text-inherit"
+          class="text-gray-800 dark:text-inherit [&:not(:has(li))_>_div]:!font-normal ltr:pl-{{ node.get_level|multiply:'3' }} rtl:pr-{{ node.get_level|multiply:'3' }} [&:not(:has(li))_>_div]:!text-inherit [&:has(li:hover)_>_div]:bg-gray-100 [&:has(li:hover)_>_div]:dark:bg-gray-950"
           x-data="{parentOpen: false}"
         >
           <div :class="parentOpen && 'font-semibold text-blue-500'" class="relative">
@@ -31,12 +32,12 @@
             {% if not node.is_leaf_node %}
             <p 
             @click="parentOpen = !parentOpen"
-            class="py-2 ltr:pl-12 rtl:pr-12 hover:dark:bg-gray-800 hover:bg-gray-100">
-              {{ node.name }}
+            class="py-2 ltr:pl-12 rtl:pr-12 cursor-pointer">
+              {{ node.department_id }} - {{ node.name }}
             </p>
             {% else %}
-            <p class="py-2 ltr:pl-12 rtl:pr-12 hover:dark:bg-gray-800 hover:bg-gray-100">
-              {{ node.name }}
+            <p class="py-2 ltr:pl-12 rtl:pr-12">
+              {{ node.department_id }} - {{ node.name }}
             </p>
             {% endif %}
 
@@ -103,4 +104,5 @@
       </c-btns.icon>
     </div>
   </c-slot>
+  
 </c-layout.app-container>

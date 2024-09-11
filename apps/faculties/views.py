@@ -81,7 +81,7 @@ class CreateView(
     permission_required = 'faculties.add_faculty'
     form_class = forms.FacultyForm
     template_name = 'apps/faculties/create.html'
-
+    
 
 class UpdateView(
     LoginRequiredMixin, PermissionRequiredMixin, UpdateMixin, View

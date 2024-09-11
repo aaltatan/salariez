@@ -28,14 +28,22 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
     
     """
     utility class for implement update record functionality.  
-    you need to set those attributes on derived class:  
+    
+    ### required attributes:  
     - `template_name: str` like `apps/<app_name>/update.html`
     - `form_class: ModelForm`
+    
+    ### optional attributes:  
+    - `form_template_name: str` like: `'partials/create-form.html'`
+    - `index_template_name: str` like: `'apps/<app_name>/index.html'`  
+    - `success_path: str` like: `'<app_name>:index'` 
+     
+    also you need to implement `get_create_path` property in the model which the `form_class` inherit from.
     """
     
     def get(self, request: HttpRequest, slug: str) -> HttpResponse:
         
-        instance = get_object_or_404(self.get_model_class(), slug=slug)
+        instance = get_object_or_404(self._get_model_class(), slug=slug)
         
         context = {
             'form': self.form_class(instance=instance),
@@ -45,20 +53,20 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
     
     def delete(self, request: HttpRequest, slug: int) -> HttpResponse:
         
-        instance = get_object_or_404(self.get_model_class(), slug=slug)
+        instance = get_object_or_404(self._get_model_class(), slug=slug)
         
         context = {
             'form': self.form_class(instance=instance),
             'instance': instance
         }
         
-        form_template_name = self.get_form_template_name('update')
+        form_template_name = self._get_form_template_name('update')
         
         return render(request, form_template_name, context)
     
     def post(self, request: HttpRequest, slug: int) -> HttpResponse:
             
-        instance = get_object_or_404(self.get_model_class(), slug=slug)
+        instance = get_object_or_404(self._get_model_class(), slug=slug)
         
         form: DepartmentForm = self.form_class(
             data=request.POST, 
@@ -71,11 +79,11 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
                 messages.success(request, _('done'))
                 
                 if request.POST.get('update'):
-                    return self.get_success_save_update_response()
+                    return self._get_success_save_update_response()
             except InvalidMove as error:
                 form.add_error('parent', error)
 
-        form_template_name = self.get_form_template_name('update')
+        form_template_name = self._get_form_template_name('update')
         context = {'form': form, 'instance': instance}
         
         return render(request, form_template_name, context)

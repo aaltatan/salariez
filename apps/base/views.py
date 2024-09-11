@@ -13,12 +13,7 @@ def index(request: HttpRequest) -> HttpResponse:
 
 
 @login_required
-def get_messages(request: HttpRequest) -> HttpResponse:
-    return render(request, 'partials/messages.html')
-
-
-@login_required
 def logout_after_change_password(request: HttpRequest):
     logout(request)
-    messages.info(request, _('password has been changed successfully'), 'bg-green-600')
+    messages.success(request, _('password has been changed successfully'))
     return redirect(reverse('login'))

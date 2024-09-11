@@ -1,8 +1,8 @@
 {% if messages %}
-<ul class="rounded-md duration-150 space-y-2">
+<ul id="messages" class="rounded-md duration-150 space-y-2">
   {% for message in messages %}
   <li
-    class="{% if message.tags %} {{ message.tags }} {% endif %} text-white px-4 py-2 text-sm font-semibold my-2 text-center capitalize rounded-lg"
+    class="{% if message.tags %} {{ message.tags }} {% endif %} text-white px-6 py-3 bg-opacity-50 text-sm font-semibold my-2 text-center capitalize rounded-lg"
     x-data="{open: true}"
     x-show="open"
     x-collapse.duration.150
