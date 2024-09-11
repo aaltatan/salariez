@@ -3,7 +3,6 @@
 <c-modal.container>
     <form 
     hx-post="{{ bulk_path }}" 
-    hx-swap="innerHTML"
     hx-include="[data-include]"
     @submit="modalOpen = false"
     >

@@ -7,11 +7,16 @@ from django.db.models import Q
 
 from . import utils
 
+
 class AbstractSearch(ABC):
     
     @property
     @abstractmethod
     def input_placeholder(self): ...
+    
+    @property
+    @abstractmethod
+    def search_container_id(self): ...
     
     @property
     @abstractmethod
@@ -22,12 +27,13 @@ class SearchMixin(utils.HelperMixin, AbstractSearch):
     
     """
     utility class for implement search for record functionality.  
-    you need to set those attributes on derived class:  
+    ### required attributes:  
     - `model: Model`
     - `input_placeholder: str` like `search faculties`
-    optional attributes:  
-        - `search_path: str` like reverse('faculties:search')
-        - `template_name: str` like `apps/<app_label>/partials/search-results.html`
+    - `search_container_id: str` like `search-container`
+    ### optional attributes:  
+    - `search_path: str` like reverse('faculties:search')
+    - `template_name: str` like `apps/<app_label>/partials/search-results.html`
     """
     
     def _get_search_path(self):
@@ -62,7 +68,7 @@ class SearchMixin(utils.HelperMixin, AbstractSearch):
             'name': name,
             'value': value,
             'obj': obj,
-            'id': id,
+            'container_id': self.search_container_id
         } 
         
         return render(request, 'components/inputs/search.html', context)
@@ -71,7 +77,8 @@ class SearchMixin(utils.HelperMixin, AbstractSearch):
         
         q = request.POST.get('q', '')
         context = {
-            'path': self._get_search_path()
+            'path': self._get_search_path(),
+            'container_id': self.search_container_id
         }
         
         if q is None or q == '':

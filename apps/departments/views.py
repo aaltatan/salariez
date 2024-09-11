@@ -23,7 +23,7 @@ class SearchView(
     
     model = models.Department
     input_placeholder = _('search department')
-
+    search_container_id = 'parent-departments-container'
 
 class ExportView(
     LoginRequiredMixin, PermissionRequiredMixin, ExportMixin, View,

@@ -21,6 +21,12 @@ class DepartmentForm(forms.ModelForm):
                     "autocomplete": "on",
                 }
             ),
+            "department_id": forms.TextInput(
+                attrs={
+                    'placeholder': _("department's id"),
+                    'x-mask': '999999999999',
+                }
+            ),
             "description": forms.Textarea(
                 attrs={
                     "x-autosize": "",

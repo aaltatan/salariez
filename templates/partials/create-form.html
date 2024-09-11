@@ -3,7 +3,6 @@
 <form
 hx-post="{{ instance.get_create_path }}"
 hx-target="this"
-hx-swap="outerHTML"
 >
 
     <div>
@@ -32,7 +31,6 @@ hx-swap="outerHTML"
                 datatheme="secondary"
                 hx-delete="{{ instance.get_create_path }}"
                 hx-target="closest form"
-                hx-swap="outerHTML"
                 hx-indicator="#reset-loading"
                 hx-disabled-elt="*[data-disabled]"
                 data-disabled
@@ -42,7 +40,6 @@ hx-swap="outerHTML"
                     </div>
                     <span>{% translate 'reset' %}</span>
                 </c-btns.btn>
-
 
             </c-slot>
 

@@ -12,6 +12,7 @@ from apps.base import admin_actions
 def reslugify_action(modeladmin, request, queryset):
     admin_actions.reslugify_action(modeladmin, request, queryset)
 
+
 @admin.register(models.Faculty)
 class FacultyAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ["name", "slug"]

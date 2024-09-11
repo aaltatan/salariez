@@ -6,7 +6,7 @@
    hx-get="{{ path }}?name=parent&id={{ obj.id }}&value={{ obj.department_id }}%20-%20{{ obj.name }}"
    hx-indicator="#search-spinner"
    hx-disabled-elt="*[data-disabled]"
-   hx-target="#search-container">
+   hx-target="#{{ container_id }}">
       {{ obj.department_id }} - {{ obj.name }}
    </c-inputs.search-item>
 
@@ -16,7 +16,8 @@
    hx-get="{{ path }}" 
    hx-indicator="#search-spinner"
    hx-disabled-elt="*[data-disabled]"
-   hx-target="#search-container">
+   hx-target="#{{ container_id }}"
+   data-empty>
         {% translate 'no results' %}
    </c-inputs.search-item>
    

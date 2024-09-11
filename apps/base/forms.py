@@ -25,7 +25,6 @@ class PaginatedByForm(forms.Form):
             'px-1 rounded-lg bg-gray-50 dark:bg-gray-900 outline-none focus:ring-1 focus:ring-blue-500 border-none duration-150'
         )
         self.fields['per_page'].widget.attrs['hx-include'] = '[data-include]'
-        self.fields['per_page'].widget.attrs['hx-swap']= 'outerHTML'
         self.fields['per_page'].widget.attrs['data-include']= ''
         
         for k, v in attrs.items():

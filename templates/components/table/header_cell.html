@@ -1,11 +1,11 @@
 {% load i18n %}
 
 <div
-  hx-swap="outerHTML"
   hx-include="[data-include]"
   hx-vals='js:{
   order: `{% firstof request.GET.order default_column %}` === "{{ default_column }}" ? "-" + "{{ default_column }}" : "{{ default_column }}" }'
   hx-trigger="click"
+  hx-swap="outerHTML"
   data-include
   class="flex items-center gap-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 duration-150 px-2 py-4"
   {{ attrs }}

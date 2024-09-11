@@ -81,7 +81,6 @@ class DeleteMixin(utils.HelperMixin, AbstractDelete):
             'path': reverse(self._get_hx_location_path()),
             'values': {**request.POST},
             'target': self._get_hx_location_target(),
-            'swap': 'outerHTML',
         }
         
         ic(hx_location)

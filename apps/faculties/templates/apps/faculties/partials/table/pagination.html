@@ -6,7 +6,6 @@
   <c-btns.icon
     hx-post="{{ export_path }}"
     hx-target="#modal"
-    hx-swap="innerHTML"
     @click="modalOpen = true"
     title="{% translate 'export'|title %}"
     hx-include="[data-include]"

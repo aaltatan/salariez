@@ -104,7 +104,6 @@ class BulkModalMixin(utils.HelperMixin, AbstractBulkModal):
             'path': reverse(self._get_hx_location_path()),
             'values': {**request.POST},
             'target': self._get_hx_location_target(),
-            'swap': 'outerHTML',
         }
         response['Hx-Location'] = json.dumps(hx_location)
             

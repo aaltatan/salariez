@@ -2,8 +2,7 @@
 
 <form
 hx-post="{{ instance.get_update_path }}"
-hx-target="this"
-hx-swap="outerHTML">
+hx-target="this">
 
     <div>
 
@@ -25,7 +24,6 @@ hx-swap="outerHTML">
                 hx-target="closest form"
                 hx-indicator="#reset-spinner"
                 hx-disabled-elt="*[data-disabled]"
-                hx-swap="outerHTML"
                 data-disabled
                 title="{% translate 'reset'|title %}"
                 >
