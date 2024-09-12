@@ -2,109 +2,25 @@
 {% load i18n %}
 {% load math_filters %}
 
+
+{% with perms.departments.add_department as can_create %}
+{% with perms.departments.delete_department as can_delete %}
+{% with perms.departments.change_department as can_update %}
+{% with perms.departments.can_export as can_export %}
+
 <c-layout.app-container id="departments-body" app_title="{% translate 'departments' %}">
 
   <c-slot name="body">
-    <div class="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 py-2 rounded-md">
-      <ul class="divide-y divide-gray-100 dark:divide-gray-800 text-sm">
-
-        {% recursetree qs %}
-
-        <li
-          class="text-gray-800 dark:text-inherit [&:not(:has(li))_>_div]:!font-normal ltr:pl-{{ node.get_level|multiply:'3' }} rtl:pr-{{ node.get_level|multiply:'3' }} [&:not(:has(li))_>_div]:!text-inherit [&:has(li:hover)_>_div]:bg-gray-100 [&:has(li:hover)_>_div]:dark:bg-gray-950"
-          x-data="{parentOpen: false}"
-        >
-          <div :class="parentOpen && 'font-semibold text-blue-500'" class="relative">
-
-            {% if not node.is_leaf_node %}
-            <div class="absolute ltr:left-2 rtl:right-2 top-1/2 -translate-y-1/2">
-              <c-btns.icon @click="parentOpen = !parentOpen">
-                <span :class="parentOpen && 'hidden'">
-                  <c-icons.plus-square ratio="1.25rem" />
-                </span>
-                <span :class="!parentOpen && 'hidden'">
-                  <c-icons.minus-square ratio="1.25rem" />
-                </span>
-              </c-btns.icon>
-            </div>
-            {% endif %}
-
-            {% if not node.is_leaf_node %}
-            <p 
-            @click="parentOpen = !parentOpen"
-            title="{{ node.description }}"
-            class="py-2 ltr:pl-12 rtl:pr-12 cursor-pointer">
-              {{ node.department_id }} - {{ node.name }}
-            </p>
-            {% else %}
-            <p 
-            title="{{ node.description }}"
-            class="py-2 ltr:pl-12 rtl:pr-12">
-              {{ node.department_id }} - {{ node.name }}
-            </p>
-            {% endif %}
-
-            <div class="absolute ltr:right-4 rtl:left-4 top-1/2 -translate-y-1/2">
-                <c-context.context
-                  class="ltr:right-[calc(100%+4px)] rtl:left-[calc(100%+4px)] bottom-2 min-w-[100px]">
-
-                  {% if node.is_leaf_node %}
-                  <c-context.btn
-                    hx-get="{{ node.get_delete_path }}"
-                    hx-target="#modal"
-                    @click="modalOpen = true">
-                      {% translate 'delete' %}
-                  </c-context.btn>
-                  {% endif %}
-
-                  <c-context.btn href="{{ node.get_update_path }}" datatype="href">
-                    {% translate 'update' %}
-                  </c-context.btn>
-
-                </c-context.context>
-            </div>
-
-          </div>
-
-          {% if not node.is_leaf_node %}
-          <ul class="divide-y divide-gray-100 dark:divide-gray-800" x-show="parentOpen" x-collapse>
-            {{ children }}
-          </ul>
-          {% endif %}
-        </li>
-
-        {% endrecursetree %}
-      </ul>
-    </div>
+      {% include 'apps/departments/partials/body/body.html' %}
   </c-slot>
-
+    
   <c-slot name="footer">
-    <div class="flex items-center justify-center gap-1">
-      <c-btns.icon
-        title="{% translate 'reset'|title %}"
-        hx-get="{% url 'departments:index' %}"
-        hx-target="#departments-body"
-      >
-        <c-icons.reset ratio="1rem" />
-      </c-btns.icon>
-
-      <c-btns.icon
-        title="{% translate 'export'|title %}"
-        @click="modalOpen = true"
-        hx-post="{% url 'departments:export' %}"
-        hx-target="#modal"
-      >
-        <c-icons.download ratio="1.25rem" />
-      </c-btns.icon>
-
-      <c-btns.icon
-        title="{% translate 'add new record'|title %}"
-        href="{% url 'departments:create' %}"
-        datatype="href"
-      >
-        <c-icons.plus ratio="1rem" />
-      </c-btns.icon>
-    </div>
+    {% include 'apps/departments/partials/body/footer.html' %}
   </c-slot>
   
 </c-layout.app-container>
+
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}

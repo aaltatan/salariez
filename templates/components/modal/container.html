@@ -1,11 +1,24 @@
 <div 
     class="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-[rgba(0,0,0,0.1)] backdrop-blur-sm z-[150]"
     x-transition.duration.150ms
-    @keydown="if ($event.code === 'Escape') modalOpen = false"
-    @keydown.debounce.150="if ($event.code === 'Escape') document.getElementById('modal').innerHTML = ''"
+    @keydown="handleKeydown"
+    @keydown.debounce.150="handleKeydownAfterDebouncing"
     x-show="modalOpen"
     role="modal"
     id="modal"
 >
     {{ slot }}
 </div>
+
+<script>
+    function handleKeydown(e) {
+        if (e.code === 'Escape') {
+            modalOpen = false;
+        }
+    }
+    function handleKeydownAfterDebouncing(e) {
+        if (e.code === 'Escape') {
+            document.getElementById('modal').outerHTML = '<div id="modal"></div>'
+        }
+    }
+</script>

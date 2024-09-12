@@ -2,7 +2,7 @@
 
 <div 
 @click.outside="modalOpen = false"
-@click.outside.debounce.200="document.getElementById('modal').innerHTML = ''"
+@click.outside.debounce.200="handleClickAfterDebouncing"
 class="shadow-md rounded-lg overflow-hidden bg-white dark:bg-gray-950 dark:border dark:border-gray-900">
 
     <header class="p-4">
@@ -24,7 +24,7 @@ class="shadow-md rounded-lg overflow-hidden bg-white dark:bg-gray-950 dark:borde
                 type="button"
                 datatheme="secondary"
                 @click="modalOpen = false"
-                @click.debounce.200="document.getElementById('modal').innerHTML = ''">
+                @click.debounce.200="handleClickAfterDebouncing">
                 {% translate 'close' %}
             </c-btns.btn>
             {{ footer }}
@@ -32,3 +32,9 @@ class="shadow-md rounded-lg overflow-hidden bg-white dark:bg-gray-950 dark:borde
     </footer>
 
 </div>
+
+<script>
+    function handleClickAfterDebouncing() {
+        document.getElementById('modal').innerHTML = ''
+    }
+</script>

@@ -6,8 +6,10 @@
    hx-get="{{ path }}?name=parent&id={{ obj.id }}&value={{ obj.department_id }}%20-%20{{ obj.name }}"
    hx-indicator="#search-spinner"
    hx-disabled-elt="*[data-disabled]"
+   title="{% if not obj.is_leaf_node %}{% translate 'primary account'|title %}{% endif %}"
    hx-target="#{{ container_id }}">
       {{ obj.department_id }} - {{ obj.name }}
+      {% if not obj.is_leaf_node %} * {% endif %}
    </c-inputs.search-item>
 
 {% empty %}

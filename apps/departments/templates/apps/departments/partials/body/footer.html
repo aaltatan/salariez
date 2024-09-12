@@ -1,0 +1,32 @@
+{% load i18n %}
+
+<div class="flex items-center justify-center gap-1">
+  <c-btns.icon
+    title="{% translate 'reset'|title %}"
+    hx-get="{% url 'departments:index' %}"
+    hx-target="#departments-body"
+  >
+    <c-icons.reset ratio="1rem" />
+  </c-btns.icon>
+
+  {% if can_export %}
+  <c-btns.icon
+    title="{% translate 'export'|title %}"
+    @click="modalOpen = true"
+    hx-post="{% url 'departments:export' %}"
+    hx-target="#modal"
+  >
+    <c-icons.download ratio="1.25rem" />
+  </c-btns.icon>
+  {% endif %}
+
+  {% if can_create %}
+  <c-btns.icon
+    title="{% translate 'add new record'|title %}"
+    href="{% url 'departments:create' %}"
+    datatype="href"
+  >
+    <c-icons.plus ratio="1rem" />
+  </c-btns.icon>
+  {% endif %}
+</div>

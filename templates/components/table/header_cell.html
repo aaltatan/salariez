@@ -10,22 +10,16 @@
   class="flex items-center gap-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 duration-150 px-2 py-4"
   {{ attrs }}
 >
-
   <span>{% translate default_column %}</span>
 
-  <span
-    class="duration-150"
-    :class="
+  <span class="duration-150" :class="
     let orderValue = document.getElementsByName('order')[0].value;
     let criteria = orderValue.endsWith('{{ default_column }}');
     if (criteria) {
       return !orderValue.startsWith('-') && 'rotate-180';
     } else {
       return 'hidden';
-    }
-    "
-  >
+    }">
     <c-icons.triangle ratio="0.5rem"></c-icons.triangle>
   </span>
-
 </div>

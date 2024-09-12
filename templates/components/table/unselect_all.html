@@ -11,17 +11,21 @@
     <span
       class="hover:underline"
       role="button"
-      @click="
-          const selector = `[data-check]`
-          document
-              .querySelectorAll(selector)
-              .forEach(el => el.checked = false);
-          selectedRows = [];
-          document.getElementById('check-all').checked = false;
-          "
+      @click="handleClick"
       >{% translate 'unselect all'|title %}</span
     >
     <!-- end unselect all -->
     {{ slot }}
   </td>
 </tr>
+
+<script>
+  function handleClick() {
+    const selector = `[data-check]`
+    document
+        .querySelectorAll(selector)
+        .forEach(el => el.checked = false);
+    selectedRows = [];
+    document.getElementById('check-all').checked = false;
+  }
+</script>
