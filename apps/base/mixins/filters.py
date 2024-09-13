@@ -10,3 +10,10 @@ class FiltersMixins:
         for keyword in keywords:
             stmt &= Q(search__contains=keyword)
         return queryset.filter(stmt)
+
+    def filter_description(self, queryset, name, value):
+        keywords = value.split(" ")
+        stmt = Q()
+        for keyword in keywords:
+            stmt &= Q(description__contains=keyword)
+        return queryset.filter(stmt)

@@ -19,9 +19,9 @@ MIDDLEWARE = [
 #     "ROOT_TAG_EXTRA_ATTRS": "hx-preserve"
 # }
 
-# INTERNAL_IPS = [
-#     "127.0.0.1",
-# ]
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
 # TESTING = "test" in sys.argv
 

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+    {% translate 'add new job subtypes'|title %}
+{% endblock %}
+
+{% block body %}
+
+    <template 
+    x-init="let hrefs = [
+        {
+            text: '{% translate 'job subtypes' %}', 
+            href: '{% url 'job_subtypes:index' %}'
+        },
+        {
+            text: '{% translate 'add new' %}', 
+            href: '{% url 'job_subtypes:create' %}'
+        },
+    ];
+    breadCrumbs = [...breadCrumbs, ...hrefs]"
+    ></template>
+
+    {% include 'partials/create-form.html' %}
+
+{% endblock %}

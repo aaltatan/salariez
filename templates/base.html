@@ -28,41 +28,18 @@ x-data="{ dark: $persist(false).as('dark') }">
 
       <div 
         id="app" 
-        class="realtive bg-gray-100/80 dark:text-white/80 dark:bg-gray-950 font-cairo" 
+        class="realtive bg-gray-100/80 dark:text-white/80 dark:bg-gray-950 font-cairo ~text-sm/base" 
         dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}"
         x-init="
         urls.map(el => {
-          return location.pathname.startsWith(el.url) 
-                    ? el.isActive = true 
-                    : el.isActive = false;
+          return el.children.map(subElement => {
+            return location.pathname.startsWith(subElement.url) 
+                      ? subElement.isActive = true 
+                      : subElement.isActive = false;
+          });
         });
         "
-        x-data="{
-          asideOpen: false, 
-          modalOpen: true,
-          breadCrumbs: [
-              {
-                text: '{% translate 'home' %}', 
-                href: '{% url 'base:index' %}'
-              },
-          ],
-          urls: [
-            {% if perms.faculties.view_faculty %}
-              {
-                text: '{% translate 'faculties' %}', 
-                url: '{% url 'faculties:index' %}', 
-                isActive: false,
-              },
-            {% endif %}
-            {% if perms.departments.view_faculty %}
-              {
-                text: '{% translate 'departments' %}', 
-                url: '{% url 'departments:index' %}', 
-                isActive: false,
-              },
-            {% endif %}
-          ]
-        }"
+        x-data="{% include 'x-data.html' %}"
       >
 
         <span class="hidden" id="no-content"></span>
@@ -93,7 +70,7 @@ x-data="{ dark: $persist(false).as('dark') }">
 
       {% if debug %}
       <script>
-        if (typeof window.htmx !== undefined) {
+        if (typeof window.htmx !== "undefined") {
           htmx.on("htmx:afterSettle", function(detail) {
               if (
                   typeof window.djdt !== "undefined"

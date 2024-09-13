@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% translate 'job subtypes'|title %}{% endblock %}
+
+{% block body %}
+
+    <span
+    hx-get="{% url 'job_subtypes:index' %}"
+    hx-trigger="load"
+    hx-target="#job-subtypes-table"
+    hx-indicator="#no-content"
+    class="hidden"
+    x-init="breadCrumbs.push(
+        {
+            text: '{% translate 'job subtypes' %}', 
+            href: '{% url 'job_subtypes:index' %}'
+        }
+    )"
+    ></span>
+
+    {% include 'apps/job_subtypes/partials/table.html' %}
+
+{% endblock %}

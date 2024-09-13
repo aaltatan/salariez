@@ -53,7 +53,10 @@ INSTALLED_APPS = [
     # apps
     "apps.base",
     "apps.faculties",
+    "apps.job_types",
+    "apps.job_subtypes",
     "apps.departments",
+    "apps.positions",
 ]
 
 MIDDLEWARE = [

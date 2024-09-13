@@ -1,12 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 
+import fluid, { extract } from 'fluid-tailwind'
 const plugin = require('tailwindcss/plugin')
 
 module.exports = {
-  content: [
-    'apps/**/*.{html,py}',
-    'templates/**/*.html'
-  ],
+  content: {
+    files: [
+      'apps/**/*.{html,py}',
+      'templates/**/*.html'
+    ],
+    extract: extract,
+  },
   safelist: [
     // cols
     'grid-cols-1',
@@ -67,8 +71,16 @@ module.exports = {
         'cairo': ['Cairo', 'sans-serif']
       }
     },
+    screens: {
+      'sm': '40rem',
+      'md': '48rem',
+      'lg': '64rem',
+      'xl': '80rem',
+      '2xl': '96rem',
+    }
   },
   plugins: [
+    require('@tailwindcss/forms'),
     require('tailwind-scrollbar')({ nocompatible: true }),
     plugin(function ({ addVariant }) {
       addVariant('hx-request', ['&.htmx-request'])
@@ -76,6 +88,7 @@ module.exports = {
     plugin(function ({ addVariant }) {
       addVariant('has-checked', ['&:has(input[type="checkbox"]:checked)'])
     }),
+    fluid,
 ],
 }
 

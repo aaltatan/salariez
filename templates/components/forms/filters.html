@@ -9,11 +9,11 @@
         <div 
         @click="open = !open"
         title="{% translate 'filters'|title %}"
-        class="inline-flex items-center justify-start rounded-lg duration-150 p-2 gap-2 my-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
+        class="inline-flex items-center justify-start rounded-lg duration-150 ~text-lg/xl p-2 gap-2 my-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
 
             <c-icons.filter ratio="1.25rem" />
 
-            <h1 class="text-xl tracking-tighter capitalize">
+            <h1 class="tracking-tighter capitalize">
                 {% translate 'filters' %}
             </h1>
 
@@ -23,15 +23,15 @@
 
         </div>
 
-        <div class="space-y-4" x-show="open" x-collapse.duration.150ms>
+        <div class="space-y-4 p-4 border border-gray-100 dark:border-gray-800 rounded-md" x-show="open" x-collapse.duration.150ms>
 
             <div class="flex items-center !flex-shrink-0 flex-1 flex-wrap gap-2">
                 {% for field in filter %}
-                    {% render_field field|add_class:'input !w-auto' %}
+                    {% render_field field|add_class:'input max-md:w-full' %}
                 {% endfor %}
             </div>
 
-            <div class="flex items-center max-sm:flex-col justify-center gap-2">
+            <div class="flex items-center justify-center gap-2">
 
                 <c-btns.btn 
                 datatype="input"

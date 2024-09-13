@@ -41,7 +41,6 @@
           <span>/</span>
           <span>{{ page_obj.paginator.num_pages }}</span>
         </div>
-        {{ pagination_form }}
       </div>
       <!--  -->
       
@@ -76,6 +75,7 @@
     </div>
 
     <div class="flex items-center gap-1 justify-center">
+      {{ pagination_form }}
       <c-btns.icon 
       hx-get="{{ url }}"
       hx-target="{{ target }}"

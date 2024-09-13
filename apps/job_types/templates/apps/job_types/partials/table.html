@@ -1,0 +1,37 @@
+{% load i18n %}
+
+{% with 'job-type-filter-form' as filter_form %}
+{% with '#job-types-table' as target %}
+
+{% with perms.job_types.add_job_type as can_create %}
+{% with perms.job_types.delete_job_type as can_delete %}
+{% with perms.job_types.change_job_type as can_update %}
+{% with perms.job_types.can_export as can_export %}
+
+{% url 'job_types:index' as index_path %}
+{% url 'job_types:bulk' as bulk_path %}
+{% url 'job_types:create' as create_path %}
+{% url 'job_types:export' as export_path %}
+
+<c-layout.app-container id="job-types-table" app_title="{% translate 'job types' %}">
+
+  <c-slot name="filters">
+    {% include 'apps/job_types/partials/table/filters.html' %}
+  </c-slot>
+
+  <c-slot name="body">
+    {% include 'apps/job_types/partials/table/table.html' %}
+  </c-slot>
+
+  <c-slot name="pagination">
+    {% include 'apps/job_types/partials/table/pagination.html' %}
+  </c-slot>
+
+</c-layout.app-container>
+
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}

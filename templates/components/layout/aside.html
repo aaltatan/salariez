@@ -3,12 +3,13 @@
 <div :class="!asideOpen && 'hidden'" class="fixed w-screen h-screen left-0 top-0 z-[49] lg:hidden" @click="asideOpen = false"></div>
 
 <div
+data-aside
 x-cloak
 x-data="{ search: '', localUrls: urls }"
   :class="asideOpen ? 'ltr:max-lg:left-0 rtl:max-lg:right-0' : 'ltr:max-lg:left-[-400px] rtl:max-lg:right-[-400px]'"
-  class="fixed w-[min(100%,300px)] h-[calc(100vh_-_2rem)] shadow-lg rounded-lg m-4 bg-white dark:bg-gray-900 dark:ring-1 dark:ring-gray-800 ltr:ml-2 rtl:mr-2 dark:shadow-none z-50 duration-150"
+  class="fixed w-[min(100%,300px)] h-[calc(100vh_-_2rem)] shadow-lg rounded-lg m-4 bg-white dark:bg-gray-900 dark:ring-1 dark:ring-gray-800 ltr:ml-2 rtl:mr-2 dark:shadow-none z-50 duration-150 ~text-base/lg"
 >
-  <aside class="relative p-3 h-full overflow-y-auto overflow-x-hidden">
+  <aside class="relative ~p-2/3 h-full overflow-y-auto overflow-x-hidden">
 
     <span class="md:hidden flex items-center justify-end">
       <c-btns.icon role="button" @click="asideOpen = false">
@@ -24,28 +25,70 @@ x-data="{ search: '', localUrls: urls }"
       </a>
     </div>
 
-    <div class="px-2 mt-8">
+    <div class="mt-8">
       <input 
       type="search"
       id="aside-search"
       x-model="search" 
-      x-on:keydown="localUrls = urls.filter(url => url.text.includes(search) || url.url.includes(search))"
-      x-on:search="localUrls = urls.filter(url => url.text.includes(search) || url.url.includes(search))"
-      placeholder="{% translate 'search ...' %}" class="input">
+      @keydown="handleSearch"
+      @search="handleSearch"
+      placeholder="{% translate 'search ...' %}" 
+      class="input w-full">
     </div>
 
-    <ul class="p-2">
+    <script>
+      function handleSearch() {
+
+        let app = document.getElementById('app');
+        let aside = document.querySelector('[data-aside]');
+        let asideSearch = document.getElementById('aside-search');
+        
+        Alpine.$data(aside).localUrls = Alpine.$data(app).urls.filter(
+          url => {
+            return (
+              url.children.some(e => {
+                return (
+                  e.text.includes(Alpine.$data(asideSearch).search.toLowerCase()) ||
+                  e.url.includes(Alpine.$data(asideSearch).search.toLowerCase())
+                )
+              })
+            )
+          }
+        );
+      }
+    </script>
+
+    <ul class="py-2">
 
       <template x-for="url in localUrls" :key="url.text" x-transition>
 
-        <li class="my-2">
-          <a 
-            :href="url.url"
-            :class="url.isActive && 'text-blue-500 font-semibold'"
-            class="flex items-center gap-2 px-4 py-2 rounded-lg duration-150 hover:bg-gray-100 outline-none focus:ring-2 focus:ring-blue-500 dark:hover:bg-gray-800"
-          >
-            <span x-text="url.text" class="capitalize text-lg"></span>
-          </a>
+        <li x-data="{
+          open: $persist(false).as('open-aside-' + url.text )
+        }">
+
+          <div 
+          class="flex items-center justify-between cursor-pointer p-2 hover:bg-gray-100 dark:hover:bg-gray-800 outline-none focus:ring-2 [&:has(_~_ul_li[aria-label='true'])]:font-bold [&:has(_~_ul_li[aria-label='true'])]:text-blue-500" 
+          @click="open = !open">
+            <span x-text="url.text" class="capitalize"></span>
+            <div class="duration-150" :class="open && 'rotate-180'">
+              <c-icons.arrow-down ratio="1rem" />
+            </div>
+          </div>
+
+          <ul class="divide-y divide-gray-100 dark:divide-gray-800" x-show="open" x-collapse>
+              <template x-for="suburl in url.children" :key="suburl.text">
+                  <li :aria-label="suburl.isActive && 'true'">
+                    <a 
+                      :href="suburl.url"
+                      :class="suburl.isActive && 'text-blue-500 font-semibold'"
+                      class="flex items-center gap-2 py-2 ltr:pl-8 rtl:pr-8 duration-150 hover:bg-gray-100 outline-none focus:ring-2 focus:ring-blue-500 dark:hover:bg-gray-800">
+                        <c-icons.star ratio="1rem" />
+                        <span x-text="suburl.text" class="capitalize"></span>
+                    </a>
+                  </li>
+              </template>
+          </ul>
+
         </li>
 
       </template>

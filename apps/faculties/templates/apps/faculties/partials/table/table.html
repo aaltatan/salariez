@@ -27,7 +27,8 @@ x-data="{ selectedRows: [] }">
             <c-table.header-cell 
             hx-get="{{ index_path }}"
             hx-target="{{ target }}"
-            default_column="name" />
+            code_name="name"
+            name="{% translate 'name' %}" />
           </th>
           <th></th>
         </c-table.header-row>

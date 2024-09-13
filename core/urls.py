@@ -13,7 +13,10 @@ urlpatterns = [
     # apps
     path('', include('apps.base.urls')),
     path('faculties/', include('apps.faculties.urls')),
+    path('job-types/', include('apps.job_types.urls')),
+    path('job-subtypes/', include('apps.job_subtypes.urls')),
     path('departments/', include('apps.departments.urls')),
+    path('positions/', include('apps.positions.urls')),
 ]
 
 if settings.DEBUG:

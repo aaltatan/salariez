@@ -14,7 +14,7 @@
 
             <ul>
                 {% for error in form.non_field_errors %}
-                <li class="bg-red-100 font-semibold text-sm p-4 rounded-lg text-red-600">
+                <li class="bg-red-100 font-semibold p-4 rounded-lg text-red-600">
                     {{ error }}
                 </li>
                 {% endfor %}
@@ -30,18 +30,18 @@
                         <span>{{ field.label }}:</span>
                     </label>
 
-                    <span class="hidden [&:has(~_input[required])]:inline-block text-[red] text-lg" title="{% translate 'required'|title %}">*</span>
+                    <span class="hidden [&:has(~_*[required])]:inline-block text-[red]" title="{% translate 'required'|title %}">*</span>
 
                     {% if field.help_text %}
-                    <div class="mb-4 text-gray-500 text-sm first-letter:capitalize">
+                    <div class="mb-4 text-gray-500 first-letter:capitalize">
                         {{ field.help_text }}
                     </div>
                     {% endif %}
                     
-                    {% render_field field|add_class:'input' %}
+                    {% render_field field|add_class:'input w-full' %}
 
                     {% if field.errors %}
-                    <ul data-form-errors class="text-[red] text-sm tracking-tight">
+                    <ul data-form-errors class="text-[red] tracking-tight">
                         {% for error in field.errors %}
                             <li
                             class="first-letter:capitalize pl-2 font-semibold my-2">
@@ -60,7 +60,7 @@
 
         </div>
 
-        <div class="flex items-center max-sm:flex-col justify-end gap-x-1 gap-y-2 my-6">
+        <div class="flex items-center max-sm:flex-wrap max-sm:justify-center justify-end gap-x-1 gap-y-2 my-6">
             {{ btns }}
         </div>
     </div>

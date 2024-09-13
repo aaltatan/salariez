@@ -3,7 +3,7 @@
 {% load math_filters %}
 
 <div class="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 py-2 rounded-md overflow-x-auto">
-  <ul class="divide-y divide-gray-100 dark:divide-gray-800 text-xs lg:text-sm">
+  <ul class="divide-y divide-gray-100 dark:divide-gray-800">
 
     {% recursetree qs %}
 
@@ -31,7 +31,7 @@
         @click="parentOpen = !parentOpen"
         title="{{ node.description }}"
         :class="parentOpen && 'font-semibold text-blue-500'"
-        class="py-2 px-12 whitespace-nowrap cursor-pointer">
+        class="py-2 px-12 whitespace-nowrap cursor-pointer overflow-clip">
           {{ node.department_id }} - {{ node.name }}
         </p>
         {% else %}
