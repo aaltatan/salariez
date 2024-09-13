@@ -15,7 +15,11 @@ content='{
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
 
 <!-- css files -->
+{% if debug %}
+<link rel="stylesheet" href="{% static 'css/dev/styles.css' %}">
+{% else %}
 <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}">
+{% endif %}
 
 <!-- global styles -->
 <style>

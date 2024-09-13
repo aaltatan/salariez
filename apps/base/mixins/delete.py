@@ -83,8 +83,6 @@ class DeleteMixin(utils.HelperMixin, AbstractDelete):
             'target': self._get_hx_location_target(),
         }
         
-        ic(hx_location)
-        
         response['Hx-Location'] = json.dumps(hx_location)
         
         return response

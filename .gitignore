@@ -5,7 +5,7 @@ __pycache__/
 
 staticfiles/
 
-static/css/dist/
+static/css/dev/
 
 app.db
 .env

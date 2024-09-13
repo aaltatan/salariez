@@ -112,15 +112,6 @@ class ListMixin(HelperMixin, AbstractList):
         
         if request_ordering is not None and request_ordering != '':
             order = [request_ordering]
-        
-        qs = (
-            self
-            .filter_class(self.request.GET or self.request.POST)
-            .qs
-            .values()
-            .order_by(*order)
-        )
-        print(qs)
             
         qs: QuerySet = (
             self

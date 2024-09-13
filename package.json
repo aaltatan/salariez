@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "npx tailwindcss -i static/css/src/input.css -o static/css/dist/styles.css --watch",
+    "dev": "npx tailwindcss -i static/css/src/input.css -o static/css/dev/styles.css --watch",
     "build": "npx tailwindcss -i static/css/src/input.css -o static/css/dist/styles.css --minify"
   },
   "keywords": [],
