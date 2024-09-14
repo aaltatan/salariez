@@ -1,0 +1,32 @@
+[
+  {
+    "model": "job_subtypes.jobsubtype",
+    "pk": 1,
+    "fields": {
+      "name": "عضو هيئة ادارية",
+      "description": "اعضاء الهيئة الادارية",
+      "slug": "عضو-هيئة-ادارية",
+      "job_type": 3
+    }
+  },
+  {
+    "model": "job_subtypes.jobsubtype",
+    "pk": 2,
+    "fields": {
+      "name": "عضو هيئة فنية",
+      "description": "",
+      "slug": "عضو-هيئة-فنية",
+      "job_type": 4
+    }
+  },
+  {
+    "model": "job_subtypes.jobsubtype",
+    "pk": 3,
+    "fields": {
+      "name": "عضو هيئة تدريسية",
+      "description": "",
+      "slug": "عضو-هيئة-تدريسية",
+      "job_type": 4
+    }
+  }
+]

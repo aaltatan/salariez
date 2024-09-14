@@ -15,7 +15,7 @@ role="button">
             {{ user.username }}
         </span>
         <span :class="open && 'rotate-180'" class='duration-150'>
-            <c-icons.arrow-down ratio="1rem"></c-icons.arrow-down>
+            <c-icons.arrow-down ratio="1rem" />
         </span>
     </div>
 
@@ -55,15 +55,17 @@ role="button">
 
         {% if user.is_superuser %}
 
-        <c-context.btn datatype="href" hx-boost="false" href="/admin/">
-            <span>{% translate 'admin site' %}</span>
-        </c-context.btn>
+            <c-context.btn datatype="href" hx-boost="false" href="/admin/">
+                <span>{% translate 'admin site' %}</span>
+            </c-context.btn>
 
-        <c-context.btn datatype="href" hx-boost="false" href="/silk/">
-            <span>silk</span>
-        </c-context.btn>
+            {% if debug %}
+                <c-context.btn datatype="href" hx-boost="false" href="/silk/">
+                    <span>silk</span>
+                </c-context.btn>
+            {% endif %}
 
-        <hr class="border-gray-200 dark:border-gray-700 ">
+            <hr class="border-gray-200 dark:border-gray-700 ">
 
         {% endif %}
 

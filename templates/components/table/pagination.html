@@ -11,11 +11,11 @@
         hx-include="{{ include }}"
         title="{% translate 'first page'|title %}"
       >
-        <c-icons.arrow-double-left ratio="1rem"></c-icons.arrow-double-left>
+        <c-icons.arrow-double-left ratio="1.25rem"></c-icons.arrow-double-left>
       </c-btns.icon>
       {% else %}
       <span class="text-xl p-1 opacity-45">
-        <c-icons.arrow-double-left ratio="1rem"></c-icons.arrow-double-left>
+        <c-icons.arrow-double-left ratio="1.25rem"></c-icons.arrow-double-left>
       </span>
       {% endif %} 
       
@@ -26,11 +26,11 @@
         hx-include="{{ include }}"
         title="{% translate 'previous page'|title %}"
       >
-        <c-icons.arrow-left ratio="1rem"></c-icons.arrow-left>
+        <c-icons.arrow-left ratio="1.25rem"></c-icons.arrow-left>
       </c-btns.icon>
       {% else %}
       <span class="text-xl p-1 opacity-45">
-        <c-icons.arrow-left ratio="1rem"></c-icons.arrow-left>
+        <c-icons.arrow-left ratio="1.25rem"></c-icons.arrow-left>
       </span>
       {% endif %} 
 
@@ -51,11 +51,11 @@
         hx-include="{{ include }}"
         title="{% translate 'next page'|title %}"
       >
-        <c-icons.arrow-right ratio="1rem"></c-icons.arrow-right>
+        <c-icons.arrow-right ratio="1.25rem"></c-icons.arrow-right>
       </c-btns.icon>
       {% else %}
       <span class="text-xl p-1 opacity-45">
-        <c-icons.arrow-right ratio="1rem"></c-icons.arrow-right>
+        <c-icons.arrow-right ratio="1.25rem"></c-icons.arrow-right>
       </span>
       {% endif %} 
       {% if page_obj.has_next %}
@@ -65,11 +65,11 @@
         hx-include="{{ include }}"
         title="{% translate 'last page'|title %}"
       >
-        <c-icons.arrow-double-right ratio="1rem"></c-icons.arrow-double-right>
+        <c-icons.arrow-double-right ratio="1.25rem"></c-icons.arrow-double-right>
       </c-btns.icon>
       {% else %}
       <span class="p-1 opacity-45">
-        <c-icons.arrow-double-right ratio="1rem"></c-icons.arrow-double-right>
+        <c-icons.arrow-double-right ratio="1.25rem"></c-icons.arrow-double-right>
       </span>
       {% endif %}
     </div>
@@ -81,7 +81,7 @@
       hx-target="{{ target }}"
       id="page-reset-btn"
       title="{% translate 'reset'|title %}">
-        <c-icons.reset ratio="1rem"></c-icons.reset>
+        <c-icons.reset ratio="1.25rem"></c-icons.reset>
       </c-btns.icon>
       {{ slot }}
       <!--  -->

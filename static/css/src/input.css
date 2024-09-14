@@ -5,7 +5,7 @@
 
 @layer utilities {
     .input {
-        @apply block mt-1 placeholder-gray-400/70 dark:placeholder-gray-500 rounded-md border border-gray-200 bg-white ~text-sm/base ~px-3/6 ~py-1.5/2 text-gray-700 focus:border-blue-500 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300 outline-none duration-75 aria-[invalid]:!ring-[red] placeholder:capitalize disabled:opacity-90 dark:disabled:opacity-50 disabled:text-blue-500;
+        @apply block mt-1 placeholder-gray-400/70 dark:placeholder-gray-500 rounded-md border border-gray-200 bg-white ~text-sm/base ~px-4/6 ~py-2/3 text-gray-700 focus:border-blue-500 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300 outline-none duration-75 aria-[invalid]:!ring-[red] placeholder:capitalize disabled:opacity-90 dark:disabled:opacity-50 disabled:text-blue-500;
     }
     .debug {
         @apply bg-slate-700;

@@ -91,6 +91,8 @@ x-data="{ selectedRows: [] }">
             {% endif %}
           </td>
         </c-table.tr>
+        {% empty %}
+        <c-table.empty-tr colspan="4" />
         {% endfor %}
       </c-table.tbody>
       <!-- end rows -->

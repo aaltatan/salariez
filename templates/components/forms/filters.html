@@ -23,11 +23,11 @@
 
         </div>
 
-        <div class="space-y-4 p-4 border border-gray-100 dark:border-gray-800 rounded-md" x-show="open" x-collapse.duration.150ms>
+        <div class="@container space-y-4 p-4 border border-gray-100 dark:border-gray-800 rounded-md" x-show="open" x-collapse.duration.150ms>
 
             <div class="flex items-center !flex-shrink-0 flex-1 flex-wrap gap-2">
                 {% for field in filter %}
-                    {% render_field field|add_class:'input max-md:w-full' %}
+                    {% render_field field|add_class:'input @sm:w-full @lg:w-auto w-full' %}
                 {% endfor %}
             </div>
 

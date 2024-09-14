@@ -80,6 +80,7 @@ module.exports = {
     }
   },
   plugins: [
+    require('@tailwindcss/container-queries'),
     require('@tailwindcss/forms'),
     require('tailwind-scrollbar')({ nocompatible: true }),
     plugin(function ({ addVariant }) {

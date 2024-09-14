@@ -6,16 +6,20 @@ from .list import ListMixin
 from .search import SearchMixin
 from .update import UpdateMixin
 from .export import ExportMixin
+from .tree import TreeMixin
+from .debug_required import DebugRequiredMixin
 
 
 __all__ = [
-    BulkModalMixin,
+    DebugRequiredMixin,
     BulkMapperMixin,
+    BulkModalMixin,
+    FiltersMixins,
     CreateMixin,
     DeleteMixin,
-    FiltersMixins,
-    ListMixin,
     SearchMixin,
     UpdateMixin,
     ExportMixin,
+    TreeMixin,
+    ListMixin,
 ]

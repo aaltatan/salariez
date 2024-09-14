@@ -1,10 +1,11 @@
-from django.shortcuts import render
 from django.views import View
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.mixins import (
     LoginRequiredMixin,
     PermissionRequiredMixin,
 )
+
+from braces.views import SuperuserRequiredMixin
 
 from . import models, forms, resources, mixins
 
@@ -14,7 +15,26 @@ from apps.base.mixins import (
     UpdateMixin,
     SearchMixin,
     ExportMixin,
+    TreeMixin,
+    DebugRequiredMixin,
 )
+
+
+class EmptyView(
+    SuperuserRequiredMixin, 
+    DebugRequiredMixin,
+    mixins.EmptyMixin, 
+    View
+):
+    
+    model = models.Department
+
+
+class BulkCreateView(
+    SuperuserRequiredMixin, mixins.BulkCreateMixin, View
+):
+    
+    model = models.Department
 
 
 class SearchView(
@@ -25,6 +45,7 @@ class SearchView(
     input_placeholder = _('search department')
     search_container_id = 'parent-departments-container'
 
+
 class ExportView(
     LoginRequiredMixin, PermissionRequiredMixin, ExportMixin, View,
 ):
@@ -34,45 +55,14 @@ class ExportView(
 
 
 class TreeView(
-    LoginRequiredMixin, PermissionRequiredMixin, View,
+    LoginRequiredMixin, 
+    PermissionRequiredMixin, 
+    TreeMixin,
+    View,
 ):
     
     permission_required = 'departments.view_department'
     model = models.Department
-    
-    def _get_app_label(self) -> str:
-        
-        app_label = self.model._meta.app_label
-        return app_label
-    
-    def _get_template_name(self) -> str:
-        
-        if getattr(self, 'template_name', None) is not None:
-            return self.template_name
-        
-        app_label = self._get_app_label()
-        
-        return f'apps/{app_label}/index.html'
-    
-    def _get_body_template_name(self) -> str:
-        
-        if getattr(self, 'body_template_name', None) is not None:
-            return self.body_template_name
-        
-        app_label = self._get_app_label()
-        return f'apps/{app_label}/partials/body.html'
-    
-    def get(self, request, *args, **kwargs):
-        
-        qs = self.model.objects.all()
-        context = {'qs': qs}
-        
-        template_name = self._get_body_template_name()
-        
-        if not request.htmx or request.htmx.boosted:
-            template_name = self._get_template_name()
-        
-        return render(request, template_name, context)
 
 
 class CreateView(

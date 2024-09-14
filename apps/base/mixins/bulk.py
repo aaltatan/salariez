@@ -66,6 +66,10 @@ class BulkModalMixin(utils.HelperMixin, AbstractBulkModal):
     utility class to implement modal appearance and its functionality.  
     you need to implement `modal_action`, `get_bulk_path` and `get_modal_content` methods for each (bulk mixin) class in `apps.<app_name>.mixin`.  
     
+    ### optional attributes:  
+    - `hx_location_path : str` like: `'<app_name>:index'`
+    - `hx_location_target : str` like: `'#<app_name>-table'` 
+    
     # Note:
     you need to set at least one bulk mixin locally in `apps.<app_name>.mixin` like `BulkDeleteMixin`
     
@@ -95,7 +99,9 @@ class BulkModalMixin(utils.HelperMixin, AbstractBulkModal):
         
         response = HttpResponse('')
         
-        pks = [int(pk) for pk in self.request.POST.get('pks').split(",")]
+        pks = [
+            int(pk) for pk in self.request.POST.get('pks').split(",")
+        ]
         
         # action & message
         self.modal_action(pks)

@@ -46,7 +46,7 @@ class HelperMixin:
     
     def _get_modal_template_name(self):
         """
-        get modal template name to use it in delete mixin
+        you can set `modal_template_name` in view class instead.  
         """
         if hasattr(self, 'modal_template_name'):
             return self.modal_template_name
@@ -56,9 +56,8 @@ class HelperMixin:
     def _get_form_template_name(
         self, view: Literal['update', 'create'] = 'create'
     ):
-        """to use it in create and update mixins
-        Args:
-            view (Literal[&#39;update&#39;, &#39;create&#39;], optional): _description_. Defaults to 'create'.
+        """
+        you can set `form_template_name` in view class instead.  
         """
         if hasattr(self, 'form_template_name'):
             return self.form_template_name
@@ -66,7 +65,9 @@ class HelperMixin:
         return f'partials/{view}-form.html'
     
     def _get_success_path(self):
-        
+        """
+        you can set `success_path` in view class instead.  
+        """
         if hasattr(self, 'success_path'):
             return self.success_path
         
@@ -75,7 +76,7 @@ class HelperMixin:
     
     def _get_hx_location_path(self):
         """
-        to use it in delete mixin
+        you can set `hx_location_path` in view class instead.  
         """
         if hasattr(self, 'hx_location_path'):
             return self.hx_location_path
@@ -85,7 +86,7 @@ class HelperMixin:
     
     def _get_hx_location_target(self):
         """
-        to use it in delete mixin
+        you can set `hx_location_target` in view class instead.  
         """
         if hasattr(self, 'hx_location_target'):
             return self.hx_location_target
@@ -94,7 +95,9 @@ class HelperMixin:
         return f'#{app_name}-table'
     
     def _get_index_template_name(self):
-        
+        """
+        you can set `index_template_name` in view class instead.  
+        """
         if hasattr(self, 'index_template_name'):
             return self.index_template_name
         

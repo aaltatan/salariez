@@ -15,5 +15,8 @@
     "fluid-tailwind": "^1.0.3",
     "tailwind-scrollbar": "^3.1.0",
     "tailwindcss": "^3.4.4"
+  },
+  "dependencies": {
+    "@tailwindcss/container-queries": "^0.1.1"
   }
 }

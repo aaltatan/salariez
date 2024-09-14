@@ -72,6 +72,7 @@ class BulkDeleteView(
     
     permission_required = 'job_types:delete_job_type'
     model = models.JobType
+    hx_location_target = '#job-types-table'
 
 
 class CreateView(
@@ -102,3 +103,4 @@ class DeleteView(
 
     permission_required = 'job_types.delete_job_type'
     model = models.JobType
+    hx_location_target = '#job-types-table'
