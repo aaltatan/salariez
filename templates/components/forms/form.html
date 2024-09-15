@@ -20,10 +20,10 @@
                 {% endfor %}
             </ul>
 
-            <div class="space-y-4">
+            <div class="~space-y-2/4">
 
                 {% for field in form %}
-                <div data-field>
+                <div data-field class="[&:has([required])_>_span]:inline-block">
 
                     <label class="font-semibold" 
                     for="{{ field.id_for_label }}">
@@ -33,7 +33,7 @@
                     <span class="hidden [&:has(~_*[required])]:inline-block text-[red]" title="{% translate 'required'|title %}">*</span>
 
                     {% if field.help_text %}
-                    <div class="mb-4 text-gray-500 first-letter:capitalize">
+                    <div class="mb-2 text-gray-500 first-letter:capitalize">
                         {{ field.help_text }}
                     </div>
                     {% endif %}

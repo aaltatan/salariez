@@ -13,6 +13,7 @@ def get_search_input(
     field_name: str,
     model: models.Model,
     value_attributes: list[str] = [],
+    required: bool = True,
 ) -> forms.TextInput:
     """
     form: ModelForm like `self`  
@@ -35,7 +36,10 @@ def get_search_input(
         hx_get_path = (
             f'{reverse(url_name)}?id={field}&name={field_name}&value={value}'
         )
-    
+        
+    if required: 
+        hx_get_path += f"{'&' if field else '?'}required=true"
+            
     return forms.TextInput({
         "hx-get": hx_get_path ,
         "hx-trigger": "load",

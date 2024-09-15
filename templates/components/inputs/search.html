@@ -5,6 +5,7 @@
 <div 
 id="{{ container_id }}" 
 hx-indicator="#search-spinner-{{ container_id }}"
+x-data="{ searchValue: '' }"
 class="relative">
   <div class="relative" hx-target="next ul">
     {% if name is None %}
@@ -13,36 +14,41 @@ class="relative">
       hx-trigger="input changed delay:500ms, search"
       hx-swap="innerHTML"
       hx-disabled-elt="*[data-disabled]"
-      @click.outside="emptySearchResults"
-      @keydown.escape="emptySearchResults"
-      @blur="onBlur"
       x-init="
       let id = $el.parentElement
                     .parentElement
                     .parentElement
                     .querySelector('label')
                     .getAttribute('for')
-      $el.id = id;
-      "
+      $el.id = id;"
+      x-model="searchValue"
+      @blur="onBlur"
       type="search"
       class="{{ theme }}"
       name="q-{{ container_id }}"
       placeholder="{{ placeholder }}"
+      {% if required %}required{% endif %}
     />
-    <input type="hidden" name="{{ name }}" />
+    <input 
+    {% if required %}required{% endif %} 
+    type="hidden" 
+    name="{{ name }}" />
 
     <script>
 
-      function onBlur() {
+      function onBlur(e) {
+        console.log(e)
         let results = document.querySelector("#{{ container_id }} ul");
         let criteria = Boolean(results.querySelector('[data-empty]'));
         if (criteria) {
-            emptySearchResults();
+            emptySearchResults(e);
         }
       }
 
-      function emptySearchResults() {
+      function emptySearchResults(e) {
         document.querySelector("#{{ container_id }} ul").innerHTML = "";
+        console.log(document.getElementById('search-input-{{ container_id }}'))
+        document.getElementById('search-input-{{ container_id }}').value= ''
       }
     </script>
 
@@ -60,10 +66,15 @@ class="relative">
                   .getAttribute('for')
     $el.id = id;
     "
+    {% if required %}required{% endif %} 
     name="q" />
-    <input type="hidden" name="{{ name }}" value="{{ obj.id }}" />
+    <input 
+    {% if required %}required{% endif %}  
+    type="hidden" 
+    name="{{ name }}" 
+    value="{{ obj.id }}" />
     <span
-      hx-get="{{ path }}"
+      hx-get="{{ path }}{% if required %}?required=true{% endif %}"
       hx-target="#{{ container_id }}"
       hx-trigger="click"
       hx-indicator="#search-spinner"
@@ -87,6 +98,8 @@ class="relative">
   </div>
 
   <ul
-    class="absolute left-0 top-[calc(100%_+_0.5rem)] w-full bg-white dark:bg-gray-950 divide-y divide-gray-200 dark:divide-gray-900 rounded-lg ring-1 ring-gray-100 dark:ring-gray-900 shadow-md dark:shadow-inner max-h-36 overflow-y-auto empty:hidden"
+    class="absolute left-0 top-[calc(100%_+_0.5rem)] w-full bg-white dark:bg-gray-950 z-50 divide-y divide-gray-200 dark:divide-gray-900 rounded-lg ring-1 ring-gray-100 dark:ring-gray-900 shadow-md dark:shadow-inner max-h-36 overflow-y-auto empty:hidden"
+    x-show="searchValue"
+    id="search-results-{{ container_id }}"
   ></ul>
 </div>

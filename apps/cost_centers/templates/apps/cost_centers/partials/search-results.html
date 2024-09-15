@@ -3,7 +3,7 @@
 {% for obj in qs %}
 
    <c-inputs.search-item
-   hx-get="{{ path }}?name=cost_center&id={{ obj.id }}&value={{ obj.name }}"
+   hx-get="{{ path }}?name=cost_center&id={{ obj.id }}&value={{ obj.name }}&required=true"
    hx-indicator="#search-spinner-{{ container_id }}"
    hx-disabled-elt="*[data-disabled]"
    hx-target="#{{ container_id }}">
@@ -13,7 +13,7 @@
 {% empty %}
 
    <c-inputs.search-item 
-   hx-get="{{ path }}" 
+   hx-get="{{ path }}?required=true" 
    hx-indicator="#search-spinner-{{ container_id }}"
    hx-disabled-elt="*[data-disabled]"
    hx-target="#{{ container_id }}"

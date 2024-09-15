@@ -46,6 +46,7 @@ class DepartmentForm(forms.ModelForm):
             field_name='parent', 
             model=models.Department,
             value_attributes=['department_id', 'name'],
+            required=False,
         )
 
         # cost centers search field

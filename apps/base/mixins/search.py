@@ -52,6 +52,10 @@ class SearchMixin(utils.HelperMixin, AbstractSearch):
         value = request.GET.get('value')
         id = request.GET.get('id')
         placeholder = request.GET.get('placeholder')
+        required = request.GET.get('required')
+        
+        if required == 'true':
+            required = True
         
         if placeholder is None:
             placeholder = self.input_placeholder
@@ -67,6 +71,7 @@ class SearchMixin(utils.HelperMixin, AbstractSearch):
             'placeholder': placeholder,
             'name': name,
             'value': value,
+            'required': required,
             'obj': obj,
             'container_id': self.search_container_id
         } 
@@ -79,7 +84,8 @@ class SearchMixin(utils.HelperMixin, AbstractSearch):
             k: v for k,v in request.POST.items() 
             if k.startswith('q-') and v != ''
         }
-        q = list(q.values())[0]
+        q = list(q.values())
+        q = q[0] if len(q) else ''
         
         context = {
             'path': self._get_search_path(),
