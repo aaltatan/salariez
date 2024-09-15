@@ -84,7 +84,11 @@ class CreateView(
     
 
 class UpdateView(
-    LoginRequiredMixin, PermissionRequiredMixin, UpdateMixin, View
+    LoginRequiredMixin, 
+    PermissionRequiredMixin, 
+    UpdateMixin,
+    mixins.CannotDeleteMixin, 
+    View
 ):
     
     permission_required = 'positions.change_position'
@@ -96,7 +100,7 @@ class DeleteView(
     LoginRequiredMixin, 
     PermissionRequiredMixin, 
     DeleteMixin, 
-    mixins.CannotDeletePositionMixin, 
+    mixins.CannotDeleteMixin, 
     View
 ):
 

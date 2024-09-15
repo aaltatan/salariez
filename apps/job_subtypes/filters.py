@@ -7,10 +7,10 @@ from django.forms import widgets
 import django_filters as filters
 
 from . import models
-from ..base.mixins.filters import FiltersMixins
+from ..base.mixins.filters import FiltersMixin
 
 
-class JobSubtypeFilterSet(FiltersMixins, filters.FilterSet):
+class JobSubtypeFilterSet(FiltersMixin, filters.FilterSet):
 
     name = filters.CharFilter(
         label="",

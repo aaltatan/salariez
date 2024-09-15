@@ -75,7 +75,12 @@ class SearchMixin(utils.HelperMixin, AbstractSearch):
     
     def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         
-        q = request.POST.get('q', '')
+        q = {
+            k: v for k,v in request.POST.items() 
+            if k.startswith('q-') and v != ''
+        }
+        q = list(q.values())[0]
+        
         context = {
             'path': self._get_search_path(),
             'container_id': self.search_container_id

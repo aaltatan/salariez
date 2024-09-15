@@ -4,15 +4,14 @@
 
 <div 
 id="{{ container_id }}" 
+hx-indicator="#search-spinner-{{ container_id }}"
 class="relative">
-  <div class="relative">
+  <div class="relative" hx-target="next ul">
     {% if name is None %}
     <input
       hx-post="{{ path }}"
       hx-trigger="input changed delay:500ms, search"
       hx-swap="innerHTML"
-      hx-target="#search-results"
-      hx-indicator="#search-spinner"
       hx-disabled-elt="*[data-disabled]"
       @click.outside="emptySearchResults"
       @keydown.escape="emptySearchResults"
@@ -27,19 +26,15 @@ class="relative">
       "
       type="search"
       class="{{ theme }}"
-      name="q"
+      name="q-{{ container_id }}"
       placeholder="{{ placeholder }}"
     />
     <input type="hidden" name="{{ name }}" />
 
     <script>
 
-      function hello() {
-        console.log('hello')
-      }
-      
       function onBlur() {
-        let results = document.getElementById("search-results");
+        let results = document.querySelector("#{{ container_id }} ul");
         let criteria = Boolean(results.querySelector('[data-empty]'));
         if (criteria) {
             emptySearchResults();
@@ -47,8 +42,7 @@ class="relative">
       }
 
       function emptySearchResults() {
-        document.getElementById("search-results").innerHTML = "";
-        document.querySelector("[name='q']").value = "";
+        document.querySelector("#{{ container_id }} ul").innerHTML = "";
       }
     </script>
 
@@ -83,17 +77,16 @@ class="relative">
     {% endif %}
 
     <div class="block absolute rtl:right-4 ltr:left-4 top-1/2 -translate-y-1/2">
-      <div id="search-spinner" class="hx-request:hidden">
+      <div id="search-spinner-{{ container_id }}" class="hx-request:hidden">
         <c-icons.magnifier ratio="1.25rem" />
       </div>
-      <div id="search-spinner" class="hidden hx-request:block hx-request:animate-spin">
+      <div id="search-spinner-{{ container_id }}" class="hidden hx-request:block hx-request:animate-spin">
         <c-icons.reset ratio="1.25rem" />
       </div>
     </div>
   </div>
 
   <ul
-    id="search-results"
     class="absolute left-0 top-[calc(100%_+_0.5rem)] w-full bg-white dark:bg-gray-950 divide-y divide-gray-200 dark:divide-gray-900 rounded-lg ring-1 ring-gray-100 dark:ring-gray-900 shadow-md dark:shadow-inner max-h-36 overflow-y-auto empty:hidden"
   ></ul>
 </div>

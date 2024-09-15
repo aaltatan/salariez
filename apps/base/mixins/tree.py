@@ -47,10 +47,12 @@ class TreeMixin(AbstractTree):
         app_label = self._get_app_label()
         return f'apps/{app_label}/partials/body.html'
     
+    def get_queryset(self):
+        return self.model.objects.all()
+    
     def get(self, request, *args, **kwargs):
         
-        qs = self.model.objects.all()
-        context = {'qs': qs}
+        context = {'qs': self.get_queryset()}
         
         template_name = self._get_body_template_name()
         

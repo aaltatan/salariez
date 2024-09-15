@@ -8,7 +8,9 @@ from . import models
 class JobSubtypeRecourse(resources.ModelResource):
     
     name = fields.Field('name', column_name=_('name').title())
-    job_type = fields.Field('job_type__name', column_name=_('job type').title())
+    job_type = fields.Field(
+      'job_type__name', column_name=_('job type').title()
+    )
     description = fields.Field(
       'description', column_name=_('description').title()
     )

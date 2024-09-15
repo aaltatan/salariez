@@ -52,9 +52,9 @@ INSTALLED_APPS = [
     "mptt",
     # apps
     "apps.base",
-    "apps.faculties",
     "apps.job_types",
     "apps.job_subtypes",
+    "apps.cost_centers",
     "apps.departments",
     "apps.positions",
 ]

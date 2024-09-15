@@ -1,0 +1,5 @@
+{% if not node.is_leaf_node %}
+<ul class="divide-y divide-gray-100 dark:divide-gray-800" x-show="parentOpen" x-collapse>
+  {{ children }}
+</ul>
+{% endif %}

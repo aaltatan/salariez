@@ -22,10 +22,13 @@
 <script>
   function handleClick() {
     const selector = `[data-check]`
+    const form = document.querySelector(
+      'form[x-data="{ selectedRows: [] }"]'
+    );
     document
         .querySelectorAll(selector)
         .forEach(el => el.checked = false);
-    selectedRows = [];
+    Alpine.$data(form).selectedRows = [];
     document.getElementById('check-all').checked = false;
   }
 </script>

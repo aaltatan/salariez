@@ -1,0 +1,29 @@
+{% load i18n %}
+
+<c-vars
+  criteria_theme="parentOpen && 'font-semibold text-blue-500'"
+  theme="py-2 ltr:pl-10 rtl:pr-10 whitespace-nowrap"
+/>
+
+{% if not node.is_leaf_node %}
+<p
+  @click="parentOpen = !parentOpen"
+  :class="{{ criteria_theme }}"
+  title="{% translate 'cost center'|title %}: {{ node.cost_center.name }}{% if description %}{% translate 'description'|title %}: {{ node.description }}{% endif %}"
+  class="{{ theme }} cursor-pointer overflow-clip"
+>
+  {% if can_update %}
+  <a class="hover:underline" href="{{ node.get_update_path }}">
+    {{ node.department_id }} - {{ node.name }}
+  </a>
+  {% endif %}
+</p>
+{% else %}
+<p :class="{{ criteria_theme }}" title="{% translate 'cost center'|title %}: {{ node.cost_center.name }}{% if description %}{% translate 'description'|title %}: {{ node.description }}{% endif %}" class="{{ theme }}">
+  {% if can_update %}
+  <a class="hover:underline" href="{{ node.get_update_path }}">
+    {{ node.department_id }} - {{ node.name }}
+  </a>
+  {% endif %}
+</p>
+{% endif %}

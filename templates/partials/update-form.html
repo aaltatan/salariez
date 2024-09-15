@@ -15,8 +15,10 @@ hx-target="this">
                 name="update" 
                 value="{% translate 'update' %}"
                 title="{% translate 'update'|title %}"
+                @click="handelClick"
+                data-confirm="{% translate 'are you sure you want to continue with these changes in' %} {{ instance.name }}{% translate '?' %}"
                 data-disabled
-                type="submit"></c-btns.btn> 
+                type="submit" />
         
                 <c-btns.btn
                 datatheme="secondary"
@@ -32,6 +34,17 @@ hx-target="this">
                     </div>
                     <span>{% translate 'reset' %}</span>
                 </c-btns.btn>
+        
+                <c-btns.btn
+                datatheme="danger"
+                datatype="input"
+                name="delete" 
+                value="{% translate 'delete' %}"
+                title="{% translate 'delete'|title %}"
+                @click="handelClick"
+                data-confirm="{% translate 'are you sure you want to delete' %} {{ instance.name }}{% translate '?' %}"
+                data-disabled
+                type="submit" />
 
             </c-slot>
 
@@ -40,3 +53,16 @@ hx-target="this">
     </div>
 
 </form>
+
+<script>
+    function handelClick(e) {
+        const element = document.querySelector('[data-confirm]');
+        const message = element.getAttribute('data-confirm').toUpperCase();
+
+        const confirmDialog = confirm(message);
+
+        if (!confirmDialog) {
+            e.preventDefault();
+        }
+    }
+</script>

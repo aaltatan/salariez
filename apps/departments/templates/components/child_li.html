@@ -1,0 +1,8 @@
+{% load math_filters %}
+
+<li
+  class="text-gray-800 dark:text-inherit [&:not(:has(li))_>_div]:!font-normal ltr:pl-{{ node.get_level|multiply:'2' }} rtl:pr-{{ node.get_level|multiply:'2' }} [&:not(:has(li))_>_div]:!text-inherit [&:has(li:hover)_>_div]:bg-gray-100 [&:has(li:hover)_>_div]:dark:bg-gray-950"
+  x-data="{parentOpen: false}"
+>
+    {{ slot }}
+</li>

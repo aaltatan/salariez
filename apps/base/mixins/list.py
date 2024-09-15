@@ -64,9 +64,13 @@ class ListMixin(HelperMixin, AbstractList):
                 )
         
         if not request.htmx or request.htmx.boosted:
-            return render(request, self.index_template_name, {})
+            response = render(request, self.index_template_name, {})
+            response['Hx-Trigger'] = 'get-messages'
+            return response
         
-        return super().get(request, *args, **kwargs)
+        response = super().get(request, *args, **kwargs)
+        response['Hx-Trigger'] = 'get-messages'
+        return response
     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         

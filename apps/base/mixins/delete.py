@@ -42,7 +42,9 @@ class DeleteMixin(utils.HelperMixin, AbstractDelete):
         if not hasattr(self, 'cannot_delete'):
             raise NotImplementedError('you need to implement cannot_delete method on your view')
         
-        instance = get_object_or_404(self.model, slug=kwargs.get('slug'))
+        instance = get_object_or_404(
+            self.model, slug=kwargs.get('slug')
+        )
         
         instance_name = getattr(instance, 'name')
         
@@ -64,18 +66,23 @@ class DeleteMixin(utils.HelperMixin, AbstractDelete):
     
     def post(self, request: HttpRequest, *args, **kwargs):
         
-        slug=kwargs.get('slug')
+        slug = kwargs.get('slug')
         
         instance = get_object_or_404(self.model, slug=slug)
         response = HttpResponse('')
         
-        cannot_delete_response = self.cannot_delete(request, *args, **kwargs)
+        cannot_delete_response = self.cannot_delete(
+            request, *args, **kwargs
+        )
         
         if cannot_delete_response is not None:
             return cannot_delete_response
         
         instance.delete()
-        messages.success(request, _('done'))
+        messages.success(
+            request, 
+            _('{} has been deleted successfully'.format(instance))
+        )
         
         hx_location = {
             'path': reverse(self._get_hx_location_path()),
@@ -84,5 +91,6 @@ class DeleteMixin(utils.HelperMixin, AbstractDelete):
         }
         
         response['Hx-Location'] = json.dumps(hx_location)
+        response['Hx-Trigger'] = 'get-messages'
         
         return response

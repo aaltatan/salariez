@@ -16,15 +16,8 @@ from apps.base.mixins import (
     DeleteMixin,
     BulkModalMixin,
     BulkMapperMixin,
-    SearchMixin,
     ExportMixin,
 )
-
-
-class SearchView(LoginRequiredMixin, SearchMixin, View):
-    
-    model = models.Faculty
-    input_placeholder = _('search faculty')
 
 
 class ListTableView(

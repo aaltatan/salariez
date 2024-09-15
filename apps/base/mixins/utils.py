@@ -14,6 +14,7 @@ class HelperMixin:
         response = render(self.request, self._get_index_template_name())
         response['HX-Retarget'] = '#app'
         response['HX-Reselect'] = '#app'
+        response['HX-Trigger'] = 'get-messages'
         response['HX-Push-Url'] = reverse(self._get_success_path())
         return response
 

@@ -9,9 +9,6 @@ x-data="{ dark: $persist(false).as('dark') }">
 
   <head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     {% include 'head.html' %}
 
     {% block styles %}{% endblock %}
@@ -25,6 +22,8 @@ x-data="{ dark: $persist(false).as('dark') }">
   hx-history="false"
   hx-indicator="#spinner"
   hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'>
+
+      <c-layout.messages-loader />
 
       <div 
         id="app" 
@@ -42,6 +41,8 @@ x-data="{ dark: $persist(false).as('dark') }">
         x-data="{% include 'x-data.html' %}"
       >
 
+        <c-layout.messages-container />
+
         <span class="hidden" id="no-content"></span>
         <c-layout.spinner></c-layout.spinner>
         <div id="modal"></div>
@@ -58,7 +59,6 @@ x-data="{ dark: $persist(false).as('dark') }">
               <div class="mt-8 mb-4 lg:hidden">
                 <c-layout.breadcrumb></c-layout.breadcrumb>
               </div>
-              <c-layout.messages></c-layout.messages>
               {% block body %}{% endblock %}
             </main>
 
@@ -67,21 +67,6 @@ x-data="{ dark: $persist(false).as('dark') }">
         </div>
 
       </div>
-
-      {% if debug %}
-      <script>
-        if (typeof window.htmx !== "undefined") {
-          htmx.on("htmx:afterSettle", function(detail) {
-              if (
-                  typeof window.djdt !== "undefined"
-                  && detail.target instanceof HTMLBodyElement
-              ) {
-                  djdt.show_toolbar();
-              }
-          });
-      }
-      </script>
-      {% endif %}
 
       {% block scripts %}{% endblock %}
 

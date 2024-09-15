@@ -1,10 +1,10 @@
 {% load i18n %}
 
-{% with perms.faculties.view_faculty as can_faculty %}
 {% with perms.departments.view_department as can_department %}
 {% with perms.job_types.view_department as can_job_type %}
 {% with perms.job_subtypes.view_department as can_job_subtype %}
 {% with perms.positions.view_position as can_position %}
+{% with perms.cost_centers.view_cost_center as can_cost_center %}
 
 {
   asideOpen: false, 
@@ -20,10 +20,10 @@
     {
       text: '{% translate 'departments' %}', 
       children: [
-          {% if can_faculty %}
+          {% if can_cost_center %}
           {
-            text: '{% translate 'faculties' %}', 
-            url: '{% url 'faculties:index' %}', 
+            text: '{% translate 'cost centers' %}', 
+            url: '{% url 'cost_centers:index' %}', 
             isActive: false,
           },
           {% endif %}

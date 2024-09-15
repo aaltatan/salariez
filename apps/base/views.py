@@ -13,7 +13,14 @@ def index(request: HttpRequest) -> HttpResponse:
 
 
 @login_required
+def get_messages(request: HttpRequest) -> HttpResponse:
+    return render(request, 'components/layout/messages.html')
+
+
+@login_required
 def logout_after_change_password(request: HttpRequest):
     logout(request)
-    messages.success(request, _('password has been changed successfully'))
+    messages.success(
+        request, _('password has been changed successfully')
+    )
     return redirect(reverse('login'))

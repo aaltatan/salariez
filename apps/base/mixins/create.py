@@ -41,7 +41,9 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
         model_name = model_class._meta.model_name
         
         if not hasattr(model_class, 'get_create_path'):
-            raise NotImplementedError(f'you need to implement get_create_path property in {model_name} model')
+            raise NotImplementedError(
+                f'you need to implement get_create_path property in {model_name} model'
+            )
         
         context = {'form': self.form_class(), 'instance': model_class}
         return render(request, self.template_name, context)
@@ -59,8 +61,8 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
         context = {'form': form}
         
         if form.is_valid():
-            form.save()
-            messages.success(request, _('done'))
+            obj = form.save()
+            messages.success(request, _('{} has been created successfully'.format(obj)))
             
             if request.POST.get('save'):
                 return self._get_success_save_update_response()
@@ -70,4 +72,7 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
         
         form_template_name = self._get_form_template_name()
         
-        return render(request, form_template_name, context)
+        response = render(request, form_template_name, context)
+        response['HX-Trigger'] = 'get-messages'
+
+        return response

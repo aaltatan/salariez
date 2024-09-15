@@ -1,9 +1,10 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from django.urls import reverse, reverse_lazy
-from django.shortcuts import get_object_or_404
 
 from . import models
+
+from apps.cost_centers import models as cc_models
+from apps.base.utils import get_search_input
 
 
 class DepartmentForm(forms.ModelForm):
@@ -11,56 +12,47 @@ class DepartmentForm(forms.ModelForm):
     class Meta:
         model = models.Department
         fields = [
-            'name', 'parent', 'department_id', 'description'
+            'name', 
+            'cost_center', 
+            'parent', 
+            'department_id', 
+            'description'
         ]
         widgets = {
-            "name": forms.TextInput(
-                attrs={
-                    "placeholder": _("department's name"),
-                    "autofocus": "on",
-                    "autocomplete": "on",
-                }
-            ),
-            "department_id": forms.TextInput(
-                attrs={
-                    'placeholder': _("department's id"),
-                    'x-mask': '999999999999',
-                }
-            ),
-            "description": forms.Textarea(
-                attrs={
-                    "x-autosize": "",
-                    "rows": "1",
-                    "autocomplete": "on",
-                    "placeholder": _("department's description"),
-                }
-            ),
+            "name": forms.TextInput({
+                "placeholder": _("department's name"),
+                "autofocus": "on",
+                "autocomplete": "on",
+            }),
+            "department_id": forms.TextInput({
+                'placeholder': _("department's id"),
+                'x-mask': '999999999999',
+            }),
+            "description": forms.Textarea({
+                "x-autosize": "",
+                "rows": "1",
+                "autocomplete": "on",
+                "placeholder": _("department's description"),
+            }),
         }
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
-        hx_get_path = reverse_lazy("departments:search")
-        
-        parent = self.initial.get("parent")
-        parent = self.data.get('parent', parent)
-        
-        value = ''
-        
-        if parent:
-            parent_obj = get_object_or_404(models.Department, id=parent)
-            value = f'{parent_obj.department_id} - {parent_obj.name}'
-        
-        if parent:
-            hx_get_path = (
-                f'{reverse("departments:search")}?id={parent}&name=parent&value={value}'
-            )
+        # departments search field
+        self.fields['parent'].widget = get_search_input(
+            form=self, 
+            url_name='departments:search', 
+            field_name='parent', 
+            model=models.Department,
+            value_attributes=['department_id', 'name'],
+        )
 
-        self.fields["parent"].widget = forms.TextInput(
-            attrs={
-                "hx-get": hx_get_path ,
-                "hx-trigger": "load",
-                "hx-target": "this",
-                "autocomplete": "on",
-            }
+        # cost centers search field
+        self.fields['cost_center'].widget = get_search_input(
+            form=self, 
+            url_name='cost_centers:search', 
+            field_name='cost_center', 
+            model=cc_models.CostCenter,
+            value_attributes=['name'],
         )

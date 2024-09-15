@@ -1,7 +1,7 @@
 from .bulk import BulkModalMixin, BulkMapperMixin
 from .create import CreateMixin
 from .delete import DeleteMixin
-from .filters import FiltersMixins
+from .filters import FiltersMixin
 from .list import ListMixin
 from .search import SearchMixin
 from .update import UpdateMixin
@@ -14,7 +14,7 @@ __all__ = [
     DebugRequiredMixin,
     BulkMapperMixin,
     BulkModalMixin,
-    FiltersMixins,
+    FiltersMixin,
     CreateMixin,
     DeleteMixin,
     SearchMixin,

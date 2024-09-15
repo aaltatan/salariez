@@ -9,7 +9,6 @@ from mptt.exceptions import InvalidMove
 
 from . import utils
 
-from apps.departments.forms import DepartmentForm
 
 class AbstractUpdate(ABC):
     
@@ -64,20 +63,36 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
         
         return render(request, form_template_name, context)
     
-    def post(self, request: HttpRequest, slug: int) -> HttpResponse:
+    def post(
+        self, request: HttpRequest, slug: int, *args, **kwargs
+    ) -> HttpResponse:
             
         instance = get_object_or_404(self._get_model_class(), slug=slug)
         
-        form: DepartmentForm = self.form_class(
-            data=request.POST, 
-            instance=instance
-        )
+        form = self.form_class(data=request.POST, instance=instance)
+        
+        if request.POST.get('delete'):
+            
+            kwargs['slug'] = slug
+            
+            if self.cannot_delete(request, *args, **kwargs) is None:
+                instance.delete()
+                messages.success(
+                    request,
+                    _(
+                        '{} has been deleted successfully'
+                        .format(instance)
+                    )
+                )
+            return self._get_success_save_update_response() 
         
         if form.is_valid():
             try:
-                form.save()
-                messages.success(request, _('done'))
-                
+                obj = form.save()
+                messages.success(
+                    request, 
+                    _('{} has been updated successfully'.format(obj))
+                )
                 if request.POST.get('update'):
                     return self._get_success_save_update_response()
             except InvalidMove as error:

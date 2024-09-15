@@ -12,9 +12,9 @@ urlpatterns = [
     path("password-change-done/", logout_after_change_password, name='password_change_done'),
     # apps
     path('', include('apps.base.urls')),
-    path('faculties/', include('apps.faculties.urls')),
     path('job-types/', include('apps.job_types.urls')),
     path('job-subtypes/', include('apps.job_subtypes.urls')),
+    path('cost-centers/', include('apps.cost_centers.urls')),
     path('departments/', include('apps.departments.urls')),
     path('positions/', include('apps.positions.urls')),
 ]

@@ -1,0 +1,27 @@
+{% load i18n %}
+
+<c-table.pagination url="{{ index_path }}" target="{{ target }}" include="[data-include]">
+
+  {% if can_export %}
+  <c-btns.icon
+    hx-post="{{ export_path }}"
+    hx-target="#modal"
+    @click="modalOpen = true"
+    title="{% translate 'export'|title %}"
+    hx-include="[data-include]"
+  >
+    <c-icons.download ratio="1.5rem"></c-icons.download>
+  </c-btns.icon>
+  {% endif %} 
+  
+  {% if can_create %}
+  <c-btns.icon
+    datatype="href"
+    title="{% translate 'add new record'|title %}"
+    href="{{ create_path }}"
+  >
+    <c-icons.plus ratio="1.25rem"></c-icons.plus>
+  </c-btns.icon>
+  {% endif %}
+
+</c-table.pagination>

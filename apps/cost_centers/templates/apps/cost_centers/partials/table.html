@@ -1,0 +1,37 @@
+{% load i18n %}
+
+{% with 'cost-centers-filter-form' as filter_form %}
+{% with '#cost-centers-table' as target %}
+
+{% with perms.cost_centers.add_cost_center as can_create %}
+{% with perms.cost_centers.delete_cost_center as can_delete %}
+{% with perms.cost_centers.change_cost_center as can_update %}
+{% with perms.cost_centers.can_export as can_export %}
+
+{% url 'cost_centers:index' as index_path %}
+{% url 'cost_centers:bulk' as bulk_path %}
+{% url 'cost_centers:create' as create_path %}
+{% url 'cost_centers:export' as export_path %}
+
+<c-layout.app-container id="cost-centers-table" app_title="{% translate 'cost centers' %}">
+
+  <c-slot name="filters">
+    {% include 'apps/cost_centers/partials/table/filters.html' %}
+  </c-slot>
+
+  <c-slot name="body">
+    {% include 'apps/cost_centers/partials/table/table.html' %}
+  </c-slot>
+
+  <c-slot name="pagination">
+    {% include 'apps/cost_centers/partials/table/pagination.html' %}
+  </c-slot>
+
+</c-layout.app-container>
+
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}

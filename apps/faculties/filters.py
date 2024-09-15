@@ -6,10 +6,10 @@ from django.forms import widgets
 import django_filters as filters
 
 from . import models
-from ..base.mixins.filters import FiltersMixins
+from ..base.mixins.filters import FiltersMixin
 
 
-class FacultyFilterSet(FiltersMixins, filters.FilterSet):
+class FacultyFilterSet(FiltersMixin, filters.FilterSet):
 
     name = filters.CharFilter(
         label="",

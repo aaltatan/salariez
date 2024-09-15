@@ -10,6 +10,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 from . import utils
 
 from apps.base import validators, utils as base_utils
+from apps.cost_centers import models as cc_models
 
 
 class SearchManager(models.Manager):
@@ -62,6 +63,12 @@ class Department(MPTTModel):
         null=True,
         blank=True,
         related_name='children'
+    )
+    cost_center = models.ForeignKey(
+        cc_models.CostCenter,
+        on_delete=models.PROTECT,
+        related_name='departments',
+        verbose_name=_('cost center')
     )
     
     objects = SearchManager()

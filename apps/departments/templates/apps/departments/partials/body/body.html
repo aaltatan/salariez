@@ -2,15 +2,11 @@
 {% load i18n %}
 {% load math_filters %}
 
-<div class="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 py-8 rounded-md overflow-x-auto">
-  <ul class="divide-y divide-gray-100 dark:divide-gray-800">
-
+<c-body-container>
+  <c-main-ul>
     {% recursetree qs %}
+    <c-child-li>
 
-    <li
-      class="text-gray-800 dark:text-inherit [&:not(:has(li))_>_div]:!font-normal ltr:pl-{{ node.get_level|multiply:'2' }} rtl:pr-{{ node.get_level|multiply:'2' }} [&:not(:has(li))_>_div]:!text-inherit [&:has(li:hover)_>_div]:bg-gray-100 [&:has(li:hover)_>_div]:dark:bg-gray-950"
-      x-data="{parentOpen: false}"
-    >
       <div class="relative grid grid-cols-[1fr_2rem] items-center">
 
         {% if not node.is_leaf_node %}
@@ -26,22 +22,7 @@
         </div>
         {% endif %}
 
-        {% if not node.is_leaf_node %}
-        <p 
-        @click="parentOpen = !parentOpen"
-        title="{{ node.description }}"
-        :class="parentOpen && 'font-semibold text-blue-500'"
-        class="py-2 ltr:pl-10 rtl:pr-10 whitespace-nowrap cursor-pointer overflow-clip">
-          {{ node.department_id }} - {{ node.name }}
-        </p>
-        {% else %}
-        <p 
-        title="{{ node.description }}"
-        :class="parentOpen && 'font-semibold text-blue-500'"
-        class="py-2 ltr:pl-10 rtl:pr-10 whitespace-nowrap">
-          {{ node.department_id }} - {{ node.name }}
-        </p>
-        {% endif %}
+        <c-node-p />
 
         {% if can_update or can_delete %}
         <div>
@@ -69,13 +50,9 @@
 
       </div>
 
-      {% if not node.is_leaf_node %}
-      <ul class="divide-y divide-gray-100 dark:divide-gray-800" x-show="parentOpen" x-collapse>
-        {{ children }}
-      </ul>
-      {% endif %}
-    </li>
-
+      <c-child-ul />
+      
+    </c-child-li>
     {% endrecursetree %}
-  </ul>
-</div>
+  </c-main-ul>
+</c-body-container>

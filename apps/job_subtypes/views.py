@@ -16,15 +16,8 @@ from apps.base.mixins import (
     DeleteMixin,
     BulkModalMixin,
     BulkMapperMixin,
-    SearchMixin,
     ExportMixin,
 )
-
-
-class SearchView(LoginRequiredMixin, SearchMixin, View):
-    
-    model = models.JobSubtype
-    input_placeholder = _('search job subtype')
 
 
 class ListTableView(
@@ -88,7 +81,11 @@ class CreateView(
     
 
 class UpdateView(
-    LoginRequiredMixin, PermissionRequiredMixin, UpdateMixin, View
+    LoginRequiredMixin, 
+    PermissionRequiredMixin, 
+    UpdateMixin, 
+    mixins.CannotDeleteMixin, 
+    View
 ):
     
     permission_required = 'job_subtypes.change_job_subtype'
@@ -100,7 +97,7 @@ class DeleteView(
     LoginRequiredMixin, 
     PermissionRequiredMixin, 
     DeleteMixin, 
-    mixins.CannotDeleteJobSubtypeMixin, 
+    mixins.CannotDeleteMixin, 
     View
 ):
 

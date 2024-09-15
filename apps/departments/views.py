@@ -63,6 +63,9 @@ class TreeView(
     
     permission_required = 'departments.view_department'
     model = models.Department
+    
+    def get_queryset(self):
+        return super().get_queryset().select_related('cost_center')
 
 
 class CreateView(
@@ -78,7 +81,7 @@ class DeleteView(
     LoginRequiredMixin, 
     PermissionRequiredMixin, 
     DeleteMixin, 
-    mixins.CannotDeleteFacultyMixin, # locale mixin
+    mixins.CannotDeleteMixin, # locale mixin
     View,
 ):
     
@@ -90,6 +93,7 @@ class DeleteView(
 class UpdateView(
     LoginRequiredMixin,
     PermissionRequiredMixin,
+    mixins.CannotDeleteMixin, # locale mixin
     UpdateMixin,
     View,
 ):

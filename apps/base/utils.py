@@ -2,6 +2,45 @@ import re
 
 from django.utils.text import slugify
 from django.db import models
+from django.shortcuts import get_object_or_404
+from django import forms
+from django.urls import reverse
+
+
+def get_search_input(
+    form: forms.ModelForm,
+    url_name: str,
+    field_name: str,
+    model: models.Model,
+    value_attributes: list[str] = [],
+) -> forms.TextInput:
+    """
+    form: ModelForm like `self`  
+    url_name: str like `departments:search`  
+    field_name: str like `parent`  
+    model: Model like `Department`  
+    value: list[str] = [] like `f'{parent_obj.department_id} - {parent_obj.name}'`
+    """
+    hx_get_path = reverse(url_name)
+    
+    field = form.initial.get(field_name)
+    field = form.data.get(field_name, field)
+    
+    if field and value_attributes:
+        obj = get_object_or_404(model, id=field)
+        values = [getattr(obj, attr) for attr in value_attributes]
+        value = " - ".join(values)
+    
+    if field:
+        hx_get_path = (
+            f'{reverse(url_name)}?id={field}&name={field_name}&value={value}'
+        )
+    
+    return forms.TextInput({
+        "hx-get": hx_get_path ,
+        "hx-trigger": "load",
+        "hx-target": "this",
+    })
 
 
 def increase_last_digit(string: str) -> str:
