@@ -69,7 +69,7 @@ role="button">
 
         {% endif %}
 
-        <c-context.btn datatype="href" class="w-full capitalize font-semibold block dark:hover:bg-gray-800 hover:bg-gray-100 duration-100 px-4 py-2 ltr:text-left rtl:text-right " @click="dark = !dark;">
+        <c-context.btn datatype="href" class="w-full capitalize font-semibold block dark:hover:bg-gray-800 hover:bg-gray-100 duration-100 px-4 py-2 ltr:text-left rtl:text-right" @click="dark = !dark;">
 
             <span x-show="dark" title="{% translate 'light theme'|title %}">
                 {% translate 'light theme' %}
@@ -90,6 +90,21 @@ role="button">
             name="language" 
             value="{% if LANGUAGE_CODE == 'ar' %}en{% else %}ar{% endif %}">
         </c-context.form>
+
+        <hr class="border-gray-200 dark:border-gray-700 ">
+        
+        <c-context.btn>
+            <label for="messages-timeout">
+                {% translate 'messages timeout' %}
+            </label>
+            <select class="input !py-1 !px-2 w-full" x-model="messagesTimeout" id="messages-timeout">
+                <option value="5000">{% translate '5 seconds' %}</option>
+                <option value="10000">{% translate '10 seconds' %}</option>
+                <option value="15000">{% translate '15 seconds' %}</option>
+                <option value="30000">{% translate '30 seconds' %}</option>
+                <option value="60000">{% translate '1 minute' %}</option>
+            </select>
+        </c-context.btn>
 
         <hr class="border-gray-200 dark:border-gray-700 ">
 

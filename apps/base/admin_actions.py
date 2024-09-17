@@ -3,12 +3,12 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
 
 
-def reslugify_action(modeladmin, request, queryset):
+def reslugify_action(request, queryset):
 
     for obj in queryset:
         obj.slug = slugify(obj.name, allow_unicode=True)
         obj.save()
 
     messages.success(
-        request, _("all selected faculties has been reslugifed successfully")
+        request, _("all ({}) selected object(s) has been reslugifed successfully").format(queryset.count())
     )

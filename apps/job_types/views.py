@@ -6,6 +6,8 @@ from django.contrib.auth.mixins import (
     PermissionRequiredMixin
 )
 
+from braces.views import SuperuserRequiredMixin
+
 from . import models, forms, filters, mixins, resources
 
 from apps.base import forms as base_forms
@@ -16,6 +18,7 @@ from apps.base.mixins import (
     DeleteMixin,
     BulkModalMixin,
     BulkMapperMixin,
+    ReslugifyModalMixin,
     ExportMixin,
 )
 
@@ -51,7 +54,8 @@ class ExportView(
 class BulkModalView(LoginRequiredMixin, BulkMapperMixin, RedirectView):
     
     mapper = {
-        'bulk_delete': 'job_types:bulk-delete'
+        'bulk_delete': 'job_types:bulk-delete',
+        'bulk_reslugify': 'job_types:bulk-reslugify',
     }
 
 
@@ -65,7 +69,17 @@ class BulkDeleteView(
     
     permission_required = 'job_types:delete_job_type'
     model = models.JobType
-    hx_location_target = '#job-types-table'
+
+
+class BulkReslugifyView(
+    LoginRequiredMixin, 
+    BulkModalMixin,
+    SuperuserRequiredMixin,
+    ReslugifyModalMixin,
+    View
+):
+    model = models.JobType
+    bulk_path = 'job_types:bulk-reslugify'
 
 
 class CreateView(
@@ -74,7 +88,6 @@ class CreateView(
     
     permission_required = 'job_types.add_job_type'
     form_class = forms.JobTypeForm
-    template_name = 'apps/job_types/create.html'
     
 
 class UpdateView(
@@ -87,7 +100,6 @@ class UpdateView(
     
     permission_required = 'job_types.change_job_type'
     form_class = forms.JobTypeForm
-    template_name = 'apps/job_types/update.html'
 
 
 class DeleteView(
@@ -100,4 +112,3 @@ class DeleteView(
 
     permission_required = 'job_types.delete_job_type'
     model = models.JobType
-    hx_location_target = '#job-types-table'

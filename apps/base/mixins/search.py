@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
+from inspect import signature
 
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404
@@ -8,19 +10,34 @@ from django.db.models import Q
 from . import utils
 
 
+@dataclass
+class Attrs:
+    name: str | None = None
+    value: str | None = None
+    id: str | None = None
+    placeholder: str | None = None
+    required: str | None = None
+    
+    @classmethod
+    def from_request(cls, **kwargs):
+        fields = signature(cls).parameters
+        return cls(**{k:v[0] for k,v in kwargs.items() if k in fields})
+    
+    def __post_init__(self):
+        self.required = self.required == 'true'
+        if self.id:
+            self.id = int(self.id)
+
+
 class AbstractSearch(ABC):
     
     @property
     @abstractmethod
-    def input_placeholder(self): ...
-    
-    @property
-    @abstractmethod
-    def search_container_id(self): ...
-    
-    @property
-    @abstractmethod
     def model(self): ...
+    
+    @property
+    @abstractmethod
+    def input_placeholder(self): ...
 
 
 class SearchMixin(utils.HelperMixin, AbstractSearch):
@@ -30,11 +47,19 @@ class SearchMixin(utils.HelperMixin, AbstractSearch):
     ### required attributes:  
     - `model: Model`
     - `input_placeholder: str` like `search faculties`
-    - `search_container_id: str` like `search-container`
     ### optional attributes:  
+    - `search_container_id: str` like `search-container`
     - `search_path: str` like reverse('faculties:search')
     - `template_name: str` like `apps/<app_label>/partials/search-results.html`
     """
+
+    def _get_container_id(self):
+
+        if getattr(self, 'search_container_id', None) is not None:
+            return self.search_container_id
+
+        app_label = self._app_label_to_kebab(self._get_app_label())
+        return f'{app_label}-search-container'
     
     def _get_search_path(self):
         
@@ -47,33 +72,24 @@ class SearchMixin(utils.HelperMixin, AbstractSearch):
         return search_path
     
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        
-        name = request.GET.get('name')
-        value = request.GET.get('value')
-        id = request.GET.get('id')
-        placeholder = request.GET.get('placeholder')
-        required = request.GET.get('required')
-        
-        if required == 'true':
-            required = True
-        
-        if placeholder is None:
-            placeholder = self.input_placeholder
+
+        attrs = Attrs.from_request(**request.GET)
+
+        if attrs.placeholder is None:
+            attrs.placeholder = self.input_placeholder
         
         obj = None
-        if id:
-            obj = get_object_or_404(self.model, id=int(id))
-        
+
+        if attrs.id:
+            obj = get_object_or_404(self.model, id=attrs.id)
+
         search_path = self._get_search_path()
-        
+
         context = {
             'path': search_path,
-            'placeholder': placeholder,
-            'name': name,
-            'value': value,
-            'required': required,
+            **attrs.__dict__,
             'obj': obj,
-            'container_id': self.search_container_id
+            'container_id': self._get_container_id()
         } 
         
         return render(request, 'components/inputs/search.html', context)
@@ -89,7 +105,7 @@ class SearchMixin(utils.HelperMixin, AbstractSearch):
         
         context = {
             'path': self._get_search_path(),
-            'container_id': self.search_container_id
+            'container_id': self._get_container_id()
         }
         
         if q is None or q == '':

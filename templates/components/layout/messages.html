@@ -1,28 +1,27 @@
 {% if messages %}
-{% for message in messages %}
-<li
-  class="{% if message.tags %} {{ message.tags }} {% endif %} text-white px-4 py-2 bg-opacity-50 font-semibold mx-2 text-center capitalize rounded-lg w-full"
-  x-data="{open: true}"
-  x-show="open"
-  x-transition:enter="transition ease-out duration-100"
-  x-transition:enter-start="opacity-0 scale-90"
-  x-transition:enter-end="opacity-100 scale-100"
-  x-transition:leave="transition ease-in duration-100"
-  x-transition:leave-start="opacity-100 scale-100"
-  x-transition:leave-end="opacity-0 scale-90"
->
-  <div class="flex items-center gap-2 justify-between">
-    <span>{{ message }}</span>
-    <span class="text-black dark:text-white">
-      <c-btns.icon
-        @click="open = false"
-        @click.debounce.150ms="$el.parentElement.parentElement.parentElement.remove()"
-        x-init="setTimeout(() => $el.click(), 10_000)"
-      >
-        <c-icons.x ratio="1rem" />
-      </c-btns.icon>
-    </span>
-  </div>
-</li>
-{% endfor %}
+  {% for message in messages %}
+  <li
+    class="{% if message.tags %} {{ message.tags }} {% endif %} text-white px-4 py-2 bg-opacity-50 font-semibold mx-2 text-center rounded-lg w-full"
+    x-data="{open: true}"
+    x-show="open"
+    x-transition:enter="transition ease-out duration-100"
+    x-transition:enter-start="opacity-0 scale-90"
+    x-transition:enter-end="opacity-100 scale-100"
+    x-transition:leave="transition ease-in duration-100"
+    x-transition:leave-start="opacity-100 scale-100"
+    x-transition:leave-end="opacity-0 scale-90"
+  >
+    <div class="flex items-center gap-2 justify-between">
+      <span class="first-letter:capitalize">{{ message }}</span>
+      <span class="text-black dark:text-white">
+        <c-btns.icon
+          x-init="setTimeout(() => $el.click(), +messagesTimeout)"
+          @click.debounce.150ms="$el.parentElement.parentElement.parentElement.remove()"
+          @click="open = false">
+          <c-icons.x ratio="1rem" />
+        </c-btns.icon>
+      </span>
+    </div>
+  </li>
+  {% endfor %}
 {% endif %}

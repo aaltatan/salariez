@@ -1,30 +1,26 @@
 {% load i18n %}
 
 <c-modal.container>
-    <form 
-    hx-post="{{ bulk_path }}" 
-    hx-include="[data-include]"
-    @submit="modalOpen = false"
-    >
-        <c-modal.modal>
+  <form hx-post="{{ bulk_path }}" hx-include="[data-include]" @submit="modalOpen = false">
+    <c-modal.modal>
+      <c-slot name="header">
+        <span class="capitalize">{% translate 'confirm' %}</span>
+      </c-slot>
 
-            <c-slot name="header">
-                <span class="capitalize">{% translate 'confirm' %}</span>
-            </c-slot>
+      <c-slot name="body">
+        <input type="hidden" name="pks" value="{{ pks }}" />
+        {{ modal_content|escape }}
+      </c-slot>
 
-            <c-slot name="body">
-                <input type="hidden" name="pks" value="{{ pks }}">
-                {{ modal_content|escape }}
-            </c-slot>
-
-            <c-slot name="footer">
-                <c-btns.btn 
-                datatype="input" 
-                type="submit" 
-                @click="modalOpen = false" 
-                name="bulk_delete" value="{% translate 'confirm' %}"></c-btns.btn>
-            </c-slot>
-
-        </c-modal.modal>
-    </form>
+      <c-slot name="footer">
+        <c-btns.btn
+          datatype="input"
+          type="submit"
+          @click="modalOpen = false"
+          name="bulk_delete"
+          value="{% translate 'confirm' %}"
+        ></c-btns.btn>
+      </c-slot>
+    </c-modal.modal>
+  </form>
 </c-modal.container>

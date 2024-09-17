@@ -7,8 +7,6 @@ from django.http import HttpResponse, HttpRequest
 from django.contrib import messages
 from django.urls import reverse
 
-from icecream import ic
-
 from . import utils
 
 
@@ -49,8 +47,12 @@ class DeleteMixin(utils.HelperMixin, AbstractDelete):
         instance_name = getattr(instance, 'name')
         
         message = (
-            _('are you sure you want to delete {} ?')
-            .format(instance_name)
+            _('are you sure you want to {}delete{} {} ?')
+            .format(
+                '<span class="text-[red] uppercase underline font-bold">',
+                '</span>',
+                instance_name, 
+            )
         )
         
         context = {

@@ -1,4 +1,6 @@
-from .bulk import BulkModalMixin, BulkMapperMixin
+from .bulk import (
+  BulkModalMixin, BulkMapperMixin, ReslugifyModalMixin, BulkActionMixin
+)
 from .create import CreateMixin
 from .delete import DeleteMixin
 from .filters import FiltersMixin
@@ -14,6 +16,8 @@ __all__ = [
     DebugRequiredMixin,
     BulkMapperMixin,
     BulkModalMixin,
+    ReslugifyModalMixin,
+    BulkActionMixin,
     FiltersMixin,
     CreateMixin,
     DeleteMixin,

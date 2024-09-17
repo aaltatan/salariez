@@ -1,0 +1,146 @@
+[
+  {
+    "model": "positions.position",
+    "pk": 1,
+    "fields": {
+      "name": "رئيس الجامعة",
+      "description": "",
+      "slug": "رئيس-الجامعة"
+    }
+  },
+  {
+    "model": "positions.position",
+    "pk": 2,
+    "fields": {
+      "name": "نائب رئيس الجامعة للشؤون العلمية",
+      "description": "",
+      "slug": "نائب-رئيس-الجامعة-للشؤون-العلمية"
+    }
+  },
+  {
+    "model": "positions.position",
+    "pk": 3,
+    "fields": {
+      "name": "نائب رئيس الجامعة للشؤون الإدارية",
+      "description": "",
+      "slug": "نائب-رئيس-الجامعة-للشؤون-الإدارية"
+    }
+  },
+  {
+    "model": "positions.position",
+    "pk": 4,
+    "fields": {
+      "name": "رئيس مجلس الأمناء",
+      "description": "",
+      "slug": "رئيس-مجلس-الأمناء"
+    }
+  },
+  {
+    "model": "positions.position",
+    "pk": 5,
+    "fields": {
+      "name": "عميد كلية",
+      "description": "",
+      "slug": "عميد-كلية"
+    }
+  },
+  {
+    "model": "positions.position",
+    "pk": 6,
+    "fields": {
+      "name": "نائب عميد كلية",
+      "description": "",
+      "slug": "نائب-عميد-كلية"
+    }
+  },
+  {
+    "model": "positions.position",
+    "pk": 7,
+    "fields": {
+      "name": "رئيس قسم كلية",
+      "description": "",
+      "slug": "رئيس-قسم-كلية"
+    }
+  },
+  {
+    "model": "positions.position",
+    "pk": 8,
+    "fields": {
+      "name": "رئيس قسم إداري",
+      "description": "",
+      "slug": "رئيس-قسم-إداري"
+    }
+  },
+  {
+    "model": "positions.position",
+    "pk": 9,
+    "fields": {
+      "name": "مدير",
+      "description": "",
+      "slug": "مدير"
+    }
+  },
+  {
+    "model": "positions.position",
+    "pk": 10,
+    "fields": {
+      "name": "عضو هيئة إدارية",
+      "description": "",
+      "slug": "موظف-إداري"
+    }
+  },
+  {
+    "model": "positions.position",
+    "pk": 11,
+    "fields": {
+      "name": "مشرف مخبر",
+      "description": "",
+      "slug": "مشرف-مخبر"
+    }
+  },
+  {
+    "model": "positions.position",
+    "pk": 12,
+    "fields": {
+      "name": "محضر مخبر",
+      "description": "",
+      "slug": "محضر-مخبر"
+    }
+  },
+  {
+    "model": "positions.position",
+    "pk": 13,
+    "fields": {
+      "name": "مشرف عيادة",
+      "description": "",
+      "slug": "مشرف-عيادة"
+    }
+  },
+  {
+    "model": "positions.position",
+    "pk": 14,
+    "fields": {
+      "name": "محضر عيادة",
+      "description": "",
+      "slug": "محضر-عيادة"
+    }
+  },
+  {
+    "model": "positions.position",
+    "pk": 15,
+    "fields": {
+      "name": "عضو هيئة تدريسية",
+      "description": "",
+      "slug": "عضو-هيئة-تدريسية"
+    }
+  },
+  {
+    "model": "positions.position",
+    "pk": 16,
+    "fields": {
+      "name": "عضو هيئة فنية",
+      "description": "",
+      "slug": "عضو-هيئة-فنية"
+    }
+  }
+]

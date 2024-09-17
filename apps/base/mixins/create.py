@@ -13,10 +13,6 @@ class AbstractCreate(ABC):
     @property
     @abstractmethod
     def form_class(self): ...
-    
-    @property
-    @abstractmethod
-    def template_name(self): ...
 
 
 class CreateMixin(utils.HelperMixin, AbstractCreate):
@@ -25,16 +21,16 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
     
     ### required attributes:  
     - `form_class: ModelForm` to use it inside form_template_name
-    - `template_name: str` to use it as main template  
     
     ### optional attributes:  
+    - `template_name: str` to use it as main template  
     - `form_template_name: str` like: `'partials/create-form.html'`
     - `index_template_name: str` like: `'apps/<app_name>/index.html'`  
     - `success_path: str` like: `'<app_name>:index'` 
      
     also you need to implement `get_create_path` property in the model which the `form_class` inherit from.
     """
-    
+
     def get(self, request: HttpRequest) -> HttpResponse:
         
         model_class = self.form_class._meta.model
@@ -45,8 +41,12 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
                 f'you need to implement get_create_path property in {model_name} model'
             )
         
+        template_name = self._get_template_name_create_update()
         context = {'form': self.form_class(), 'instance': model_class}
-        return render(request, self.template_name, context)
+
+        return render(
+            request, template_name, context
+        )
     
     def delete(self, request: HttpRequest) -> HttpResponse:
         

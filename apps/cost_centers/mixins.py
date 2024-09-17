@@ -1,14 +1,15 @@
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
-from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from django.template.loader import render_to_string
 
-from apps.base.mixins.bulk import AbstractBulkAction
+from apps.base.mixins.bulk import BulkActionMixin
 
 
-class BulkDeleteMixin(AbstractBulkAction):
+class BulkDeleteMixin(BulkActionMixin):
+
+    bulk_content_template_path = 'partials/bulk-contents/delete.html'
+    bulk_path = 'cost_centers:bulk-delete'
 
     def modal_action(self, pks: list[int]):
         qs = self.model.objects.filter(pk__in=pks)
@@ -21,21 +22,6 @@ class BulkDeleteMixin(AbstractBulkAction):
             else:
                 obj.delete()
                 messages.success(self.request, _('{} has been deleted successfully').format(obj.name))
-
-    def get_bulk_path(self):
-        return reverse('cost_centers:bulk-delete')
-    
-    def get_modal_content(self):
-        
-        pks = self.get_get_pks()
-        context = {
-            'qs': self.model.objects.filter(pk__in=pks)
-        }
-        return render_to_string(
-            'apps/cost_centers/partials/bulk-contents/delete.html',
-            context,
-            self.request
-        )
 
 
 class CannotDeleteMixin:

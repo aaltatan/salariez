@@ -1,39 +1,31 @@
 {% load i18n %}
 
 <c-modal.container>
+  <form hx-post="{{ delete_path }}" hx-include="[data-include]" @submit="modalOpen = false">
+    <c-modal.modal>
+      <c-slot name="header">
+        <span class="capitalize">{% translate 'delete' %}</span>
+        <span>{{ instance.name }}</span>
+        <span>{% translate '?' %}</span>
+      </c-slot>
 
-    <form 
-    hx-post="{{ delete_path }}" 
-    hx-include="[data-include]"
-    @submit="modalOpen = false"
-    >
+      <c-slot name="body">
+        {% if page %}
+        <input type="hidden" name="page" value="{{ page }}" />
+        {% endif %}
+        <p class="capitalize">{{ message|safe }}</p>
+      </c-slot>
 
-        <c-modal.modal>
-
-            <c-slot name="header">
-                <span class="capitalize">{% translate 'delete' %}</span>
-                <span>{{ instance.name }}</span>
-                <span>{% translate '?' %}</span>
-            </c-slot>
-
-            <c-slot name="body">
-                {% if page %}
-                <input type="hidden" name="page" value="{{ page }}">
-                {% endif %}
-                <p class="capitalize">{{ message }}</p>
-            </c-slot>
-
-            <c-slot name="footer">
-                <c-btns.btn 
-                datatype="button"
-                type="submit"
-                value="{% translate 'delete' %}">
-                    {% translate 'delete' %}
-                </c-btns.btn>
-            </c-slot>
-
-        </c-modal.modal>
-
-    </form>
-
+      <c-slot name="footer">
+        <c-btns.btn
+          datatype="button"
+          datatheme="danger"
+          type="submit"
+          value="{% translate 'delete' %}"
+        >
+          {% translate 'delete' %}
+        </c-btns.btn>
+      </c-slot>
+    </c-modal.modal>
+  </form>
 </c-modal.container>

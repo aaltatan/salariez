@@ -6,6 +6,8 @@ from django.contrib.auth.mixins import (
     PermissionRequiredMixin
 )
 
+from braces.views import SuperuserRequiredMixin
+
 from . import models, forms, filters, mixins, resources
 
 from apps.base import forms as base_forms
@@ -16,6 +18,7 @@ from apps.base.mixins import (
     DeleteMixin,
     BulkModalMixin,
     BulkMapperMixin,
+    ReslugifyModalMixin,
     SearchMixin,
     ExportMixin,
 )
@@ -58,7 +61,8 @@ class ExportView(
 class BulkModalView(LoginRequiredMixin, BulkMapperMixin, RedirectView):
     
     mapper = {
-        'bulk_delete': 'positions:bulk-delete'
+        'bulk_delete': 'positions:bulk-delete',
+        'bulk_reslugify': 'positions:bulk-reslugify',
     }
 
 
@@ -74,13 +78,23 @@ class BulkDeleteView(
     model = models.Position
 
 
+class BulkReslugifyView(
+    LoginRequiredMixin, 
+    BulkModalMixin,
+    SuperuserRequiredMixin,
+    ReslugifyModalMixin,
+    View
+):
+    model = models.Position
+    bulk_path = 'positions:bulk-reslugify'
+
+
 class CreateView(
     LoginRequiredMixin, PermissionRequiredMixin, CreateMixin, View
 ):
     
     permission_required = 'positions.add_position'
     form_class = forms.PositionForm
-    template_name = 'apps/positions/create.html'
     
 
 class UpdateView(
@@ -93,7 +107,6 @@ class UpdateView(
     
     permission_required = 'positions.change_position'
     form_class = forms.PositionForm
-    template_name = 'apps/positions/update.html'
 
 
 class DeleteView(

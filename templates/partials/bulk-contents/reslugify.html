@@ -3,9 +3,11 @@
 <div class="space-y-4">
 
   <p class="first-letter:capitalize text-xl">
-    <span>{% translate 'are you sure you want to delete these ' %}</span>
+    <span>{% translate 'are you sure you want to ' %}</span>
+    <span class="uppercase font-bold">{% translate ' reslugify ' %}</span>
+    <span>{% translate 'these' %}</span>
     <span>{{ qs.count }}</span>
-    <span>{% translate 'job types: ' %}</span>
+    <span>{% translate 'objects: ' %}</span>
   </p>
   
   <ul>

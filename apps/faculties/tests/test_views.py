@@ -3,7 +3,6 @@ from django.urls import reverse
 from django.contrib.auth.models import User, Permission
 
 from selectolax.parser import HTMLParser
-from icecream import ic
 
 from ..models import Faculty
 

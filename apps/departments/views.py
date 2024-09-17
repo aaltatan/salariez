@@ -43,7 +43,6 @@ class SearchView(
     
     model = models.Department
     input_placeholder = _('search department')
-    search_container_id = 'parent-departments-container'
 
 
 class ExportView(
@@ -74,7 +73,6 @@ class CreateView(
     
     permission_required = 'departments.add_department'
     form_class = forms.DepartmentForm
-    template_name = 'apps/departments/create.html'
 
 
 class DeleteView(
@@ -100,4 +98,3 @@ class UpdateView(
     
     permission_required = 'departments.update_department'
     form_class = forms.DepartmentForm
-    template_name = 'apps/departments/update.html'

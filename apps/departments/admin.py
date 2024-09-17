@@ -9,7 +9,7 @@ from apps.base import admin_actions
 
 @admin.action(description="Reslugify selected departments")
 def reslugify_action(modeladmin, request, queryset):
-    admin_actions.reslugify_action(modeladmin, request, queryset)
+    admin_actions.reslugify_action(request, queryset)
 
 
 @admin.register(models.Department)

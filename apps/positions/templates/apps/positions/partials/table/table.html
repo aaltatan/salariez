@@ -48,6 +48,12 @@ x-data="{ selectedRows: [] }">
               value="{% translate 'delete'|title %}"
               title="{% translate 'delete'|title %}" />
           {% endif %}
+          {% if user.is_superuser %}
+            <c-table.action-input
+              name="bulk_reslugify"
+              value="{% translate 'reslugify'|title %}"
+              title="{% translate 'reslugify'|title %}" />
+          {% endif %}
         </c-table.unselect-all>
         {% endif %}
 

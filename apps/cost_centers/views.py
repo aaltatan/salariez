@@ -6,6 +6,8 @@ from django.contrib.auth.mixins import (
     PermissionRequiredMixin
 )
 
+from braces.views import SuperuserRequiredMixin
+
 from . import models, forms, filters, mixins, resources
 
 from apps.base import forms as base_forms
@@ -16,6 +18,7 @@ from apps.base.mixins import (
     DeleteMixin,
     BulkModalMixin,
     BulkMapperMixin,
+    ReslugifyModalMixin,
     SearchMixin,
     ExportMixin,
 )
@@ -25,7 +28,6 @@ class SearchView(LoginRequiredMixin, SearchMixin, View):
     
     model = models.CostCenter
     input_placeholder = _('search cost center')
-    search_container_id = 'cost-center-search-container'
 
 
 class ListTableView(
@@ -59,7 +61,8 @@ class ExportView(
 class BulkModalView(LoginRequiredMixin, BulkMapperMixin, RedirectView):
     
     mapper = {
-        'bulk_delete': 'cost_centers:bulk-delete'
+        'bulk_delete': 'cost_centers:bulk-delete',
+        'bulk_reslugify': 'cost_centers:bulk-reslugify',
     }
 
 
@@ -73,7 +76,17 @@ class BulkDeleteView(
     
     permission_required = 'cost_centers:delete_cost_center'
     model = models.CostCenter
-    hx_location_target = '#cost-centers-table'
+
+
+class BulkReslugifyView(
+    LoginRequiredMixin, 
+    SuperuserRequiredMixin, 
+    BulkModalMixin,
+    ReslugifyModalMixin,
+    View
+):
+    model = models.CostCenter
+    bulk_path = 'cost_centers:bulk-reslugify'
 
 
 class CreateView(
@@ -82,7 +95,6 @@ class CreateView(
     
     permission_required = 'cost_centers.add_cost_center'
     form_class = forms.CostCenterForm
-    template_name = 'apps/cost_centers/create.html'
     
 
 class UpdateView(
@@ -95,7 +107,6 @@ class UpdateView(
     
     permission_required = 'cost_centers.change_cost_center'
     form_class = forms.CostCenterForm
-    template_name = 'apps/cost_centers/update.html'
 
 
 class DeleteView(
@@ -108,4 +119,3 @@ class DeleteView(
 
     permission_required = 'cost_centers.delete_cost_center'
     model = models.CostCenter
-    hx_location_target = '#cost-centers-table'

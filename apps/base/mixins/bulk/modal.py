@@ -1,29 +1,13 @@
 import re
 import json
 from abc import ABC, abstractmethod
-from urllib.parse import urlencode
 
 from django.http import HttpRequest, HttpResponse
 from django.utils.translation import gettext_lazy as _
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.urls import reverse
 
-from . import utils
-
-
-class AbstractBulkAction(ABC):
-    
-    @property
-    @abstractmethod
-    def modal_action(self): ...
-    
-    @property
-    @abstractmethod
-    def get_bulk_path(self): ...
-    
-    @property
-    @abstractmethod
-    def get_modal_content(self): ...
+from .. import utils
 
 
 class AbstractBulkModal(ABC):
@@ -31,33 +15,6 @@ class AbstractBulkModal(ABC):
     @property
     @abstractmethod
     def model(self): ...
-
-
-class AbstractBulkMapper(ABC):
-    
-    @property
-    @abstractmethod
-    def mapper(self): ...
-
-
-class BulkMapperMixin(AbstractBulkMapper):
-    """
-    utility class to implement redirection between bulk template and bulk action.  
-    ### required attributes:  
-    - `mapper: dict`  
-    """
-    
-    def get(self, request: HttpRequest, *args, **kwargs):
-        url = self.get_redirect_url()
-        querystring = urlencode(request.GET)
-        full_url = f'{url}?{querystring}'
-        return redirect(full_url)
-    
-    def get_redirect_url(self, *args, **kwargs) -> str | None:
-        
-        for key in self.request.GET.keys():
-            if self.mapper.get(key):
-                return reverse(self.mapper[key])
 
 
 class BulkModalMixin(utils.HelperMixin, AbstractBulkModal):

@@ -10,7 +10,7 @@ from apps.base import admin_actions
 
 @admin.action(description="Reslugify selected positions")
 def reslugify_action(modeladmin, request, queryset):
-    admin_actions.reslugify_action(modeladmin, request, queryset)
+    admin_actions.reslugify_action(request, queryset)
 
 
 @admin.register(models.Position)

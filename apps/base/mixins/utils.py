@@ -6,6 +6,18 @@ from django.forms import ModelForm
 
 
 class HelperMixin:
+
+    @staticmethod
+    def _app_label_to_spaces(app_label: str):
+        if '_' in app_label:
+            return app_label.replace(' ', '-')
+        return app_label
+
+    @staticmethod
+    def _app_label_to_kebab(app_label: str):
+        if '_' in app_label:
+            return app_label.replace('_', '-')
+        return app_label
     
     def _get_success_save_update_response(self):
         """
@@ -72,8 +84,8 @@ class HelperMixin:
         if hasattr(self, 'success_path'):
             return self.success_path
         
-        app_name = self._get_app_label()
-        return f'{app_name}:index'
+        app_label = self._get_app_label()
+        return f'{app_label}:index'
     
     def _get_hx_location_path(self):
         """
@@ -87,13 +99,26 @@ class HelperMixin:
     
     def _get_hx_location_target(self):
         """
+        returns app_label in kebab case  
         you can set `hx_location_target` in view class instead.  
         """
         if hasattr(self, 'hx_location_target'):
             return self.hx_location_target
         
-        app_name = self._get_app_label()
-        return f'#{app_name}-table'
+        app_label = self._app_label_to_kebab(self._get_app_label())
+        return f'#{app_label}-table'
+    
+    def _get_template_name_create_update(
+        self, view: Literal['update', 'create'] = 'create'
+    ):
+        """
+        you can set `template_name` in view class instead.  
+        """
+        if getattr(self, 'template_name', None) is not None:
+            return self.template_name
+        
+        app_label = self._get_app_label()
+        return f'apps/{app_label}/{view}.html'
     
     def _get_index_template_name(self):
         """

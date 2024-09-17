@@ -6,6 +6,8 @@ from django.contrib.auth.mixins import (
     PermissionRequiredMixin
 )
 
+from braces.views import SuperuserRequiredMixin
+
 from . import models, forms, filters, mixins, resources
 
 from apps.base import forms as base_forms
@@ -16,6 +18,7 @@ from apps.base.mixins import (
     DeleteMixin,
     BulkModalMixin,
     BulkMapperMixin,
+    ReslugifyModalMixin,
     ExportMixin,
 )
 
@@ -54,7 +57,8 @@ class ExportView(
 class BulkModalView(LoginRequiredMixin, BulkMapperMixin, RedirectView):
     
     mapper = {
-        'bulk_delete': 'job_subtypes:bulk-delete'
+        'bulk_delete': 'job_subtypes:bulk-delete',
+        'bulk_reslugify': 'job_subtypes:bulk-reslugify',
     }
 
 
@@ -68,7 +72,18 @@ class BulkDeleteView(
     
     permission_required = 'job_subtypes:delete_job_subtype'
     model = models.JobSubtype
-    hx_location_target = '#job-subtypes-table'
+
+
+class BulkReslugifyView(
+    LoginRequiredMixin, 
+    BulkModalMixin,
+    SuperuserRequiredMixin,
+    ReslugifyModalMixin,
+    View
+):
+    model = models.JobSubtype
+    bulk_path = 'job_subtypes:bulk-reslugify'
+
 
 
 class CreateView(
@@ -77,7 +92,6 @@ class CreateView(
     
     permission_required = 'job_subtypes.add_job_subtype'
     form_class = forms.JobSubtypeForm
-    template_name = 'apps/job_subtypes/create.html'
     
 
 class UpdateView(
@@ -90,7 +104,6 @@ class UpdateView(
     
     permission_required = 'job_subtypes.change_job_subtype'
     form_class = forms.JobSubtypeForm
-    template_name = 'apps/job_subtypes/update.html'
 
 
 class DeleteView(
@@ -103,4 +116,3 @@ class DeleteView(
 
     permission_required = 'job_subtypes.delete_job_subtype'
     model = models.JobSubtype
-    hx_location_target = '#job-subtypes-table'
