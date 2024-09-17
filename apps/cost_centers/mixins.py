@@ -41,10 +41,9 @@ class BulkDeleteMixin(AbstractBulkAction):
 class CannotDeleteMixin:
     
     def cannot_delete(self, request, *args, **kwargs):
-        
-        instance = get_object_or_404(
-            self.model, slug=kwargs.get('slug')
-        )
+
+        model = self._get_model_class()
+        instance = get_object_or_404(model, slug=kwargs.get('slug'))
         
         criteria = instance.departments.all().exists()
         

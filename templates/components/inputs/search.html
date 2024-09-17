@@ -1,7 +1,5 @@
 {% load i18n %}
 
-<c-vars theme="input w-full select-none peer ltr:!pl-12 rtl:!pr-12" />
-
 <div 
 id="{{ container_id }}" 
 hx-indicator="#search-spinner-{{ container_id }}"
@@ -21,10 +19,12 @@ class="relative">
                     .querySelector('label')
                     .getAttribute('for')
       $el.id = id;"
+      @blur="handleBlur"
+      @click.outside="searchValue = ''"
+      data-selector="{{ container_id }}"
       x-model="searchValue"
-      @blur="onBlur"
       type="search"
-      class="{{ theme }}"
+      class="input w-full select-none peer ltr:!pl-12 rtl:!pr-12"
       name="q-{{ container_id }}"
       placeholder="{{ placeholder }}"
       {% if required %}required{% endif %}
@@ -36,26 +36,23 @@ class="relative">
 
     <script>
 
-      function onBlur(e) {
-        console.log(e)
-        let results = document.querySelector("#{{ container_id }} ul");
-        let criteria = Boolean(results.querySelector('[data-empty]'));
-        if (criteria) {
-            emptySearchResults(e);
-        }
+      function handleBlur(e) {
+          const selector = e.srcElement.getAttribute('data-selector');
+          if (
+            e.relatedTarget && 
+            e.relatedTarget.getAttribute('data-empty') === 'true'
+          ) {
+            e.srcElement.value = e.srcElement && ''
+              document.querySelector(`#${selector} ul`).innerHTML = '';
+          } 
       }
 
-      function emptySearchResults(e) {
-        document.querySelector("#{{ container_id }} ul").innerHTML = "";
-        console.log(document.getElementById('search-input-{{ container_id }}'))
-        document.getElementById('search-input-{{ container_id }}').value= ''
-      }
     </script>
 
     {% else %}
     <input 
     type="text" 
-    class="{{ theme }}" 
+    class="input w-full select-none peer ltr:!pl-12 rtl:!pr-12" 
     value="{{ value }}" 
     disabled
     x-init="
@@ -77,7 +74,7 @@ class="relative">
       hx-get="{{ path }}{% if required %}?required=true{% endif %}"
       hx-target="#{{ container_id }}"
       hx-trigger="click"
-      hx-indicator="#search-spinner"
+      hx-indicator="#search-spinner-{{ container_id }}"
       hx-disabled-elt="*[data-disabled]"
       class="absolute cursor-pointer rtl:left-4 ltr:right-4 top-1/2 -translate-y-1/2 z-20 hidden peer-disabled:block"
     >

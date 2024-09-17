@@ -17,6 +17,7 @@
       <c-btns.icon
         @click="open = false"
         @click.debounce.150ms="$el.parentElement.parentElement.parentElement.remove()"
+        x-init="setTimeout(() => $el.click(), 10_000)"
       >
         <c-icons.x ratio="1rem" />
       </c-btns.icon>

@@ -56,8 +56,7 @@ hx-target="this">
 
 <script>
     function handelClick(e) {
-        const element = document.querySelector('[data-confirm]');
-        const message = element.getAttribute('data-confirm').toUpperCase();
+        const message = e.target.getAttribute('data-confirm').toUpperCase();
 
         const confirmDialog = confirm(message);
 
