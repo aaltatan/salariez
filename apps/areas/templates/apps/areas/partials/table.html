@@ -1,0 +1,37 @@
+{% load i18n %}
+
+{% with 'area-filter-form' as filter_form %}
+{% with '#areas-table' as target %}
+
+{% with perms.areas.add_area as can_create %}
+{% with perms.areas.delete_area as can_delete %}
+{% with perms.areas.change_area as can_update %}
+{% with perms.areas.can_export as can_export %}
+
+{% url 'areas:index' as index_path %}
+{% url 'areas:bulk' as bulk_path %}
+{% url 'areas:create' as create_path %}
+{% url 'areas:export' as export_path %}
+
+<c-layout.app-container id="areas-table" app_title="{% translate 'areas' %}">
+
+  <c-slot name="filters">
+    {% include 'apps/areas/partials/table/filters.html' %}
+  </c-slot>
+
+  <c-slot name="body">
+    {% include 'apps/areas/partials/table/table.html' %}
+  </c-slot>
+
+  <c-slot name="pagination">
+    {% include 'apps/areas/partials/table/pagination.html' %}
+  </c-slot>
+
+</c-layout.app-container>
+
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}

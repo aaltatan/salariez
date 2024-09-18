@@ -5,6 +5,8 @@
 {% with perms.job_subtypes.view_department as can_job_subtype %}
 {% with perms.positions.view_position as can_position %}
 {% with perms.cost_centers.view_cost_center as can_cost_center %}
+{% with perms.cities.view_city as can_city %}
+{% with perms.areas.view_area as can_area %}
 
 {
   asideOpen: false, 
@@ -36,7 +38,26 @@
           },
           {% endif %}
         ]
-      },
+    },
+    {
+      text: '{% translate 'cities & areas' %}', 
+      children: [
+          {% if can_cost_center %}
+          {
+            text: '{% translate 'cities' %}', 
+            url: '{% url 'cities:index' %}', 
+            isActive: false,
+          },
+          {% endif %}
+          {% if can_area %}
+          {
+            text: '{% translate 'areas' %}', 
+            url: '{% url 'areas:index' %}', 
+            isActive: false,
+          },
+          {% endif %}
+        ]
+    },
     {% endif %}
     {% if can_job_type or can_job_subtype or can_position %}
     {
@@ -64,11 +85,13 @@
           },
           {% endif %}
         ]
-      },
+    },
     {% endif %}
   ]
 }
 
+{% endwith %}
+{% endwith %}
 {% endwith %}
 {% endwith %}
 {% endwith %}

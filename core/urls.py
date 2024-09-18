@@ -17,6 +17,8 @@ urlpatterns = [
     path('cost-centers/', include('apps.cost_centers.urls')),
     path('departments/', include('apps.departments.urls')),
     path('positions/', include('apps.positions.urls')),
+    path('cities/', include('apps.cities.urls')),
+    path('areas/', include('apps.areas.urls')),
 ]
 
 if settings.DEBUG:

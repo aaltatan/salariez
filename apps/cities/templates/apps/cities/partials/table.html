@@ -1,0 +1,37 @@
+{% load i18n %}
+
+{% with 'city-filter-form' as filter_form %}
+{% with '#cities-table' as target %}
+
+{% with perms.cities.add_city as can_create %}
+{% with perms.cities.delete_city as can_delete %}
+{% with perms.cities.change_city as can_update %}
+{% with perms.cities.can_export as can_export %}
+
+{% url 'cities:index' as index_path %}
+{% url 'cities:bulk' as bulk_path %}
+{% url 'cities:create' as create_path %}
+{% url 'cities:export' as export_path %}
+
+<c-layout.app-container id="cities-table" app_title="{% translate 'cities' %}">
+
+  <c-slot name="filters">
+    {% include 'apps/cities/partials/table/filters.html' %}
+  </c-slot>
+
+  <c-slot name="body">
+    {% include 'apps/cities/partials/table/table.html' %}
+  </c-slot>
+
+  <c-slot name="pagination">
+    {% include 'apps/cities/partials/table/pagination.html' %}
+  </c-slot>
+
+</c-layout.app-container>
+
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}

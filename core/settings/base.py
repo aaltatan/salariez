@@ -57,6 +57,8 @@ INSTALLED_APPS = [
     "apps.cost_centers",
     "apps.departments",
     "apps.positions",
+    "apps.cities",
+    "apps.areas",
 ]
 
 MIDDLEWARE = [
