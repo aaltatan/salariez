@@ -1,25 +1,20 @@
 {% load i18n %}
 
-{% get_current_language as LANGUAGE_CODE %}
+<div
+  x-data="{open: false}"
+  @click="open = true"
+  :class="open && 'bg-gray-50 dark:bg-gray-800'"
+  class="relative select-none rounded-md px-4 py-2 dark:hover:bg-gray-800 hover:bg-gray-100 duration-150"
+  role="button"
+>
+  <div class="flex items-center justify-center gap-1">
+    <span class="font-semibold"> {{ user.username }} </span>
+    <span :class="open && 'rotate-180'" class="duration-150">
+      <c-icons.arrow-down ratio="1rem" />
+    </span>
+  </div>
 
-<div 
-x-data='{open: false}' 
-@click="open = true"
-:class="open && 'bg-gray-50 dark:bg-gray-800'"
-class="relative select-none rounded-md px-4 py-2 dark:hover:bg-gray-800 hover:bg-gray-100 duration-150" 
-role="button">
-
-    <div 
-    class="flex items-center justify-center gap-1">
-        <span class="font-semibold">
-            {{ user.username }}
-        </span>
-        <span :class="open && 'rotate-180'" class='duration-150'>
-            <c-icons.arrow-down ratio="1rem" />
-        </span>
-    </div>
-
-    <ul 
+  <ul
     role="menu"
     x-show="open"
     @click.outside="open = false"
@@ -30,93 +25,57 @@ role="button">
     x-transition:leave-start="opacity-100 scale-100"
     x-transition:leave-end="opacity-0 scale-90"
     x-cloak
-    class="rounded-lg overflow-hidden py-2 absolute rtl:left-0 ltr:right-0 top-[calc(100%+.5rem)] bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-md z-10 ltr:text-left rtl:text-right ltr:origin-top-right rtl:origin-top-left w-[max-content]">
+    class="rounded-lg overflow-hidden py-2 absolute rtl:left-0 ltr:right-0 top-[calc(100%+.5rem)] bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-md z-10 ltr:text-left rtl:text-right ltr:origin-top-right rtl:origin-top-left w-[max-content]"
+  >
+    <div class="flex items-center gap-x-2 text-nowrap p-4">
+      <div
+        class="object-cover w-12 h-12 rounded-full flex items-center justify-center bg-blue-500 text-white font-semibold tracking-tighter"
+      >
+        {{ user.first_name|first|title }} {{ user.last_name|first|title }}
+      </div>
 
-        <div class="flex items-center gap-x-2 text-nowrap p-4">
-            
-            <div class="object-cover w-12 h-12 rounded-full flex items-center justify-center bg-blue-500 text-white font-semibold tracking-tighter">
-                {{ user.first_name|first|title }}
-                {{ user.last_name|first|title }}
-            </div>
-            
-            <div>
-                <h1 class="font-semibold text-gray-700 capitalize dark:text-white tracking-tighter">
-                    {{ user.first_name|title }}
-                    {{ user.last_name|title }}
-                </h1>
+      <div>
+        <h1 class="font-semibold text-gray-700 capitalize dark:text-white tracking-tighter">
+          {{ user.first_name|title }} {{ user.last_name|title }}
+        </h1>
 
-                <p class="text-gray-500 dark:text-gray-400">
-                    @{{ user.username }}
-                </p>
-            </div>
-        </div>
+        <p class="text-gray-500 dark:text-gray-400">@{{ user.username }}</p>
+      </div>
 
-        <hr class="border-gray-200 dark:border-gray-700 ">
+      <div>
+        <c-btns.icon 
+        title="{% translate 'user configurations'|title %}"
+        @click="modalOpen = true" 
+        hx-get="{% url 'base:user-configurations' %}" 
+        hx-target="#modal">
+          <c-icons.gear ratio="1.25rem" />
+        </c-btns.icon>
+      </div>
+    </div>
 
-        {% if user.is_superuser %}
+    <hr class="border-gray-200 dark:border-gray-700" />
 
-            <c-context.btn datatype="href" hx-boost="false" href="/admin/">
-                <span>{% translate 'admin site' %}</span>
-            </c-context.btn>
+    {% if user.is_superuser %}
 
-            {% if debug %}
-                <c-context.btn datatype="href" hx-boost="false" href="/silk/">
-                    <span>silk</span>
-                </c-context.btn>
-            {% endif %}
+    <c-context.btn datatype="href" hx-boost="false" href="/admin/">
+      <span>{% translate 'admin site' %}</span>
+    </c-context.btn>
 
-            <hr class="border-gray-200 dark:border-gray-700 ">
+    {% if debug %}
+    <c-context.btn datatype="href" hx-boost="false" href="/silk/">
+      <span>silk</span>
+    </c-context.btn>
+    {% endif %}
 
-        {% endif %}
+    <hr class="border-gray-200 dark:border-gray-700" />
 
-        <c-context.btn datatype="href" class="w-full capitalize font-semibold block dark:hover:bg-gray-800 hover:bg-gray-100 duration-100 px-4 py-2 ltr:text-left rtl:text-right" @click="dark = !dark;">
+    {% endif %}
 
-            <span x-show="dark" title="{% translate 'light theme'|title %}">
-                {% translate 'light theme' %}
-            </span>
-            <span x-show="!dark" title="{% translate 'dark theme'|title %}">
-                {% translate 'dark theme' %}
-            </span>
-            
-        </c-context.btn>
-
-        <c-context.form 
-        btn_title="{% if LANGUAGE_CODE == 'ar' %}English{% else %}Arabic{% endif %}" 
-        action="{% url 'set_language' %}" 
-        method="post">
-            <input name="next" type="hidden" value="{{ redirect_to }}">
-            <input 
-            type="hidden" 
-            name="language" 
-            value="{% if LANGUAGE_CODE == 'ar' %}en{% else %}ar{% endif %}">
-        </c-context.form>
-
-        <hr class="border-gray-200 dark:border-gray-700 ">
-        
-        <c-context.btn>
-            <label for="messages-timeout">
-                {% translate 'messages timeout' %}
-            </label>
-            <select class="input !py-1 !px-2 w-full" x-model="messagesTimeout" id="messages-timeout">
-                <option value="5000">{% translate '5 seconds' %}</option>
-                <option value="10000">{% translate '10 seconds' %}</option>
-                <option value="15000">{% translate '15 seconds' %}</option>
-                <option value="30000">{% translate '30 seconds' %}</option>
-                <option value="60000">{% translate '1 minute' %}</option>
-            </select>
-        </c-context.btn>
-
-        <hr class="border-gray-200 dark:border-gray-700 ">
-
-        <c-context.btn datatype="href" href="{% url 'password_change' %}">
-            {% translate 'change password' %}
-        </c-context.btn>
-
-        <c-context.form 
-        method="POST" 
-        action="{% url 'logout' %}" 
-        btn_title="{% translate 'logout'|title %}"></c-context.form>
-
-    </ul>
-
+    <c-context.form
+      method="POST"
+      action="{% url 'logout' %}"
+      hx-boost="false"
+      btn_title="{% translate 'logout'|title %}"
+    />
+  </ul>
 </div>

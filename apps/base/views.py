@@ -18,6 +18,11 @@ def get_messages(request: HttpRequest) -> HttpResponse:
 
 
 @login_required
+def user_configurations_modal(request: HttpRequest) -> HttpResponse:
+    return render(request, 'partials/user-modal.html')
+
+
+@login_required
 def logout_after_change_password(request: HttpRequest):
     logout(request)
     messages.success(
