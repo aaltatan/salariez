@@ -18,7 +18,6 @@ class AreaFilterSet(FiltersMixin, filters.FilterSet):
         widget=widgets.TextInput(
             attrs={
                 "autocomplete": "off",
-                "autofocus": "on",
                 "placeholder": _("search by the name"),
                 "type": "search",
                 "data-disabled": "",
