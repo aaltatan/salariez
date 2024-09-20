@@ -2,86 +2,71 @@
 
 <div 
 id="{{ container_id }}" 
-hx-indicator="#search-spinner-{{ container_id }}"
-x-data="{ searchValue: '' }"
+x-data="{ searchValue: ''}"
 class="relative">
+
   <div class="relative" hx-target="next ul">
-    {% if name is None %}
-    <input
-      hx-post="{{ path }}"
-      hx-trigger="input changed delay:500ms, search"
-      hx-swap="innerHTML"
-      hx-disabled-elt="*[data-disabled]"
-      x-init="
-      let id = $el.parentElement
-                    .parentElement
-                    .parentElement
-                    .querySelector('label')
-                    .getAttribute('for')
-      $el.id = id;"
-      @blur="handleBlur"
-      @click.outside="searchValue = ''"
-      data-selector="{{ container_id }}"
-      x-model="searchValue"
-      type="search"
-      class="input w-full select-none peer ltr:!pl-12 rtl:!pr-12"
-      name="q-{{ container_id }}"
-      placeholder="{{ placeholder }}"
-      {% if required %}required{% endif %}
-    />
-    <input 
-    {% if required %}required{% endif %} 
-    type="hidden" 
-    name="{{ name }}" />
+    {% if value is None %}
+      <input
+        hx-post="{{ path }}?name={{ name }}{% if multiple %}&multiple=true{% endif %}{% if required %}&required=true{% endif %}"
+        hx-headers='{ "MULTIPLE": true }'
+        hx-trigger="input changed delay:500ms, search"
+        hx-swap="innerHTML"
+        hx-disabled-elt="*[data-disabled]"
+        hx-indicator="#search-spinner-{{ container_id }}"
+        @blur="handleBlur"
+        @click.outside="searchValue = ''"
+        x-model="searchValue"
+        id="id_{{ name }}"
+        data-selector="{{ container_id }}"
+        type="search"
+        class="input w-full select-none peer ltr:!pl-12 rtl:!pr-12"
+        name="q-{{ container_id }}"
+        placeholder="{{ placeholder }}"
+        {% if required %}required{% endif %}
+      />
+      <input type="hidden">
+      <script>
 
-    <script>
+        function handleBlur(e) {
+            const selector = e.srcElement.getAttribute('data-selector');
+            if (
+              e.relatedTarget && 
+              e.relatedTarget.getAttribute('data-empty') === 'true'
+            ) {
+              e.srcElement.value = e.srcElement && ''
+                document.querySelector(`#${selector} ul`).innerHTML = '';
+            } 
+        }
 
-      function handleBlur(e) {
-          const selector = e.srcElement.getAttribute('data-selector');
-          if (
-            e.relatedTarget && 
-            e.relatedTarget.getAttribute('data-empty') === 'true'
-          ) {
-            e.srcElement.value = e.srcElement && ''
-              document.querySelector(`#${selector} ul`).innerHTML = '';
-          } 
-      }
-
-    </script>
-
+      </script>
     {% else %}
-    <input 
-    type="text" 
-    class="input w-full select-none peer ltr:!pl-12 rtl:!pr-12" 
-    value="{{ value }}" 
-    disabled
-    x-init="
-    let id = $el.parentElement
-                  .parentElement
-                  .parentElement
-                  .querySelector('label')
-                  .getAttribute('for')
-    $el.id = id;
-    "
-    {% if required %}required{% endif %} 
-    name="q" />
-    <input 
-    {% if required %}required{% endif %}  
-    type="hidden" 
-    name="{{ name }}" 
-    value="{{ obj.id }}" />
-    <span
-      hx-get="{{ path }}{% if required %}?required=true{% endif %}"
-      hx-target="#{{ container_id }}"
-      hx-trigger="click"
-      hx-indicator="#search-spinner-{{ container_id }}"
-      hx-disabled-elt="*[data-disabled]"
-      class="absolute cursor-pointer rtl:left-4 ltr:right-4 top-1/2 -translate-y-1/2 z-20 hidden peer-disabled:block"
-    >
-      <c-btns.icon>
-        <c-icons.x ratio="1.25rem" />
-      </c-btns.icon>
-    </span>
+      {% if not multiple %}
+      <input 
+      type="text" 
+      class="input w-full select-none peer ltr:!pl-12 rtl:!pr-12" 
+      value="{{ value }}" 
+      disabled
+      {% if required %}required{% endif %} 
+      name="q" />
+      <input 
+      {% if required %}required{% endif %}  
+      type="hidden" 
+      name="{{ name }}" 
+      value="{{ obj.id }}" />
+      <span
+        hx-get="{{ path }}{% if required %}?required=true{% endif %}"
+        hx-target="#{{ container_id }}"
+        hx-trigger="click"
+        hx-indicator="#search-spinner-{{ container_id }}"
+        hx-disabled-elt="*[data-disabled]"
+        class="absolute cursor-pointer rtl:left-4 ltr:right-4 top-1/2 -translate-y-1/2 z-20 hidden peer-disabled:block"
+      >
+        <c-btns.icon>
+          <c-icons.x ratio="1.25rem" />
+        </c-btns.icon>
+      </span>
+      {% endif %}
     {% endif %}
 
     <div class="block absolute rtl:right-4 ltr:left-4 top-1/2 -translate-y-1/2">
@@ -95,8 +80,14 @@ class="relative">
   </div>
 
   <ul
-    class="absolute left-0 top-[calc(100%_+_0.5rem)] w-full bg-white dark:bg-gray-950 z-50 divide-y divide-gray-200 dark:divide-gray-900 rounded-lg ring-1 ring-gray-100 dark:ring-gray-900 shadow-md dark:shadow-inner max-h-36 overflow-y-auto empty:hidden"
+    class="absolute left-0 top-[calc(100%_+_0.5rem)] w-full bg-white dark:bg-gray-950 z-[200] divide-y divide-gray-200 dark:divide-gray-900 rounded-lg ring-1 ring-gray-100 dark:ring-gray-900 shadow-md dark:shadow-inner max-h-16 overflow-y-auto empty:hidden"
     x-show="searchValue"
     id="search-results-{{ container_id }}"
   ></ul>
+
 </div>
+
+{% if multiple %}
+<div class="divide-y divide-gray-200 dark:divide-gray-800" id="multiple-container-{{ name }}">
+</div>
+{% endif %}

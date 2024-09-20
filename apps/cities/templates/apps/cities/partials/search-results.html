@@ -2,8 +2,20 @@
 
 {% for obj in qs %}
 
-   <c-inputs.search-item data-id="obj-{{ obj.id }}" data-name="name" >
-        {{ obj.name }}
+   <c-inputs.search-item
+   hx-get="{{ path }}?name=city&id={{ obj.id }}&value={{ obj.name }}{% if multiple %}&multiple=true{% endif %}{% if required %}&required=true{% endif %}"
+   id="{% if multiple %}multiple-{{ obj.id }}{% else %}{{ obj.id }}{% endif %}"
+   hx-indicator="#search-spinner-{{ container_id }}"
+   hx-disabled-elt="*[data-disabled]"
+   hx-swap="{% if multiple %}beforeend{% else %}outerHTML{% endif %}"
+   hx-target="#{% if multiple %}multiple-container-{{ name }}{% else %}{{ container_id }}{% endif %}">
+      {{ obj.name }}
    </c-inputs.search-item>
 
+{% empty %}
+
+   <c-inputs.search-item @click="searchValue = ''">
+        {% translate 'no results' %}
+   </c-inputs.search-item>
+   
 {% endfor %}

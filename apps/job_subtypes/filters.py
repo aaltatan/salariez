@@ -13,7 +13,7 @@ from ..base.mixins.filters import FiltersMixin
 class JobSubtypeFilterSet(FiltersMixin, filters.FilterSet):
 
     name = filters.CharFilter(
-        label="",
+        label=_('name'),
         method="filter_name",
         widget=widgets.TextInput(
             attrs={
@@ -21,12 +21,11 @@ class JobSubtypeFilterSet(FiltersMixin, filters.FilterSet):
                 "placeholder": _("search by the name"),
                 "type": "search",
                 "data-disabled": "",
-                "hx-preserve": "",
             }
         ),
     )
     description = filters.CharFilter(
-        label="",
+        label=_('description'),
         method="filter_description",
         widget=widgets.TextInput(
             attrs={
@@ -35,7 +34,6 @@ class JobSubtypeFilterSet(FiltersMixin, filters.FilterSet):
                 "data-type": "select",
                 "type": "search",
                 "data-disabled": "",
-                "hx-preserve": "",
             }
         ),
     )

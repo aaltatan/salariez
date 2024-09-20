@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import widgets
 from django.utils.translation import gettext_lazy as _
 
 from . import models
@@ -41,19 +42,21 @@ class DepartmentForm(forms.ModelForm):
 
         # departments search field
         self.fields['parent'].widget = get_search_input(
+            widget=widgets.TextInput,
             form=self, 
             url_name='departments:search', 
             field_name='parent', 
             model=models.Department,
             value_attributes=['department_id', 'name'],
-            required=False,
         )
 
         # cost centers search field
         self.fields['cost_center'].widget = get_search_input(
+            widget=widgets.TextInput,
             form=self, 
             url_name='cost_centers:search', 
             field_name='cost_center', 
             model=cc_models.CostCenter,
             value_attributes=['name'],
+            required=True,
         )

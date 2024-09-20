@@ -72,6 +72,7 @@ x-data="{ selectedRows: [] }">
         {% for obj in qs %}
         <c-table.tr>
           <td class="p-2"><c-table.check /></td>
+
           {% if can_update %}
           <c-table.td href="{{ obj.get_update_path }}">
             {{ obj.name }}
@@ -79,8 +80,17 @@ x-data="{ selectedRows: [] }">
           {% else %}
           <c-table.td>{{ obj.name }}</c-table.td>
           {% endif %}
+
+          {% if perms.job_types.view_job_type %}
+          <c-table.td href="{{ obj.job_type.get_update_path }}">
+            {{ obj.job_type.name }}
+          </c-table.td>
+          {% else %}
           <c-table.td>{{ obj.job_type.name }}</c-table.td>
+          {% endif %}
+
           <c-table.td>{{ obj.description }}</c-table.td>
+
           <td>
             {% if can_delete or can_update %}
             <c-context.context class="ltr:right-[calc(100%+4px)] rtl:left-[calc(100%+4px)] bottom-2 min-w-[100px]">

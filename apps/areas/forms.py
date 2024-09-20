@@ -1,7 +1,11 @@
 from django import forms
+from django.forms import widgets
 from django.utils.translation import gettext_lazy as _
 
 from . import models
+
+from apps.base.utils import get_search_input
+
 
 class AreaForm(forms.ModelForm):
     
@@ -14,12 +18,24 @@ class AreaForm(forms.ModelForm):
                 'autofocus': 'true',
                 'autocomplete': 'off',
             }),
-            "description": forms.Textarea(
-                attrs={
-                    "x-autosize": "",
-                    "rows": "1",
-                    "autocomplete": "on",
-                    "placeholder": _("area's description"),
-                }
-            ),
+            "description": forms.Textarea({
+                "x-autosize": "",
+                "rows": "1",
+                "autocomplete": "on",
+                "placeholder": _("area's description"),
+            }),
         }
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+
+        # cities search field
+        self.fields['city'].widget = get_search_input(
+            widget=widgets.TextInput,
+            form=self, 
+            url_name='cities:search', 
+            field_name='city', 
+            model=models.City,
+            value_attributes=['name'],
+            required=True,
+        )

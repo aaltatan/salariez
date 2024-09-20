@@ -12,7 +12,7 @@ from ..base.mixins.filters import FiltersMixin
 class CostCenterFilterSet(FiltersMixin, filters.FilterSet):
 
     name = filters.CharFilter(
-        label="",
+        label=_('name'),
         method="filter_name",
         widget=widgets.TextInput(
             attrs={
@@ -20,12 +20,11 @@ class CostCenterFilterSet(FiltersMixin, filters.FilterSet):
                 "placeholder": _("search by the name"),
                 "type": "search",
                 "data-disabled": "",
-                "hx-preserve": "",
             }
         ),
     )
     description = filters.CharFilter(
-        label="",
+        label=_('description'),
         method="filter_description",
         widget=widgets.TextInput(
             attrs={
@@ -33,25 +32,23 @@ class CostCenterFilterSet(FiltersMixin, filters.FilterSet):
                 "placeholder": _("search by the description"),
                 "type": "search",
                 "data-disabled": "",
-                "hx-preserve": "",
             }
         ),
     )
-    cost_center = filters.CharFilter(
-        label="",
+    cost_center_accounting_id = filters.CharFilter(
+        label=_('accounting id'),
         method="filter_cost_center",
         widget=widgets.TextInput(
             attrs={
                 "autocomplete": "off",
-                "placeholder": _("search by the cost center"),
+                "placeholder": _("search by the accounting id"),
                 "type": "search",
                 "x-mask": "999999999",
                 "data-disabled": "",
-                "hx-preserve": "",
             }
         ),
     )
 
     class Meta:
         model = models.CostCenter
-        fields = ["name", "cost_center", "description"]
+        fields = ["name", "cost_center_accounting_id", "description"]

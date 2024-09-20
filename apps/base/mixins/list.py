@@ -2,7 +2,6 @@ import json
 from typing import Any
 from abc import ABC, abstractmethod
 
-from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest
@@ -10,7 +9,6 @@ from django.core.paginator import Paginator
 from django.db.models import QuerySet
 
 from .utils import HelperMixin
-from ..admin_actions import reslugify_action
 
 
 class AbstractList(ABC):
@@ -58,7 +56,7 @@ class ListMixin(HelperMixin, AbstractList):
     """
     
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        
+
         for property in ['get_delete_path', 'get_update_path']:
             if not hasattr(self.model, property):
                 model_name = self.model._meta.model_name.title()
@@ -73,24 +71,6 @@ class ListMixin(HelperMixin, AbstractList):
         
         response = super().get(request, *args, **kwargs)
         response['Hx-Trigger'] = 'get-messages'
-        return response
-    
-    def put(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
-
-        queryset = self.get_queryset()
-        reslugify_action(self.request, queryset)
-
-        response = HttpResponse('')
-
-        hx_location = {
-            'path': reverse(self._get_hx_location_path()),
-            'values': {**request.POST},
-            'target': self._get_hx_location_target(),
-        }
-        
-        response['Hx-Location'] = json.dumps(hx_location)
-        response['Hx-Trigger'] = 'get-messages'
-        
         return response
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
@@ -137,7 +117,7 @@ class ListMixin(HelperMixin, AbstractList):
         
         if request_ordering is not None and request_ordering != '':
             order = [request_ordering]
-            
+
         qs: QuerySet = (
             self
             .filter_class(self.request.GET or self.request.POST)

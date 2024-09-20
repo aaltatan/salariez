@@ -12,7 +12,7 @@ from ..base.mixins.filters import FiltersMixin
 class CityFilterSet(FiltersMixin, filters.FilterSet):
 
     name = filters.CharFilter(
-        label="",
+        label=_('name'),
         method="filter_name",
         widget=widgets.TextInput(
             attrs={
@@ -21,12 +21,11 @@ class CityFilterSet(FiltersMixin, filters.FilterSet):
                 "placeholder": _("search by the name"),
                 "type": "search",
                 "data-disabled": "",
-                "hx-preserve": "",
             }
         ),
     )
     description = filters.CharFilter(
-        label="",
+        label=_('description'),
         method="filter_description",
         widget=widgets.TextInput(
             attrs={
@@ -34,7 +33,6 @@ class CityFilterSet(FiltersMixin, filters.FilterSet):
                 "placeholder": _("search by the description"),
                 "type": "search",
                 "data-disabled": "",
-                "hx-preserve": "",
             }
         ),
     )

@@ -17,6 +17,7 @@ class Attrs:
     id: str | None = None
     placeholder: str | None = None
     required: str | None = None
+    multiple: str | None = None
     
     @classmethod
     def from_request(cls, **kwargs):
@@ -25,6 +26,7 @@ class Attrs:
     
     def __post_init__(self):
         self.required = self.required == 'true'
+        self.multiple = self.multiple == 'true'
         if self.id:
             self.id = int(self.id)
 
@@ -91,19 +93,32 @@ class SearchMixin(utils.HelperMixin, AbstractSearch):
             'obj': obj,
             'container_id': self._get_container_id()
         } 
+
+        template = 'components/inputs/search.html'
+        criteria = (
+            request
+            .headers
+            .get('hx-trigger', '')
+            .startswith('multiple-')
+        )
+        if criteria:
+            template = 'components/inputs/multiple.html'
         
-        return render(request, 'components/inputs/search.html', context)
+        return render(request, template, context)
     
     def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         
+        attrs = Attrs.from_request(**request.GET)
+
         q = {
             k: v for k,v in request.POST.items() 
             if k.startswith('q-') and v != ''
         }
         q = list(q.values())
         q = q[0] if len(q) else ''
-        
+
         context = {
+            **attrs.__dict__,
             'path': self._get_search_path(),
             'container_id': self._get_container_id()
         }

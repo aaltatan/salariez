@@ -7,12 +7,13 @@ import django_filters as filters
 
 from . import models
 from ..base.mixins.filters import FiltersMixin
+from apps.base.utils import get_search_input
 
 
 class AreaFilterSet(FiltersMixin, filters.FilterSet):
 
     name = filters.CharFilter(
-        label="",
+        label=_('name'),
         method="filter_name",
         widget=widgets.TextInput(
             attrs={
@@ -21,12 +22,16 @@ class AreaFilterSet(FiltersMixin, filters.FilterSet):
                 "placeholder": _("search by the name"),
                 "type": "search",
                 "data-disabled": "",
-                "hx-preserve": "",
             }
         ),
     )
+    city = filters.ModelMultipleChoiceFilter(
+        to_field_name='id',
+        queryset=models.City.objects.all(),
+        method="filter_city"
+    )
     description = filters.CharFilter(
-        label="",
+        label=_('description'),
         method="filter_description",
         widget=widgets.TextInput(
             attrs={
@@ -34,10 +39,27 @@ class AreaFilterSet(FiltersMixin, filters.FilterSet):
                 "placeholder": _("search by the description"),
                 "type": "search",
                 "data-disabled": "",
-                "hx-preserve": "",
             }
         ),
     )
+
+    def filter_city(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(city__in=value)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        self.form.fields['city'].widget = get_search_input(
+            widget=widgets.SelectMultiple,
+            form=self.form, 
+            url_name='cities:search', 
+            field_name='city', 
+            model=models.City,
+            value_attributes=['name'],
+            multiple=True,
+        )
 
     class Meta:
         model = models.Area
