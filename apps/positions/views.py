@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import (
 
 from braces.views import SuperuserRequiredMixin
 
-from . import models, forms, filters, mixins, resources
+from . import models, forms, filters, mixins, resources, utils
 
 from apps.base import forms as base_forms
 from apps.base.mixins import (
@@ -95,27 +95,20 @@ class CreateView(
     
     permission_required = 'positions.add_position'
     form_class = forms.PositionForm
-    
+
 
 class UpdateView(
-    LoginRequiredMixin, 
-    PermissionRequiredMixin, 
-    UpdateMixin,
-    mixins.CannotDeleteMixin, 
-    View
+    LoginRequiredMixin, PermissionRequiredMixin, UpdateMixin,View
 ):
     
     permission_required = 'positions.change_position'
     form_class = forms.PositionForm
-
+    deleter = utils.Deleter
 
 class DeleteView(
-    LoginRequiredMixin, 
-    PermissionRequiredMixin, 
-    DeleteMixin, 
-    mixins.CannotDeleteMixin, 
-    View
+    LoginRequiredMixin, PermissionRequiredMixin, DeleteMixin, View
 ):
 
     permission_required = 'positions.delete_position'
     model = models.Position
+    deleter = utils.Deleter

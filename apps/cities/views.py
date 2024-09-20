@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import (
 
 from braces.views import SuperuserRequiredMixin
 
-from . import models, forms, filters, mixins, resources
+from . import models, forms, filters, mixins, resources, utils
 
 from apps.base import forms as base_forms
 from apps.base.mixins import (
@@ -95,27 +95,21 @@ class CreateView(
     
     permission_required = 'cities.add_city'
     form_class = forms.CityForm
-    
+
 
 class UpdateView(
-    LoginRequiredMixin, 
-    PermissionRequiredMixin, 
-    UpdateMixin,
-    mixins.CannotDeleteMixin, 
-    View
+    LoginRequiredMixin, PermissionRequiredMixin, UpdateMixin, View
 ):
     
     permission_required = 'cities.change_city'
     form_class = forms.CityForm
+    deleter = utils.Deleter
 
 
 class DeleteView(
-    LoginRequiredMixin, 
-    PermissionRequiredMixin, 
-    DeleteMixin, 
-    mixins.CannotDeleteMixin, 
-    View
+    LoginRequiredMixin, PermissionRequiredMixin, DeleteMixin, View
 ):
 
     permission_required = 'cities.delete_city'
     model = models.City
+    deleter = utils.Deleter

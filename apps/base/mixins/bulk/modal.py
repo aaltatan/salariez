@@ -61,7 +61,7 @@ class BulkModalMixin(utils.HelperMixin, AbstractBulkModal):
         ]
         
         # action & message
-        self.modal_action(pks)
+        self.modal_action(pks, request)
         
         hx_location = {
             'path': reverse(self._get_hx_location_path()),

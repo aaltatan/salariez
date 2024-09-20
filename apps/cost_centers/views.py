@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import (
 
 from braces.views import SuperuserRequiredMixin
 
-from . import models, forms, filters, mixins, resources
+from . import models, forms, filters, mixins, resources, utils
 
 from apps.base import forms as base_forms
 from apps.base.mixins import (
@@ -98,24 +98,18 @@ class CreateView(
     
 
 class UpdateView(
-    LoginRequiredMixin, 
-    PermissionRequiredMixin, 
-    UpdateMixin, 
-    mixins.CannotDeleteMixin, 
-    View
+    LoginRequiredMixin, PermissionRequiredMixin, UpdateMixin, View
 ):
     
     permission_required = 'cost_centers.change_cost_center'
     form_class = forms.CostCenterForm
+    deleter = utils.Deleter
 
 
 class DeleteView(
-    LoginRequiredMixin, 
-    PermissionRequiredMixin, 
-    DeleteMixin, 
-    mixins.CannotDeleteMixin, 
-    View
+    LoginRequiredMixin, PermissionRequiredMixin, DeleteMixin, View
 ):
 
     permission_required = 'cost_centers.delete_cost_center'
     model = models.CostCenter
+    deleter = utils.Deleter

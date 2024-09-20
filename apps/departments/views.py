@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import (
 
 from braces.views import SuperuserRequiredMixin
 
-from . import models, forms, resources, mixins
+from . import models, forms, resources, mixins, utils
 
 from apps.base.mixins import (
     CreateMixin,
@@ -76,25 +76,19 @@ class CreateView(
 
 
 class DeleteView(
-    LoginRequiredMixin, 
-    PermissionRequiredMixin, 
-    DeleteMixin, 
-    mixins.CannotDeleteMixin, # locale mixin
-    View,
+    LoginRequiredMixin, PermissionRequiredMixin, DeleteMixin, View,
 ):
     
     permission_required = 'departments.delete_department'
     model = models.Department
     hx_location_target = '#departments-body'
+    deleter = utils.Deleter
 
 
 class UpdateView(
-    LoginRequiredMixin,
-    PermissionRequiredMixin,
-    mixins.CannotDeleteMixin, # locale mixin
-    UpdateMixin,
-    View,
+    LoginRequiredMixin, PermissionRequiredMixin, UpdateMixin, View,
 ):
     
     permission_required = 'departments.update_department'
     form_class = forms.DepartmentForm
+    deleter = utils.Deleter

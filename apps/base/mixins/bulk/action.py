@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 
 from django.utils.translation import gettext_lazy as _
 from django.template.loader import render_to_string
+from django.http import HttpResponse
 from django.urls import reverse
 
 from .. import utils
@@ -68,3 +69,10 @@ class BulkActionMixin(utils.HelperMixin, AbstractBulkAction):
         context = self.get_context_data()
         template_name = self.get_bulk_contents_template()
         return render_to_string(template_name, context, self.request)
+
+    def get_response(self) -> HttpResponse:
+                
+        response = HttpResponse('')
+        response['Hx-Retarget'] = '#no-content'
+        response['Hx-Reswap'] = 'innerHTML'
+        return response

@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import (
 
 from braces.views import SuperuserRequiredMixin
 
-from . import models, forms, filters, mixins, resources
+from . import models, forms, filters, mixins, resources, utils
 
 from apps.base import forms as base_forms
 from apps.base.mixins import (
@@ -85,7 +85,6 @@ class BulkReslugifyView(
     bulk_path = 'job_subtypes:bulk-reslugify'
 
 
-
 class CreateView(
     LoginRequiredMixin, PermissionRequiredMixin, CreateMixin, View
 ):
@@ -95,24 +94,17 @@ class CreateView(
     
 
 class UpdateView(
-    LoginRequiredMixin, 
-    PermissionRequiredMixin, 
-    UpdateMixin, 
-    mixins.CannotDeleteMixin, 
-    View
+    LoginRequiredMixin, PermissionRequiredMixin, UpdateMixin, View
 ):
     
     permission_required = 'job_subtypes.change_job_subtype'
     form_class = forms.JobSubtypeForm
-
+    deleter = utils.Deleter
 
 class DeleteView(
-    LoginRequiredMixin, 
-    PermissionRequiredMixin, 
-    DeleteMixin, 
-    mixins.CannotDeleteMixin, 
-    View
+    LoginRequiredMixin, PermissionRequiredMixin, DeleteMixin, View
 ):
 
     permission_required = 'job_subtypes.delete_job_subtype'
     model = models.JobSubtype
+    deleter = utils.Deleter

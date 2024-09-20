@@ -16,6 +16,11 @@ class AbstractUpdate(ABC):
     @abstractmethod
     def form_class(self):
         ...
+    
+    @property
+    @abstractmethod
+    def deleter(self):
+        ...
 
 
 class UpdateMixin(utils.HelperMixin, AbstractUpdate):
@@ -25,6 +30,7 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
     
     ### required attributes:  
     - `form_class: ModelForm`
+    - `deleter: Deleter`
     
     ### optional attributes:  
     - `template_name: str` like `apps/<app_name>/update.html`
@@ -68,18 +74,7 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
         form = self.form_class(data=request.POST, instance=instance)
         
         if request.POST.get('delete'):
-            
-            kwargs['slug'] = slug
-            
-            if self.cannot_delete(request, *args, **kwargs) is None:
-                instance.delete()
-                messages.success(
-                    request,
-                    _(
-                        '{} has been deleted successfully'
-                        .format(instance)
-                    )
-                )
+            self.deleter(instance, request).delete()
             return self._get_success_save_update_response() 
         
         if form.is_valid():
