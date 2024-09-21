@@ -4,7 +4,8 @@ from django.utils.translation import gettext_lazy as _
 
 from . import models
 
-from apps.base.utils import get_search_input
+from apps.base.utils import get_search_input, Object
+
 
 
 class AreaForm(forms.ModelForm):
@@ -30,12 +31,17 @@ class AreaForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         # cities search field
-        self.fields['city'].widget = get_search_input(
-            widget=widgets.TextInput,
-            form=self, 
+        city = Object(
             url_name='cities:search', 
             field_name='city', 
             model=models.City,
             value_attributes=['name'],
             required=True,
+            add_new_url=('cities:create', 'create_city')
+        )
+
+        self.fields['city'].widget = get_search_input(
+            widget=widgets.TextInput,
+            form=self, 
+            obj=city,
         )

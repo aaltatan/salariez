@@ -7,7 +7,7 @@ import django_filters as filters
 
 from . import models
 from ..base.mixins.filters import FiltersMixin
-from apps.base.utils import get_search_input
+from apps.base.utils import get_search_input, Object
 
 
 class AreaFilterSet(FiltersMixin, filters.FilterSet):
@@ -49,15 +49,19 @@ class AreaFilterSet(FiltersMixin, filters.FilterSet):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        
-        self.form.fields['city'].widget = get_search_input(
-            widget=widgets.SelectMultiple,
-            form=self.form, 
+
+        city = Object(
             url_name='cities:search', 
             field_name='city', 
             model=models.City,
             value_attributes=['name'],
             multiple=True,
+        )
+        
+        self.form.fields['city'].widget = get_search_input(
+            widget=widgets.SelectMultiple,
+            form=self.form, 
+            obj=city,
         )
 
     class Meta:

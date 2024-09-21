@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from . import models
 
 from apps.cost_centers import models as cc_models
-from apps.base.utils import get_search_input
+from apps.base.utils import get_search_input, Object
 
 
 class DepartmentForm(forms.ModelForm):
@@ -41,22 +41,29 @@ class DepartmentForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         # departments search field
-        self.fields['parent'].widget = get_search_input(
-            widget=widgets.TextInput,
-            form=self, 
+        parent = Object(
             url_name='departments:search', 
             field_name='parent', 
             model=models.Department,
             value_attributes=['department_id', 'name'],
         )
-
-        # cost centers search field
-        self.fields['cost_center'].widget = get_search_input(
+        self.fields['parent'].widget = get_search_input(
             widget=widgets.TextInput,
             form=self, 
+            obj=parent
+        )
+
+        # cost centers search field
+        cost_center = Object(
             url_name='cost_centers:search', 
             field_name='cost_center', 
             model=cc_models.CostCenter,
             value_attributes=['name'],
             required=True,
+            add_new_url=('cost_centers:create', 'view_cost_center')
+        )
+        self.fields['cost_center'].widget = get_search_input(
+            widget=widgets.TextInput,
+            form=self, 
+            obj=cost_center,
         )

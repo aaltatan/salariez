@@ -1,4 +1,5 @@
 {% load widget_tweaks %}
+{% load permissions %}
 {% load i18n %}
 
 <div class="p-3 lg:p-6">
@@ -32,11 +33,35 @@
 
                     <span class="hidden [&:has(~_*[required])]:inline-block text-[red]" title="{% translate 'required'|title %}">*</span>
 
-                    {% if field.help_text %}
-                    <div class="mb-2 text-gray-500 first-letter:capitalize">
-                        {{ field.help_text }}
+                    <div class="flex items-center gap-1 mb-2">
+                        
+                        {% if field.help_text %}
+                        <div class="text-gray-500 first-letter:capitalize">
+                            {{ field.help_text }}
+                        </div>
+                        {% endif %}
+
+                        {% if user|has_perm:field.field.widget.attrs.data_permission %}
+                        <div>
+                            <c-btns.icon 
+                            title="{% translate 'add new'|title %}">
+                                <a class="capitalize"
+                                target="_blank" 
+                                x-init="
+                                const nextInput = $el.parentElement.parentElement.parentElement.nextElementSibling;
+                                const href = nextInput.getAttribute('data_add_new');
+                                if (href) {
+                                    $el.href = href;
+                                } else {
+                                    $el.parentElement.parentElement.remove();
+                                }">
+                                    <c-icons.plus ratio="1rem" />
+                                </a>
+                            </c-btns.icon>
+                        </div>
+                        {% endif %}
+
                     </div>
-                    {% endif %}
                     
                     {% render_field field|add_class:'input w-full' %}
 
