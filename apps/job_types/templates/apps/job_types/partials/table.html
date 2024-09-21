@@ -3,9 +3,9 @@
 {% with 'job-type-filter-form' as filter_form %}
 {% with '#job-types-table' as target %}
 
-{% with perms.job_types.add_job_type as can_create %}
-{% with perms.job_types.delete_job_type as can_delete %}
-{% with perms.job_types.change_job_type as can_update %}
+{% with perms.job_types.add_jobtype as can_create %}
+{% with perms.job_types.delete_jobtype as can_delete %}
+{% with perms.job_types.change_jobtype as can_update %}
 {% with perms.job_types.can_export as can_export %}
 
 {% url 'job_types:index' as index_path %}

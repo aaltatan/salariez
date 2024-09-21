@@ -34,7 +34,7 @@ class ListTableView(
     LoginRequiredMixin, PermissionRequiredMixin, ListMixin, ListView
 ):
     
-    permission_required = 'cost_centers.view_cost_center'
+    permission_required = 'cost_centers.view_costcenter'
     
     model = models.CostCenter
     filter_class = filters.CostCenterFilterSet
@@ -74,7 +74,7 @@ class BulkDeleteView(
     View
 ):
     
-    permission_required = 'cost_centers:delete_cost_center'
+    permission_required = 'cost_centers:delete_costcenter'
     model = models.CostCenter
 
 
@@ -93,7 +93,7 @@ class CreateView(
     LoginRequiredMixin, PermissionRequiredMixin, CreateMixin, View
 ):
     
-    permission_required = 'cost_centers.add_cost_center'
+    permission_required = 'cost_centers.add_costcenter'
     form_class = forms.CostCenterForm
     
 
@@ -101,7 +101,7 @@ class UpdateView(
     LoginRequiredMixin, PermissionRequiredMixin, UpdateMixin, View
 ):
     
-    permission_required = 'cost_centers.change_cost_center'
+    permission_required = 'cost_centers.change_costcenter'
     form_class = forms.CostCenterForm
     deleter = utils.Deleter
 
@@ -110,6 +110,6 @@ class DeleteView(
     LoginRequiredMixin, PermissionRequiredMixin, DeleteMixin, View
 ):
 
-    permission_required = 'cost_centers.delete_cost_center'
+    permission_required = 'cost_centers.delete_costcenter'
     model = models.CostCenter
     deleter = utils.Deleter

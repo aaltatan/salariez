@@ -3,9 +3,9 @@
 {% with 'cost-centers-filter-form' as filter_form %}
 {% with '#cost-centers-table' as target %}
 
-{% with perms.cost_centers.add_cost_center as can_create %}
-{% with perms.cost_centers.delete_cost_center as can_delete %}
-{% with perms.cost_centers.change_cost_center as can_update %}
+{% with perms.cost_centers.add_costcenter as can_create %}
+{% with perms.cost_centers.delete_costcenter as can_delete %}
+{% with perms.cost_centers.change_costcenter as can_update %}
 {% with perms.cost_centers.can_export as can_export %}
 
 {% url 'cost_centers:index' as index_path %}

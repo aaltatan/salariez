@@ -37,7 +37,7 @@ class AreaForm(forms.ModelForm):
             model=models.City,
             value_attributes=['name'],
             required=True,
-            add_new_url=('cities:create', 'create_city')
+            add_new_url=('cities:create', 'cities.add_city')
         )
 
         self.fields['city'].widget = get_search_input(

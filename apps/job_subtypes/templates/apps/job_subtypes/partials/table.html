@@ -3,9 +3,9 @@
 {% with 'job-subtype-filter-form' as filter_form %}
 {% with '#job-subtypes-table' as target %}
 
-{% with perms.job_subtypes.add_job_subtype as can_create %}
-{% with perms.job_subtypes.delete_job_subtype as can_delete %}
-{% with perms.job_subtypes.change_job_subtype as can_update %}
+{% with perms.job_subtypes.add_jobsubtype as can_create %}
+{% with perms.job_subtypes.delete_jobsubtype as can_delete %}
+{% with perms.job_subtypes.change_jobsubtype as can_update %}
 {% with perms.job_subtypes.can_export as can_export %}
 
 {% url 'job_subtypes:index' as index_path %}

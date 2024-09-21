@@ -16,6 +16,8 @@
   <a class="hover:underline" href="{{ node.get_update_path }}">
     {{ node.department_id }} - {{ node.name }}
   </a>
+  {% else %}
+  <span>{{ node.department_id }} - {{ node.name }}</span>
   {% endif %}
 </p>
 {% else %}
@@ -24,6 +26,8 @@
   <a class="hover:underline" href="{{ node.get_update_path }}">
     {{ node.department_id }} - {{ node.name }}
   </a>
+  {% else %}
+  <span>{{ node.department_id }} - {{ node.name }}</span>
   {% endif %}
 </p>
 {% endif %}

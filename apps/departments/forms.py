@@ -60,7 +60,7 @@ class DepartmentForm(forms.ModelForm):
             model=cc_models.CostCenter,
             value_attributes=['name'],
             required=True,
-            add_new_url=('cost_centers:create', 'view_cost_center')
+            add_new_url=('cost_centers:create', 'cost_centers.add_costcenter')
         )
         self.fields['cost_center'].widget = get_search_input(
             widget=widgets.TextInput,

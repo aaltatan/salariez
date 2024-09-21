@@ -27,7 +27,7 @@ class ListTableView(
     LoginRequiredMixin, PermissionRequiredMixin, ListMixin, ListView
 ):
     
-    permission_required = 'job_subtypes.view_job_subtype'
+    permission_required = 'job_subtypes.view_jobsubtype'
     
     model = models.JobSubtype
     filter_class = filters.JobSubtypeFilterSet
@@ -70,7 +70,7 @@ class BulkDeleteView(
     View
 ):
     
-    permission_required = 'job_subtypes:delete_job_subtype'
+    permission_required = 'job_subtypes:delete_jobsubtype'
     model = models.JobSubtype
 
 
@@ -89,7 +89,7 @@ class CreateView(
     LoginRequiredMixin, PermissionRequiredMixin, CreateMixin, View
 ):
     
-    permission_required = 'job_subtypes.add_job_subtype'
+    permission_required = 'job_subtypes.add_jobsubtype'
     form_class = forms.JobSubtypeForm
     
 
@@ -97,7 +97,7 @@ class UpdateView(
     LoginRequiredMixin, PermissionRequiredMixin, UpdateMixin, View
 ):
     
-    permission_required = 'job_subtypes.change_job_subtype'
+    permission_required = 'job_subtypes.change_jobsubtype'
     form_class = forms.JobSubtypeForm
     deleter = utils.Deleter
 
@@ -105,6 +105,6 @@ class DeleteView(
     LoginRequiredMixin, PermissionRequiredMixin, DeleteMixin, View
 ):
 
-    permission_required = 'job_subtypes.delete_job_subtype'
+    permission_required = 'job_subtypes.delete_jobsubtype'
     model = models.JobSubtype
     deleter = utils.Deleter

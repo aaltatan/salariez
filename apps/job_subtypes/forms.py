@@ -17,7 +17,7 @@ class JobSubtypeForm(forms.ModelForm):
             }),
             'job_type': forms.Select({
                 'data_add_new': reverse_lazy('job_types:create'),
-                'data_permission': 'view_job_type',
+                'data_permission': 'job_types.add_jobtype',
             }),
             "description": forms.Textarea(
                 attrs={

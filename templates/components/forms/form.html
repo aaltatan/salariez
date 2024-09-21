@@ -24,44 +24,39 @@
             <div class="~space-y-2/4">
 
                 {% for field in form %}
-                <div data-field class="[&:has([required])_>_span]:inline-block">
+                <div data-field class="[&:has([required])_span]:inline-block">
 
-                    <label class="font-semibold" 
-                    for="{{ field.id_for_label }}">
-                        <span>{{ field.label }}:</span>
-                    </label>
-
-                    <span class="hidden [&:has(~_*[required])]:inline-block text-[red]" title="{% translate 'required'|title %}">*</span>
-
-                    <div class="flex items-center gap-1 mb-2">
-                        
-                        {% if field.help_text %}
-                        <div class="text-gray-500 first-letter:capitalize">
-                            {{ field.help_text }}
-                        </div>
-                        {% endif %}
-
+                    <div class="flex items-center gap-1">
+                        <label class="font-semibold"
+                        for="{{ field.id_for_label }}">
+                            <span>{{ field.label }}:</span>
+                        </label>
+                        <span class="hidden text-[red]" title="{% translate 'required'|title %}">*</span>
                         {% if user|has_perm:field.field.widget.attrs.data_permission %}
-                        <div>
-                            <c-btns.icon 
-                            title="{% translate 'add new'|title %}">
-                                <a class="capitalize"
-                                target="_blank" 
-                                x-init="
-                                const nextInput = $el.parentElement.parentElement.parentElement.nextElementSibling;
-                                const href = nextInput.getAttribute('data_add_new');
-                                if (href) {
-                                    $el.href = href;
-                                } else {
-                                    $el.parentElement.parentElement.remove();
-                                }">
-                                    <c-icons.plus ratio="1rem" />
-                                </a>
-                            </c-btns.icon>
-                        </div>
+                        <c-btns.icon
+                        title="{% translate 'add new'|title %}">
+                            <a class="capitalize"
+                            target="_blank"
+                            x-init="
+                            const nextInput = $el.parentElement.parentElement.nextElementSibling.nextElementSibling;
+                            const href = nextInput.getAttribute('data_add_new');
+                            if (href) {
+                                $el.href = href;
+                            } else {
+                                $el.parentElement.remove();
+                            }">
+                                <c-icons.plus ratio="1rem" />
+                            </a>
+                        </c-btns.icon>
                         {% endif %}
-
                     </div>
+
+                    {% if field.help_text %}
+                    <div 
+                    class="text-gray-500 ~text-sm/base first-letter:capitalize">
+                        {{ field.help_text }}
+                    </div>
+                    {% endif %}
                     
                     {% render_field field|add_class:'input w-full' %}
 

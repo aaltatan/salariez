@@ -37,7 +37,8 @@ class Department(MPTTModel):
         unique=True,
         validators=[validators.numeric_validator],
         default='',
-        blank=True
+        blank=True,
+        help_text=_('if you leave it blank, it will be filled based on parent id serial.'),
     )
     name = models.CharField(
         name=_('name'),
@@ -62,13 +63,15 @@ class Department(MPTTModel):
         on_delete=models.PROTECT,
         null=True,
         blank=True,
-        related_name='children'
+        related_name='children',
+        help_text=_('parent department if exists.'),
     )
     cost_center = models.ForeignKey(
         cc_models.CostCenter,
         on_delete=models.PROTECT,
         related_name='departments',
-        verbose_name=_('cost center')
+        verbose_name=_('cost center'),
+        help_text=_('the cost center which belongs to'),
     )
     
     objects = SearchManager()
