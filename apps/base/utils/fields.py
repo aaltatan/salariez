@@ -35,8 +35,10 @@ def get_search_input(
     field = form.data.get(obj.field_name, field)
 
     if field and obj.value_attributes:
-        obj = get_object_or_404(obj.model, id=field)
-        values = [getattr(obj, attr) for attr in obj.value_attributes]
+        instance = get_object_or_404(obj.model, id=field)
+        values = [
+            getattr(instance, attr) for attr in obj.value_attributes
+        ]
         value = " - ".join(values)
     
     if field:
