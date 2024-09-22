@@ -35,7 +35,23 @@
                         {% if user|has_perm:field.field.widget.attrs.data_permission %}
                         <c-btns.icon
                         title="{% translate 'add new'|title %}">
-                            <a class="capitalize"
+                            {% if field.field.widget.attrs.data_hx_target %}
+                            <div
+                            @click="modalOpen = true"
+                            x-init="
+                            const nextInput = $el.parentElement.parentElement.nextElementSibling.nextElementSibling;
+                            const href = nextInput.getAttribute('data_add_new');
+                            const target = nextInput.getAttribute('data_hx_target');
+                            if (href) {
+                                $el.setAttribute('hx-get', href);
+                                $el.setAttribute('hx-target', target);
+                            } else {
+                                $el.parentElement.remove();
+                            }">
+                                <c-icons.plus ratio="1rem" />
+                            </div>
+                            {% else %}
+                            <a
                             target="_blank"
                             x-init="
                             const nextInput = $el.parentElement.parentElement.nextElementSibling.nextElementSibling;
@@ -47,6 +63,7 @@
                             }">
                                 <c-icons.plus ratio="1rem" />
                             </a>
+                            {% endif %}
                         </c-btns.icon>
                         {% endif %}
                     </div>

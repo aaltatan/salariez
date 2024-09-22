@@ -1,4 +1,3 @@
-from django.urls import reverse_lazy
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
@@ -16,8 +15,9 @@ class JobSubtypeForm(forms.ModelForm):
                 'autocomplete': 'off',
             }),
             'job_type': forms.Select({
-                'data_add_new': reverse_lazy('job_types:create'),
+                'data_add_new': '/job-types/create/?modal=true',
                 'data_permission': 'job_types.add_jobtype',
+                'data_hx_target': '#modal'
             }),
             "description": forms.Textarea(
                 attrs={

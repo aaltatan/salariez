@@ -48,7 +48,7 @@ class BulkModalMixin(utils.HelperMixin, AbstractBulkModal):
             'modal_content': self.get_modal_content()
         }
         
-        response = render(request, 'partials/confirm-modal.html', context)
+        response = render(request, 'partials/modals/confirm.html', context)
         response['Hx-Retarget'] = '#modal'
         return response
     

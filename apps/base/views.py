@@ -19,7 +19,7 @@ def get_messages(request: HttpRequest) -> HttpResponse:
 
 @login_required
 def user_configurations_modal(request: HttpRequest) -> HttpResponse:
-    return render(request, 'partials/user-modal.html')
+    return render(request, 'partials/modals/user.html')
 
 
 @login_required

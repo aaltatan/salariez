@@ -64,7 +64,7 @@ class HelperMixin:
         if hasattr(self, 'modal_template_name'):
             return self.modal_template_name
         
-        return 'partials/delete-modal.html'
+        return 'partials/modals/delete.html'
     
     def _get_form_template_name(
         self, view: Literal['update', 'create'] = 'create'
@@ -119,6 +119,17 @@ class HelperMixin:
         
         app_label = self._get_app_label()
         return f'apps/{app_label}/{view}.html'
+    
+    def _get_template_name_create_update_partial(
+        self, view: Literal['update', 'create'] = 'create'
+    ):
+        """
+        you can set `partial_template_name` in view class instead.  
+        """
+        if getattr(self, 'partial_template_name', None) is not None:
+            return self.partial_template_name
+        
+        return f'partials/modals/{view}-form.html'
     
     def _get_index_template_name(self):
         """

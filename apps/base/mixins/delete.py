@@ -30,7 +30,7 @@ class DeleteMixin(utils.HelperMixin, AbstractDelete):
     - `deleter: Deleter`  
     
     ### optional attributes:  
-    - `modal_template_name: str` like: `'partials/delete-modal.html'`
+    - `modal_template_name: str` like: `'partials/modals/delete.html'`
     - `hx_location_path: str` like: `'<app_name>:index'`
     - `hx_location_target: str` like: `'#<app_name>-table'`
      

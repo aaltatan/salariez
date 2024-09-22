@@ -41,8 +41,12 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
                 f'you need to implement get_create_path property in {model_name} model'
             )
         
-        template_name = self._get_template_name_create_update()
         context = {'form': self.form_class(), 'instance': model_class}
+
+        if request.GET.get('modal'):
+            template_name = self._get_template_name_create_update_partial()
+        else:
+            template_name = self._get_template_name_create_update()
 
         return render(
             request, template_name, context
@@ -55,14 +59,17 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
         
         return render(request, form_template_name, context)
     
-    def post(self, request: HttpRequest) -> HttpResponse:
-        
+    def _base_post(self, request: HttpRequest) -> HttpResponse:
+
         form = self.form_class(request.POST)
+
         context = {'form': form}
-        
+
         if form.is_valid():
             obj = form.save()
-            messages.success(request, _('{} has been created successfully'.format(obj)))
+            messages.success(
+                request, _('{} has been created successfully'.format(obj))
+            )
             
             if request.POST.get('save'):
                 return self._get_success_save_update_response()
@@ -76,3 +83,30 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
         response['HX-Trigger'] = 'get-messages'
 
         return response
+
+    def _modal_post(self, request):
+
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            obj = form.save()
+            messages.success(
+                request, _('{} has been created successfully'.format(obj))
+            )
+            form = self.form_class()
+
+        template_name = self._get_template_name_create_update_partial()
+        context = {'form': form}
+
+        response = render(request, template_name, context)
+        response['HX-Retarget'] = '#modal'
+        response['HX-Trigger'] = 'get-messages'
+
+        return response
+    
+    def post(self, request: HttpRequest) -> HttpResponse:
+        
+        if request.GET.get('modal'):
+            return self._modal_post(request)
+        
+        return self._base_post(request)

@@ -17,7 +17,7 @@ class CostCenter(AbstractNameModel):
     )
     
     class Meta:
-        ordering = ['name']
+        ordering = ['cost_center_accounting_id', 'name']
         permissions = [
             ['can_export', 'Can export data']
         ]

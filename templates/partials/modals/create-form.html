@@ -1,0 +1,30 @@
+<c-modal.container>
+  {% load i18n %}
+
+  <form hx-post="{{ instance.get_create_path }}?modal=true">
+    <c-modal.modal>
+
+      <c-slot name="header">
+        <span class="capitalize">
+          {% translate 'add new' %}
+        </span>
+      </c-slot>
+
+      <c-slot name="body">
+        <c-forms.form />
+      </c-slot>
+
+      <c-slot name="footer">
+        <c-btns.btn
+          datatype="input"
+          type="submit"
+          title="{% translate 'save'|title %}"
+          data-disabled
+          name="save"
+          value="{% translate 'save' %}"
+        />
+      </c-slot>
+
+    </c-modal.modal>
+  </form>
+</c-modal.container>

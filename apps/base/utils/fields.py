@@ -4,7 +4,7 @@ from django.db import models
 from django.shortcuts import get_object_or_404
 from django import forms
 from django.forms.widgets import Widget
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 
 
 @dataclass
@@ -15,6 +15,7 @@ class Object:
     value_attributes: list[str]
     required: bool = False
     multiple: bool = False
+    is_modal: bool = False
     add_new_url: tuple[str, str] | None = None
 
 
@@ -58,8 +59,15 @@ def get_search_input(
     }
 
     if obj.add_new_url is not None:
+        
         url, permission = obj.add_new_url
-        attributes['data_add_new'] = reverse(url)
+
+        url = reverse(url)
+        if obj.is_modal:
+            url += '?modal=true'
+            attributes['data_hx_target'] = '#modal'
+
+        attributes['data_add_new'] = url
         attributes['data_permission'] = permission
     
     return widget(attributes)

@@ -37,6 +37,7 @@ class AreaForm(forms.ModelForm):
             model=models.City,
             value_attributes=['name'],
             required=True,
+            is_modal=True,
             add_new_url=('cities:create', 'cities.add_city')
         )
 

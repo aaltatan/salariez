@@ -60,7 +60,7 @@ class ExportMixin(AbstractExport):
             'path': request.get_full_path()
         }
         
-        return render(request, 'partials/export-modal.html', context)
+        return render(request, 'partials/modals/export.html', context)
     
     def _get_filename(self):
         
