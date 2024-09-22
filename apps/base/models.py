@@ -1,7 +1,9 @@
 from django.db import models
+from django.db.models import Value, F
+from django.db.models.functions import Concat
 from django.urls import reverse
 
-from . import validators, managers
+from . import validators
 
 
 class BaseTimeStampSoftDeleteModel(models.Model):
@@ -35,11 +37,14 @@ class AbstractNameModel(models.Model):
         blank=True,
         allow_unicode=True,
     )
+    search = models.GeneratedField(
+        expression=Concat(F('name'), Value(' '), F('name')),
+        output_field=models.CharField(max_length=255),
+        db_persist=False,
+    )
 
     def __str__(self) -> str:
         return self.name
-
-    objects = managers.SearchManager()
 
     def _get_app_label(self):
         return self.__class__._meta.app_label
