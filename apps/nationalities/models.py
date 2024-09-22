@@ -5,12 +5,17 @@ from django.db.models.signals import pre_save
 from apps.base import models as base_models, utils
 
 
+IS_LOCAL_CHOICES = (
+    (False, _('foreign').title()),
+    (True, _('local').title()),
+)
+
 class Nationality(base_models.AbstractNameModel):
 
     is_local = models.BooleanField(
         verbose_name=_('is local'),
         default=False,
-        help_text=_('is it local?'),
+        help_text=_('is it local or foreign?'),
     )
 
     class Meta:

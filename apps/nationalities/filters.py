@@ -23,12 +23,9 @@ class NationalityFilterSet(FiltersMixin, filters.FilterSet):
             }
         ),
     )
-    is_local = filters.CharFilter(
-        label=_('is local'),
-        method="filter_is_local",
-        widget=widgets.TextInput({
-            "data-disabled": "",
-        }),
+    is_local = filters.ChoiceFilter(
+        label=_('locality'),
+        choices=models.IS_LOCAL_CHOICES
     )
     description = filters.CharFilter(
         label=_('description'),

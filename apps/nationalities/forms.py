@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 from . import models
 
+
 class NationalityForm(forms.ModelForm):
     
     class Meta:
@@ -14,6 +15,7 @@ class NationalityForm(forms.ModelForm):
                 'autofocus': 'true',
                 'autocomplete': 'off',
             }),
+            'is_local': forms.Select(choices=models.IS_LOCAL_CHOICES),
             "description": forms.Textarea({
                 "x-autosize": "",
                 "rows": "1",

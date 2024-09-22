@@ -11,13 +11,11 @@ class NationalityRecourse(resources.ModelResource):
     description = fields.Field(
       'description', column_name=_('description').title()
     )
-    is_local = fields.Field(
-      'is_local', column_name=_('local').title()
-    )
+    is_local = fields.Field('is_local', column_name=_('local').title())
 
     class Meta:
         model = models.Nationality
         fields = ["name", "is_local", "description"]
     
     def dehydrate_is_local(self, obj):
-        return _('yes').title() if obj.is_local else _('no').title()
+        return _('local').title() if obj.is_local else _('foreign').title()
