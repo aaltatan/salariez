@@ -20,6 +20,7 @@ urlpatterns = [
     path('cities/', include('apps.cities.urls')),
     path('areas/', include('apps.areas.urls')),
     path('nationalities/', include('apps.nationalities.urls')),
+    path('statuses/', include('apps.statuses.urls')),
 ]
 
 if settings.DEBUG:

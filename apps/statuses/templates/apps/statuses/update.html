@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{{ instance.name }}{% endblock %}
+
+{% block body %}
+
+    <template 
+    x-init="let hrefs = [
+        {
+            text: '{% translate 'statuses' %}', 
+            href: '{% url 'statuses:index' %}'
+        },
+        {
+            text: '{{ instance.name }}', 
+            href: '{% url 'statuses:create' %}'
+        },
+    ];
+    breadCrumbs = [...breadCrumbs, ...hrefs]"
+    ></template>
+
+    {% include 'partials/update-form.html' %}
+
+{% endblock %}

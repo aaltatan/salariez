@@ -1,0 +1,37 @@
+{% load i18n %}
+
+{% with 'status-filter-form' as filter_form %}
+{% with '#statuses-table' as target %}
+
+{% with perms.statuses.add_status as can_create %}
+{% with perms.statuses.delete_status as can_delete %}
+{% with perms.statuses.change_status as can_update %}
+{% with perms.statuses.can_export as can_export %}
+
+{% url 'statuses:index' as index_path %}
+{% url 'statuses:bulk' as bulk_path %}
+{% url 'statuses:create' as create_path %}
+{% url 'statuses:export' as export_path %}
+
+<c-layout.app-container id="statuses-table" app_title="{% translate 'statuses' %}">
+
+  <c-slot name="filters">
+    {% include 'apps/statuses/partials/table/filters.html' %}
+  </c-slot>
+
+  <c-slot name="body">
+    {% include 'apps/statuses/partials/table/table.html' %}
+  </c-slot>
+
+  <c-slot name="pagination">
+    {% include 'apps/statuses/partials/table/pagination.html' %}
+  </c-slot>
+
+</c-layout.app-container>
+
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}
