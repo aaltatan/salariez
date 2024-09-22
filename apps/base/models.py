@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Value, F
 from django.db.models.functions import Concat
+from django.db.models.fields.generated import GeneratedField
 from django.urls import reverse
 
 from . import validators
@@ -37,7 +38,7 @@ class AbstractNameModel(models.Model):
         blank=True,
         allow_unicode=True,
     )
-    search = models.GeneratedField(
+    search = GeneratedField(
         expression=Concat(F('name'), Value(' '), F('name')),
         output_field=models.CharField(max_length=255),
         db_persist=False,

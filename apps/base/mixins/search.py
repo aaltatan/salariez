@@ -73,6 +73,12 @@ class SearchMixin(utils.HelperMixin, AbstractSearch):
             
         return search_path
     
+    def get_queryset(self):
+        return self.get_manager().all()
+    
+    def get_manager(self):
+        return self.model.objects
+    
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
 
         attrs = Attrs.from_request(**request.GET)
@@ -122,6 +128,8 @@ class SearchMixin(utils.HelperMixin, AbstractSearch):
             'path': self._get_search_path(),
             'container_id': self._get_container_id()
         }
+
+        qs = self.get_queryset()
         
         if q is None or q == '':
             context['qs'] = self.model.objects.none()
@@ -130,7 +138,7 @@ class SearchMixin(utils.HelperMixin, AbstractSearch):
             stmt = Q()
             for keyword in keywords:
                 stmt &= Q(search__contains=keyword)
-            context['qs'] = self.model.objects.filter(stmt)
+            context['qs'] = qs.filter(stmt)
             
         template_name = getattr(self, 'search_results_template', None)
         

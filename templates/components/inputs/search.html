@@ -3,7 +3,7 @@
 <div 
 id="{{ container_id }}" 
 x-data="{ searchValue: ''}"
-class="relative">
+class="relative z-[200]">
 
   <div class="relative" hx-target="next ul">
     {% if value is None %}
@@ -80,7 +80,7 @@ class="relative">
   </div>
 
   <ul
-    class="absolute left-0 top-[calc(100%_+_0.5rem)] w-full bg-white dark:bg-gray-950 z-[200] divide-y divide-gray-200 dark:divide-gray-900 rounded-lg ring-1 ring-gray-100 dark:ring-gray-900 shadow-md dark:shadow-inner max-h-16 overflow-y-auto empty:hidden"
+    class="absolute left-0 top-[calc(100%_+_0.5rem)] w-full bg-white dark:bg-gray-950 z-[300] divide-y divide-gray-200 dark:divide-gray-900 rounded-lg dark:ring-2 dark:ring-gray-800 shadow-lg dark:shadow-inner max-h-40 overflow-y-auto empty:hidden"
     x-show="searchValue"
     id="search-results-{{ container_id }}"
   ></ul>

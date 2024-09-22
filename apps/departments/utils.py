@@ -1,5 +1,3 @@
-from django.utils.text import slugify
-
 from apps.base.utils import views
 
 
@@ -18,6 +16,7 @@ def generate_department_id(instance):
         Klass
         .objects
         .filter(parent=instance.parent)
+        .order_by('department_id')
         .exclude(pk=instance.pk)
         .last()
     )
@@ -48,38 +47,38 @@ def empty_departments(model) -> None:
           empty_departments(model)
 
 
-def create_faculties(model):
+def create_departments(model, cc_model):
     
-    faculties = [
-        'هندسة العمارة',
-        'الهندسة المعلوماتية',
-        'العلوم الادارية والمالية',
-        'طب الأسنان',
-        'الصيدلة',
-        'الهندسة المدنية',
+    cost_centers = [
+        cc_model.objects.get(cost_center_accounting_id=2), # arch
+        cc_model.objects.get(cost_center_accounting_id=3), # it
+        cc_model.objects.get(cost_center_accounting_id=4), # mang
+        cc_model.objects.get(cost_center_accounting_id=5), # dent
+        cc_model.objects.get(cost_center_accounting_id=6), # pharm
+        cc_model.objects.get(cost_center_accounting_id=7), # civil
     ]
     
-    for faculty_name in faculties:
-        faculty_instance = model(
-            name=faculty_name, 
-            slug=slugify(faculty_name, allow_unicode=True), 
+    for cc in cost_centers:
+        dept_instance = model(
+            name=cc.name, 
+            cost_center=cc,
             parent=None
         )
-        faculty_instance.save()
+        dept_instance.save()
         
-        dean_office_name = 'عمادة كلية ' + faculty_name
+        dean_office_name = 'عمادة كلية ' + cc.name
         dep = model(
             name=dean_office_name, 
-            slug=slugify(dean_office_name, allow_unicode=True), 
-            parent=faculty_instance,
+            cost_center=cc,
+            parent=dept_instance,
         )
         dep.save()
         
-        management_department_name = 'القسم الإداري ' + faculty_name
+        management_department_name = 'القسم الإداري ' + cc.name
         management_department = model(
             name=management_department_name, 
-            slug=slugify(management_department_name, allow_unicode=True), 
-            parent=faculty_instance,
+            cost_center=cc,
+            parent=dept_instance,
         )
         management_department.save()
         management_offices = [
@@ -92,27 +91,27 @@ def create_faculties(model):
         ]
         
         for o in management_offices:
-            office_name = f'{o} {faculty_name}'
+            office_name = f'{o} {cc.name}'
             obj = model(
                 name=office_name,
-                slug=slugify(office_name, allow_unicode=True),
+                cost_center=cc,
                 parent=management_department
             )
             obj.save()
 
-        academic_department_name = 'القسم الأكاديمي ' + faculty_name
+        academic_department_name = 'القسم الأكاديمي ' + cc.name
         academic_department = model(
             name=academic_department_name, 
-            slug=slugify(academic_department_name, allow_unicode=True), 
-            parent=faculty_instance,
+            cost_center=cc,
+            parent=dept_instance,
         )
         academic_department.save()
         
         for idx in range(1, 4):
-            office_name = 'قسم ' + str(idx) + ' ' + faculty_name
+            office_name = 'قسم ' + str(idx) + ' ' + cc.name
             obj = model(
                 name=office_name,
-                slug=slugify(office_name, allow_unicode=True),
+                cost_center=cc,
                 parent=academic_department
             )
             obj.save()

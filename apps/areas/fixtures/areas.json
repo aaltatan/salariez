@@ -1,0 +1,57 @@
+[
+    {
+        "model": "areas.area",
+        "pk": 1,
+        "fields": {
+            "name": "مدينة حماه",
+            "description": "",
+            "slug": "مدينة-حماه",
+            "search": "مدينة حماه مدينة حماه",
+            "city": 2
+        }
+    },
+    {
+        "model": "areas.area",
+        "pk": 2,
+        "fields": {
+            "name": "بلدة كفربهم",
+            "description": "",
+            "slug": "بلدة-كفربهم",
+            "search": "بلدة كفربهم بلدة كفربهم",
+            "city": 2
+        }
+    },
+    {
+        "model": "areas.area",
+        "pk": 3,
+        "fields": {
+            "name": "مدينة السلمية",
+            "description": "",
+            "slug": "مدينة-السلمية",
+            "search": "مدينة السلمية مدينة السلمية",
+            "city": 2
+        }
+    },
+    {
+        "model": "areas.area",
+        "pk": 4,
+        "fields": {
+            "name": "مدينة حمص",
+            "description": "",
+            "slug": "مدينة-حمص",
+            "search": "مدينة حمص مدينة حمص",
+            "city": 3
+        }
+    },
+    {
+        "model": "areas.area",
+        "pk": 5,
+        "fields": {
+            "name": "مدينة الرستن",
+            "description": "",
+            "slug": "مدينة-الرستن",
+            "search": "مدينة الرستن مدينة الرستن",
+            "city": 3
+        }
+    }
+]

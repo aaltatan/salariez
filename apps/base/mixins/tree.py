@@ -48,7 +48,7 @@ class TreeMixin(AbstractTree):
         return f'apps/{app_label}/partials/body.html'
     
     def get_queryset(self):
-        return self.model.objects.all()
+        return self.model.objects.all().order_by('department_id')
     
     def get(self, request, *args, **kwargs):
         

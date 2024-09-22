@@ -44,6 +44,9 @@ class SearchView(
     model = models.Department
     input_placeholder = _('search department')
 
+    def get_queryset(self):
+        return super().get_queryset().order_by('department_id')
+
 
 class ExportView(
     LoginRequiredMixin, PermissionRequiredMixin, ExportMixin, View,
@@ -72,7 +75,7 @@ class CreateView(
 ):
     
     permission_required = 'departments.add_department'
-    form_class = forms.DepartmentForm
+    form_class = forms.DepartmentCreateForm
 
 
 class DeleteView(
@@ -90,5 +93,5 @@ class UpdateView(
 ):
     
     permission_required = 'departments.update_department'
-    form_class = forms.DepartmentForm
+    form_class = forms.DepartmentUpdateForm
     deleter = utils.Deleter

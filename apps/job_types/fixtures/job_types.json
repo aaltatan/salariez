@@ -1,0 +1,22 @@
+[
+  {
+    "model": "job_types.jobtype",
+    "pk": 1,
+    "fields": {
+      "name": "عضو هيئة تعليمية",
+      "description": "",
+      "slug": "عضو-هيئة-تعليمية",
+      "search": "عضو هيئة تعليمية عضو هيئة تعليمية"
+    }
+  },
+  {
+    "model": "job_types.jobtype",
+    "pk": 2,
+    "fields": {
+      "name": "عضو هيئة إدارية",
+      "description": "",
+      "slug": "عضو-هيئة-إدارية",
+      "search": "عضو هيئة إدارية عضو هيئة إدارية"
+    }
+  }
+]

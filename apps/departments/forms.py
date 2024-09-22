@@ -8,34 +8,25 @@ from apps.cost_centers import models as cc_models
 from apps.base.utils import get_search_input, Object
 
 
-class DepartmentForm(forms.ModelForm):
+WIDGETS = {
+    "name": forms.TextInput({
+        "placeholder": _("department's name"),
+        "autofocus": "on",
+        "autocomplete": "on",
+    }),
+    "department_id": forms.TextInput({
+        'placeholder': _("department's id"),
+        'x-mask': '999999999999',
+    }),
+    "description": forms.Textarea({
+        "x-autosize": "",
+        "rows": "1",
+        "autocomplete": "on",
+        "placeholder": _("department's description"),
+    }),
+}
 
-    class Meta:
-        model = models.Department
-        fields = [
-            'name', 
-            'cost_center', 
-            'parent', 
-            'department_id', 
-            'description'
-        ]
-        widgets = {
-            "name": forms.TextInput({
-                "placeholder": _("department's name"),
-                "autofocus": "on",
-                "autocomplete": "on",
-            }),
-            "department_id": forms.TextInput({
-                'placeholder': _("department's id"),
-                'x-mask': '999999999999',
-            }),
-            "description": forms.Textarea({
-                "x-autosize": "",
-                "rows": "1",
-                "autocomplete": "on",
-                "placeholder": _("department's description"),
-            }),
-        }
+class InitializerMixin:
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
@@ -68,3 +59,31 @@ class DepartmentForm(forms.ModelForm):
             form=self, 
             obj=cost_center,
         )
+
+
+class DepartmentCreateForm(InitializerMixin, forms.ModelForm):
+
+    class Meta:
+        model = models.Department
+        fields = [
+            'name', 
+            'cost_center', 
+            'parent', 
+            'description'
+        ]
+        widgets = WIDGETS
+
+
+class DepartmentUpdateForm(InitializerMixin, forms.ModelForm):
+
+    class Meta:
+        model = models.Department
+        fields = [
+            'name', 
+            'cost_center', 
+            'parent', 
+            'department_id', 
+            'description'
+        ]
+        widgets = WIDGETS
+

@@ -1,4 +1,4 @@
-django==5.0.0
+django==5.0.1
 django-extensions
 django-filter
 django-cotton

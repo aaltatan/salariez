@@ -62,7 +62,6 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
     def _base_post(self, request: HttpRequest) -> HttpResponse:
 
         form = self.form_class(request.POST)
-
         context = {'form': form}
 
         if form.is_valid():
@@ -94,6 +93,10 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
                 request, _('{} has been created successfully'.format(obj))
             )
             form = self.form_class()
+            response = HttpResponse('')
+            response['HX-Retarget'] = '#no-content'
+            response['HX-Trigger'] = 'get-messages'
+            return response
 
         template_name = self._get_template_name_create_update_partial()
         context = {'form': form}

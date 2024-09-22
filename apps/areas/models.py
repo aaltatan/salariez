@@ -5,6 +5,7 @@ from django.db.models.signals import pre_save
 from apps.base import models as base_models, utils
 from apps.cities.models import City
 
+
 class Area(base_models.AbstractNameModel):
 
     city = models.ForeignKey(
@@ -16,7 +17,7 @@ class Area(base_models.AbstractNameModel):
     )
 
     class Meta:
-        ordering = ['name']
+        ordering = ['city__name', 'name']
         permissions = [
             ['can_export', 'Can export data']
         ]
