@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% translate 'nationalities'|title %}{% endblock %}
+
+
+{% block body %}
+
+    <span
+    hx-get="{% url 'nationalities:index' %}"
+    hx-trigger="load"
+    hx-target="#nationalities-table"
+    class="hidden"
+    x-init="breadCrumbs.push(
+        {
+            text: '{% translate 'nationalities' %}', 
+            href: '{% url 'nationalities:index' %}'
+        }
+    )"
+    ></span>
+
+    {% include 'apps/nationalities/partials/table.html' %}
+
+{% endblock %}

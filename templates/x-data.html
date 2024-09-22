@@ -7,6 +7,7 @@
 {% with perms.departments.view_department as can_department %}
 {% with perms.job_subtypes.view_jobsubtype as can_job_subtype %}
 {% with perms.cost_centers.view_costcenter as can_cost_center %}
+{% with perms.nationalities.view_nationality as can_nationality %}
 
 {
   asideOpen: false, 
@@ -72,12 +73,20 @@
             isActive: false,
           },
           {% endif %}
+          {% if can_nationality %}
+          {
+            text: '{% translate 'nationalities' %}', 
+            url: '{% url 'nationalities:index' %}', 
+            isActive: false,
+          },
+          {% endif %}
         ]
     },
     {% endif %}
   ]
 }
 
+{% endwith %}
 {% endwith %}
 {% endwith %}
 {% endwith %}

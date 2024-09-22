@@ -44,6 +44,12 @@ module.exports = {
     "rtl:pr-10",
     "rtl:pr-11",
     "rtl:pr-12",
+    // border colors
+    "border-green-500",
+    "border-red-500",
+    // bg colors
+    "bg-green-500",
+    "bg-red-500",
   ],
   darkMode: "class",
   theme: {

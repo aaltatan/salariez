@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     "apps.positions",
     "apps.cities",
     "apps.areas",
+    "apps.nationalities",
 ]
 
 MIDDLEWARE = [
