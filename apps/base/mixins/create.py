@@ -4,8 +4,11 @@ from django.utils.translation import gettext_lazy as _
 from django.http import HttpRequest, HttpResponse
 from django.contrib import messages
 from django.shortcuts import render
+from django.contrib.contenttypes.models import ContentType
 
 from . import utils
+
+from apps.activities.models import Activity
 
 
 class AbstractCreate(ABC):
@@ -59,6 +62,25 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
         
         return render(request, form_template_name, context)
     
+    def _add_activity(
+        self, obj, new_data: dict | None = None
+    ) -> None:
+        
+        app_label = self._get_app_label()
+        content_type = ContentType.objects.get(app_label=app_label)
+
+        activity = {
+            'user': self.request.user,
+            'type': Activity.TypeChoices.CREATE,
+            'content_type': content_type,
+            'object_id': obj.id,
+        }
+
+        if new_data:
+            activity['new_data'] = new_data
+
+        Activity(**activity).save()
+
     def _base_post(self, request: HttpRequest) -> HttpResponse:
 
         form = self.form_class(request.POST)
@@ -66,6 +88,9 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
 
         if form.is_valid():
             obj = form.save()
+            self._add_activity(
+                obj, new_data=form.cleaned_data
+            )
             messages.success(
                 request, _('{} has been created successfully'.format(obj))
             )
@@ -89,6 +114,9 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
 
         if form.is_valid():
             obj = form.save()
+            self._add_activity(
+                obj, new_data=form.cleaned_data
+            )
             messages.success(
                 request, _('{} has been created successfully'.format(obj))
             )

@@ -4,10 +4,13 @@ from django.utils.translation import gettext_lazy as _
 from django.http import HttpRequest, HttpResponse
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404
+from django.contrib.contenttypes.models import ContentType
 
 from mptt.exceptions import InvalidMove
 
 from . import utils
+
+from apps.activities.models import Activity
 
 
 class AbstractUpdate(ABC):
@@ -65,6 +68,31 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
         
         return render(request, form_template_name, context)
     
+    def _add_activity(
+        self, 
+        obj, 
+        new_data: dict | None = None,
+        old_data: dict | None = None,
+    ) -> None:
+        
+        app_label = self._get_app_label()
+        content_type = ContentType.objects.get(app_label=app_label)
+
+        activity = {
+            'user': self.request.user,
+            'type': Activity.TypeChoices.UPDATE,
+            'content_type': content_type,
+            'object_id': obj.id,
+        }
+
+        if new_data:
+            activity['new_data'] = new_data
+
+        if old_data:
+            activity['old_data'] = old_data
+
+        Activity(**activity).save()
+
     def post(
         self, request: HttpRequest, slug: int, *args, **kwargs
     ) -> HttpResponse:
@@ -79,6 +107,22 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
         
         if form.is_valid():
             try:
+                old_data = (
+                    self
+                    ._get_model_class()
+                    .objects
+                    .values()
+                    .get(id=instance.id)
+                )
+                old_data = {
+                    k:v for k,v in old_data.items() 
+                    if k not in ['slug', 'search']
+                }
+                self._add_activity(
+                    instance, 
+                    new_data=form.cleaned_data,
+                    old_data=old_data,
+                )
                 obj = form.save()
                 messages.success(
                     request, 

@@ -15,6 +15,6 @@ def reslugify_action(modeladmin, request, queryset):
 
 @admin.register(models.JobSubtype)
 class JobSubtypeAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-    list_display = ["name", "job_type", "slug"]
+    list_display = ["id", "name", "job_type", "slug"]
     prepopulated_fields = {"slug": ["name"]}
     actions = [reslugify_action]

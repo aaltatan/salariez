@@ -1,9 +1,12 @@
 from abc import ABC, abstractmethod
+from inspect import signature
 
 from django.contrib import messages
 from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
+from django.contrib.contenttypes.models import ContentType
 
+from apps.activities.models import Activity
 
 class Deleter(ABC):
     """
@@ -25,7 +28,26 @@ class Deleter(ABC):
         self.request = request
         self.send_delete_messages = send_delete_messages
         self.send_cannot_delete_messages = send_cannot_delete_messages
+    
+    def _add_activity(
+        self, obj, old_data: dict | None = None
+    ) -> None:
+        
+        app_label = self.instance.__class__._meta.app_label
+        content_type = ContentType.objects.get(app_label=app_label)
 
+        activity = {
+            'user': self.request.user,
+            'type': Activity.TypeChoices.DELETE,
+            'content_type': content_type,
+            'object_id': obj.id,
+        }
+
+        if old_data:
+            activity['old_data'] = old_data
+
+        Activity(**activity).save()
+    
     def get_delete_message(self):
         return _('{} has been deleted successfully').format(self.instance)
     
@@ -39,7 +61,20 @@ class Deleter(ABC):
             )
 
     def success_scenario(self) -> None:
+
+        Klass = self.instance.__class__
+        old_data = Klass.objects.values().get(id=self.instance.id)
+        old_data = {
+            k:v for k,v in old_data.items() 
+            if k not in ['slug', 'search']
+        }
+
+        self._add_activity(
+            self.instance, old_data=old_data
+        )
+
         self.instance.delete()
+
         if self.send_delete_messages:
             messages.success(
                 self.request, self.get_delete_message()

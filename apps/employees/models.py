@@ -41,18 +41,6 @@ class Employee(models.Model):
 
     objects = EmployeeManager()
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.PROTECT,
-        related_name='employees'
-    )
-    updated_at = models.DateTimeField(auto_now=True)
-    updated_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.PROTECT,
-        related_name='employees'
-    )
     firstname = models.CharField(
         max_length=255,
         verbose_name=_('first name'),

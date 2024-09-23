@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "import_export",
     "mptt",
     # apps
+    "apps.activities",
     "apps.base",
     "apps.job_types",
     "apps.job_subtypes",

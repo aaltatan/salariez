@@ -15,6 +15,6 @@ def reslugify_action(modeladmin, request, queryset):
 
 @admin.register(models.City)
 class CityAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-    list_display = ["name", "slug"]
+    list_display = ["id", "name", "slug"]
     prepopulated_fields = {"slug": ["name"]}
     actions = [reslugify_action]
