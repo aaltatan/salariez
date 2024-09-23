@@ -1,9 +1,9 @@
 from django.db import models
-from django.db.models.fields.generated import GeneratedField
-from django.db.models.functions import Concat
 from django.conf import settings
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+
+from .managers import EmployeeManager
 
 from apps.base.validators import (
     two_chars_validator,
@@ -39,6 +39,8 @@ class Employee(models.Model):
         EXCUSED = 'E', _('excused').title()
         OTHER = 'O', _('other').title()
 
+    objects = EmployeeManager()
+
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -65,34 +67,6 @@ class Employee(models.Model):
         max_length=255,
         verbose_name=_('father name'),
         validators=[two_chars_validator]
-    )
-    fullname = GeneratedField(
-        expression=Concat(
-            models.F('firstname'),
-            models.Value(' '),
-            models.F('father_name'),
-            models.Value(' '),
-            models.F('last_name'),
-        ),
-        output_field=models.CharField(255),
-        db_persist=False,
-    )
-    search = GeneratedField(
-        expression=Concat(
-            models.F('firstname'),
-            models.Value(' '),
-            models.F('father_name'),
-            models.Value(' '),
-            models.F('last_name'),
-            models.Value(' '),
-            models.F('firstname'),
-            models.Value(' '),
-            models.F('father_name'),
-            models.Value(' '),
-            models.F('last_name'),
-        ),
-        output_field=models.CharField(500),
-        db_persist=False,
     )
     mother_name = models.CharField(
         max_length=255,
@@ -219,57 +193,6 @@ class Employee(models.Model):
     salary = models.DecimalField(
         decimal_places=2, max_digits=12, default=0,
     )
-
-    def _get_age(self, field: str) -> int:
-        today = timezone.now().date()
-        difference: timezone.timedelta = today - eval(f'self.{field}')
-        age = difference.days / 30 / 12
-        return round(age)
-
-    def _is_birthday_in_current_month(
-        self, field: str, step: int = 1
-    ) -> bool:
-        ...
-
-    def _is_birthday(self, field: str, step: int = 1) -> bool:
-        
-        today = timezone.now().date()
-
-        current_day, current_month = today.day, today.month
-
-        field_day = eval(f'self.{field}.day')
-        field_month = eval(f'self.{field}.month')
-
-        day_criteria = current_day == field_day
-        month_criteria = current_month == field_month
-
-        if step > 1:
-            current_year, field_year = today.year, eval(f'self.{field}.year')
-            year_diff = current_year - field_year
-            year_criteria = year_diff // step == 0
-            return day_criteria and month_criteria and year_criteria
-        
-        return day_criteria and month_criteria
-    
-    @property
-    def age(self) -> int:
-        self._get_age('birth_date')
-    
-    @property
-    def job_age(self) -> int:
-        self._get_age('hire_date')
-
-    @property
-    def is_birthday(self) -> bool:
-        return self._is_birthday('birth_date')
-
-    @property
-    def is_one_year_anniversary(self) -> bool:
-        return self._is_birthday('hire_date')
-
-    @property
-    def is_two_years_anniversary(self) -> bool:
-        return self._is_birthday('hire_date', 2)
 
     def save(self, *args, **kwargs) -> None:
         
