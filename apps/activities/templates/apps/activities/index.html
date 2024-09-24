@@ -41,34 +41,12 @@
                   {% endif %}
                 </c-table.td>
                 <c-table.td>
-                  {{ obj.new_data|json_script:'new-data' }}
-                  <ul 
-                    x-init="Object.keys(data).forEach((el) => {
-                      return $el.innerHTML += `
-                        <li class='whitespace-nowrap'>
-                           - <span class='font-bold underline'>${el}</span>: ${data[el]}
-                        </li>
-                      `
-                    })"
-                    x-data="{
-                      data: JSON.parse(document.getElementById('new-data').innerText)
-                    }">
-                  </ul>
+                  {{ obj.new_data|json_script }}
+                  <c-ul />
                 </c-table.td>
                 <c-table.td>
-                  {{ obj.old_data|json_script:'old-data' }}
-                  <ul 
-                    x-init="Object.keys(data).forEach((el) => {
-                      return $el.innerHTML += `
-                        <li class='whitespace-nowrap'>
-                           - <span class='font-bold underline'>${el}</span>: ${data[el]}
-                        </li>
-                      `
-                    })"
-                    x-data="{
-                      data: JSON.parse(document.getElementById('old-data').innerText)
-                    }">
-                  </ul>
+                  {{ obj.old_data|json_script }}
+                  <c-ul />
                 </c-table.td>
              </c-table.tr>
           {% empty %}

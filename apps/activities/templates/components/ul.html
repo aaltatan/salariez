@@ -1,0 +1,12 @@
+<ul
+  x-init="Object.keys(data).forEach((el) => {
+  return $el.innerHTML += `
+    <li class='whitespace-nowrap'>
+       - <span class='font-bold underline'>${el}</span>: ${data[el]}
+    </li>
+  `
+})"
+  x-data="{
+  data: JSON.parse($el.previousElementSibling.innerText)
+}"
+></ul>

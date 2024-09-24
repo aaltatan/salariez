@@ -1,0 +1,72 @@
+{% load i18n %}
+{% load permissions %}
+{% load widget_tweaks %}
+
+<div data-field class="[&:has([required])_span]:inline-block">
+
+  <div class="flex items-center gap-1">
+
+      <label class="font-semibold"
+      for="{{ field.id_for_label }}">
+          <span>{{ field.label }}:</span>
+      </label>
+
+      <span class="hidden text-[red]" title="{% translate 'required'|title %}">*</span>
+
+      {% if user|has_perm:field.field.widget.attrs.data_permission %}
+      <c-btns.icon
+      title="{% translate 'add new'|title %}">
+          {% if field.field.widget.attrs.data_hx_target %}
+          <div
+          @click="modalOpen = true"
+          x-init="
+          const nextInput = $el.parentElement.parentElement.nextElementSibling.nextElementSibling;
+          const href = nextInput.getAttribute('data_add_new');
+          const target = nextInput.getAttribute('data_hx_target');
+          if (href) {
+              $el.setAttribute('hx-get', href);
+              $el.setAttribute('hx-target', target);
+          } else {
+              $el.parentElement.remove();
+          }">
+              <c-icons.plus ratio="1rem" />
+          </div>
+          {% else %}
+          <a
+          target="_blank"
+          x-init="
+          const nextInput = $el.parentElement.parentElement.nextElementSibling.nextElementSibling;
+          const href = nextInput.getAttribute('data_add_new');
+          if (href) {
+              $el.href = href;
+          } else {
+              $el.parentElement.remove();
+          }">
+              <c-icons.plus ratio="1rem" />
+          </a>
+          {% endif %}
+      </c-btns.icon>
+      {% endif %}
+  </div>
+
+  {% if field.help_text %}
+  <div 
+  class="text-gray-500 ~text-sm/base first-letter:capitalize">
+      {{ field.help_text }}
+  </div>
+  {% endif %}
+  
+  {% render_field field|add_class:'input w-full' %}
+
+  {% if field.errors %}
+  <ul data-form-errors class="text-[red] tracking-tight">
+      {% for error in field.errors %}
+          <li
+          class="first-letter:capitalize pl-2 font-semibold my-2">
+              {{ error }}
+          </li>
+      {% endfor %}
+  </ul>
+  {% endif %}
+
+</div>

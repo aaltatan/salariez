@@ -1,105 +1,37 @@
-{% load widget_tweaks %}
-{% load permissions %}
-{% load i18n %}
-
 <div class="p-3 lg:p-6">
+  <div class="max-w-lg mx-auto">
 
-    <div class="max-w-lg mx-auto">
-        {% if title %}
-        <h1 class="text-4xl tracking-tighter font-semibold mb-6 rtl:text-right ltr:text-left first-letter:capitalize">
-            {{ title }}
-        </h1>
-        {% endif %}
+    {% if title %}
+    <h1
+      class="text-4xl tracking-tighter font-semibold mb-6 rtl:text-right ltr:text-left first-letter:capitalize"
+    >
+      {{ title }}
+    </h1>
+    {% endif %}
 
-        <div>
+    <div>
 
-            <ul>
-                {% for error in form.non_field_errors %}
-                <li class="bg-red-100 font-semibold p-4 rounded-lg text-red-600">
-                    {{ error }}
-                </li>
-                {% endfor %}
-            </ul>
+      <ul>
+        {% for error in form.non_field_errors %}
+        <li class="bg-red-100 font-semibold p-4 rounded-lg text-red-600">
+            {{ error }}
+        </li>
+        {% endfor %}
+      </ul>
 
-            <div class="~space-y-2/4">
+      <div class="~space-y-2/4">
+        {% for field in form %}<c-forms.form-field />{% endfor %}
+      </div>
 
-                {% for field in form %}
-                <div data-field class="[&:has([required])_span]:inline-block">
+      {% csrf_token %}
 
-                    <div class="flex items-center gap-1">
-                        <label class="font-semibold"
-                        for="{{ field.id_for_label }}">
-                            <span>{{ field.label }}:</span>
-                        </label>
-                        <span class="hidden text-[red]" title="{% translate 'required'|title %}">*</span>
-                        {% if user|has_perm:field.field.widget.attrs.data_permission %}
-                        <c-btns.icon
-                        title="{% translate 'add new'|title %}">
-                            {% if field.field.widget.attrs.data_hx_target %}
-                            <div
-                            @click="modalOpen = true"
-                            x-init="
-                            const nextInput = $el.parentElement.parentElement.nextElementSibling.nextElementSibling;
-                            const href = nextInput.getAttribute('data_add_new');
-                            const target = nextInput.getAttribute('data_hx_target');
-                            if (href) {
-                                $el.setAttribute('hx-get', href);
-                                $el.setAttribute('hx-target', target);
-                            } else {
-                                $el.parentElement.remove();
-                            }">
-                                <c-icons.plus ratio="1rem" />
-                            </div>
-                            {% else %}
-                            <a
-                            target="_blank"
-                            x-init="
-                            const nextInput = $el.parentElement.parentElement.nextElementSibling.nextElementSibling;
-                            const href = nextInput.getAttribute('data_add_new');
-                            if (href) {
-                                $el.href = href;
-                            } else {
-                                $el.parentElement.remove();
-                            }">
-                                <c-icons.plus ratio="1rem" />
-                            </a>
-                            {% endif %}
-                        </c-btns.icon>
-                        {% endif %}
-                    </div>
-
-                    {% if field.help_text %}
-                    <div 
-                    class="text-gray-500 ~text-sm/base first-letter:capitalize">
-                        {{ field.help_text }}
-                    </div>
-                    {% endif %}
-                    
-                    {% render_field field|add_class:'input w-full' %}
-
-                    {% if field.errors %}
-                    <ul data-form-errors class="text-[red] tracking-tight">
-                        {% for error in field.errors %}
-                            <li
-                            class="first-letter:capitalize pl-2 font-semibold my-2">
-                                {{ error }}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-
-                </div>
-                {% endfor %}
-
-            </div>
-
-            {% csrf_token %}
-
-        </div>
-
-        <div class="flex items-center max-sm:flex-wrap max-sm:justify-center justify-end gap-x-1 gap-y-2 my-6">
-            {{ btns }}
-        </div>
     </div>
 
+    <div
+      class="flex items-center max-sm:flex-wrap max-sm:justify-center justify-end gap-x-1 gap-y-2 my-6"
+    >
+      {{ btns }}
+    </div>
+
+  </div>
 </div>

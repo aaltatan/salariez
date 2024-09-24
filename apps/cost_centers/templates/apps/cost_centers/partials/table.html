@@ -17,15 +17,107 @@
 <c-layout.app-container id="cost-centers-table" app_title="{% translate 'cost centers' %}">
 
   <c-slot name="filters">
-    {% include 'apps/cost_centers/partials/table/filters.html' %}
+    {% include 'partials/filters/base.html' %}
   </c-slot>
 
   <c-slot name="body">
-    {% include 'apps/cost_centers/partials/table/table.html' %}
+    <form 
+    hx-get="{{ bulk_path }}" 
+    hx-include="[data-include]"
+    x-data="{ selectedRows: [] }">
+    
+      <c-table.container>
+    
+        <input
+        data-include
+        type="hidden"
+        name="order"
+        value="{% firstof request.GET.order default_column %}"/>
+      
+        <c-table.table>
+          
+          <thead>
+    
+            <c-table.header-row>
+              <th class="px-2 py-1">
+                {% if can_delete %}
+                <c-table.check data_check="all" />
+                {% endif %}
+              </th>
+              <th>
+                <c-table.header-cell 
+                hx-get="{{ index_path }}"
+                hx-target="{{ target }}"
+                code_name="name"
+                name="{% translate 'name' %}" />
+              </th>
+              <th>
+                <c-table.header-cell 
+                hx-get="{{ index_path }}"
+                hx-target="{{ target }}"
+                code_name="cost_center_accounting_id"
+                name="{% translate 'accounting id' %}" />
+              </th>
+              <th>
+                <c-table.header-cell 
+                hx-get="{{ index_path }}"
+                hx-target="{{ target }}"
+                code_name="description"
+                name="{% translate 'description' %}" />
+              </th>
+              <th></th>
+            </c-table.header-row>
+    
+            {% if can_delete %}
+            <c-table.unselect-all colspan="4">
+              {% if can_delete %}
+                <c-table.action-input
+                  name="bulk_delete"
+                  value="{% translate 'delete'|title %}"
+                  title="{% translate 'delete'|title %}" />
+              {% endif %}
+              {% if user.is_superuser %}
+                <c-table.action-input
+                  name="bulk_reslugify"
+                  value="{% translate 'reslugify'|title %}"
+                  title="{% translate 'reslugify'|title %}" />
+              {% endif %}
+            </c-table.unselect-all>
+            {% endif %}
+    
+          </thead>
+          <!-- end header -->
+      
+          <!-- start rows -->
+          <c-table.tbody>
+            {% for obj in qs %}
+            <c-table.tr>
+              <td class="p-2"><c-table.check /></td>
+              {% if can_update %}
+              <c-table.td href="{{ obj.get_update_path }}">
+                {{ obj.name }}
+              </c-table.td>
+              {% else %}
+              <c-table.td>{{ obj.name }}</c-table.td>
+              {% endif %}
+              <c-table.td>{{ obj.cost_center_accounting_id }}</c-table.td>
+              <c-table.td>{{ obj.description }}</c-table.td>
+              <td>{% include 'partials/context/base.html' %}</td>
+            </c-table.tr>
+            {% empty %}
+            <c-table.empty-tr colspan="3" />
+            {% endfor %}
+          </c-table.tbody>
+          <!-- end rows -->
+        </c-table.table>
+    
+      </c-table.container>
+    
+    </form>
   </c-slot>
 
   <c-slot name="pagination">
-    {% include 'apps/cost_centers/partials/table/pagination.html' %}
+    {% include 'partials/pagination/base.html' %}
   </c-slot>
 
 </c-layout.app-container>
