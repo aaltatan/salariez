@@ -1,32 +1,62 @@
 {% load i18n %}
 {% get_current_language as LANGUAGE_CODE %}
 
-<div class="relative inline-block" x-data="{openContext: false}">
+<div 
+data-container 
+class="relative inline-block" 
+@click.outside="openContext = false"
+@scroll.window="openContext = false"
+x-data="{openContext: false}" >
 
   <c-btns.icon
+    @click.debounce.1="setOffset"
     @click="openContext = true"
     role="button"
-    :class="openContext && 'bg-gray-200'"
+    x-bind:class="openContext && '!bg-gray-300 dark:!bg-gray-700'"
   >
     <c-icons.ellipsis ratio="1rem"></c-icons.ellipsis>
   </c-btns.icon>
 
-  <div class="absolute {{ class }}">
-    <ul
-      role="menu"
-      x-show="openContext"
-      @click.outside="openContext = false"
-      x-transition:enter="transition ease-out duration-100"
-      x-transition:enter-start="opacity-0 scale-90"
-      x-transition:enter-end="opacity-100 scale-100"
-      x-transition:leave="transition ease-in duration-100"
-      x-transition:leave-start="opacity-100 scale-100"
-      x-transition:leave-end="opacity-0 scale-90"
-      x-cloak
-      class="divide-y divide-gray-100 dark:divide-gray-800 rounded-lg overflow-hidden py-1 fixed w-[min(100px)] bg-white dark:bg-gray-900 ltr:origin-top-right rtl:origin-top-left border border-gray-100 dark:border-gray-800 shadow-md z-50"
-    >
-      {{ slot }}
-    </ul>
-  </div>
+  <ul
+    role="menu"
+    x-show="openContext"
+    x-transition:enter="transition ease-out duration-100"
+    x-transition:enter-start="opacity-0 scale-90"
+    x-transition:enter-end="opacity-100 scale-100"
+    x-transition:leave="transition ease-in duration-100"
+    x-transition:leave-start="opacity-100 scale-100"
+    x-transition:leave-end="opacity-0 scale-90"
+    x-on:mousedown="console.log('dads')"
+    x-cloak
+    class="divide-y divide-gray-100 dark:divide-gray-800 rounded-lg overflow-hidden py-1 fixed w-[min(100px)] bg-white dark:bg-gray-900 ltr:origin-top-right rtl:origin-top-left border border-gray-100 dark:border-gray-800 shadow-md z-50"
+  >
+    {{ slot }}
+  </ul>
+
+  <script>
+    function setOffset(element) {
+      const ul = element.target.closest('div[data-container]').querySelector('ul');
+      const ulWidth = getComputedStyle(ul).width;
+      const ulHeight = Math.floor(+getComputedStyle(ul).height.replace('px', ''))
+      const portHeight = document.documentElement.clientHeight;
+      const direction = document.getElementById('app').dir;
+      const rightOrLeft = direction === 'ltr' ? '-' : '+';
+
+      let left = element.x;
+      let top = element.y;
+
+      if (direction === 'rtl') {
+        left = `${element.x + 16}px`
+      } else {
+        left = `calc(${element.x - 16}px - ${ulWidth})`
+      }
+
+      const topCriteria = (portHeight - element.y) > ulHeight;
+      top = topCriteria ? top : (portHeight - ulHeight - 16);
+
+      ul.style.left = left;
+      ul.style.top = `${top}px`;
+    }
+  </script>
   
 </div>
