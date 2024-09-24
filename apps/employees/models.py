@@ -164,6 +164,7 @@ class Employee(models.Model):
         verbose_name=_('institution id'),
         unique=True,
         null=True,
+        blank=True,
         validators=[numeric_validator]
     )
     notes = models.TextField(
