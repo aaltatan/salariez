@@ -1,0 +1,81 @@
+{% load i18n %}
+
+<c-modal.container>
+  <c-modal.modal>
+    <c-slot name="header">
+      <h1 class="text-2xl first-letter:capitalize">
+        {% translate 'activities log on' %} {{ instance }}
+      </h1>
+    </c-slot>
+    <c-slot name="body">
+      <c-table.container>
+        <c-table.table>
+          <c-table.header-row>
+            <c-table.td>{% translate 'since' %}</c-table.td>
+            <c-table.td>{% translate 'user' %}</c-table.td>
+            <c-table.td>{% translate 'type' %}</c-table.td>
+            <c-table.td>{% translate 'new data' %}</c-table.td>
+            <c-table.td>{% translate 'old data' %}</c-table.td>
+          </c-table.header-row>
+          {% for obj in qs %}
+             <c-table.tr title="obj.created_at">
+                <c-table.td>{{ obj.created_at|timesince }}</c-table.td>
+                <c-table.td>{{ obj.user }}</c-table.td>
+                <c-table.td>
+                  {% if obj.type == 'create' %}
+                    <c-layout.badge theme="green">
+                      {{ obj.type }}
+                    </c-layout.badge>
+                  {% elif obj.type == 'update' %}
+                    <c-layout.badge theme="blue">
+                      {{ obj.type }}
+                    </c-layout.badge>
+                  {% elif obj.type == 'delete' %}
+                    <c-layout.badge theme="red">
+                      {{ obj.type }}
+                    </c-layout.badge>
+                  {% else %}
+                    <c-layout.badge theme="gray">
+                      {{ obj.type }}
+                    </c-layout.badge>
+                  {% endif %}
+                </c-table.td>
+                <c-table.td>
+                  {{ obj.new_data|json_script:'new-data' }}
+                  <ul 
+                    x-init="Object.keys(data).forEach((el) => {
+                      return $el.innerHTML += `
+                        <li class='whitespace-nowrap'>
+                           - <span class='font-bold underline'>${el}</span>: ${data[el]}
+                        </li>
+                      `
+                    })"
+                    x-data="{
+                      data: JSON.parse(document.getElementById('new-data').innerText)
+                    }">
+                  </ul>
+                </c-table.td>
+                <c-table.td>
+                  {{ obj.old_data|json_script:'old-data' }}
+                  <ul 
+                    x-init="Object.keys(data).forEach((el) => {
+                      return $el.innerHTML += `
+                        <li class='whitespace-nowrap'>
+                           - <span class='font-bold underline'>${el}</span>: ${data[el]}
+                        </li>
+                      `
+                    })"
+                    x-data="{
+                      data: JSON.parse(document.getElementById('old-data').innerText)
+                    }">
+                  </ul>
+                </c-table.td>
+             </c-table.tr>
+          {% empty %}
+             <c-table.empty-tr />
+          {% endfor %}
+        </c-table.table>
+      </c-table.container>
+    </c-slot>
+  </c-modal.modal>
+</c-modal.container>

@@ -11,20 +11,22 @@
     <c-icons.ellipsis ratio="1rem"></c-icons.ellipsis>
   </c-btns.icon>
 
-  <ul
-    role="menu"
-    x-show="openContext"
-    @click.outside="openContext = false"
-    x-transition:enter="transition ease-out duration-100"
-    x-transition:enter-start="opacity-0 scale-90"
-    x-transition:enter-end="opacity-100 scale-100"
-    x-transition:leave="transition ease-in duration-100"
-    x-transition:leave-start="opacity-100 scale-100"
-    x-transition:leave-end="opacity-0 scale-90"
-    x-cloak
-    class="divide-y divide-gray-100 dark:divide-gray-800 rounded-lg overflow-hidden py-1 absolute w-[min(100px)] {{ class }} bg-white dark:bg-gray-900 ltr:origin-bottom-right rtl:origin-bottom-left border border-gray-100 dark:border-gray-800 shadow-md z-50"
-  >
-    {{ slot }}
-  </ul>
+  <div class="absolute {{ class }}">
+    <ul
+      role="menu"
+      x-show="openContext"
+      @click.outside="openContext = false"
+      x-transition:enter="transition ease-out duration-100"
+      x-transition:enter-start="opacity-0 scale-90"
+      x-transition:enter-end="opacity-100 scale-100"
+      x-transition:leave="transition ease-in duration-100"
+      x-transition:leave-start="opacity-100 scale-100"
+      x-transition:leave-end="opacity-0 scale-90"
+      x-cloak
+      class="divide-y divide-gray-100 dark:divide-gray-800 rounded-lg overflow-hidden py-1 fixed w-[min(100px)] bg-white dark:bg-gray-900 ltr:origin-top-right rtl:origin-top-left border border-gray-100 dark:border-gray-800 shadow-md z-50"
+    >
+      {{ slot }}
+    </ul>
+  </div>
   
 </div>

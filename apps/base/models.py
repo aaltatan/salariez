@@ -51,6 +51,15 @@ class AbstractNameModel(models.Model):
         return self.__class__._meta.app_label
 
     @property
+    def get_activity_path(self):
+        kwargs = {
+            'app_label': self._get_app_label(),
+            'model_name': self.__class__.__name__,
+            'object_id': self.id,
+        }
+        return reverse('activities:index', kwargs=kwargs)
+
+    @property
     def get_create_path(self):
         return reverse(f'{self._get_app_label()}:create')
 

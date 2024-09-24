@@ -1,0 +1,46 @@
+[
+  {
+    "model": "statuses.status",
+    "pk": 3,
+    "fields": {
+      "name": "مستقيل",
+      "description": "",
+      "slug": "مستقيل",
+      "search": "مستقيل مستقيل",
+      "has_salary": false
+    }
+  },
+  {
+    "model": "statuses.status",
+    "pk": 4,
+    "fields": {
+      "name": "مفعل",
+      "description": "",
+      "slug": "مفعل",
+      "search": "مفعل مفعل",
+      "has_salary": true
+    }
+  },
+  {
+    "model": "statuses.status",
+    "pk": 5,
+    "fields": {
+      "name": "معلق",
+      "description": "",
+      "slug": "معلق",
+      "search": "معلق معلق",
+      "has_salary": false
+    }
+  },
+  {
+    "model": "statuses.status",
+    "pk": 6,
+    "fields": {
+      "name": "تحت التجربة",
+      "description": "",
+      "slug": "تحت-التجربة",
+      "search": "تحت التجربة تحت التجربة",
+      "has_salary": true
+    }
+  }
+]

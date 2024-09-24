@@ -7,6 +7,7 @@
 {% with perms.statuses.delete_status as can_delete %}
 {% with perms.statuses.change_status as can_update %}
 {% with perms.statuses.can_export as can_export %}
+{% with perms.activities.can_view as can_log %}
 
 {% url 'statuses:index' as index_path %}
 {% url 'statuses:bulk' as bulk_path %}
@@ -29,6 +30,7 @@
 
 </c-layout.app-container>
 
+{% endwith %}
 {% endwith %}
 {% endwith %}
 {% endwith %}

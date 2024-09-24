@@ -7,6 +7,7 @@
 {% with perms.cost_centers.delete_costcenter as can_delete %}
 {% with perms.cost_centers.change_costcenter as can_update %}
 {% with perms.cost_centers.can_export as can_export %}
+{% with perms.activities.view_activity as can_log %}
 
 {% url 'cost_centers:index' as index_path %}
 {% url 'cost_centers:bulk' as bulk_path %}
@@ -29,6 +30,7 @@
 
 </c-layout.app-container>
 
+{% endwith %}
 {% endwith %}
 {% endwith %}
 {% endwith %}

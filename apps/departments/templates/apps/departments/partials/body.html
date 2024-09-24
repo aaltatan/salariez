@@ -7,6 +7,7 @@
 {% with perms.departments.delete_department as can_delete %}
 {% with perms.departments.change_department as can_update %}
 {% with perms.departments.can_export as can_export %}
+{% with perms.activities.view_activity as can_log %}
 
 <c-layout.app-container id="departments-body" app_title="{% translate 'departments' %}">
 
@@ -20,6 +21,7 @@
   
 </c-layout.app-container>
 
+{% endwith %}
 {% endwith %}
 {% endwith %}
 {% endwith %}

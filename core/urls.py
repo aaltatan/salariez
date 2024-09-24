@@ -21,6 +21,7 @@ urlpatterns = [
     path('areas/', include('apps.areas.urls')),
     path('nationalities/', include('apps.nationalities.urls')),
     path('statuses/', include('apps.statuses.urls')),
+    path('activities/', include('apps.activities.urls')),
 ]
 
 if settings.DEBUG:

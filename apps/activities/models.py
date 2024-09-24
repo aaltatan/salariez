@@ -8,10 +8,10 @@ from django.utils.translation import gettext as _
 class Activity(models.Model):
     
     class TypeChoices(models.TextChoices):
-        CREATE = 'c', _('create').title()
-        UPDATE = 'u', _('update').title()
-        DELETE = 'd', _('delete').title()
-        OTHER = 'o', _('other').title()
+        CREATE = 'create', _('create').title()
+        UPDATE = 'update', _('update').title()
+        DELETE = 'delete', _('delete').title()
+        OTHER = 'other', _('other').title()
 
     created_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(

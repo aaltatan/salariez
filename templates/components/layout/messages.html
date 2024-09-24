@@ -15,7 +15,10 @@
       <span class="first-letter:capitalize">{{ message }}</span>
       <span class="text-black dark:text-white">
         <c-btns.icon
-          x-init="setTimeout(() => $el.click(), +messagesTimeout)"
+          x-init="setTimeout(() => {
+            open = false;
+            setTimeout(() => $el.parentElement.parentElement.parentElement.remove(), 150)
+          }, +messagesTimeout)"
           @click.debounce.150ms="$el.parentElement.parentElement.parentElement.remove()"
           @click="open = false">
           <c-icons.x ratio="1rem" />

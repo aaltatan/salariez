@@ -1,5 +1,4 @@
 from django.db import models
-from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.db.models.signals import pre_save
 from django.db.models.fields.generated import GeneratedField
@@ -52,21 +51,6 @@ class Department(MPTTModel, base_models.AbstractNameModel):
         output_field=models.CharField(max_length=255),
         db_persist=False,
     )
-    
-    @property
-    def get_create_path(self) -> str:
-        return reverse('departments:create')
-    
-    @property
-    def get_delete_path(self) -> str:
-        return reverse('departments:delete', kwargs={'slug': self.slug})
-    
-    @property
-    def get_update_path(self) -> str:
-        return reverse('departments:update', kwargs={'slug': self.slug})
-    
-    def __str__(self) -> str:
-        return self.name
     
     class MPTTMeta:
         level_attr = 'level'

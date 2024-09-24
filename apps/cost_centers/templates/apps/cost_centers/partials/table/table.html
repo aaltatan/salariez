@@ -81,29 +81,7 @@ x-data="{ selectedRows: [] }">
           {% endif %}
           <c-table.td>{{ obj.cost_center_accounting_id }}</c-table.td>
           <c-table.td>{{ obj.description }}</c-table.td>
-          <td>
-            {% if can_delete or can_update %}
-            <c-context.context class="ltr:right-[calc(100%+4px)] rtl:left-[calc(100%+4px)] bottom-2 min-w-[100px]">
-
-              {% if can_delete %}
-                <c-context.btn
-                    hx-get="{{ obj.get_delete_path }}"
-                    hx-vals="js:{page: '{{ page_obj.number }}'}"
-                    hx-target="#modal"
-                    @click="modalOpen = true">
-                    {% translate 'delete' %}
-                </c-context.btn>
-              {% endif %}
-
-              {% if can_update %}
-                <c-context.btn href="{{ obj.get_update_path }}" datatype="href">
-                    {% translate 'update' %}
-                </c-context.btn>
-              {% endif %}
-
-            </c-context.context>
-            {% endif %}
-          </td>
+          <td>{% include 'partials/context/base.html' %}</td>
         </c-table.tr>
         {% empty %}
         <c-table.empty-tr colspan="3" />

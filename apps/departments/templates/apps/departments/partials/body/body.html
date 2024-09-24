@@ -24,10 +24,19 @@
 
         <c-node-p />
 
-        {% if can_update or can_delete %}
+        {% if can_update or can_delete or can_log %}
         <div>
             <c-context.context
               class="ltr:right-[calc(100%+4px)] rtl:left-[calc(100%+4px)] bottom-2 min-w-[100px]">
+
+              {% if can_log %}
+                <c-context.btn
+                    hx-get="{{ node.get_activity_path }}"
+                    hx-target="#modal"
+                    @click="modalOpen = true">
+                    {% translate 'activities' %}
+                </c-context.btn>
+              {% endif %}
 
               {% if node.is_leaf_node and can_delete %}
               <c-context.btn
