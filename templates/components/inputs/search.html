@@ -8,12 +8,12 @@ class="relative z-[200]">
   <div class="relative" hx-target="next ul">
     {% if value is None %}
       <input
-        hx-post="{{ path }}?name={{ name }}{% if multiple %}&multiple=true{% endif %}{% if required %}&required=true{% endif %}"
-        hx-headers='{ "MULTIPLE": true }'
+        hx-post="{{ path }}?name={{ name }}{% if required %}&required=true{% endif %}"
         hx-trigger="input changed delay:500ms, search"
         hx-swap="innerHTML"
         hx-disabled-elt="*[data-disabled]"
         hx-indicator="#search-spinner-{{ container_id }}"
+        hx-replace-url="false"
         @blur="handleBlur"
         @click.outside="searchValue = ''"
         x-model="searchValue"
@@ -41,7 +41,6 @@ class="relative z-[200]">
 
       </script>
     {% else %}
-      {% if not multiple %}
       <input 
       type="text" 
       class="input w-full select-none peer ltr:!pl-12 rtl:!pr-12" 
@@ -60,13 +59,13 @@ class="relative z-[200]">
         hx-trigger="click"
         hx-indicator="#search-spinner-{{ container_id }}"
         hx-disabled-elt="*[data-disabled]"
+        hx-replace-url="false"
         class="absolute cursor-pointer rtl:left-4 ltr:right-4 top-1/2 -translate-y-1/2 z-20 hidden peer-disabled:block"
       >
         <c-btns.icon>
           <c-icons.x ratio="1.25rem" />
         </c-btns.icon>
       </span>
-      {% endif %}
     {% endif %}
 
     <div class="block absolute rtl:right-4 ltr:left-4 top-1/2 -translate-y-1/2">
@@ -86,8 +85,3 @@ class="relative z-[200]">
   ></ul>
 
 </div>
-
-{% if multiple %}
-<div class="divide-y divide-gray-200 dark:divide-gray-800" id="multiple-container-{{ name }}">
-</div>
-{% endif %}

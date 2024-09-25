@@ -4,7 +4,7 @@ from django.db import models
 from django.shortcuts import get_object_or_404
 from django import forms
 from django.forms.widgets import Widget
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 
 
 @dataclass
@@ -14,7 +14,6 @@ class Object:
     field_name: str
     value_attributes: list[str]
     required: bool = False
-    multiple: bool = False
     is_modal: bool = False
     add_new_url: tuple[str, str] | None = None
 
@@ -48,14 +47,12 @@ def get_search_input(
     if obj.required: 
         hx_get_path += "&required=true"
         
-    if obj.multiple: 
-        hx_get_path += "&multiple=true"
-
     attributes = {
         "hx-get": hx_get_path ,
         "hx-trigger": "load",
         "hx-target": "this",
         "style": "display: none;",
+        "hx-replace-url": "false",
     }
 
     if obj.add_new_url is not None:

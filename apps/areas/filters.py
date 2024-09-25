@@ -24,11 +24,6 @@ class AreaFilterSet(FiltersMixin, filters.FilterSet):
             }
         ),
     )
-    city = filters.ModelMultipleChoiceFilter(
-        to_field_name='id',
-        queryset=models.City.objects.all(),
-        method="filter_city"
-    )
     description = filters.CharFilter(
         label=_('description'),
         method="filter_description",
@@ -42,11 +37,6 @@ class AreaFilterSet(FiltersMixin, filters.FilterSet):
         ),
     )
 
-    def filter_city(self, queryset, name, value):
-        if not value:
-            return queryset
-        return queryset.filter(city__in=value)
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -55,11 +45,10 @@ class AreaFilterSet(FiltersMixin, filters.FilterSet):
             field_name='city', 
             model=models.City,
             value_attributes=['name'],
-            multiple=True,
         )
         
         self.form.fields['city'].widget = get_search_input(
-            widget=widgets.SelectMultiple,
+            widget=widgets.TextInput,
             form=self.form, 
             obj=city,
         )
