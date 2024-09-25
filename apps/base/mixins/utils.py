@@ -1,7 +1,9 @@
+import json
 from typing import Literal
 
 from django.shortcuts import render
 from django.urls import reverse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.forms import ModelForm
 
 
@@ -23,11 +25,14 @@ class HelperMixin:
         """
         to use it inside create and update mixins.
         """
-        response = render(self.request, self._get_index_template_name())
-        response['HX-Retarget'] = '#app'
-        response['HX-Reselect'] = '#app'
+        hx_location = {
+            'path': reverse(self._get_success_path()),
+            'target': '#app',
+            'select': '#app',
+        }
+        response = HttpResponse('')
+        response['HX-Location'] = json.dumps(hx_location)
         response['HX-Trigger'] = 'get-messages'
-        response['HX-Push-Url'] = reverse(self._get_success_path())
         return response
 
     def _get_default_ordering(self):

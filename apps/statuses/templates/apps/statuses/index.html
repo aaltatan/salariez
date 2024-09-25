@@ -6,19 +6,6 @@
 
 {% block body %}
 
-    <span
-    hx-get="{% url 'statuses:index' %}"
-    hx-trigger="load"
-    hx-target="#statuses-table"
-    class="hidden"
-    x-init="breadCrumbs.push(
-        {
-            text: '{% translate 'statuses' %}', 
-            href: '{% url 'statuses:index' %}'
-        }
-    )"
-    ></span>
-
-    {% include 'apps/statuses/partials/table.html' %}
+{% include 'apps/statuses/partials/table.html' %}
 
 {% endblock %}

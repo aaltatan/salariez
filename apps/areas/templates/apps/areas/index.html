@@ -6,19 +6,6 @@
 
 {% block body %}
 
-    <span
-    hx-get="{% url 'areas:index' %}"
-    hx-trigger="load"
-    hx-target="#areas-table"
-    class="hidden"
-    x-init="breadCrumbs.push(
-        {
-            text: '{% translate 'areas' %}', 
-            href: '{% url 'areas:index' %}'
-        }
-    )"
-    ></span>
-
     {% include 'apps/areas/partials/table.html' %}
 
 {% endblock %}

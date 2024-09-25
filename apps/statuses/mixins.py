@@ -11,11 +11,11 @@ class BulkDeleteMixin(BulkActionMixin):
     bulk_path = 'statuses:bulk-delete'
     deleter = Deleter
 
-    def modal_action(self, pks: list[int], request):
+    def modal_action(self, pks: list[int], request) -> None:
         
         qs = self.model.objects.filter(pk__in=pks)
 
         for instance in qs:
             self.deleter(instance, request).delete()
         
-        return self.get_response()
+        return 

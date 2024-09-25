@@ -17,4 +17,4 @@ class BulkDeleteMixin(BulkActionMixin):
         for instance in qs:
             self.deleter(instance, request).delete()
         
-        return self.get_response()
+        return 

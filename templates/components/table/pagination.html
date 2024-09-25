@@ -8,6 +8,7 @@
       <c-btns.icon
         hx-get="{{ url }}?page=1"
         hx-target="{{ target }}"
+        hx-select="{{ target }}"
         hx-include="{{ include }}"
         title="{% translate 'first page'|title %}"
       >
@@ -23,6 +24,7 @@
       <c-btns.icon
         hx-get="{{ url }}?page={{ page_obj.previous_page_number }}"
         hx-target="{{ target }}"
+        hx-select="{{ target }}"
         hx-include="{{ include }}"
         title="{% translate 'previous page'|title %}"
       >
@@ -48,6 +50,7 @@
       <c-btns.icon
         hx-get="{{ url }}?page={{ page_obj.next_page_number }}"
         hx-target="{{ target }}"
+        hx-select="{{ target }}"
         hx-include="{{ include }}"
         title="{% translate 'next page'|title %}"
       >
@@ -62,6 +65,7 @@
       <c-btns.icon
         hx-get="{{ url }}?page={{ page_obj.paginator.num_pages }}"
         hx-target="{{ target }}"
+        hx-select="{{ target }}"
         hx-include="{{ include }}"
         title="{% translate 'last page'|title %}"
       >
@@ -79,6 +83,9 @@
       <c-btns.icon 
       hx-get="{{ url }}"
       hx-target="{{ target }}"
+      hx-select="{{ target }}"
+      hx-replace-url="true"
+      type="reset"
       id="page-reset-btn"
       title="{% translate 'reset'|title %}">
         <c-icons.reset ratio="1.25rem"></c-icons.reset>

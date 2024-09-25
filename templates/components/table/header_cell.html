@@ -5,6 +5,8 @@
   hx-vals='js:{
   order: `{% firstof request.GET.order code_name %}` === "{{ code_name }}" ? "-" + "{{ code_name }}" : "{{ code_name }}" }'
   hx-trigger="click"
+  hx-select="{{ target }}"
+  hx-target="{{ target }}"
   hx-swap="outerHTML"
   data-include
   class="flex items-center gap-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 duration-150 py-4 px-2 whitespace-nowrap"

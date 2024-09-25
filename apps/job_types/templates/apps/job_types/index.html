@@ -5,19 +5,6 @@
 
 {% block body %}
 
-    <span
-    hx-get="{% url 'job_types:index' %}"
-    hx-trigger="load"
-    hx-target="#job-types-table"
-    class="hidden"
-    x-init="breadCrumbs.push(
-        {
-            text: '{% translate 'job types' %}', 
-            href: '{% url 'job_types:index' %}'
-        }
-    )"
-    ></span>
-
     {% include 'apps/job_types/partials/table.html' %}
 
 {% endblock %}

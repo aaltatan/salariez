@@ -1,6 +1,42 @@
 <tr
   {{ attrs }}
   class="hover:bg-gray-100/80 dark:hover:bg-gray-800 has-checked:bg-blue-100 has-checked:dark:bg-blue-900 has-checked:border-blue-200 has-checked:dark:border-blue-950 has-checked:hover:bg-blue-200 has-checked:dark:hover:bg-blue-950"
+  x-on:contextmenu.prevent="handleContextClick"
+  x-on:contextmenu.prevent.debounce.1="setOffset"
 >
   {{ slot }}
 </tr>
+
+
+<script>
+
+  function handleContextClick(e) {
+    const contextMenuBtn = e.target.closest('tr').querySelector('td:last-child span');
+    Alpine.$data(contextMenuBtn).openContext = true;
+  }
+
+  function setOffset(element) {
+    const ul = element.target.closest('tr').querySelector('td:last-child ul');
+    const ulWidth = getComputedStyle(ul).width;
+    const ulHeight = Math.floor(+getComputedStyle(ul).height.replace('px', ''))
+    const portHeight = document.documentElement.clientHeight;
+    const direction = document.getElementById('app').dir;
+    const rightOrLeft = direction === 'ltr' ? '-' : '+';
+
+    let left = element.x;
+    let top = element.y;
+
+    if (direction === 'rtl') {
+      left = `${element.x + 16}px`
+    } else {
+      left = `calc(${element.x - 16}px - ${ulWidth})`
+    }
+
+    const topCriteria = (portHeight - element.y) > ulHeight;
+    top = topCriteria ? top : (portHeight - ulHeight - 16);
+
+    ul.style.left = left;
+    ul.style.top = `${top}px`;
+  }
+
+</script>

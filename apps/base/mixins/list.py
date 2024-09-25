@@ -64,34 +64,24 @@ class ListMixin(HelperMixin, AbstractList):
                     f'you implement {property} property on {model_name} model'
                 )
         
-        if not request.htmx or request.htmx.boosted:
-            response = render(request, self.index_template_name, {})
-            response['Hx-Trigger'] = 'get-messages'
-            return response
-        
-        response = super().get(request, *args, **kwargs)
+        context = self.get_context_data()
+        response = render(request, self.index_template_name, context)
         response['Hx-Trigger'] = 'get-messages'
         return response
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        
         """
         append `qs`, `filter_form` and `pagination_form` to the context
         """
-        
-        context = super().get_context_data(**kwargs)
-        
-        filter_from = self.filter_class(self.request.GET).form
-        
-        qs = self.get_paginator_queryset()
-        
-        pagination_form = self.get_pagination_form()
-        
-        context.update({
-            'filter': filter_from, 
-            'qs': qs,
-            'pagination_form': pagination_form,
-        })
+        context = super().get_context_data(
+            object_list=self.get_queryset(), **kwargs
+        )
+        context = {
+            **context,
+            'filter': self.filter_class(self.request.GET).form, 
+            'qs': self.get_paginator_queryset(),
+            'pagination_form': self.get_pagination_form(),
+        }
         
         return context
     
@@ -105,7 +95,6 @@ class ListMixin(HelperMixin, AbstractList):
         return paginator.get_page(page).object_list
 
     def get_queryset(self):
-        
         """
         filtering the queryset by filter_class
         """
@@ -146,10 +135,12 @@ class ListMixin(HelperMixin, AbstractList):
         return paginator, page, page.object_list, page.has_other_pages()
     
     def get_pagination_form(self):
+
+        attrs = self.paginate_by_form_attributes
+        attrs['hx-select'] = attrs['hx-target']
         
         pagination_form = self.paginate_by_form(
-            data=self.request.GET,
-            attrs=self.paginate_by_form_attributes
+            data=self.request.GET, attrs=attrs
         )
         return pagination_form
     
@@ -163,6 +154,6 @@ class ListMixin(HelperMixin, AbstractList):
             per_page = pagination_form.data.get('per_page')
         
         if pagination_form.data.get('per_page') == 'all':
-            per_page = 1_000_000
+            per_page = 1_000_000_000
         
         return int(per_page)

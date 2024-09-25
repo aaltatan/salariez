@@ -67,7 +67,9 @@ class BulkModalMixin(utils.HelperMixin, AbstractBulkModal):
             'path': reverse(self._get_hx_location_path()),
             'values': {**request.POST},
             'target': self._get_hx_location_target(),
+            'select': self._get_hx_location_target(),
         }
         response['Hx-Location'] = json.dumps(hx_location)
+        response['Hx-Trigger'] = 'get-messages'
             
         return response

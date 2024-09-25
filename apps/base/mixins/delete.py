@@ -74,8 +74,9 @@ class DeleteMixin(utils.HelperMixin, AbstractDelete):
             'path': reverse(self._get_hx_location_path()),
             'values': {**request.POST},
             'target': self._get_hx_location_target(),
+            'select': self._get_hx_location_target(),
         }
-        
+
         response = HttpResponse('')
         response['Hx-Location'] = json.dumps(hx_location)
         response['Hx-Trigger'] = 'get-messages'

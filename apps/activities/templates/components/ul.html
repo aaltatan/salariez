@@ -1,5 +1,5 @@
 <ul
-  x-init="Object.keys(data).forEach((el) => {
+  x-init="data && Object.keys(data).forEach((el) => {
   return $el.innerHTML += `
     <li class='whitespace-nowrap'>
        - <span class='font-bold underline'>${el}</span>: ${data[el]}

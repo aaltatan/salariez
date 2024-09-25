@@ -6,19 +6,6 @@
 
 {% block body %}
 
-    <span
-    hx-get="{% url 'cost_centers:index' %}"
-    hx-trigger="load"
-    hx-target="#cost-centers-table"
-    class="hidden"
-    x-init="breadCrumbs.push(
-        {
-            text: '{% translate 'cost centers' %}', 
-            href: '{% url 'cost_centers:index' %}'
-        }
-    )"
-    ></span>
-
     {% include 'apps/cost_centers/partials/table.html' %}
 
 {% endblock %}
