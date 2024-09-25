@@ -1,0 +1,81 @@
+{% load i18n %}
+
+<div 
+data-combo
+x-effect="
+optionsConcat = options.filter(el => el.selected).map(el => el.value).join(',');
+textsConcat = options.filter(el => el.selected).map(el => el.text).join(', ');
+" 
+class="relative" x-data="{ 
+  open: false,
+  optionsConcat: '',
+  textsConcat: '',
+  keywords: '',
+  options: [
+    { value: '1', text: 'google', selected: false },
+    { value: '2', text: 'facebook', selected: false },
+    { value: '3', text: 'design', selected: false },
+  ],
+}">
+
+  <input type="hidden" name="tochange" :value="optionsConcat">
+
+  <button @click="open = !open" class="input !flex items-center gap-1">
+    <span class="capitalize" x-text="textsConcat || '{% translate 'Please select' %}'"></span>
+    <c-icons.arrow-down ratio="1rem" />
+  </button>
+
+  <div 
+  role="menu" 
+  x-show="open"
+  @click.outside="open = false"
+  x-transition:enter="transition ease-out duration-100"
+  x-transition:enter-start="opacity-0 scale-90"
+  x-transition:enter-end="opacity-100 scale-100"
+  x-transition:leave="transition ease-in duration-100"
+  x-transition:leave-start="opacity-100 scale-100"
+  x-transition:leave-end="opacity-0 scale-90"
+  class="ltr:origin-top-right rtl:origin-top-left bg-gray-900 ~p-2/4 absolute top-[calc(100%_+_.5rem)] left-0 rounded-lg"
+  x-cloak
+  >
+
+    <input 
+    class="input" 
+    type="search" 
+    id="search" 
+    @search="searchHandler"
+    @keyup="searchHandler"
+    x-model="keywords"
+    placeholder="{% translate 'search'|title %}">
+
+    <ul class="py-2">
+      <template x-for="option in options" :key="option.value">
+        <li class="~px-2/4 ~py-1/2 flex items-center gap-2 hover:bg-gray-800">
+          <input 
+          :id="option.value" 
+          :checked="option.selected" 
+          :value="option.value"
+          x-model="option.selected" 
+          type="checkbox">
+          <label 
+          :for="option.value" 
+          x-text="option.text" 
+          class="w-full block first-letter:capitalize"></label>
+        </li>
+      </template>
+    </ul>
+
+  </div>
+
+</div>
+
+<script>
+  function searchHandler(el) {
+    const container = el.target.closest('div[data-combo]');
+    const keywords = Alpine.$data(container).keywords;
+
+    let options = Alpine.$data(container).options;
+    console.log(options.filter(e => e.text.contains(keywords)))
+    //Alpine.$data(container).options = 
+  }
+</script>
