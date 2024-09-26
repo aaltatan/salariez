@@ -2,7 +2,7 @@
 <input
   @change="handleChange"
   id="check-all"
-  class="before:content[''] block relative size-4 cursor-pointer appearance-none overflow-hidden rounded border border-gray-300 bg-white before:absolute before:inset-0 checked:border-blue-500 checked:before:bg-blue-500 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-gray-800 checked:focus:outline-blue-500 active:outline-offset-0 dark:border-gray-700 dark:bg-gray-800 dark:checked:border-blue-500 dark:checked:before:bg-blue-500 dark:focus:outline-gray-300 dark:checked:focus:outline-blue-500"
+  class="check"
   type="checkbox"
 />
 <script>
@@ -22,7 +22,7 @@
 {% else %}
 <input
   type="checkbox"
-  class="before:content[''] block relative size-4 cursor-pointer appearance-none overflow-hidden rounded border border-gray-300 bg-white before:absolute before:inset-0 checked:border-blue-500 checked:before:bg-blue-500 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-gray-800 checked:focus:outline-blue-500 active:outline-offset-0 dark:border-gray-700 dark:bg-gray-800 dark:checked:border-blue-500 dark:checked:before:bg-blue-500 dark:focus:outline-gray-300 dark:checked:focus:outline-blue-500"
+  class="check"
   name="obj-{{ obj.id }}-selected"
   data-check
   id="{{ obj.id }}"

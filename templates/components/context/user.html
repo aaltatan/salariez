@@ -3,8 +3,8 @@
 <div
   x-data="{open: false}"
   @click="open = true"
-  :class="open && 'bg-gray-50 dark:bg-gray-800'"
-  class="relative select-none rounded-md px-4 py-2 dark:hover:bg-gray-800 hover:bg-gray-100 duration-150"
+  :class="open && 'bg-neutral-50 dark:bg-neutral-800'"
+  class="relative select-none rounded-md px-4 py-2 dark:hover:bg-neutral-800 hover:bg-neutral-100 duration-150"
   role="button"
 >
   <div class="flex items-center justify-center gap-1">
@@ -25,21 +25,22 @@
     x-transition:leave-start="opacity-100 scale-100"
     x-transition:leave-end="opacity-0 scale-90"
     x-cloak
-    class="rounded-lg overflow-hidden py-2 absolute rtl:left-0 ltr:right-0 top-[calc(100%+.5rem)] bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-md z-10 ltr:text-left rtl:text-right ltr:origin-top-right rtl:origin-top-left w-[max-content]"
+    class="rounded-lg overflow-hidden py-2 absolute rtl:left-0 ltr:right-0 top-[calc(100%+.5rem)] bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-md z-10 ltr:text-left rtl:text-right ltr:origin-top-right rtl:origin-top-left w-[max-content]"
   >
     <div class="flex items-center gap-x-2 text-nowrap p-4">
-      <div
-        class="object-cover w-12 h-12 rounded-full flex items-center justify-center bg-blue-500 text-white font-semibold tracking-tighter"
-      >
-        {{ user.first_name|first|title }} {{ user.last_name|first|title }}
-      </div>
+      
+      <c-layout.avatar />
 
       <div>
-        <h1 class="font-semibold text-gray-700 capitalize dark:text-white tracking-tighter">
+        <h1 class="font-semibold text-neutral-700 capitalize dark:text-white tracking-tighter">
+          {% if user.first_name and user.last_name %}
           {{ user.first_name|title }} {{ user.last_name|title }}
+          {% else %}
+          {{ user.username }}
+          {% endif %}
         </h1>
 
-        <p class="text-gray-500 dark:text-gray-400">@{{ user.username }}</p>
+        <p class="text-neutral-500 dark:text-neutral-400">@{{ user.username }}</p>
       </div>
 
       <div>
@@ -53,7 +54,7 @@
       </div>
     </div>
 
-    <hr class="border-gray-200 dark:border-gray-700" />
+    <hr class="border-neutral-200 dark:border-neutral-700" />
 
     {% if user.is_superuser %}
 
@@ -67,7 +68,7 @@
     </c-context.btn>
     {% endif %}
 
-    <hr class="border-gray-200 dark:border-gray-700" />
+    <hr class="border-neutral-200 dark:border-neutral-700" />
 
     {% endif %}
 

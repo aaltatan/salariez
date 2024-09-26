@@ -1,26 +1,23 @@
 {% load i18n %}
 
 <div x-cloak x-show="breadCrumbs.length >= 2">
-    <ul class="flex items-center flex-wrap gap-1 px-4">
-        <template
-        x-for="(breadCrumb, idx) in breadCrumbs"
-        :key="breadCrumb.text">
-            <li class="flex items-center gap-1">
-    
-                <a
-                    class="capitalize font-semibold hover:underline duration-150"
-                    :class="(idx === breadCrumbs.length - 1) && 'text-blue-500'"
-                    :href="breadCrumb.href"
-                    x-text="breadCrumb.text">
-                </a>
-    
-                <template x-if="idx !== breadCrumbs.length - 1">
-                    <span class="rtl:rotate-180">
-                        <c-icons.arrow-right ratio="1rem" />
-                    </span>
-                </template>
-    
-            </li>
+  <ul class="flex items-center flex-wrap gap-1 px-4">
+    <template x-for="(breadCrumb, idx) in breadCrumbs" :key="breadCrumb.text">
+      <li class="flex items-center gap-1">
+        <a
+          class="capitalize font-semibold hover:underline duration-150"
+          :class="(idx === breadCrumbs.length - 1) && 'text-blue-500'"
+          :href="breadCrumb.href"
+          x-text="breadCrumb.text"
+        >
+        </a>
+
+        <template x-if="idx !== breadCrumbs.length - 1">
+          <span class="rtl:rotate-180">
+            <c-icons.arrow-right ratio="1rem" />
+          </span>
         </template>
-    </ul>
+      </li>
+    </template>
+  </ul>
 </div>

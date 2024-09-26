@@ -1,3 +1,9 @@
-<div class="bg-blue-500 {{ textsize }} max-w-24 text-white font-bold p-1 rounded-full capitalize block aspect-square leading-none border border-blue-500">
-    {{ request.user.first_name|make_list|first }}{{ request.user.last_name|make_list|first }}
+<div class="capitalize object-cover w-12 h-12 rounded-full flex items-center justify-center bg-blue-500 text-white font-semibold tracking-tighter">
+    {% if user.first_name and user.last_name %}
+        {{ user.first_name|make_list|first }}
+        {{ user.last_name|make_list|first }}
+    {% else %}
+        {{ user.username|make_list|first }}
+        {{ user.username|make_list|last }}
+    {% endif %}
 </div>

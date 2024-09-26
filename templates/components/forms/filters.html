@@ -6,7 +6,7 @@
     <div
       @click="open = !open"
       title="{% translate 'filters'|title %}"
-      class="inline-flex items-center justify-start rounded-lg duration-150 ~text-lg/xl p-2 gap-2 my-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800"
+      class="inline-flex items-center justify-start rounded-lg duration-150 ~text-lg/xl p-2 gap-2 my-2 cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-800"
     >
       <c-icons.filters ratio="1.25rem" />
 
@@ -20,7 +20,7 @@
     </div>
 
     <div
-      class="@container space-y-4 p-4 border border-gray-100 dark:border-gray-800 rounded-md"
+      class="@container space-y-4 p-4 border border-neutral-200 dark:border-neutral-800 rounded-md"
       x-show="open"
       x-collapse.duration.150ms
     >

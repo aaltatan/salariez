@@ -12,7 +12,7 @@ x-data="{openContext: false}" >
     @click.debounce.1="setOffset"
     @click="openContext = true"
     role="button"
-    x-bind:class="openContext && '!bg-gray-300 dark:!bg-gray-700'"
+    x-bind:class="openContext && '!bg-neutral-300 dark:!bg-neutral-700'"
   >
     <c-icons.ellipsis ratio="1rem"></c-icons.ellipsis>
   </c-btns.icon>
@@ -27,7 +27,7 @@ x-data="{openContext: false}" >
     x-transition:leave-start="opacity-100 scale-100"
     x-transition:leave-end="opacity-0 scale-90"
     x-cloak
-    class="divide-y divide-gray-100 dark:divide-gray-800 rounded-lg overflow-hidden py-1 fixed w-[min(100px)] bg-white dark:bg-gray-950 ltr:origin-top-right rtl:origin-top-left border border-gray-100 dark:border-gray-800 shadow-md z-50"
+    class="divide-y divide-neutral-200 dark:divide-neutral-800 rounded-lg overflow-hidden py-1 fixed w-[min(100px)] bg-white dark:bg-neutral-950 ltr:origin-top-right rtl:origin-top-left border border-neutral-200 dark:border-neutral-800 shadow-md z-50"
   >
     {{ slot }}
   </ul>

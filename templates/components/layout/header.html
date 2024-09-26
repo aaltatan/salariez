@@ -1,7 +1,10 @@
 {% load i18n %}
-
+<!-- ring-1 dark:ring-neutral-800 -->
 <header
-  class="sticky top-4 left-0 md:mx-auto ~p-2/4 shadow-md rounded-lg dark:bg-gray-900 dark:ring-1 dark:ring-gray-800 bg-white z-40 mx-auto"
+  x-data="{ atTop: false }"
+  class="sticky top-4 left-0 md:mx-auto ~p-2/4 shadow-md rounded-lg dark:bg-neutral-900 duration-150 bg-white dark:shadow-none z-40 mx-auto"
+  :class="atTop && 'bg-opacity-50 backdrop-blur-md ring-1 dark:ring-neutral-800 ring-neutral-200'"
+  @scroll.window="atTop = (window.pageYOffset < 20) ? false: true"
 >
   <nav class="flex items-center justify-between">
 
@@ -39,10 +42,10 @@
     </ul>
 
     <div class="hidden lg:block">
-      <c-layout.breadcrumb></c-layout.breadcrumb>
+      <c-layout.breadcrumb />
     </div>
 
-    <c-context.user></c-context.user>
+    <c-context.user />
   </nav>
 
   {{ slot }}

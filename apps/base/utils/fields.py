@@ -6,6 +6,8 @@ from django import forms
 from django.forms.widgets import Widget
 from django.urls import reverse
 
+from icecream import ic
+
 
 @dataclass
 class Object:
@@ -14,6 +16,7 @@ class Object:
     field_name: str
     value_attributes: list[str]
     required: bool = False
+    multiple: bool = False
     is_modal: bool = False
     add_new_url: tuple[str, str] | None = None
 
@@ -22,7 +25,7 @@ def get_search_input(
     widget: Widget,
     form: forms.ModelForm,
     obj: Object,
-):
+) -> Widget:
     """
     use it inside ModelForm.__init__() method  
     widget: select what widget will present the field form `django.forms.widgets`  
@@ -46,6 +49,9 @@ def get_search_input(
     
     if obj.required: 
         hx_get_path += "&required=true"
+    
+    if obj.multiple: 
+        hx_get_path += "&multiple=true"
         
     attributes = {
         "hx-get": hx_get_path ,

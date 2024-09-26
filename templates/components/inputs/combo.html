@@ -1,81 +1,125 @@
 {% load i18n %}
 
-<div 
-data-combo
-x-effect="
-optionsConcat = options.filter(el => el.selected).map(el => el.value).join(',');
-textsConcat = options.filter(el => el.selected).map(el => el.text).join(', ');
-" 
-class="relative" x-data="{ 
-  open: false,
-  optionsConcat: '',
-  textsConcat: '',
-  keywords: '',
-  options: [
-    { value: '1', text: 'google', selected: false },
-    { value: '2', text: 'facebook', selected: false },
-    { value: '3', text: 'design', selected: false },
-  ],
-}">
+<div
+  data-combo
+  x-effect="
+  textsConcat = options.filter(el => el.selected).map(el => el.text).join(', ')"
+  x-init="
+    let initials = location.href.match(/(?<={{ name }}\=)\d+/g)
+    initials = initials && initials.map(e => +e);
+    if (initials) {
+      options = options.map(e => {
+        e.selected = initials.includes(e.value);
+        return e;
+      })
+  }"
+  class="relative w-full"
+  x-data="{ 
+    open: false,
+    optionsConcat: '',
+    textsConcat: '',
+    keywords: '',
+    options: JSON.parse('{{ options }}'),
+  }">
+  <!-- { value: '1', text: 'google', selected: false, show: true }, -->
 
-  <input type="hidden" name="tochange" :value="optionsConcat">
-
-  <button @click="open = !open" class="input !flex items-center gap-1">
-    <span class="capitalize" x-text="textsConcat || '{% translate 'Please select' %}'"></span>
+  <span 
+  role="button"
+  @click="open = !open; options.sort((a, b) => b.selected - a.selected)" 
+  @click.1000="document.getElementById('search').focus()" 
+  class="input w-full !flex items-center justify-between">
+    <span
+      class="capitalize text-sm whitespace-nowrap truncate"
+      x-text="textsConcat || '{% translate 'Please select' %}'"
+    >
+    </span>
     <c-icons.arrow-down ratio="1rem" />
-  </button>
+  </span>
 
-  <div 
-  role="menu" 
-  x-show="open"
-  @click.outside="open = false"
-  x-transition:enter="transition ease-out duration-100"
-  x-transition:enter-start="opacity-0 scale-90"
-  x-transition:enter-end="opacity-100 scale-100"
-  x-transition:leave="transition ease-in duration-100"
-  x-transition:leave-start="opacity-100 scale-100"
-  x-transition:leave-end="opacity-0 scale-90"
-  class="ltr:origin-top-right rtl:origin-top-left bg-gray-900 ~p-2/4 absolute top-[calc(100%_+_.5rem)] left-0 rounded-lg"
-  x-cloak
+  <div
+    role="menu"
+    x-show="open"
+    @click.outside="
+    open = false; 
+    keywords = '';
+    options = options.map(e => {
+      e.show = true;
+      return e
+    })
+    options.sort((a, b) => b.selected - a.selected);"
+    x-transition:enter="transition ease-out duration-100"
+    x-transition:enter-start="opacity-0 scale-90"
+    x-transition:enter-end="opacity-100 scale-100"
+    x-transition:leave="transition ease-in duration-100"
+    x-transition:leave-start="opacity-100 scale-100"
+    x-transition:leave-end="opacity-0 scale-90"
+    class="origin-top w-full bg-white dark:bg-neutral-950 absolute top-[calc(100%_+_.5rem)] left-0 rounded-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden"
+    x-cloak
   >
+    <div x-show="options.length">
+      <input
+        class="w-full border-none border-b border-neutral-300 bg-neutral-50 py-2.5 px-4 text-sm text-neutral-600 focus:outline-none focus-visible:border-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-300 dark:focus-visible:border-blue-500"
+        type="search"
+        id="search"
+        @search="searchHandler"
+        @keyup="searchHandler"
+        @keyup.Escape="
+        open = false; 
+        keywords = '';
+        options = options.map(e => {
+          e.show = true;
+          return e
+        })
+        options.sort((a, b) => b.selected - a.selected);"
+        x-model="keywords"
+        placeholder="{% translate 'search'|title %} ..."
+      />
 
-    <input 
-    class="input" 
-    type="search" 
-    id="search" 
-    @search="searchHandler"
-    @keyup="searchHandler"
-    x-model="keywords"
-    placeholder="{% translate 'search'|title %}">
+      <ul class="text-sm max-h-32 overflow-y-auto">
+        <template x-for="option in options" :key="option.value">
+          <li
+            class="~px-2/4 ~py-1/2 flex items-center gap-2 hover:dark:bg-neutral-800 hover:bg-neutral-200"
+            x-show="option.show"
+          >
+            <input
+              :id="option.value"
+              :checked="option.selected"
+              :value="option.value"
+              x-model="option.selected"
+              name="{{ name }}"
+              type="checkbox"
+              class="check"
+            />
+            <label
+              :for="option.value"
+              x-text="option.text"
+              class="w-full block first-letter:capitalize"
+            ></label>
+          </li>
+        </template>
+      </ul>
+    </div>
 
-    <ul class="py-2">
-      <template x-for="option in options" :key="option.value">
-        <li class="~px-2/4 ~py-1/2 flex items-center gap-2 hover:bg-gray-800">
-          <input 
-          :id="option.value" 
-          :checked="option.selected" 
-          :value="option.value"
-          x-model="option.selected" 
-          type="checkbox">
-          <label 
-          :for="option.value" 
-          x-text="option.text" 
-          class="w-full block first-letter:capitalize"></label>
-        </li>
-      </template>
-    </ul>
-
+    <div class="w-full ~p-2/4" x-show="!options.length">{% translate 'no options' %}</div>
   </div>
-
 </div>
 
 <script>
+
   function searchHandler(el) {
-    const container = el.target.closest('div[data-combo]');
+    const container = el.target.closest("div[data-combo]");
     const keywords = Alpine.$data(container).keywords;
 
     let options = Alpine.$data(container).options;
-    console.log(options.filter(e => e.text.contains(keywords)))
-    //Alpine.$data(container).options = 
+    Alpine.$data(container).options = options.map((e) => {
+      e.show = false;
+      e.show = e.text.includes(keywords);
+      return e;
+    });
   }
+
+  function reSortOptionsHandler(el) {
+    
+  }
+
 </script>

@@ -23,7 +23,7 @@ x-data="{ dark: $persist(false).as('dark') }">
 
       <div 
         id="app" 
-        class="realtive bg-gray-200/80 dark:text-white/80 dark:bg-gray-950 font-cairo ~text-sm/base" 
+        class="realtive bg-neutral-100 dark:text-white/80 dark:bg-neutral-950 font-cairo ~text-sm/base" 
         dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}"
         x-data="{% include 'x-data.html' %}"
         x-init="
@@ -45,7 +45,7 @@ x-data="{ dark: $persist(false).as('dark') }">
 
           <c-layout.aside></c-layout.aside>
 
-          <div class="relative ltr:lg:pr-2 max-lg:!mx-2 ltr:lg:ml-[calc(300px_+_1rem)] rtl:lg:mr-[calc(300px_+_1rem)] min-h-screen">
+          <div class="relative ltr:lg:pr-2 rtl:lg:pl-2 max-lg:!mx-2 ltr:lg:ml-[calc(300px_+_1rem)] rtl:lg:mr-[calc(300px_+_1rem)] min-h-screen">
 
             <c-layout.header></c-layout.header>
 

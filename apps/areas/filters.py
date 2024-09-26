@@ -6,7 +6,8 @@ from django.forms import widgets
 import django_filters as filters
 
 from . import models
-from ..base.mixins.filters import FiltersMixin
+
+from apps.base.mixins.filters import FiltersMixin
 from apps.base.utils import get_search_input, Object
 
 
@@ -24,6 +25,13 @@ class AreaFilterSet(FiltersMixin, filters.FilterSet):
             }
         ),
     )
+    city = filters.ModelMultipleChoiceFilter(
+        queryset=models.City.objects.all(),
+        field_name='city',
+        lookup_expr='in',
+        label=_('city'),
+        method="filter_city",
+    )
     description = filters.CharFilter(
         label=_('description'),
         method="filter_description",
@@ -37,6 +45,11 @@ class AreaFilterSet(FiltersMixin, filters.FilterSet):
         ),
     )
 
+    def filter_city(self, qs, name, value):
+        if not value:
+            return qs
+        return qs.filter(city__in=value)
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -45,10 +58,11 @@ class AreaFilterSet(FiltersMixin, filters.FilterSet):
             field_name='city', 
             model=models.City,
             value_attributes=['name'],
+            multiple=True,
         )
         
         self.form.fields['city'].widget = get_search_input(
-            widget=widgets.TextInput,
+            widget=widgets.SelectMultiple,
             form=self.form, 
             obj=city,
         )

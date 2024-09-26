@@ -1,6 +1,6 @@
 {% load i18n %} 
 {% get_current_language as LANGUAGE_CODE %} 
-{% with 'w-full capitalize font-semibold block dark:hover:bg-gray-800 hover:bg-gray-100 duration-100 ~px-2/4 ~py-1/2 ltr:text-left rtl:text-right' as theme %}
+{% with 'w-full capitalize font-semibold block dark:hover:bg-neutral-800 hover:bg-neutral-100 duration-100 ~px-2/4 ~py-1/2 ltr:text-left rtl:text-right' as theme %}
 
 <c-modal.container>
   <c-modal.modal>
@@ -10,14 +10,14 @@
     </c-slot>
 
     <c-slot name="body">
-      <div class="divide-y divide-gray-200 dark:divide-gray-800">
+      <div class="divide-y divide-neutral-200 dark:divide-neutral-800">
 
         <div class="flex items-center gap-2 ~text-sm/base ~px-2/4 ~py-1/2">
           <label class="capitalize whitespace-nowrap" for="messages-timeout">
               {% translate 'messages timeout' %} 
           </label>
           <select
-            class="block mt-1 rounded-md border border-gray-200 bg-white ~px-2/4 ~py-1/2 focus:border-blue-500 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40 dark:border-gray-800 dark:bg-gray-900 dark:focus:border-blue-300 outline-none duration-75 w-full"
+            class="block mt-1 rounded-md border border-neutral-200 bg-white ~px-2/4 ~py-1/2 focus:border-blue-500 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40 dark:border-neutral-800 dark:bg-neutral-900 dark:focus:border-blue-300 outline-none duration-75 w-full"
             x-model="messagesTimeout"
             id="messages-timeout"
           >

@@ -1,3 +1,4 @@
+import json
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from inspect import signature
@@ -101,14 +102,20 @@ class SearchMixin(utils.HelperMixin, AbstractSearch):
         } 
 
         template = 'components/inputs/search.html'
-        criteria = (
-            request
-            .headers
-            .get('hx-trigger', '')
-            .startswith('multiple-')
-        )
+        criteria = request.GET.get('multiple')
         if criteria:
-            template = 'components/inputs/multiple.html'
+            options = self.model.objects.all()
+            options = [
+                {
+                    'value': option.id, 
+                    'text': str(option), 
+                    'selected': False, 
+                    'show': True
+                } 
+                for option in options
+            ]
+            context['options'] = json.dumps(options)
+            template = 'components/inputs/combo.html'
         
         return render(request, template, context)
     

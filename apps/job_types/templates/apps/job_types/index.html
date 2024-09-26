@@ -3,6 +3,13 @@
 
 {% block title %}{% translate 'job types'|title %}{% endblock %}
 
+<span
+class="hidden"
+x-init="breadCrumbs.push({
+    text: '{% translate 'job_types' %}', 
+    href: '{% url 'job_types:index' %}'
+})"></span>
+
 {% block body %}
 
     {% include 'apps/job_types/partials/table.html' %}

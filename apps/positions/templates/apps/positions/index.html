@@ -3,6 +3,12 @@
 
 {% block title %}{% translate 'positions'|title %}{% endblock %}
 
+<span
+class="hidden"
+x-init="breadCrumbs.push({
+    text: '{% translate 'positions' %}', 
+    href: '{% url 'positions:index' %}'
+})"></span>
 
 {% block body %}
 

@@ -3,7 +3,7 @@
 <div 
 @click.outside="modalOpen = false"
 @click.outside.debounce.200="handleClickAfterDebouncing"
-class="shadow-md rounded-lg overflow-hidden bg-white dark:bg-gray-900 dark:border dark:border-gray-800">
+class="shadow-md rounded-lg overflow-hidden bg-white dark:bg-neutral-900 dark:border dark:border-neutral-800">
 
     <header class="p-4">
         <p class="font-semibold tracking-tight text-xl">
@@ -11,14 +11,14 @@ class="shadow-md rounded-lg overflow-hidden bg-white dark:bg-gray-900 dark:borde
         </p>
     </header>
 
-    <hr class="hidden dark:block dark:border-gray-800">
+    <hr class="hidden dark:block dark:border-neutral-800">
 
     <div 
-    class="p-4 dark:border-t dark:border-b dark:border-gray-900 shadow-inner dark:shadow-none max-h-[300px] overflow-auto !scrollbar-track-gray-200 dark:!scrollbar-track-gray-900">
+    class="p-4 dark:border-t dark:border-b dark:border-neutral-900 shadow-inner dark:shadow-none max-h-[300px] overflow-auto !scrollbar-track-neutral-200 dark:!scrollbar-track-neutral-900">
         {{ body }}
     </div>
 
-    <hr class="border-gray-200 dark:border-gray-800">
+    <hr class="border-neutral-200 dark:border-neutral-800">
 
     <footer class="p-4 flex items-center">
         <div class="ltr:ml-auto rtl:mr-auto flex items-center gap-1">

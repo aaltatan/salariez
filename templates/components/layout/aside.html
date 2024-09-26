@@ -7,9 +7,9 @@ data-aside
 x-cloak
 x-data="{ search: '', localUrls: urls }"
   :class="asideOpen ? 'ltr:max-lg:left-0 rtl:max-lg:right-0' : 'ltr:max-lg:left-[-350px] rtl:max-lg:right-[-350px]'"
-  class="fixed w-[min(100%,300px)] h-[calc(100vh_-_2rem)] shadow-lg rounded-lg m-4 bg-white dark:bg-gray-900 dark:ring-1 dark:ring-gray-800 ltr:ml-2 rtl:mr-2 dark:shadow-none z-[300] duration-150"
+  class="fixed w-[min(100%,300px)] h-[calc(100vh_-_2rem)] shadow-lg rounded-lg m-4 bg-white dark:bg-neutral-900 dark:max-lg:ring-1 dark:max-lg:ring-neutral-800 ltr:ml-2 rtl:mr-2 dark:shadow-none z-[300] duration-150"
 >
-  <aside class="relative ~p-2/3 h-full overflow-y-auto overflow-x-hidden">
+  <aside class="relative ~p-2/3 h-full">
 
     <span class="md:hidden flex items-center justify-end">
       <c-btns.icon role="button" @click="asideOpen = false">
@@ -58,7 +58,7 @@ x-data="{ search: '', localUrls: urls }"
       }
     </script>
 
-    <ul class="py-2">
+    <ul class="mt-4 max-h-96 overflow-y-auto overflow-x-hidden">
 
       <template x-for="url in localUrls" :key="url.text" x-transition>
 
@@ -67,7 +67,7 @@ x-data="{ search: '', localUrls: urls }"
         }">
 
           <div 
-          class="flex items-center justify-between cursor-pointer p-2 hover:bg-gray-100 dark:hover:bg-gray-800 outline-none focus:ring-2 [&:has(_~_ul_li[aria-label='true'])]:font-bold [&:has(_~_ul_li[aria-label='true'])]:text-blue-500" 
+          class="flex items-center justify-between cursor-pointer p-2 hover:bg-neutral-100 dark:hover:bg-neutral-800 outline-none focus:ring-2 [&:has(_~_ul_li[aria-label='true'])]:font-bold [&:has(_~_ul_li[aria-label='true'])]:text-blue-500" 
           @click="open = !open">
             <span x-text="url.text" class="capitalize"></span>
             <div class="duration-150" :class="open && 'rotate-180'">
@@ -75,13 +75,13 @@ x-data="{ search: '', localUrls: urls }"
             </div>
           </div>
 
-          <ul class="divide-y divide-gray-100 dark:divide-gray-800" x-show="open" x-collapse>
+          <ul class="divide-y divide-neutral-200 dark:divide-neutral-800" x-show="open" x-collapse>
               <template x-for="suburl in url.children" :key="suburl.text">
                   <li :aria-label="suburl.isActive && 'true'">
                     <a 
                       :href="suburl.url"
                       :class="suburl.isActive && 'text-blue-500 font-semibold'"
-                      class="flex items-center gap-2 py-2 ltr:pl-8 rtl:pr-8 duration-150 hover:bg-gray-100 outline-none focus:ring-2 focus:ring-blue-500 dark:hover:bg-gray-800">
+                      class="flex items-center gap-2 py-2 ltr:pl-8 rtl:pr-8 duration-150 hover:bg-neutral-100 outline-none focus:ring-2 focus:ring-blue-500 dark:hover:bg-neutral-800">
                         <c-icons.star ratio=".625rem" />
                         <span x-text="suburl.text" class="capitalize"></span>
                     </a>
