@@ -24,9 +24,6 @@ class Activity(models.Model):
         choices=TypeChoices.choices,
         default=TypeChoices.CREATE,
     )
-    new_data = models.JSONField(
-        null=True, blank=True,
-    )
     old_data = models.JSONField(
         null=True, blank=True,
     )

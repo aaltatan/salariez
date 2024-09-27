@@ -120,7 +120,6 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
                 }
                 self._add_activity(
                     instance, 
-                    new_data=form.cleaned_data,
                     old_data=old_data,
                 )
                 obj = form.save()

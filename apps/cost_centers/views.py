@@ -39,8 +39,7 @@ class ListTableView(
     model = models.CostCenter
     filter_class = filters.CostCenterFilterSet
     
-    template_name = 'apps/cost_centers/partials/table.html'
-    index_template_name = 'apps/cost_centers/index.html'
+    template_name = 'apps/cost_centers/index.html'
     
     paginate_by_form = base_forms.PaginatedByForm
     paginate_by_form_attributes = {

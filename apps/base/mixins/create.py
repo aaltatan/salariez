@@ -88,9 +88,7 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
 
         if form.is_valid():
             obj = form.save()
-            self._add_activity(
-                obj, new_data=form.cleaned_data
-            )
+            self._add_activity(obj)
             messages.success(
                 request, _('{} has been created successfully'.format(obj))
             )
@@ -114,9 +112,7 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
 
         if form.is_valid():
             obj = form.save()
-            self._add_activity(
-                obj, new_data=form.cleaned_data
-            )
+            self._add_activity(obj)
             messages.success(
                 request, _('{} has been created successfully'.format(obj))
             )

@@ -3,14 +3,15 @@
 
 {% block title %}{% translate 'cities'|title %}{% endblock %}
 
-<span
-class="hidden"
-x-init="breadCrumbs.push({
-    text: '{% translate 'cities' %}', 
-    href: '{% url 'cities:index' %}'
-})"></span>
 
 {% block body %}
+
+    <span
+    class="hidden"
+    x-init="breadCrumbs.push({
+        text: '{% translate 'cities' %}', 
+        href: '{% url 'cities:index' %}'
+    })"></span>
 
     {% include 'apps/cities/partials/table.html' %}
 

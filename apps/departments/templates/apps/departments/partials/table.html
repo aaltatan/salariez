@@ -1,0 +1,192 @@
+{% load i18n %}
+{% load math_filters %}
+
+{% with 'department-filter-form' as filter_form %}
+{% with '#departments-table' as target %}
+
+{% with perms.departments.add_department as can_create %}
+{% with perms.departments.delete_department as can_delete %}
+{% with perms.departments.change_department as can_update %}
+{% with perms.departments.can_export as can_export %}
+{% with perms.activities.view_activity as can_log %}
+
+{% url 'departments:index' as index_path %}
+{% url 'departments:bulk' as bulk_path %}
+{% url 'departments:create' as create_path %}
+{% url 'departments:export' as export_path %}
+
+<c-layout.app-container id="departments-table" app_title="{% translate 'departments' %}">
+
+  <c-slot name="filters">
+    {% include 'partials/filters/base.html' %}
+  </c-slot>
+
+  <c-slot name="body">
+    <form 
+    hx-get="{{ bulk_path }}" 
+    hx-include="[data-include]"
+    x-data="{ selectedRows: [] }">
+
+      <c-table.container>
+
+        <input
+        data-include
+        type="hidden"
+        name="order"
+        value="{% firstof request.GET.order default_column %}"/>
+      
+        <c-table.table>
+          
+          <c-table.header-row>
+
+            <c-table.header-cell>
+              {% if can_delete %}
+              <c-table.check data_check="all" />
+              {% endif %}
+            </c-table.header-cell>
+
+            <c-table.header-cell 
+            hx-get="{{ index_path }}"
+            hx-target="{{ target }}"
+            code_name="department_id"
+            name="{% translate 'id' %}" />
+
+            <c-table.header-cell 
+            hx-get="{{ index_path }}"
+            hx-target="{{ target }}"
+            code_name="name"
+            name="{% translate 'name' %}" />
+
+            <c-table.header-cell name="{% translate 'type' %}" />
+
+            <c-table.header-cell 
+            hx-get="{{ index_path }}"
+            hx-target="{{ target }}"
+            code_name="level"
+            name="{% translate 'level' %}" />
+
+            <c-table.header-cell 
+            hx-get="{{ index_path }}"
+            hx-target="{{ target }}"
+            code_name="cost_center"
+            name="{% translate 'cost center' %}" />
+
+            <c-table.header-cell 
+            hx-get="{{ index_path }}"
+            hx-target="{{ target }}"
+            code_name="parent"
+            name="{% translate 'parent' %}" />
+
+            <c-table.header-cell />
+
+          </c-table.header-row>
+
+          {% if can_delete %}
+          <c-table.unselect-all colspan="4">
+            {% if can_delete %}
+              <c-table.action-input
+                name="bulk_delete"
+                value="{% translate 'delete'|title %}"
+                title="{% translate 'delete'|title %}" />
+            {% endif %}
+            {% if user.is_superuser %}
+              <c-table.action-input
+                name="bulk_reslugify"
+                value="{% translate 'reslugify'|title %}"
+                title="{% translate 'reslugify'|title %}" />
+            {% endif %}
+          </c-table.unselect-all>
+          {% endif %}
+
+          <!-- end header -->
+      
+          <!-- start rows -->
+          <c-table.tbody>
+            {% for obj in qs %}
+            <c-table.tr>
+              <td class="p-2"><c-table.check /></td>
+
+              {% if can_update %}
+              <c-table.td href="{{ obj.get_update_path }}">
+                {{ obj.department_id }}
+              </c-table.td>
+              {% else %}
+              <c-table.td>{{ obj.department_id }}</c-table.td>
+              {% endif %}
+
+              {% if can_update %}
+              <c-table.td href="{{ obj.get_update_path }}">
+                <span class="whitespace-nowrap px-{{ obj.level|multiply:3 }}">
+                  {{ obj.name }}
+                </span>
+              </c-table.td>
+              {% else %}
+              <c-table.td>
+                <span class="whitespace-nowrap px-{{ obj.level|multiply:3 }}">
+                  {{ obj.name }}
+                </span>
+              </c-table.td>
+              {% endif %}
+
+              <c-table.td>
+                {% if obj.is_leaf_node %}
+                  <span class="capitalize">
+                    {% translate 'partial' %}
+                  </span>
+                {% else %}
+                  <span class="capitalize">
+                    {% translate 'primary' %}
+                  </span>
+                {% endif %}
+              </c-table.td>
+
+              <c-table.td>{{ obj.level }}</c-table.td>
+
+              {% if perms.cost_centers.update_costcenter %}
+              <c-table.td href="{{ obj.cost_center.get_update_path }}">
+                <span class="whitespace-nowrap">
+                  {{ obj.cost_center.name }}
+                </span>
+              </c-table.td>
+              {% else %}
+                <c-table.td>
+                  <span class="whitespace-nowrap">
+                  {{ obj.cost_center.name }}
+                  </span>
+                </c-table.td>
+              {% endif %}
+
+              <c-table.td>
+                {% if obj.parent %}
+                  <span class="whitespace-nowrap">{{ obj.parent }}</span>
+                {% endif %}
+              </c-table.td>
+
+              <td>{% include 'partials/context/base.html' %}</td>
+              
+            </c-table.tr>
+            {% empty %}
+            <c-table.empty-tr colspan="4" />
+            {% endfor %}
+          </c-table.tbody>
+          <!-- end rows -->
+        </c-table.table>
+
+      </c-table.container>
+
+    </form>
+  </c-slot>
+
+  <c-slot name="pagination">
+    {% include 'partials/pagination/base.html' %}
+  </c-slot>
+
+</c-layout.app-container>
+
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}

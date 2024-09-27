@@ -38,6 +38,15 @@
           </span>
         </button>
 
+        <button class="{{ theme }}" @click="asideFixed = !asideFixed">
+          <span x-show="asideFixed" title="{% translate 'fixed aside'|title %}">
+            {% translate 'fixed aside' %}
+          </span>
+          <span x-show="!asideFixed" title="{% translate 'hidden aside'|title %}">
+            {% translate 'hidden aside' %}
+          </span>
+        </button>
+
         <form action="{% url 'set_language' %}" method="post">
           <input name="next" type="hidden" value="{{ redirect_to }}" />
           <input

@@ -14,7 +14,6 @@
             <c-table.td>{% translate 'since' %}</c-table.td>
             <c-table.td>{% translate 'user' %}</c-table.td>
             <c-table.td>{% translate 'type' %}</c-table.td>
-            <c-table.td>{% translate 'new data' %}</c-table.td>
             <c-table.td>{% translate 'old data' %}</c-table.td>
           </c-table.header-row>
           {% for obj in qs %}
@@ -39,10 +38,6 @@
                       {{ obj.type }}
                     </c-layout.badge>
                   {% endif %}
-                </c-table.td>
-                <c-table.td>
-                  {{ obj.new_data|json_script }}
-                  <c-ul />
                 </c-table.td>
                 <c-table.td>
                   {{ obj.old_data|json_script }}

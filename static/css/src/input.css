@@ -5,7 +5,7 @@
 
 @layer utilities {
     .input {
-        @apply block mt-1 placeholder-neutral-400/70 dark:placeholder-neutral-500 rounded-md border border-neutral-200 bg-white ~text-sm/base ~px-4/6 ~py-2/3 text-neutral-700 focus:border-blue-500 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:focus:border-blue-300 outline-none duration-75 aria-[invalid]:!ring-[red] placeholder:capitalize disabled:opacity-90 dark:disabled:opacity-50 disabled:text-blue-500;
+        @apply block mt-1 placeholder-neutral-500 rounded-md border border-neutral-200 bg-white ~text-sm/base ~px-4/6 ~py-2/3 text-neutral-700 focus:border-blue-500 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:focus:border-blue-300 outline-none duration-75 aria-[invalid]:!ring-[red] placeholder:capitalize disabled:opacity-90 dark:disabled:opacity-50 disabled:text-blue-500;
     }
     .check {
         @apply block relative size-4 cursor-pointer appearance-none overflow-hidden rounded border border-neutral-300 bg-white before:absolute before:inset-0 checked:border-blue-500 checked:before:bg-blue-500 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-neutral-800 checked:focus:outline-blue-500 active:outline-offset-0 dark:border-neutral-700 dark:bg-neutral-800 dark:checked:border-blue-500 dark:checked:before:bg-blue-500 dark:focus:outline-neutral-300 dark:checked:focus:outline-blue-500;

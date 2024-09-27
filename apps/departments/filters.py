@@ -8,10 +8,10 @@ import django_filters as filters
 from . import models
 
 from apps.base.mixins.filters import FiltersMixin
-from apps.base.utils import get_search_input, Object
+from apps.base.utils.fields import Object, get_search_input
 
 
-class AreaFilterSet(FiltersMixin, filters.FilterSet):
+class DepartmentFilterSet(FiltersMixin, filters.FilterSet):
 
     name = filters.CharFilter(
         label=_('name'),
@@ -25,11 +25,18 @@ class AreaFilterSet(FiltersMixin, filters.FilterSet):
             }
         ),
     )
-    city = filters.ModelMultipleChoiceFilter(
-        queryset=models.City.objects.all(),
-        field_name='city',
+    cost_center = filters.ModelMultipleChoiceFilter(
+        queryset=models.cc_models.CostCenter.objects.all(),
+        field_name='cost_center',
         lookup_expr='in',
-        label=_('city'),
+        label=_('cost center'),
+        method="filter_combobox",
+    )
+    parent = filters.ModelMultipleChoiceFilter(
+        queryset=models.cc_models.CostCenter.objects.all(),
+        field_name='parent',
+        lookup_expr='in',
+        label=_('department'),
         method="filter_combobox",
     )
     description = filters.CharFilter(
@@ -48,20 +55,34 @@ class AreaFilterSet(FiltersMixin, filters.FilterSet):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        city = Object(
-            url_name='cities:search', 
-            field_name='city', 
-            model=models.City,
+        cost_center = Object(
+            url_name='cost_centers:search', 
+            field_name='cost_center', 
+            model=models.cc_models.CostCenter,
             value_attributes=['name'],
             multiple=True,
         )
         
-        self.form.fields['city'].widget = get_search_input(
+        self.form.fields['cost_center'].widget = get_search_input(
             widget=widgets.SelectMultiple,
             form=self.form, 
-            obj=city,
+            obj=cost_center,
+        )
+
+        parent = Object(
+            url_name='departments:search', 
+            field_name='parent', 
+            model=models.Department,
+            value_attributes=['name'],
+            multiple=True,
+        )
+        
+        self.form.fields['parent'].widget = get_search_input(
+            widget=widgets.SelectMultiple,
+            form=self.form, 
+            obj=parent,
         )
 
     class Meta:
-        model = models.Area
-        fields = ["name", "city", "description"]
+        model = models.Department
+        fields = ["name", "cost_center", "parent"]

@@ -39,8 +39,7 @@ class ListTableView(
     model = models.Nationality
     filter_class = filters.NationalityFilterSet
     
-    template_name = 'apps/nationalities/partials/table.html'
-    index_template_name = 'apps/nationalities/index.html'
+    template_name = 'apps/nationalities/index.html'
     
     paginate_by_form = base_forms.PaginatedByForm
     paginate_by_form_attributes = {

@@ -20,7 +20,14 @@ from apps.base.mixins import (
     BulkMapperMixin,
     ReslugifyModalMixin,
     ExportMixin,
+    SearchMixin,
 )
+
+
+class SearchView(LoginRequiredMixin, SearchMixin, View):
+    
+    model = models.JobType
+    input_placeholder = _('search job type')
 
 
 class ListTableView(
@@ -32,8 +39,7 @@ class ListTableView(
     model = models.JobType
     filter_class = filters.JobTypeFilterSet
     
-    template_name = 'apps/job_types/partials/table.html'
-    index_template_name = 'apps/job_types/index.html'
+    template_name = 'apps/job_types/index.html'
     
     paginate_by_form = base_forms.PaginatedByForm
     paginate_by_form_attributes = {

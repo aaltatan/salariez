@@ -35,7 +35,6 @@ class ActivityAdmin(admin.ModelAdmin):
         'user',
         'type',
         'formatted_type',
-        'new_data',
         'old_data',
         'notes',
         'content_type',

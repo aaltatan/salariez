@@ -39,8 +39,7 @@ class ListTableView(
     model = models.Position
     filter_class = filters.PositionFilterSet
     
-    template_name = 'apps/positions/partials/table.html'
-    index_template_name = 'apps/positions/index.html'
+    template_name = 'apps/positions/index.html'
     
     paginate_by_form = base_forms.PaginatedByForm
     paginate_by_form_attributes = {

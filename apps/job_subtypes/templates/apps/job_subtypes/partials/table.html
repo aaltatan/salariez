@@ -39,33 +39,33 @@
           <thead>
     
             <c-table.header-row>
-              <th class="px-2 py-1">
+
+              <c-table.header-cell>
                 {% if can_delete %}
                 <c-table.check data_check="all" />
                 {% endif %}
-              </th>
-              <th>
-                <c-table.header-cell 
-                hx-get="{{ index_path }}"
-                hx-target="{{ target }}"
-                code_name="name"
-                name="{% translate 'name' %}" />
-              </th>
-              <th>
-                <c-table.header-cell 
-                hx-get="{{ index_path }}"
-                hx-target="{{ target }}"
-                code_name="job_type"
-                name="{% translate 'job type' %}" />
-              </th>
-              <th>
-                <c-table.header-cell 
-                hx-get="{{ index_path }}"
-                hx-target="{{ target }}"
-                code_name="description"
-                name="{% translate 'description' %}" />
-              </th>
-              <th></th>
+              </c-table.header-cell>
+
+              <c-table.header-cell 
+              hx-get="{{ index_path }}"
+              hx-target="{{ target }}"
+              code_name="name"
+              name="{% translate 'name' %}" />
+
+              <c-table.header-cell 
+              hx-get="{{ index_path }}"
+              hx-target="{{ target }}"
+              code_name="job_type"
+              name="{% translate 'job type' %}" />
+
+              <c-table.header-cell 
+              hx-get="{{ index_path }}"
+              hx-target="{{ target }}"
+              code_name="description"
+              name="{% translate 'description' %}" />
+
+              <c-table.header-cell />
+              
             </c-table.header-row>
     
             {% if can_delete %}

@@ -53,10 +53,6 @@ class TreeMixin(AbstractTree):
     def get(self, request, *args, **kwargs):
         
         context = {'qs': self.get_queryset()}
-        
-        template_name = self._get_body_template_name()
-        
-        if not request.htmx or request.htmx.boosted:
-            template_name = self._get_template_name()
+        template_name = self._get_template_name()
         
         return render(request, template_name, context)

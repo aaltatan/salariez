@@ -3,15 +3,18 @@
 
 {% block title %}{% translate 'areas'|title %}{% endblock %}
 
-<span
-class="hidden"
-x-init="breadCrumbs.push({
-    text: '{% translate 'areas' %}', 
-    href: '{% url 'areas:index' %}'
-})"></span>
-
 {% block body %}
 
-    {% include 'apps/areas/partials/table.html' %}
+<span
+class="hidden"
+x-init="breadCrumbs.push(
+    {
+        text: '{% translate 'areas' %}', 
+        href: '{% url 'areas:index' %}'
+    }
+)"  
+></span>
+
+{% include 'apps/areas/partials/table.html' %}
 
 {% endblock %}

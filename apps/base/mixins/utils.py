@@ -30,6 +30,8 @@ class HelperMixin:
             'target': '#app',
             'select': '#app',
         }
+        print(hx_location)
+        print('#' * 100)
         response = HttpResponse('')
         response['HX-Location'] = json.dumps(hx_location)
         response['HX-Trigger'] = 'get-messages'

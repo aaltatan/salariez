@@ -32,8 +32,7 @@ class ListTableView(
     model = models.JobSubtype
     filter_class = filters.JobSubtypeFilterSet
     
-    template_name = 'apps/job_subtypes/partials/table.html'
-    index_template_name = 'apps/job_subtypes/index.html'
+    template_name = 'apps/job_subtypes/index.html'
     
     paginate_by_form = base_forms.PaginatedByForm
     paginate_by_form_attributes = {

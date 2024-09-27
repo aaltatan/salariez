@@ -3,14 +3,15 @@
 
 {% block title %}{% translate 'cost centers'|title %}{% endblock %}
 
-<span
-class="hidden"
-x-init="breadCrumbs.push({
-    text: '{% translate 'cost_centers' %}', 
-    href: '{% url 'cost_centers:index' %}'
-})"></span>
 
 {% block body %}
+
+    <span
+    class="hidden"
+    x-init="breadCrumbs.push({
+        text: '{% translate 'cost centers' %}', 
+        href: '{% url 'cost_centers:index' %}'
+    })"></span>
 
     {% include 'apps/cost_centers/partials/table.html' %}
 

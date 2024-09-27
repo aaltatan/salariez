@@ -6,9 +6,6 @@
 {% block body %}
 
 <span
-hx-get="{% url 'departments:index' %}"
-hx-trigger="load"
-hx-target="#departments-body"
 class="hidden"
 x-init="breadCrumbs.push(
     {
@@ -18,6 +15,6 @@ x-init="breadCrumbs.push(
 )"  
 ></span>
 
-<div id="departments-body"></div>
+{% include 'apps/departments/partials/table.html' %}
 
 {% endblock %}

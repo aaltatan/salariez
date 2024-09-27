@@ -27,10 +27,6 @@ class AbstractList(ABC):
     
     @property
     @abstractmethod
-    def index_template_name(self): ...
-    
-    @property
-    @abstractmethod
     def paginate_by_form(self): ...
     
     @property
@@ -47,7 +43,6 @@ class ListMixin(HelperMixin, AbstractList):
     - `model: Model`
     - `filter_class: FilterSet`
     - `template_name: str` table template path like `apps/<app_name>/partials/table.html`
-    - `index_template_name: str` main index.html file `apps/<app_name>/index.html`
     - `paginate_by_form: Form`
     - `paginate_by_form_attributes: dict[str, reverse_lazy | str]` to set hx-get and hx-target attrs on form attributes  
     
@@ -65,7 +60,7 @@ class ListMixin(HelperMixin, AbstractList):
                 )
         
         context = self.get_context_data()
-        response = render(request, self.index_template_name, context)
+        response = render(request, self.template_name, context)
         response['Hx-Trigger'] = 'get-messages'
         return response
 

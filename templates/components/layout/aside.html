@@ -1,14 +1,24 @@
 {% load i18n %}
 
-<div :class="!asideOpen && 'hidden'" class="fixed w-screen h-screen left-0 top-0 z-[49] lg:hidden" @click="asideOpen = false"></div>
+<div 
+:class="{ 
+  'hidden': !asideOpen,
+  'lg:hidden': asideFixed,
+}" 
+class="fixed w-screen h-screen left-0 top-0 z-[49]" 
+@click="asideOpen = false"></div>
 
 <div
 data-aside
 x-cloak
 x-data="{ search: '', localUrls: urls }"
-  :class="asideOpen ? 'ltr:max-lg:left-0 rtl:max-lg:right-0' : 'ltr:max-lg:left-[-350px] rtl:max-lg:right-[-350px]'"
-  class="fixed w-[min(100%,300px)] h-[calc(100vh_-_2rem)] shadow-lg rounded-lg m-4 bg-white dark:bg-neutral-900 dark:max-lg:ring-1 dark:max-lg:ring-neutral-800 ltr:ml-2 rtl:mr-2 dark:shadow-none z-[300] duration-150"
+:class="{ 
+'ltr:!left-0 rtl:!right-0': asideOpen, 
+'ltr:lg:!left-0 rtl:lg:!right-0': asideFixed, 
+}"
+class="fixed w-[min(100%,300px)] ltr:left-[-350px] rtl:right-[-350px] h-[calc(100vh_-_1rem)] shadow-lg rounded-lg m-2 bg-white dark:bg-neutral-900 dark:ring-1 dark:ring-neutral-800 ltr:ml-2 rtl:mr-2 dark:shadow-none z-[300] duration-150"
 >
+
   <aside class="relative ~p-2/3 h-full">
 
     <span class="md:hidden flex items-center justify-end">
@@ -58,7 +68,7 @@ x-data="{ search: '', localUrls: urls }"
       }
     </script>
 
-    <ul class="mt-4 max-h-96 overflow-y-auto overflow-x-hidden">
+    <ul class="mt-4 max-h-[70%] overflow-y-auto overflow-x-hidden">
 
       <template x-for="url in localUrls" :key="url.text" x-transition>
 

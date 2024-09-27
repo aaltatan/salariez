@@ -5,7 +5,7 @@ from . import views
 app_name = 'departments'
 
 urlpatterns = [
-    path('', view=views.TreeView.as_view(), name='index'),
+    path('', view=views.ListTableView.as_view(), name='index'),
     path('create/', view=views.CreateView.as_view(), name='create'),
     path('bulk-create/', view=views.BulkCreateView.as_view(), name='bulk-create'),
     path('search/', view=views.SearchView.as_view(), name='search'),

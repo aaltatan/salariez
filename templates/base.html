@@ -45,12 +45,15 @@ x-data="{ dark: $persist(false).as('dark') }">
 
           <c-layout.aside></c-layout.aside>
 
-          <div class="relative ltr:lg:pr-2 rtl:lg:pl-2 max-lg:!mx-2 ltr:lg:ml-[calc(300px_+_1rem)] rtl:lg:mr-[calc(300px_+_1rem)] min-h-screen">
+          <div 
+          :class="{ 'ltr:lg:pr-2 rtl:lg:pl-2 max-lg:!mx-2 ltr:lg:ml-[calc(300px_+_1rem)] rtl:lg:mr-[calc(300px_+_1rem)]': asideFixed, 'mx-2': !asideFixed }"
+          class="relative min-h-screen">
 
             <c-layout.header></c-layout.header>
 
-            <main class="w-full relative pb-6 lg:pt-6 mx-auto">
-              <div class="mt-8 mb-4 lg:hidden">
+            <main 
+            class="container w-full relative pb-4 lg:pt-4 mx-auto">
+              <div class="my-4 lg:hidden">
                 <c-layout.breadcrumb></c-layout.breadcrumb>
               </div>
               {% block body %}{% endblock %}

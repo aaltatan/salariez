@@ -17,6 +17,12 @@ class FiltersMixin:
             stmt &= Q(**kwargs)
         return qs.filter(stmt)
 
+    def filter_combobox(self, qs, name, value):
+        if not value:
+            return qs
+        lookup = {f'{name}__in': value}
+        return qs.filter(**lookup)
+    
     def filter_name(self, qs, name, value):
         return self._get_qs(qs, value, 'search')
 

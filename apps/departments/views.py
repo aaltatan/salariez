@@ -1,4 +1,6 @@
+from django.urls import reverse_lazy
 from django.views import View
+from django.views.generic import ListView
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.mixins import (
     LoginRequiredMixin,
@@ -7,7 +9,8 @@ from django.contrib.auth.mixins import (
 
 from braces.views import SuperuserRequiredMixin
 
-from . import models, forms, resources, mixins, utils
+from . import models, forms, resources, mixins, utils, filters
+from apps.base import forms as base_forms
 
 from apps.base.mixins import (
     CreateMixin,
@@ -15,6 +18,7 @@ from apps.base.mixins import (
     UpdateMixin,
     SearchMixin,
     ExportMixin,
+    ListMixin,
     TreeMixin,
     DebugRequiredMixin,
 )
@@ -56,15 +60,22 @@ class ExportView(
     resource_class = resources.DepartmentResource
 
 
-class TreeView(
-    LoginRequiredMixin, 
-    PermissionRequiredMixin, 
-    TreeMixin,
-    View,
+class ListTableView(
+    LoginRequiredMixin, PermissionRequiredMixin, ListMixin, ListView
 ):
     
     permission_required = 'departments.view_department'
+    
     model = models.Department
+    filter_class = filters.DepartmentFilterSet
+    
+    template_name = 'apps/departments/index.html'
+    
+    paginate_by_form = base_forms.PaginatedByForm
+    paginate_by_form_attributes = {
+        'hx-get': reverse_lazy('departments:index'),
+        'hx-target': '#departments-table',
+    }
     
     def get_queryset(self):
         return super().get_queryset().select_related('cost_center')

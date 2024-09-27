@@ -6,7 +6,7 @@
     <div
       @click="open = !open"
       title="{% translate 'filters'|title %}"
-      class="inline-flex items-center justify-start rounded-lg duration-150 ~text-lg/xl p-2 gap-2 my-2 cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-800"
+      class="inline-flex items-center justify-start rounded-lg duration-150 ~text-lg/xl p-2 gap-2 mb-2 cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-800"
     >
       <c-icons.filters ratio="1.25rem" />
 
@@ -20,46 +20,42 @@
     </div>
 
     <div
-      class="@container space-y-4 p-4 border border-neutral-200 dark:border-neutral-800 rounded-md"
+      class="@container mb-2"
       x-show="open"
       x-collapse.duration.150ms
     >
-      <div class="grid grid-cols-1 @md:grid-cols-2 @lg:grid-cols-3 ~@md/lg:~gap-2/4">
+      <div class="flex items-center flex-wrap ~gap-1/2">
+
         {% for field in filter %}
-        <div 
-        hx-preserve="true" 
-        id="id__{{ field.id_for_label }}">
-          <label 
-          class="px-2 capitalize font-semibold" 
-          for="{{ field.id_for_label }}">
-            <span>{{ field.label }}:</span>
-          </label>
+        <div id="id__{{ field.id_for_label }}">
           {% render_field field|add_class:'input w-full' %}
         </div>
         {% endfor %}
+
+        <div class="ltr:ml-auto rtl:mr-auto my-1 flex items-center ~gap-1/2">
+          <c-btns.btn
+            datatype="button"
+            datatheme="primary"
+            id="filter-submit-btn"
+            title="{% translate 'filter'|title %}"
+            type="submit"
+          >
+            <c-icons.filter ratio="1rem" />
+          </c-btns.btn>
+          <c-btns.btn
+            datatype="button"
+            datatheme="secondary"
+            @click="document.getElementById('page-reset-btn').click()"
+            value="{% translate 'reset' %}"
+            title="{% translate 'reset'|title %}"
+            type="reset"
+          >
+            <c-icons.reset ratio="1rem" />
+          </c-btns.btn>
+        </div>
+
       </div>
 
-      <div class="flex items-center justify-center gap-2">
-        <c-btns.btn
-          datatype="button"
-          datatheme="primary"
-          id="filter-submit-btn"
-          title="{% translate 'filter'|title %}"
-          type="submit"
-        >
-          <c-icons.filter ratio="1rem" />
-          <span>{% translate 'filter' %}</span>
-        </c-btns.btn>
-
-        <c-btns.btn
-          datatype="input"
-          datatheme="secondary"
-          @click="document.getElementById('page-reset-btn').click()"
-          value="{% translate 'reset' %}"
-          title="{% translate 'reset'|title %}"
-          type="reset"
-        />
-      </div>
     </div>
   </form>
 </div>

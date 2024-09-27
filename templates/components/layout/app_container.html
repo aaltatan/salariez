@@ -1,39 +1,26 @@
 {% load i18n %}
 
-<div 
+<div
 {{ attrs }}
 hx-indicator="#spinner"
-class="shadow-sm dark:shadow-none rounded-lg dark:bg-neutral-900 bg-white duration-150 scrollbar-thin scrollbar-thumb-blue-500 dark:scrollbar-track-neutral-950 scrollbar-track-neutral-100/80 space-y-4 ~px-2/4 py-4"
+class="shadow-sm dark:shadow-none rounded-lg dark:bg-neutral-900 bg-white duration-150 scrollbar-thin scrollbar-thumb-blue-500 dark:scrollbar-track-neutral-950 scrollbar-track-neutral-100/80 ~p-2/3"
 >
 
     {% if app_title %}
-    <h1 class="~text-2xl/3xl max-md:text-center font-thin first-letter:capitalize">
+    <!-- <h1 class="~text-2xl/3xl max-md:text-center font-thin first-letter:capitalize">
         {{ app_title }}
-    </h1>
-    {% endif %}
-    
-    {% if filters %}
-    <div>
-        {{ filters }}
-    </div>
+    </h1> -->
     {% endif %}
 
-    <div id="container" class="space-y-4">
+    {% if filters %}<div>{{ filters }}</div>{% endif %}
+
+    <div id="container" class="~space-y-2/4">
 
         {{ body }}
-    
-        {% if pagination %}
-        <div>
-            {{ pagination }}
-        </div>
-        {% endif %}
+        {% if pagination %}<div>{{ pagination }}</div>{% endif %}
 
     </div>
 
-    {% if footer %}
-    <div>
-        {{ footer }}
-    </div>
-    {% endif %}
+    {% if footer %}<div>{{ footer }}</div>{% endif %}
 
 </div>
