@@ -16,14 +16,12 @@ class DepartmentFilterSet(FiltersMixin, filters.FilterSet):
     name = filters.CharFilter(
         label=_('name'),
         method="filter_name",
-        widget=widgets.TextInput(
-            attrs={
-                "autocomplete": "off",
-                "placeholder": _("search by the name"),
-                "type": "search",
-                "data-disabled": "",
-            }
-        ),
+        widget=widgets.TextInput({
+            "autocomplete": "off",
+            "placeholder": _("search by the name"),
+            "type": "search",
+            "data-disabled": "",
+        }),
     )
     cost_center = filters.ModelMultipleChoiceFilter(
         queryset=models.cc_models.CostCenter.objects.all(),
@@ -33,24 +31,34 @@ class DepartmentFilterSet(FiltersMixin, filters.FilterSet):
         method="filter_combobox",
     )
     parent = filters.ModelMultipleChoiceFilter(
-        queryset=models.cc_models.CostCenter.objects.all(),
+        queryset=models.Department.objects.all(),
         field_name='parent',
         lookup_expr='in',
-        label=_('department'),
-        method="filter_combobox",
+        label=_('parent'),
+        method="filter_parent",
     )
     description = filters.CharFilter(
         label=_('description'),
         method="filter_description",
-        widget=widgets.TextInput(
-            attrs={
-                "autocomplete": "off",
-                "placeholder": _("search by the description"),
-                "type": "search",
-                "data-disabled": "",
-            }
-        ),
+        widget=widgets.TextInput({
+            "autocomplete": "off",
+            "placeholder": _("search by the description"),
+            "type": "search",
+            "data-disabled": "",
+        }),
     )
+
+    def filter_parent(self, qs, name, value):
+
+        if not value:
+            return qs
+        
+        stmt = qs.none()
+
+        for obj in value:
+            stmt = obj.get_descendants() | stmt
+
+        return stmt
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

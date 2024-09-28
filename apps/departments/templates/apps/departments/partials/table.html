@@ -1,5 +1,6 @@
 {% load i18n %}
 {% load math_filters %}
+{% load text_filters %}
 
 {% with 'department-filter-form' as filter_form %}
 {% with '#departments-table' as target %}
@@ -115,16 +116,21 @@
               {% endif %}
 
               {% if can_update %}
-              <c-table.td href="{{ obj.get_update_path }}">
-                <span class="whitespace-nowrap px-{{ obj.level|multiply:3 }}">
-                  {{ obj.name }}
-                </span>
+              <c-table.td 
+              href="{{ obj.get_update_path }}" 
+              x-data="{ 
+                name: '{{ obj.name }}',
+                level: {{ obj.level }},
+              }">
+                <span 
+                x-text="'|' + ' |'.repeat(level) + '-'.repeat(level) + ' ' + name" 
+                class="whitespace-nowrap"></span>
               </c-table.td>
               {% else %}
               <c-table.td>
-                <span class="whitespace-nowrap px-{{ obj.level|multiply:3 }}">
-                  {{ obj.name }}
-                </span>
+                <span 
+                x-text="'|' + ' |'.repeat(level) + '-'.repeat(level) + ' ' + name" 
+                class="whitespace-nowrap"></span>
               </c-table.td>
               {% endif %}
 

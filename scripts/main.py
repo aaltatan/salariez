@@ -1,9 +1,8 @@
-from apps.cities.models import City
+from apps.departments.models import Department
 
 
 def run() -> None:
 
-    obj = City.objects.first()
-    old_data = obj.__dict__
-    del old_data['_state']
-    print(old_data)
+    parent = Department.objects.get(id=97)
+    ans = parent.get_descendants()
+    print(ans)
