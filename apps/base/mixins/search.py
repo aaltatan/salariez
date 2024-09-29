@@ -114,6 +114,7 @@ class SearchMixin(utils.HelperMixin, AbstractSearch):
                 } 
                 for option in options
             ]
+            context['placeholder'] = self.input_placeholder
             context['options'] = json.dumps(options)
             template = 'components/inputs/combo.html'
         

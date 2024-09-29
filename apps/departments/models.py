@@ -54,7 +54,7 @@ class Department(MPTTModel, base_models.AbstractNameModel):
     
     class MPTTMeta:
         level_attr = 'level'
-        order_insertion_by=['-name']
+        order_insertion_by=['department_id']
         
     class Meta:
         permissions = [

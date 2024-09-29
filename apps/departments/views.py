@@ -19,7 +19,6 @@ from apps.base.mixins import (
     SearchMixin,
     ExportMixin,
     ListMixin,
-    TreeMixin,
     DebugRequiredMixin,
 )
 
@@ -78,7 +77,12 @@ class ListTableView(
     }
     
     def get_queryset(self):
-        return super().get_queryset().select_related('cost_center')
+        return (
+            super()
+            .get_queryset()
+            .select_related('cost_center')
+            .order_by('department_id')
+        )
 
 
 class CreateView(

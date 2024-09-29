@@ -13,9 +13,6 @@
         return e;
       })
     };
-    //const searchInput = $el.querySelector(`input[type='search']`);
-    //const searchId = $el.previousElementSibling.getAttribute('for');
-    //searchInput.setAttribute('id', searchId);
   "
   class="relative w-full max-w-64"
   x-data="{ 
@@ -35,7 +32,7 @@
   class="input w-full !flex items-center justify-between">
     <span
       class="capitalize text-neutral-500 whitespace-nowrap truncate"
-      x-text="textsConcat || '{% translate 'Select' %} {{ name }}'"
+      x-text="textsConcat || '{{ placeholder }}'"
     >
     </span>
     <c-icons.arrow-down ratio="1rem" />
@@ -58,7 +55,7 @@
     x-transition:leave="transition ease-in duration-100"
     x-transition:leave-start="opacity-100 scale-100"
     x-transition:leave-end="opacity-0 scale-90"
-    class="origin-top min-w-64 bg-white dark:bg-neutral-950 absolute top-[calc(100%_+_.5rem)] z-50 left-0 rounded-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden"
+    class="origin-top min-w-64 bg-[hsl(0,0%,99%)] dark:bg-neutral-950 absolute top-[calc(100%_+_.5rem)] z-50 left-0 rounded-lg border border-neutral-300 dark:border-neutral-800 overflow-hidden"
     x-cloak
   >
     <div x-show="options.length">

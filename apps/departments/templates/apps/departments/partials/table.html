@@ -1,6 +1,5 @@
 {% load i18n %}
 {% load math_filters %}
-{% load text_filters %}
 
 {% with 'department-filter-form' as filter_form %}
 {% with '#departments-table' as target %}
@@ -83,7 +82,7 @@
           </c-table.header-row>
 
           {% if can_delete %}
-          <c-table.unselect-all colspan="4">
+          <c-table.unselect-all colspan="8">
             {% if can_delete %}
               <c-table.action-input
                 name="bulk_delete"
@@ -121,15 +120,18 @@
               x-data="{ 
                 name: '{{ obj.name }}',
                 level: {{ obj.level }},
+                isPrimary: '{{ obj.is_leaf_node }}' === 'True',
               }">
                 <span 
-                x-text="'|' + ' |'.repeat(level) + '-'.repeat(level) + ' ' + name" 
+                :class="'px-' + level * 3"
+                x-html="isPrimary ? name : `${name} <span class='text-[red]'>*</span>`" 
                 class="whitespace-nowrap"></span>
               </c-table.td>
               {% else %}
               <c-table.td>
                 <span 
-                x-text="'|' + ' |'.repeat(level) + '-'.repeat(level) + ' ' + name" 
+                :class="'px-' + level * 3"
+                x-html="isPrimary ? name : `${name} <span class='text-[red]'>*</span>`" 
                 class="whitespace-nowrap"></span>
               </c-table.td>
               {% endif %}

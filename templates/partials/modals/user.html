@@ -10,14 +10,14 @@
     </c-slot>
 
     <c-slot name="body">
-      <div class="divide-y divide-neutral-200 dark:divide-neutral-800">
+      <div class="divide-y divide-neutral-300 dark:divide-neutral-800">
 
         <div class="flex items-center gap-2 ~text-sm/base ~px-2/4 ~py-1/2">
           <label class="capitalize whitespace-nowrap" for="messages-timeout">
               {% translate 'messages timeout' %} 
           </label>
           <select
-            class="block mt-1 rounded-md border border-neutral-200 bg-white ~px-2/4 ~py-1/2 focus:border-blue-500 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40 dark:border-neutral-800 dark:bg-neutral-900 dark:focus:border-blue-300 outline-none duration-75 w-full"
+            class="block mt-1 rounded-md border border-neutral-300 bg-[hsl(0,0%,99%)] ~px-2/4 ~py-1/2 focus:border-blue-500 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40 dark:border-neutral-800 dark:bg-neutral-900 dark:focus:border-blue-300 outline-none duration-75 w-full"
             x-model="messagesTimeout"
             id="messages-timeout"
           >

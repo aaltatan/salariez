@@ -13,6 +13,22 @@ from apps.base.utils.fields import Object, get_search_input
 
 class DepartmentFilterSet(FiltersMixin, filters.FilterSet):
 
+    class LevelChoices(models.models.TextChoices):
+        NONE = '', _('select level')
+        ZERO = '0', '0'
+        ONE = '1', '1'
+        TWO = '2', '2'
+        THREE = '3', '3'
+        FOUR = '4', '4'
+        FIVE = '5', '5'
+        SIX = '6', '6'
+
+    class TypeChoices(models.models.TextChoices):
+        NONE = '', _('select type')
+        PRIMARY = 'primary', _('primary')
+        PARTIAL = 'partial', _('partial')
+
+
     name = filters.CharFilter(
         label=_('name'),
         method="filter_name",
@@ -37,6 +53,8 @@ class DepartmentFilterSet(FiltersMixin, filters.FilterSet):
         label=_('parent'),
         method="filter_parent",
     )
+    level = filters.NumberFilter(label=_('level'))
+    type = filters.CharFilter(label=_('type'), method='filter_primary')
     description = filters.CharFilter(
         label=_('description'),
         method="filter_description",
@@ -54,9 +72,22 @@ class DepartmentFilterSet(FiltersMixin, filters.FilterSet):
             return qs
         
         stmt = qs.none()
-
         for obj in value:
             stmt = obj.get_descendants() | stmt
+
+        return stmt
+
+    def filter_primary(self, qs, name, value):
+
+        stmt = qs.none()
+
+        for obj in qs:
+            if value == 'primary':
+                if obj.is_leaf_node():
+                    stmt = obj | stmt
+            else:
+                if not obj.is_leaf_node():
+                    stmt = obj | stmt
 
         return stmt
 
@@ -89,6 +120,18 @@ class DepartmentFilterSet(FiltersMixin, filters.FilterSet):
             widget=widgets.SelectMultiple,
             form=self.form, 
             obj=parent,
+        )
+        
+        self.form.fields['level'].default = self.LevelChoices.NONE
+        self.form.fields['level'].widget = widgets.Select(
+            {'placeholder': _('select level')},
+            choices=self.LevelChoices.choices
+        )
+        
+        self.form.fields['type'].default = self.TypeChoices.NONE
+        self.form.fields['type'].widget = widgets.Select(
+            {'placeholder': _('select type')},
+            choices=self.TypeChoices.choices
         )
 
     class Meta:
