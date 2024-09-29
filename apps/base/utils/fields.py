@@ -3,10 +3,9 @@ from dataclasses import dataclass
 from django.db import models
 from django.shortcuts import get_object_or_404
 from django import forms
+from django.forms.widgets import DateInput
 from django.forms.widgets import Widget
 from django.urls import reverse
-
-from icecream import ic
 
 
 @dataclass
@@ -27,34 +26,32 @@ def get_search_input(
     obj: Object,
 ) -> Widget:
     """
-    use it inside ModelForm.__init__() method  
-    widget: select what widget will present the field form `django.forms.widgets`  
-    form: ModelForm like `self`  
-    obj: Object  
+    use it inside ModelForm.__init__() method
+    widget: select what widget will present the field form `django.forms.widgets`
+    form: ModelForm like `self`
+    obj: Object
     """
-    hx_get_path = f'{reverse(obj.url_name)}?name={obj.field_name}'
+    hx_get_path = f"{reverse(obj.url_name)}?name={obj.field_name}"
 
     field = form.initial.get(obj.field_name)
     field = form.data.get(obj.field_name, field)
 
     if field and obj.value_attributes:
         instance = get_object_or_404(obj.model, id=field)
-        values = [
-            getattr(instance, attr) for attr in obj.value_attributes
-        ]
+        values = [getattr(instance, attr) for attr in obj.value_attributes]
         value = " - ".join(values)
-    
+
     if field:
-        hx_get_path += f'&id={field}&value={value}'
-    
-    if obj.required: 
+        hx_get_path += f"&id={field}&value={value}"
+
+    if obj.required:
         hx_get_path += "&required=true"
-    
-    if obj.multiple: 
+
+    if obj.multiple:
         hx_get_path += "&multiple=true"
-        
+
     attributes = {
-        "hx-get": hx_get_path ,
+        "hx-get": hx_get_path,
         "hx-trigger": "load",
         "hx-target": "this",
         "style": "display: none;",
@@ -62,15 +59,29 @@ def get_search_input(
     }
 
     if obj.add_new_url is not None:
-        
         url, permission = obj.add_new_url
 
         url = reverse(url)
         if obj.is_modal:
-            url += '?modal=true'
-            attributes['data_hx_target'] = '#modal'
+            url += "?modal=true"
+            attributes["data_hx_target"] = "#modal"
 
-        attributes['data_add_new'] = url
-        attributes['data_permission'] = permission
-    
+        attributes["data_add_new"] = url
+        attributes["data_permission"] = permission
+
     return widget(attributes)
+
+
+def get_date_field(required: bool = True) -> DateInput:
+    
+    attrs: dict[str, str] = {
+        "x-mask": "9999-99-99",
+        "placeholder": "YYYY-MM-DD",
+        "@keydown.Down.prevent": 'handleDateInputKeyDown($el, "up")',
+        "@keydown.Up.prevent": 'handleDateInputKeyDown($el, "down")',
+    }
+
+    if required:
+        attrs['required'] = ''
+
+    return DateInput(attrs, format="%Y-%M-%d")

@@ -1,0 +1,36 @@
+<script>
+
+  function formatDate(date) {
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    month = month.toString().padStart(2, '0');
+    day = day.toString().padStart(2, '0');
+    return `${date.getFullYear()}-${month}-${day}`;
+  }
+
+  function handleDateInputKeyDown(el, direction) {
+
+    let date = new Date();;
+
+    if (el.value) {
+      date = new Date(el.value)
+    }
+    
+    if (isNaN(date.getTime())) {
+      date = new Date();
+    }
+
+    let year = date.getFullYear();
+    let month = date.getMonth(); 
+    let day = date.getDate(); 
+
+    if (direction === 'up') {
+      date.setDate(day + 1)
+    } else {
+      date.setDate(day - 1)
+    }
+
+    el.value = formatDate(date)
+
+  }
+</script>

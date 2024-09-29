@@ -9,3 +9,4 @@ django-mptt
 django-braces
 mysqlclient
 python-dotenv
+Pillow

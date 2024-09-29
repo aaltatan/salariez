@@ -1,9 +1,10 @@
 from django.db import models
-from django.conf import settings
-from django.utils import timezone
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django.db.models.signals import pre_save
+from django.utils.text import slugify
 
-from .managers import EmployeeManager
+from ..managers import EmployeeManager
 
 from apps.base.validators import (
     two_chars_validator,
@@ -156,8 +157,6 @@ class Employee(models.Model):
         choices=StatusChoices.choices,
         default=StatusChoices.ACTIVE,
     )
-    activate_date = models.DateField(blank=True, null=True)
-    deactivate_date = models.DateField(blank=True, null=True)
     hire_date = models.DateField()
     institution_id = models.CharField(
         max_length=255,
@@ -182,11 +181,47 @@ class Employee(models.Model):
     salary = models.DecimalField(
         decimal_places=2, max_digits=12, default=0,
     )
+    slug = models.SlugField(
+        unique=True,
+        max_length=255,
+        null=True,
+        blank=True,
+        allow_unicode=True,
+    )
 
+    @property
+    def fullname(self) -> str:
+        return f'{self.firstname} {self.father_name} {self.lastname}'
+
+    def _get_app_label(self):
+        return self.__class__._meta.app_label
+
+    @property
+    def get_activity_path(self):
+        kwargs = {
+            'app_label': self._get_app_label(),
+            'model_name': self.__class__.__name__,
+            'object_id': self.id,
+        }
+        return reverse('activities:index', kwargs=kwargs)
+
+    @property
+    def get_create_path(self):
+        return reverse(f'{self._get_app_label()}:create')
+
+    @property
+    def get_update_path(self):
+        return reverse(
+            f'{self._get_app_label()}:update', kwargs={'slug': self.slug}
+        )
+    
+    @property
+    def get_delete_path(self):
+        return reverse(
+            f'{self._get_app_label()}:delete', kwargs={'slug': self.slug}
+        )
+    
     def save(self, *args, **kwargs) -> None:
-        
-        if self.activate_date is None:
-            self.activate_date = timezone.now().date()
         
         if self.gender == self.GenderChoices.FEMALE.value:
             self.military_status = self.MilitaryStatus.EXCUSED.value
@@ -194,4 +229,16 @@ class Employee(models.Model):
         return super().save(*args, **kwargs)
     
     def __str__(self) -> str:
-        return f'{self.firstname} {self.father_name} {self.lastname}'
+        return self.fullname
+
+    class Meta:
+        ordering = ['department__department_id', 'firstname']
+
+
+def employee_pre_save(sender, instance: Employee, *args, **kwargs):
+    instance.slug = slugify(
+        f'{instance.fullname}-{instance.national_id}',
+        allow_unicode=True
+    )
+
+pre_save.connect(employee_pre_save, Employee)

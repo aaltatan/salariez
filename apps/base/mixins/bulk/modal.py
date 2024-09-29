@@ -3,7 +3,6 @@ import json
 from abc import ABC, abstractmethod
 
 from django.http import HttpRequest, HttpResponse
-from django.utils.translation import gettext_lazy as _
 from django.shortcuts import render
 from django.urls import reverse
 
@@ -61,7 +60,7 @@ class BulkModalMixin(utils.HelperMixin, AbstractBulkModal):
         ]
         
         # action & message
-        self.modal_action(pks, request)
+        self.modal_action(pks)
         
         hx_location = {
             'path': reverse(self._get_hx_location_path()),

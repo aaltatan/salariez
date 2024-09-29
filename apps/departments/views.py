@@ -1,6 +1,6 @@
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import ListView, RedirectView
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.mixins import (
     LoginRequiredMixin,
@@ -9,35 +9,20 @@ from django.contrib.auth.mixins import (
 
 from braces.views import SuperuserRequiredMixin
 
-from . import models, forms, resources, mixins, utils, filters
+from . import models, forms, resources, utils, filters
 from apps.base import forms as base_forms
 
 from apps.base.mixins import (
+    BulkModalMixin,
+    ReslugifyModalMixin,
+    BulkMapperMixin,
     CreateMixin,
     DeleteMixin,
     UpdateMixin,
     SearchMixin,
     ExportMixin,
     ListMixin,
-    DebugRequiredMixin,
 )
-
-
-class EmptyView(
-    SuperuserRequiredMixin, 
-    DebugRequiredMixin,
-    mixins.EmptyMixin, 
-    View
-):
-    
-    model = models.Department
-
-
-class BulkCreateView(
-    SuperuserRequiredMixin, mixins.BulkCreateMixin, View
-):
-    
-    model = models.Department
 
 
 class SearchView(
@@ -49,6 +34,24 @@ class SearchView(
 
     def get_queryset(self):
         return super().get_queryset().order_by('department_id')
+
+
+class BulkModalView(LoginRequiredMixin, BulkMapperMixin, RedirectView):
+    
+    mapper = {
+        'bulk_reslugify': 'departments:bulk-reslugify',
+    }
+
+
+class BulkReslugifyView(
+    LoginRequiredMixin, 
+    SuperuserRequiredMixin, 
+    BulkModalMixin,
+    ReslugifyModalMixin,
+    View
+):
+    model = models.Department
+    bulk_path = 'departments:bulk-reslugify'
 
 
 class ExportView(

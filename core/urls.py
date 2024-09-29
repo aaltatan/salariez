@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from django.conf.urls.static import static
 
 from apps.base.views import logout_after_change_password
 
@@ -22,7 +23,8 @@ urlpatterns = [
     path('nationalities/', include('apps.nationalities.urls')),
     path('statuses/', include('apps.statuses.urls')),
     path('activities/', include('apps.activities.urls')),
-]
+    path('employees/', include('apps.employees.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]

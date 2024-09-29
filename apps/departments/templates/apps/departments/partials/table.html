@@ -81,14 +81,8 @@
 
           </c-table.header-row>
 
-          {% if can_delete %}
+          {% if user.is_superuser %}
           <c-table.unselect-all colspan="8">
-            {% if can_delete %}
-              <c-table.action-input
-                name="bulk_delete"
-                value="{% translate 'delete'|title %}"
-                title="{% translate 'delete'|title %}" />
-            {% endif %}
             {% if user.is_superuser %}
               <c-table.action-input
                 name="bulk_reslugify"

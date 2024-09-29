@@ -10,6 +10,8 @@
 {% with perms.cost_centers.view_costcenter as can_cost_center %}
 {% with perms.nationalities.view_nationality as can_nationality %}
 
+{% with perms.employees.view_employee as can_employee %}
+
 {
   asideOpen: false, 
   asideFixed: $persist(true).as('aside-fixed'), 
@@ -22,6 +24,20 @@
       },
   ],
   urls: [
+    {% if can_employee %}
+    {
+      text: '{% translate 'employees' %}', 
+      children: [
+        {% if can_employee %}
+        {
+          text: '{% translate 'employees' %}', 
+          url: '{% url 'employees:index' %}', 
+          isActive: false,
+        },
+        {% endif %}
+      ]
+    },
+    {% endif %}
     {% if can_faculty or can_department %}
     {
       text: '{% translate 'constants' %}', 
@@ -94,6 +110,8 @@
     {% endif %}
   ]
 }
+
+{% endwith %}
 
 {% endwith %}
 {% endwith %}

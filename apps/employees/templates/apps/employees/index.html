@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% translate 'employees'|title %}{% endblock %}
+
+
+{% block body %}
+
+    <span
+    class="hidden"
+    x-init="breadCrumbs.push({
+        text: '{% translate 'employees' %}', 
+        href: '{% url 'employees:index' %}'
+    })"></span>
+
+    {% include 'apps/employees/partials/table.html' %}
+
+{% endblock %}

@@ -1,8 +1,6 @@
-import json
 from typing import Any
 from abc import ABC, abstractmethod
 
-from django.utils.translation import gettext_lazy as _
 from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest
 from django.core.paginator import Paginator

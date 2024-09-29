@@ -1,20 +1,20 @@
 {% load i18n %}
 
-{% with 'status-filter-form' as filter_form %}
-{% with '#statuses-table' as target %}
+{% with 'employees-filter-form' as filter_form %}
+{% with '#employees-table' as target %}
 
-{% with perms.statuses.add_status as can_create %}
-{% with perms.statuses.delete_status as can_delete %}
-{% with perms.statuses.change_status as can_update %}
-{% with perms.statuses.can_export as can_export %}
-{% with perms.activities.can_view as can_log %}
+{% with perms.employees.add_employee as can_create %}
+{% with perms.employees.delete_employee as can_delete %}
+{% with perms.employees.change_employee as can_update %}
+{% with perms.employees.can_export as can_export %}
+{% with perms.activities.view_activity as can_log %}
 
-{% url 'statuses:index' as index_path %}
-{% url 'statuses:bulk' as bulk_path %}
-{% url 'statuses:create' as create_path %}
-{% url 'statuses:export' as export_path %}
+{% url 'employees:index' as index_path %}
+{% url 'employees:bulk' as bulk_path %}
+{% url 'employees:create' as create_path %}
+{% url 'employees:export' as export_path %}
 
-<c-layout.app-container id="statuses-table" app_title="{% translate 'statuses' %}">
+<c-layout.app-container id="employees-table" app_title="{% translate 'employees' %}">
 
   <c-slot name="filters">
     {% include 'partials/filters/base.html' %}
@@ -49,38 +49,26 @@
               <c-table.header-cell 
               hx-get="{{ index_path }}"
               hx-target="{{ target }}"
-              code_name="name"
-              name="{% translate 'name' %}" />
+              code_name="firstname"
+              name="{% translate 'firstname' %}" />
 
               <c-table.header-cell 
               hx-get="{{ index_path }}"
               hx-target="{{ target }}"
-              code_name="has_salary"
-              name="{% translate 'has salary' %}" />
-
-              <c-table.header-cell 
-              hx-get="{{ index_path }}"
-              hx-target="{{ target }}"
-              code_name="description"
-              name="{% translate 'description' %}" />
+              code_name="lastname"
+              name="{% translate 'lastname' %}" />
 
               <c-table.header-cell />
               
             </c-table.header-row>
     
             {% if can_delete %}
-            <c-table.unselect-all colspan="5">
+            <c-table.unselect-all colspan="4">
               {% if can_delete %}
                 <c-table.action-input
                   name="bulk_delete"
                   value="{% translate 'delete'|title %}"
                   title="{% translate 'delete'|title %}" />
-              {% endif %}
-              {% if user.is_superuser %}
-                <c-table.action-input
-                  name="bulk_reslugify"
-                  value="{% translate 'reslugify'|title %}"
-                  title="{% translate 'reslugify'|title %}" />
               {% endif %}
             </c-table.unselect-all>
             {% endif %}
@@ -93,29 +81,25 @@
             {% for obj in qs %}
             <c-table.tr>
               <td class="p-2"><c-table.check /></td>
+
               {% if can_update %}
               <c-table.td href="{{ obj.get_update_path }}">
-                {{ obj.name }}
+                <div class="flex items-center gap-1">
+                  <img class="size-10 object-cover rounded-full block" src="{{ obj.profile.url }}" alt="">
+                  <span>
+                    {{ obj.fullname }}
+                  </span>
+                </div>
               </c-table.td>
               {% else %}
-              <c-table.td>{{ obj.name }}</c-table.td>
+              <c-table.td>{{ obj.fullname }}</c-table.td>
               {% endif %}
-              <c-table.td>
-                {% if obj.has_salary %}
-                  <c-layout.badge theme="green">
-                    {% translate 'has salary' %}
-                  </c-layout.badge>
-                  {% else %}
-                  <c-layout.badge theme="red">
-                    {% translate 'has not salary' %}
-                  </c-layout.badge>
-                {% endif %}
-              </c-table.td>
-              <c-table.td>{{ obj.description }}</c-table.td>
+
+              <c-table.td>{{ obj.lastname }}</c-table.td>
               <td>{% include 'partials/context/base.html' %}</td>
             </c-table.tr>
             {% empty %}
-            <c-table.empty-tr colspan="4" />
+            <c-table.empty-tr colspan="3" />
             {% endfor %}
           </c-table.tbody>
           <!-- end rows -->

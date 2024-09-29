@@ -5,6 +5,13 @@
 
 {% block body %}
 
-Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum accusamus qui numquam ea, nihil facilis. Ullam atque asperiores et exercitationem.
+<input 
+type="text" 
+class="input" 
+x-mask="9999-99-99" 
+@keydown.Down="handleDateInputKeyDown($el, 'up')"
+@keydown.Up="handleDateInputKeyDown($el, 'down')"
+value="2024-09-29"
+id="date">
 
 {% endblock %}
