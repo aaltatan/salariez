@@ -77,6 +77,7 @@ def get_date_field(required: bool = True) -> DateInput:
     attrs: dict[str, str] = {
         "x-mask": "9999-99-99",
         "placeholder": "YYYY-MM-DD",
+        "minlength": "12",
         "@keydown.Down.prevent": 'handleDateInputKeyDown($el, "up")',
         "@keydown.Up.prevent": 'handleDateInputKeyDown($el, "down")',
     }

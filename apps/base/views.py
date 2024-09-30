@@ -18,6 +18,12 @@ def get_messages(request: HttpRequest) -> HttpResponse:
 
 
 @login_required
+def get_avatar_field(request: HttpRequest, id: str, name: str) -> HttpResponse:
+    context = {'id': id, 'name': name,}
+    return render(request, 'components/forms/avatar.html', context)
+
+
+@login_required
 def user_configurations_modal(request: HttpRequest) -> HttpResponse:
     return render(request, 'partials/modals/user.html')
 

@@ -10,157 +10,157 @@
       {% translate 'add new employee' %}
     </h1>
 
-    <div>
+    <form 
+    hx-post="{{ instance.get_create_path }}" 
+    hx-encoding="multipart/form-data"
+    hx-target="this">
+      <div>
 
-      <ul>
-        {% for error in form.non_field_errors %}
-        <li class="bg-red-100 font-semibold p-4 rounded-lg text-red-600">
-            {{ error }}
-        </li>
-        {% endfor %}
-      </ul>
+        <ul>
+          {% for error in form.non_field_errors %}
+          <li class="bg-red-100 font-semibold p-4 rounded-lg text-red-600">
+              {{ error }}
+          </li>
+          {% endfor %}
+        </ul>
 
-      <div class="~space-y-2/4">
+        <div class="~space-y-2/4">
 
-        <div class="relative w-fit mx-auto my-4">
-          <img 
-          src="{% static 'images/user.png' %}" 
-          alt="{% translate 'user profile'|title %}" 
-          class="rounded-full object-cover size-32 block"
-          x-ref="filePreview">
-          <label 
-          class="absolute bottom-0 ltr:right-0 rtl:left-0"
-          for="file-upload">
-            <c-btns.btn datatheme="primary">
-              <c-icons.plus ratio="1.25rem" />
-            </c-btns.btn>
-            <input
-            @change="
-            const file = $el.files;
-            if (file) {
-                const fileReader = new FileReader();
-                fileReader.onload = event => {
-                    $refs.filePreview.setAttribute(
-                      'src', event.target.result
-                    );
-                }
-                fileReader.readAsDataURL(file[0]);
-            }"
-            class="hidden"
-            type="file"
-            accept=".jpg, .jpeg, .png"
-            id="file-upload"
-            >
-          </label>
+          <c-forms.divider>
+            {% translate 'basic information' %}
+          </c-forms.divider>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 ~gap-1/2">
+            <c-forms.form-field :field="form.firstname" />
+            <c-forms.form-field :field="form.lastname" />
+            <c-forms.form-field :field="form.father_name" />
+            <c-forms.form-field :field="form.mother_name" />
+          </div>
+
+          <c-forms.divider>
+            {% translate 'birth information' %}
+          </c-forms.divider>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 ~gap-1/2">
+            <c-forms.form-field :field="form.birth_place" />
+            <c-forms.form-field :field="form.birth_date" />
+          </div>
+
+          <c-forms.divider>
+            {% translate 'card information' %}
+          </c-forms.divider>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 ~gap-1/2">
+            <c-forms.form-field :field="form.national_id" />
+            <c-forms.form-field :field="form.card_id" />
+          </div>
+
+          <c-forms.divider>
+            {% translate 'registry information' %}
+          </c-forms.divider>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 ~gap-1/2">
+            <c-forms.form-field :field="form.civil_registry_office" />
+            <c-forms.form-field :field="form.registry_office_name" />
+            <c-forms.form-field :field="form.registry_office_id" />
+          </div>
+
+          <c-forms.divider>
+            {% translate 'visual information' %}
+          </c-forms.divider>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 ~gap-1/2">
+            <c-forms.form-field :field="form.gender" />
+            <c-forms.form-field :field="form.face_color" />
+            <c-forms.form-field :field="form.eyes_color" />
+          </div>
+
+          <c-forms.divider>
+            {% translate 'other information' %}
+          </c-forms.divider>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 ~gap-1/2">
+            <c-forms.form-field :field="form.address" />
+            <c-forms.form-field :field="form.special_signs" />
+            <c-forms.form-field :field="form.card_date" />
+          </div>
+
+          <c-forms.divider>
+            {% translate 'community information' %}
+          </c-forms.divider>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 ~gap-1/2">
+            <c-forms.form-field :field="form.martial_status" />
+            <c-forms.form-field :field="form.military_status" />
+          </div>
+
+          <c-forms.divider>
+            {% translate 'location information' %}
+          </c-forms.divider>
+          
+          <div class="grid grid-cols-1 lg:grid-cols-2 ~gap-1/2">
+            <c-forms.form-field :field="form.nationality" />
+            <c-forms.form-field :field="form.area" />
+          </div>
+
+          <c-forms.divider>
+            {% translate 'job information' %}
+          </c-forms.divider>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 ~gap-1/2">
+            <c-forms.form-field :field="form.department" />
+            <c-forms.form-field :field="form.position" />
+            <c-forms.form-field :field="form.job_subtype" />
+            <c-forms.form-field :field="form.job_status" />
+            <c-forms.form-field :field="form.status" />
+            <c-forms.form-field :field="form.institution_id" />
+            <c-forms.form-field :field="form.hire_date" />
+            <c-forms.form-field :field="form.salary" />
+          </div>
+
+          <div class="grid grid-cols-1 ~gap-1/2">
+            <c-forms.form-field :field="form.notes" />
+          </div>
+
         </div>
-
-        <c-forms.divider>
-          {% translate 'basic information' %}
-        </c-forms.divider>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 ~gap-1/2">
-          <c-forms.form-field :field="form.firstname" />
-          <c-forms.form-field :field="form.lastname" />
-          <c-forms.form-field :field="form.father_name" />
-          <c-forms.form-field :field="form.mother_name" />
-        </div>
-
-        <c-forms.divider>
-          {% translate 'birth information' %}
-        </c-forms.divider>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 ~gap-1/2">
-          <c-forms.form-field :field="form.birth_place" />
-          <c-forms.form-field :field="form.birth_date" />
-        </div>
-
-        <c-forms.divider>
-          {% translate 'card information' %}
-        </c-forms.divider>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 ~gap-1/2">
-          <c-forms.form-field :field="form.national_id" />
-          <c-forms.form-field :field="form.card_id" />
-        </div>
-
-        <c-forms.divider>
-          {% translate 'registry information' %}
-        </c-forms.divider>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 ~gap-1/2">
-          <c-forms.form-field :field="form.civil_registry_office" />
-          <c-forms.form-field :field="form.registry_office_name" />
-          <c-forms.form-field :field="form.registry_office_id" />
-        </div>
-
-        <c-forms.divider>
-          {% translate 'visual information' %}
-        </c-forms.divider>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 ~gap-1/2">
-          <c-forms.form-field :field="form.gender" />
-          <c-forms.form-field :field="form.face_color" />
-          <c-forms.form-field :field="form.eyes_color" />
-        </div>
-
-        <c-forms.divider>
-          {% translate 'other information' %}
-        </c-forms.divider>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 ~gap-1/2">
-          <c-forms.form-field :field="form.address" />
-          <c-forms.form-field :field="form.special_signs" />
-          <c-forms.form-field :field="form.card_date" />
-        </div>
-
-        <c-forms.divider>
-          {% translate 'community information' %}
-        </c-forms.divider>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 ~gap-1/2">
-          <c-forms.form-field :field="form.martial_status" />
-          <c-forms.form-field :field="form.military_status" />
-        </div>
-
-        <c-forms.divider>
-          {% translate 'location information' %}
-        </c-forms.divider>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 ~gap-1/2">
-          <c-forms.form-field :field="form.nationality" />
-          <c-forms.form-field :field="form.area" />
-        </div>
-
-        <c-forms.divider>
-          {% translate 'job information' %}
-        </c-forms.divider>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 ~gap-1/2">
-          <c-forms.form-field :field="form.department" />
-          <c-forms.form-field :field="form.position" />
-          <c-forms.form-field :field="form.job_subtype" />
-          <c-forms.form-field :field="form.job_status" />
-          <c-forms.form-field :field="form.status" />
-          <c-forms.form-field :field="form.institution_id" />
-          <c-forms.form-field :field="form.hire_date" />
-          <c-forms.form-field :field="form.salary" />
-        </div>
-
-        <div class="grid grid-cols-1 ~gap-1/2">
-          <c-forms.form-field :field="form.notes" />
-        </div>
-
       </div>
 
-      {% csrf_token %}
+      <div
+        class="flex items-center max-sm:flex-wrap max-sm:justify-center justify-end gap-x-1 gap-y-2 my-6"
+      >
+            <c-btns.btn
+            datatype="input"
+            type="submit"
+            title="{% translate 'save'|title %}"
+            data-disabled
+            name="save"
+            value="{% translate 'save' %}"
+          />
 
-    </div>
+          <c-btns.btn
+            datatype="input"
+            type="submit"
+            data-disabled
+            title="{% translate 'save and add another'|title %}"
+            value="{% translate 'save and add another' %}"
+            name="save_and_add_another"
+          />
 
-    <div
-      class="flex items-center max-sm:flex-wrap max-sm:justify-center justify-end gap-x-1 gap-y-2 my-6"
-    >
-      {{ btns }}
-    </div>
-
+          <c-btns.btn
+            datatheme="secondary"
+            hx-delete="{{ instance.get_create_path }}"
+            hx-target="closest form"
+            hx-indicator="#reset-loading"
+            hx-disabled-elt="*[data-disabled]"
+            data-disabled
+            title="{% translate 'reset'|title %}"
+          >
+            <div id="reset-loading" class="hx-request:animate-spin">
+              <c-icons.reset ratio="1rem" />
+            </div>
+            <span>{% translate 'reset' %}</span>
+          </c-btns.btn>
+      </div>
+    </form>
   </div>
 </div>

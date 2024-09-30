@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load static %}
 
 {% with 'employees-filter-form' as filter_form %}
 {% with '#employees-table' as target %}
@@ -85,7 +86,14 @@
               {% if can_update %}
               <c-table.td href="{{ obj.get_update_path }}">
                 <div class="flex items-center gap-1">
-                  <img class="size-10 object-cover rounded-full block" src="{{ obj.profile.url }}" alt="">
+                  <img 
+                  class="size-10 object-cover rounded-full block" 
+                  alt=""
+                  src="{% if obj.profile %}
+                          {{ obj.profile.url }}
+                       {% else %}
+                          {% static 'images/user.png' %}
+                       {% endif %}">
                   <span>
                     {{ obj.fullname }}
                   </span>
