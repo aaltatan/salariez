@@ -3,6 +3,9 @@ from django.utils.translation import gettext_lazy as _
 
 from . import models
 
+from apps.base.utils.fields import get_textarea_field
+
+
 class CostCenterForm(forms.ModelForm):
     
     class Meta:
@@ -19,11 +22,7 @@ class CostCenterForm(forms.ModelForm):
                 'x-mask': '9999999999',
                 'autocomplete': 'off',
             }),
-            "description": forms.Textarea({
-                "x-autosize": "",
-                "rows": "1",
-                "autocomplete": "on",
-                "placeholder": _("job type's description"),
-                }
+            "description": get_textarea_field(
+                placeholder=_("cost center's description")
             ),
         }

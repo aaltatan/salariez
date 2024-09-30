@@ -6,6 +6,7 @@ from . import models
 
 from apps.cost_centers import models as cc_models
 from apps.base.utils import get_search_input, Object
+from apps.base.utils.fields import get_textarea_field
 
 
 WIDGETS = {
@@ -18,12 +19,9 @@ WIDGETS = {
         'placeholder': _("department's id"),
         'x-mask': '999999999999',
     }),
-    "description": forms.Textarea({
-        "x-autosize": "",
-        "rows": "1",
-        "autocomplete": "on",
-        "placeholder": _("department's description"),
-    }),
+    "description": get_textarea_field(
+        placeholder=_("department's description")
+    ),
 }
 
 class InitializerMixin:

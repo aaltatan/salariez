@@ -36,6 +36,7 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
     - `deleter: Deleter`
     
     ### optional attributes:  
+    - `schema_class: ninja.ModelSchema` to use it to serialize complex data types into Activity.old_data: JSONField  
     - `template_name: str` like `apps/<app_name>/update.html`
     - `form_template_name: str` like: `'partials/create-form.html'`
     - `index_template_name: str` like: `'apps/<app_name>/index.html'`  
@@ -71,12 +72,15 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
     def _add_activity(
         self, 
         obj, 
-        new_data: dict | None = None,
         old_data: dict | None = None,
     ) -> None:
         
-        app_label = self._get_app_label()
-        content_type = ContentType.objects.get(app_label=app_label)
+        content_type = (
+            ContentType
+            .objects
+            .filter(app_label=self._get_app_label())
+            .first()
+        )
 
         activity = {
             'user': self.request.user,
@@ -85,11 +89,12 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
             'object_id': obj.id,
         }
 
-        if new_data:
-            activity['new_data'] = new_data
-
         if old_data:
-            activity['old_data'] = old_data
+            if hasattr(self, 'schema_class'):
+                schema = self.schema_class(**old_data)
+                activity['old_data'] = schema.model_dump()
+            else:
+                activity['old_data'] = old_data
 
         Activity(**activity).save()
 
@@ -99,7 +104,9 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
             
         instance = get_object_or_404(self._get_model_class(), slug=slug)
         
-        form = self.form_class(data=request.POST, instance=instance)
+        form = self.form_class(
+            request.POST, request.FILES, instance=instance
+        )
         
         if request.POST.get('delete'):
             self.deleter(instance, request).delete()
@@ -114,10 +121,6 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
                     .values()
                     .get(id=instance.id)
                 )
-                old_data = {
-                    k:v for k,v in old_data.items() 
-                    if k not in ['slug', 'search']
-                }
                 self._add_activity(
                     instance, 
                     old_data=old_data,

@@ -66,8 +66,12 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
         self, obj, new_data: dict | None = None
     ) -> None:
         
-        app_label = self._get_app_label()
-        content_type = ContentType.objects.get(app_label=app_label)
+        content_type = (
+            ContentType
+            .objects
+            .filter(app_label=self._get_app_label())
+            .first()
+        )
 
         activity = {
             'user': self.request.user,
@@ -83,7 +87,7 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
 
     def _base_post(self, request: HttpRequest) -> HttpResponse:
 
-        form = self.form_class(request.POST)
+        form = self.form_class(request.POST, request.FILES)
         context = {'form': form}
 
         if form.is_valid():
@@ -108,7 +112,7 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
 
     def _modal_post(self, request):
 
-        form = self.form_class(request.POST)
+        form = self.form_class(request.POST, request.FILES)
 
         if form.is_valid():
             obj = form.save()

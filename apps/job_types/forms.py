@@ -3,6 +3,9 @@ from django.utils.translation import gettext_lazy as _
 
 from . import models
 
+from apps.base.utils.fields import get_textarea_field
+
+
 class JobTypeForm(forms.ModelForm):
     
     class Meta:
@@ -14,12 +17,7 @@ class JobTypeForm(forms.ModelForm):
                 'autofocus': 'true',
                 'autocomplete': 'off',
             }),
-            "description": forms.Textarea(
-                attrs={
-                    "x-autosize": "",
-                    "rows": "1",
-                    "autocomplete": "on",
-                    "placeholder": _("job type's description"),
-                }
+            "description": get_textarea_field(
+                placeholder=_("job type's description")
             ),
         }

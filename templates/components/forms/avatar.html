@@ -1,8 +1,9 @@
 {% load i18n %}
+{% load static %}
 
 <div class="relative w-fit mx-auto my-4">
   <img
-  src="{% static 'images/user.png' %}"
+  src="{% if obj.profile %}{{ obj.profile.url }}{% else %}{% static 'images/user.png' %}{% endif %}"
   alt="{% translate 'user profile'|title %}"
   class="rounded-full object-cover size-28 block"
   x-ref="filePreview">
@@ -26,7 +27,7 @@
     }"
     class="hidden"
     type="file"
-    accept=".jpg, .jpeg, .png"
+    accept="image/*"
     name="{{ name }}"
     id="{{ id }}"
     >

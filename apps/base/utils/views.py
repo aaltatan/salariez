@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from inspect import signature
 
 from django.contrib import messages
 from django.http import HttpRequest
@@ -16,6 +15,8 @@ class Deleter(ABC):
     ### optional methods:
     - `get_delete_message()` -> str  
     - `get_cannot_delete_message()` -> str  
+    ### optional attributes:  
+    - `schema_class: ninja.ModelSchema` to use it to serialize complex data types into Activity.old_data: JSONField  
     """
     def __init__(
         self, 
@@ -44,7 +45,11 @@ class Deleter(ABC):
         }
 
         if old_data:
-            activity['old_data'] = old_data
+            if hasattr(self, 'schema_class'):
+                schema = self.schema_class(**old_data)
+                activity['old_data'] = schema.model_dump()
+            else:
+                activity['old_data'] = old_data
 
         Activity(**activity).save()
     

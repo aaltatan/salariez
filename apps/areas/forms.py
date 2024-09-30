@@ -4,7 +4,11 @@ from django.utils.translation import gettext_lazy as _
 
 from . import models
 
-from apps.base.utils import get_search_input, Object
+from apps.base.utils.fields import (
+    Object, 
+    get_search_input, 
+    get_textarea_field,
+)
 
 
 
@@ -19,12 +23,9 @@ class AreaForm(forms.ModelForm):
                 'autofocus': 'true',
                 'autocomplete': 'off',
             }),
-            "description": forms.Textarea({
-                "x-autosize": "",
-                "rows": "1",
-                "autocomplete": "on",
-                "placeholder": _("area's description"),
-            }),
+            "description": get_textarea_field(
+                placeholder=_("area's description")
+            ),
         }
 
     def __init__(self, *args, **kwargs) -> None:

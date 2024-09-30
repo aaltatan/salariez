@@ -3,6 +3,8 @@ from django.utils.translation import gettext_lazy as _
 
 from . import models
 
+from apps.base.utils.fields import get_textarea_field
+
 
 class StatusForm(forms.ModelForm):
     
@@ -16,10 +18,7 @@ class StatusForm(forms.ModelForm):
                 'autocomplete': 'off',
             }),
             'has_salary': forms.Select(choices=models.HAS_SALARY_CHOICES),
-            "description": forms.Textarea({
-                "x-autosize": "",
-                "rows": "1",
-                "autocomplete": "on",
-                "placeholder": _("status's description"),
-            }),
+            "description": get_textarea_field(
+                placeholder=_("status's description")
+            ),
         }

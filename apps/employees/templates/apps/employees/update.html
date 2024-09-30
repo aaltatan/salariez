@@ -13,12 +13,12 @@
         },
         {
             text: '{{ instance.name }}', 
-            href: '{% url 'employees:create' %}'
+            href: '{{ instance.get_update_path }}'
         },
     ];
     breadCrumbs = [...breadCrumbs, ...hrefs]"
     ></template>
 
-    {% include 'partials/update-form.html' %}
+    {% include 'apps/employees/partials/forms/update.html' %}
 
 {% endblock %}

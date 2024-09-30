@@ -1,0 +1,95 @@
+{% load i18n %}
+{% load static %}
+
+<div class="p-3 lg:p-6">
+  <div class="max-w-2xl mx-auto">
+
+    <h1
+      class="text-4xl tracking-tighter font-semibold mb-6 rtl:text-right ltr:text-left first-letter:capitalize"
+    >
+      {{ instance.fullname }}
+    </h1>
+
+    <form 
+    hx-post="{{ instance.get_update_path }}" 
+    hx-encoding="multipart/form-data"
+    hx-target="this">
+
+      <div>
+
+        <ul>
+          {% for error in form.non_field_errors %}
+          <li class="bg-red-100 font-semibold p-4 rounded-lg text-red-600">
+              {{ error }}
+          </li>
+          {% endfor %}
+        </ul>
+      
+        <div class="~space-y-2/4">
+      
+          <c-forms.avatar 
+          id="id_profile" 
+          name="profile" 
+          :obj="instance" />
+          {% include 'apps/employees/partials/forms/base.html' %}
+      
+        </div>
+      </div>
+
+      <div
+        class="flex items-center max-sm:flex-wrap max-sm:justify-center justify-end gap-x-1 gap-y-2 my-6"
+      >
+        <c-btns.btn
+          datatype="input"
+          name="update"
+          value="{% translate 'update' %}"
+          title="{% translate 'update'|title %}"
+          @click="handelClick"
+          data-confirm="{% translate 'are you sure you want to continue with these changes in' %} {{ instance.name }}{% translate '?' %}"
+          data-disabled
+          type="submit"
+        />
+
+        <c-btns.btn
+          datatheme="secondary"
+          hx-delete="{{ instance.get_update_path }}"
+          hx-target="closest form"
+          hx-indicator="#reset-spinner"
+          hx-disabled-elt="*[data-disabled]"
+          data-disabled
+          title="{% translate 'reset'|title %}"
+        >
+          <div id="reset-spinner" class="htmx-request:animate-spin">
+            <c-icons.reset ratio="1rem" />
+          </div>
+          <span>{% translate 'reset' %}</span>
+        </c-btns.btn>
+
+        <c-btns.btn
+          datatheme="danger"
+          datatype="input"
+          name="delete"
+          value="{% translate 'delete' %}"
+          title="{% translate 'delete'|title %}"
+          @click="handelClick"
+          data-confirm="{% translate 'are you sure you want to delete' %} {{ instance.name }}{% translate '?' %}"
+          data-disabled
+          type="submit"
+        />
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<script>
+  function handelClick(e) {
+    const message = e.target.getAttribute("data-confirm").toUpperCase();
+
+    const confirmDialog = confirm(message);
+
+    if (!confirmDialog) {
+      e.preventDefault();
+    }
+  }
+</script>

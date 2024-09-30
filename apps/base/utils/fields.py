@@ -1,11 +1,13 @@
 from dataclasses import dataclass
 
-from django.db import models
-from django.shortcuts import get_object_or_404
 from django import forms
-from django.forms.widgets import DateInput
-from django.forms.widgets import Widget
-from django.urls import reverse
+from django.db import models
+from django.urls import reverse, reverse_lazy
+from django.shortcuts import get_object_or_404
+from django.utils.translation import gettext as _
+from django.forms.widgets import (
+    DateInput, TextInput, Widget, Textarea, FileInput
+)
 
 
 @dataclass
@@ -72,17 +74,71 @@ def get_search_input(
     return widget(attributes)
 
 
-def get_date_field(required: bool = True) -> DateInput:
+def get_date_field(
+    required: bool = True,
+    placeholder: str = 'YYYY-MM-DD',
+    **kwargs: dict[str, str],
+) -> DateInput:
     
     attrs: dict[str, str] = {
         "x-mask": "9999-99-99",
-        "placeholder": "YYYY-MM-DD",
-        "minlength": "12",
+        "placeholder": placeholder,
+        "minlength": "10",
+        "@keydown.Alt.Down.prevent": 'handleDateInputAltKeyDown($el, "up")',
+        "@keydown.Alt.Up.prevent": 'handleDateInputAltKeyDown($el, "down")',
         "@keydown.Down.prevent": 'handleDateInputKeyDown($el, "up")',
         "@keydown.Up.prevent": 'handleDateInputKeyDown($el, "down")',
+        "@focus": 'handleDateInputFocus',
+        "@dblclick": 'handleDateInputDblClick',
+        "title": _("use down/up arrows to increase/decrease days\nuse Alt key + down/up arrows to increase/decrease years\nclick double to insert date of today"),
+        **kwargs
     }
 
     if required:
         attrs['required'] = ''
 
-    return DateInput(attrs, format="%Y-%M-%d")
+    return DateInput(attrs, format="%Y-%m-%d")
+
+
+def get_numeric_field(
+    count: int, required: bool = True, **kwargs: dict[str, str]
+) -> TextInput:
+
+    if count < 1:
+        count = 1
+    
+    attrs: dict[str, str] = {
+        "x-mask": "9" * count,
+        **kwargs
+    }
+
+    if required:
+        attrs['required'] = ''
+
+    return TextInput(attrs)
+
+
+def get_textarea_field(rows: int = 1, **kwargs) -> Textarea:
+
+    if rows < 1:
+        rows = 1
+    
+    return forms.Textarea({
+        "x-autosize": "",
+        "rows": str(rows),
+        "autocomplete": "on",
+        **kwargs
+    })
+
+
+def get_avatar_field(
+    url: str, **kwargs: dict[str, str]
+) -> FileInput:
+
+    attrs = {
+        'hx-get': reverse_lazy(url, kwargs=kwargs),
+        'hx-trigger': 'load',
+        'hx-target': 'this',
+    }
+
+    return FileInput(attrs)

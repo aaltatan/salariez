@@ -3,6 +3,9 @@ from django.utils.translation import gettext_lazy as _
 
 from . import models
 
+from apps.base.utils.fields import get_textarea_field
+
+
 class PositionForm(forms.ModelForm):
     
     class Meta:
@@ -14,12 +17,7 @@ class PositionForm(forms.ModelForm):
                 'autofocus': 'true',
                 'autocomplete': 'off',
             }),
-            "description": forms.Textarea(
-                attrs={
-                    "x-autosize": "",
-                    "rows": "1",
-                    "autocomplete": "on",
-                    "placeholder": _("position's description"),
-                }
+            "description": get_textarea_field(
+                placeholder=_("position's description")
             ),
         }

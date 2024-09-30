@@ -8,7 +8,9 @@ from django.contrib.auth.mixins import (
 
 from braces.views import SuperuserRequiredMixin
 
-from . import models, forms, filters, mixins, resources, utils
+from . import (
+    models, forms, filters, mixins, resources, utils, schemas
+)
 
 from apps.base import forms as base_forms
 from apps.base.mixins import (
@@ -94,7 +96,7 @@ class CreateView(
     
     permission_required = 'employees.add_employee'
     form_class = forms.EmployeeForm
-    form_template_name = 'apps/employees/partials/create-form.html'
+    form_template_name = 'apps/employees/partials/forms/create.html'
     
 
 class UpdateView(
@@ -103,7 +105,9 @@ class UpdateView(
     
     permission_required = 'employees.change_employee'
     form_class = forms.EmployeeForm
+    schema_class = schemas.EmployeeSchema
     deleter = utils.Deleter
+    form_template_name = 'apps/employees/partials/forms/update.html'
 
 
 class DeleteView(

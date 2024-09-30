@@ -1,0 +1,97 @@
+{% load i18n %}
+
+<c-forms.divider>
+  {% translate 'basic information' %}
+</c-forms.divider>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 ~gap-1/2">
+  <c-forms.form-field :field="form.firstname" />
+  <c-forms.form-field :field="form.lastname" />
+  <c-forms.form-field :field="form.father_name" />
+  <c-forms.form-field :field="form.mother_name" />
+</div>
+
+<c-forms.divider>
+  {% translate 'birth information' %}
+</c-forms.divider>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 ~gap-1/2">
+  <c-forms.form-field :field="form.birth_place" />
+  <c-forms.form-field :field="form.birth_date" />
+</div>
+
+<c-forms.divider>
+  {% translate 'card information' %}
+</c-forms.divider>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 ~gap-1/2">
+  <c-forms.form-field :field="form.national_id" />
+  <c-forms.form-field :field="form.card_id" />
+</div>
+
+<c-forms.divider>
+  {% translate 'registry information' %}
+</c-forms.divider>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 ~gap-1/2">
+  <c-forms.form-field :field="form.civil_registry_office" />
+  <c-forms.form-field :field="form.registry_office_name" />
+  <c-forms.form-field :field="form.registry_office_id" />
+</div>
+
+<c-forms.divider>
+  {% translate 'visual information' %}
+</c-forms.divider>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 ~gap-1/2">
+  <c-forms.form-field :field="form.gender" />
+  <c-forms.form-field :field="form.face_color" />
+  <c-forms.form-field :field="form.eyes_color" />
+</div>
+
+<c-forms.divider>
+  {% translate 'other information' %}
+</c-forms.divider>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 ~gap-1/2">
+  <c-forms.form-field :field="form.address" />
+  <c-forms.form-field :field="form.special_signs" />
+  <c-forms.form-field :field="form.card_date" />
+</div>
+
+<c-forms.divider>
+  {% translate 'community information' %}
+</c-forms.divider>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 ~gap-1/2">
+  <c-forms.form-field :field="form.martial_status" />
+  <c-forms.form-field :field="form.military_status" />
+</div>
+
+<c-forms.divider>
+  {% translate 'location information' %}
+</c-forms.divider>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 ~gap-1/2">
+  <c-forms.form-field :field="form.nationality" />
+  <c-forms.form-field :field="form.area" />
+</div>
+
+<c-forms.divider>
+  {% translate 'job information' %}
+</c-forms.divider>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 ~gap-1/2">
+  <c-forms.form-field :field="form.department" />
+  <c-forms.form-field :field="form.position" />
+  <c-forms.form-field :field="form.job_subtype" />
+  <c-forms.form-field :field="form.job_status" />
+  <c-forms.form-field :field="form.status" />
+  <c-forms.form-field :field="form.institution_id" />
+  <c-forms.form-field :field="form.hire_date" />
+  <c-forms.form-field :field="form.salary" />
+</div>
+
+<div class="grid grid-cols-1 ~gap-1/2">
+  <c-forms.form-field :field="form.notes" />
+</div>

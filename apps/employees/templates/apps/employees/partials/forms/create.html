@@ -1,0 +1,74 @@
+{% load i18n %}
+{% load static %}
+
+<div class="p-3 lg:p-6">
+  <div class="max-w-2xl mx-auto">
+
+    <h1
+      class="text-4xl tracking-tighter font-semibold mb-6 rtl:text-right ltr:text-left first-letter:capitalize"
+    >
+      {% translate 'add new employee' %}
+    </h1>
+
+    <form 
+    hx-post="{{ instance.get_create_path }}" 
+    hx-encoding="multipart/form-data"
+    hx-target="this">
+
+    <div>
+
+      <ul>
+        {% for error in form.non_field_errors %}
+        <li class="bg-red-100 font-semibold p-4 rounded-lg text-red-600">
+            {{ error }}
+        </li>
+        {% endfor %}
+      </ul>
+    
+      <div class="~space-y-2/4">
+    
+        <c-forms.form-field :field="form.profile" />
+        {% include 'apps/employees/partials/forms/base.html' %}
+    
+      </div>
+    </div>
+
+      <div
+        class="flex items-center max-sm:flex-wrap max-sm:justify-center justify-end gap-x-1 gap-y-2 my-6"
+      >
+            <c-btns.btn
+            datatype="input"
+            type="submit"
+            title="{% translate 'save'|title %}"
+            data-disabled
+            name="save"
+            value="{% translate 'save' %}"
+          />
+
+          <c-btns.btn
+            datatype="input"
+            type="submit"
+            data-disabled
+            title="{% translate 'save and add another'|title %}"
+            value="{% translate 'save and add another' %}"
+            name="save_and_add_another"
+          />
+
+          <c-btns.btn
+            datatheme="secondary"
+            hx-delete="{{ instance.get_create_path }}"
+            hx-target="closest form"
+            hx-indicator="#reset-loading"
+            hx-disabled-elt="*[data-disabled]"
+            data-disabled
+            title="{% translate 'reset'|title %}"
+          >
+            <div id="reset-loading" class="hx-request:animate-spin">
+              <c-icons.reset ratio="1rem" />
+            </div>
+            <span>{% translate 'reset' %}</span>
+          </c-btns.btn>
+      </div>
+    </form>
+  </div>
+</div>
