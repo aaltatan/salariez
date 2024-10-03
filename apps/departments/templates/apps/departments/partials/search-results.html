@@ -3,7 +3,7 @@
 {% for obj in qs %}
 
    <c-inputs.search-item
-   hx-get="{{ path }}?name=parent&id={{ obj.id }}&value={{ obj.department_id }}%20-%20{{ obj.name }}"
+   hx-get="{{ path }}?name={{ name }}&id={{ obj.id }}&value={{ obj.department_id }}%20-%20{{ obj.name }}"
    hx-indicator="#search-spinner-{{ container_id }}"
    hx-disabled-elt="*[data-disabled]"
    title="{% if not obj.is_leaf_node %}{% translate 'primary account'|title %}{% endif %}"

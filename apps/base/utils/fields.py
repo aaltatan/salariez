@@ -22,13 +22,14 @@ class Object:
     add_new_url: tuple[str, str] | None = None
 
 
-def get_search_input(
+def get_search_field(
     widget: Widget,
     form: forms.ModelForm,
     obj: Object,
 ) -> Widget:
     """
-    use it inside ModelForm.__init__() method
+    use it inside ModelForm.__init__() method  
+    like self.form.fields['<field_name>'].widget = get_search_input(...)
     widget: select what widget will present the field form `django.forms.widgets`
     form: ModelForm like `self`
     obj: Object

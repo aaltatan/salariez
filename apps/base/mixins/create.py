@@ -107,6 +107,7 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
         
         response = render(request, form_template_name, context)
         response['HX-Trigger'] = 'get-messages'
+        response['HX-reswap'] = 'outerHTML'
 
         return response
 

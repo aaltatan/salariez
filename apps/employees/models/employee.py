@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_delete
 from django.utils.text import slugify
 
 from ..managers import EmployeeManager
@@ -241,4 +241,10 @@ def employee_pre_save(sender, instance: Employee, *args, **kwargs):
         allow_unicode=True
     )
 
+
+def employee_post_delete(sender, instance: Employee, *args, **kwargs):
+    instance.profile.delete()
+
+
 pre_save.connect(employee_pre_save, Employee)
+post_delete.connect(employee_post_delete, Employee)

@@ -45,6 +45,7 @@
 
     if (isNaN(date.getTime()) || !el.target.value) {
       insertDate(el.target)
+      el.target.select();
     }
   }
 

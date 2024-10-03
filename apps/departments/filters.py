@@ -8,7 +8,7 @@ import django_filters as filters
 from . import models
 
 from apps.base.mixins.filters import FiltersMixin
-from apps.base.utils.fields import Object, get_search_input
+from apps.base.utils.fields import Object, get_search_field
 
 
 class DepartmentFilterSet(FiltersMixin, filters.FilterSet):
@@ -81,7 +81,7 @@ class DepartmentFilterSet(FiltersMixin, filters.FilterSet):
             multiple=True,
         )
         
-        self.form.fields['cost_center'].widget = get_search_input(
+        self.form.fields['cost_center'].widget = get_search_field(
             widget=widgets.SelectMultiple,
             form=self.form, 
             obj=cost_center,
@@ -95,7 +95,7 @@ class DepartmentFilterSet(FiltersMixin, filters.FilterSet):
             multiple=True,
         )
         
-        self.form.fields['parent'].widget = get_search_input(
+        self.form.fields['parent'].widget = get_search_field(
             widget=widgets.SelectMultiple,
             form=self.form, 
             obj=parent,

@@ -1,0 +1,5 @@
+{% load i18n %}
+{% translate 'age'|title %}: {{ obj.birth_date|timesince }}
+{% for mobile in obj.mobiles.all %}{% translate 'mobile'|title %}: {{ mobile.mobile }} {% if mobile.has_whatsapp %}{% translate '(has whatsapp)' %}{% endif %}{% endfor %}
+{% for phone in obj.phones.all %}{% translate 'phone'|title %}: {{ phone.phone }}{% endfor %}
+{% for email in obj.emails.all %}{% translate 'email'|title %}: {{ email.email }}{% endfor %}

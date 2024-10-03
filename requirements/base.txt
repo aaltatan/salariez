@@ -7,7 +7,6 @@ django-widget-tweaks
 django-import-export[xlsx]
 django-mptt
 django-braces
-django-ninja
 mysqlclient
 python-dotenv
 Pillow

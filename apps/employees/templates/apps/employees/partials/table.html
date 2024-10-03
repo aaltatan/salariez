@@ -1,5 +1,6 @@
 {% load i18n %}
 {% load static %}
+{% load format_numbers %}
 
 {% with 'employees-filter-form' as filter_form %}
 {% with '#employees-table' as target %}
@@ -51,13 +52,49 @@
               hx-get="{{ index_path }}"
               hx-target="{{ target }}"
               code_name="firstname"
-              name="{% translate 'firstname' %}" />
+              name="{% translate 'fullname' %}" />
 
               <c-table.header-cell 
               hx-get="{{ index_path }}"
               hx-target="{{ target }}"
-              code_name="lastname"
-              name="{% translate 'lastname' %}" />
+              code_name="job_subtype__job_type"
+              name="{% translate 'job type' %}" />
+
+              <c-table.header-cell 
+              hx-get="{{ index_path }}"
+              hx-target="{{ target }}"
+              code_name="department__cost_center__cost_center_accounting_id"
+              name="{% translate 'cost center' %}" />
+
+              <c-table.header-cell 
+              hx-get="{{ index_path }}"
+              hx-target="{{ target }}"
+              code_name="department__department_id"
+              name="{% translate 'department' %}" />
+
+              <c-table.header-cell 
+              hx-get="{{ index_path }}"
+              hx-target="{{ target }}"
+              code_name="job_age"
+              name="{% translate 'job age' %}" />
+
+              <c-table.header-cell 
+              hx-get="{{ index_path }}"
+              hx-target="{{ target }}"
+              code_name="salary"
+              name="{% translate 'salary' %}" />
+
+              <c-table.header-cell 
+              hx-get="{{ index_path }}"
+              hx-target="{{ target }}"
+              code_name="gender"
+              name="{% translate 'gender' %}" />
+
+              <c-table.header-cell 
+              hx-get="{{ index_path }}"
+              hx-target="{{ target }}"
+              code_name="job_status"
+              name="{% translate 'status' %}" />
 
               <c-table.header-cell />
               
@@ -80,31 +117,58 @@
           <!-- start rows -->
           <c-table.tbody>
             {% for obj in qs %}
-            <c-table.tr>
+            <c-table.tr title="{% include 'apps/employees/partials/table/tr-title.html' %}">
               <td class="p-2"><c-table.check /></td>
 
               {% if can_update %}
               <c-table.td href="{{ obj.get_update_path }}">
-                <div class="flex items-center gap-1">
+                <div class="flex items-center gap-2 whitespace-nowrap">
                   <img 
-                  class="size-10 object-cover rounded-full block" 
+                  class="size-8 object-cover rounded-full block" 
                   alt=""
                   src="{% if obj.profile %}
                           {{ obj.profile.url }}
                        {% else %}
                           {% static 'images/user.png' %}
                        {% endif %}">
-                  <span>
-                    {{ obj.fullname }}
-                  </span>
+                  <div>
+                    <p>
+                      {{ obj.fullname }}
+                    </p>
+                    <p class="text-xs text-neutral-500 tracking-tighter">
+                      {{ obj.job_subtype }} - {{ obj.position }}
+                    </p>
+                  </div>
                 </div>
               </c-table.td>
               {% else %}
               <c-table.td>{{ obj.fullname }}</c-table.td>
               {% endif %}
 
-              <c-table.td>{{ obj.lastname }}</c-table.td>
+              <c-table.td>{{ obj.job_subtype.job_type }}</c-table.td>
+
+              <c-table.td>{{ obj.department.cost_center }}</c-table.td>
+
+              <c-table.td>{{ obj.department }}</c-table.td>
+              
+              <c-table.td>{{ obj.hire_date|timesince }}</c-table.td>
+
+              <c-table.td>{{ obj.salary|money }}</c-table.td>
+
+              <c-table.td>
+                <c-layout.badge theme="{% if obj.gender == 'F' %}pink{% else %}blue{% endif %}">
+                  {{ obj.get_gender_display }}
+                </c-layout.badge>
+              </c-table.td>
+
+              <c-table.td>
+                <c-layout.badge theme="{% if obj.job_status.has_salary %}green{% else %}red{% endif %}">
+                  {{ obj.job_status }}
+                </c-layout.badge>
+              </c-table.td>
+
               <td>{% include 'partials/context/base.html' %}</td>
+
             </c-table.tr>
             {% empty %}
             <c-table.empty-tr colspan="3" />

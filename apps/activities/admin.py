@@ -3,7 +3,7 @@ from django.utils.html import format_html
 
 from .models import Activity
 
-from apps.base.utils.text import dict_to_css
+from apps.base.utils.generic import dict_to_css
 
 
 @admin.register(Activity)

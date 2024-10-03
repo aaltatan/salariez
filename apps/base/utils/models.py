@@ -1,7 +1,7 @@
 from django.utils.text import slugify
 from django.db import models
 
-from .text import increase_last_digit
+from .generic import increase_last_digit
 
 
 def slugify_instance(

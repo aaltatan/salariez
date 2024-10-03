@@ -4,6 +4,8 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.conf import settings
 from django.utils.translation import gettext as _
 
+from apps.base.encoders import CustomJSONEncoder
+
 
 class Activity(models.Model):
     
@@ -25,7 +27,7 @@ class Activity(models.Model):
         default=TypeChoices.CREATE,
     )
     old_data = models.JSONField(
-        null=True, blank=True,
+        null=True, blank=True, encoder=CustomJSONEncoder
     )
     notes = models.CharField(max_length=255)
 

@@ -6,4 +6,4 @@ register = template.Library()
 
 @register.filter
 def money(value: int | float):
-    return f'{value:,}'
+    return f'{value:2,}'

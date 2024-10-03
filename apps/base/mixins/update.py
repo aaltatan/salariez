@@ -27,7 +27,6 @@ class AbstractUpdate(ABC):
 
 
 class UpdateMixin(utils.HelperMixin, AbstractUpdate):
-    
     """
     utility class for implement update record functionality.  
     
@@ -36,7 +35,6 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
     - `deleter: Deleter`
     
     ### optional attributes:  
-    - `schema_class: ninja.ModelSchema` to use it to serialize complex data types into Activity.old_data: JSONField  
     - `template_name: str` like `apps/<app_name>/update.html`
     - `form_template_name: str` like: `'partials/create-form.html'`
     - `index_template_name: str` like: `'apps/<app_name>/index.html'`  
@@ -70,9 +68,7 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
         return render(request, form_template_name, context)
     
     def _add_activity(
-        self, 
-        obj, 
-        old_data: dict | None = None,
+        self, obj, old_data: dict | None = None,
     ) -> None:
         
         content_type = (
@@ -90,11 +86,7 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
         }
 
         if old_data:
-            if hasattr(self, 'schema_class'):
-                schema = self.schema_class(**old_data)
-                activity['old_data'] = schema.model_dump()
-            else:
-                activity['old_data'] = old_data
+            activity['old_data'] = old_data
 
         Activity(**activity).save()
 

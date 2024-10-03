@@ -3,7 +3,7 @@
 {% for obj in qs %}
 
    <c-inputs.search-item
-   hx-get="{{ path }}?name=city&id={{ obj.id }}&value={{ obj.name }}{% if required %}&required=true{% endif %}"
+   hx-get="{{ path }}?name={{ name }}&id={{ obj.id }}&value={{ obj.name }}{% if required %}&required=true{% endif %}"
    id="{{ obj.id }}"
    hx-indicator="#search-spinner-{{ container_id }}"
    hx-disabled-elt="*[data-disabled]"

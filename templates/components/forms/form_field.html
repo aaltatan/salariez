@@ -49,12 +49,10 @@
       {% endif %}
   </div>
 
-  {% if field.help_text %}
   <div 
-  class="text-neutral-500 ~text-sm/base first-letter:capitalize">
+  class="text-neutral-500 ~text-sm/base first-letter:capitalize empty:hidden">
       {{ field.help_text }}
   </div>
-  {% endif %}
   
   {% render_field field|add_class:'input w-full' %}
 

@@ -9,7 +9,7 @@ from django.contrib.auth.mixins import (
 from braces.views import SuperuserRequiredMixin
 
 from . import (
-    models, forms, filters, mixins, resources, utils, schemas
+    models, forms, filters, mixins, resources, utils
 )
 
 from apps.base import forms as base_forms
@@ -48,6 +48,26 @@ class ListTableView(
         'hx-get': reverse_lazy('employees:index'),
         'hx-target': '#employees-table',
     }
+
+    def get_queryset(self):
+        select_related: list[str] = [
+            'area',
+            'position',
+            'job_status',
+            'job_subtype',
+            'job_subtype__job_type',
+            'department',
+            'department__cost_center',
+        ]
+        prefetch_related: list[str] = [
+            'mobiles', 'phones', 'emails',
+        ]
+        return (
+            super()
+            .get_queryset()
+            .select_related(*select_related)
+            .prefetch_related(*prefetch_related)
+        )
 
 
 class ExportView(
@@ -105,7 +125,6 @@ class UpdateView(
     
     permission_required = 'employees.change_employee'
     form_class = forms.EmployeeForm
-    schema_class = schemas.EmployeeSchema
     deleter = utils.Deleter
     form_template_name = 'apps/employees/partials/forms/update.html'
 

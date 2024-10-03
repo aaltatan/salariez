@@ -2,11 +2,13 @@
 {% load static %}
 
 <div class="relative w-fit mx-auto my-4">
-  <img
-  src="{% if obj.profile %}{{ obj.profile.url }}{% else %}{% static 'images/user.png' %}{% endif %}"
-  alt="{% translate 'user profile'|title %}"
-  class="rounded-full object-cover size-28 block"
-  x-ref="filePreview">
+  <a href="{% if obj.profile %}{{ obj.profile.url }}{% else %}{% static 'images/user.png' %}{% endif %}" target="_blank">
+    <img
+    src="{% if obj.profile %}{{ obj.profile.url }}{% else %}{% static 'images/user.png' %}{% endif %}"
+    alt="{% translate 'user profile'|title %}"
+    class="rounded-full object-cover size-28 block"
+    x-ref="filePreview">
+  </a>
   <label
   class="absolute bottom-0 ltr:right-0 rtl:left-0"
   for="{{ id }}">

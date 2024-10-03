@@ -1,29 +1,21 @@
-def compare_two_dicts(old: dict, new: dict):
+from django.db.models.functions import Now, TruncDate
+from django.db import models
 
-    old_set = set(old.items())
-    new_set = set(new.items())
-
-    diffs: set = old_set ^ new_set
-
-    data: dict = {}
-
-    for diff in diffs:
-        key = data.get(diff[0])
-        if key:
-            data[diff[0]] = [data.get(diff[0]), diff[1]]
-        else:
-            data[diff[0]] = diff[1]
-
-    print(data)
+from apps.employees.models import Employee
 
 
 def run() -> None:
-    old = {
-        'name': 'abdullah',
-        'age': 16,
-    }
-    new = {
-        'name': 'abdullah',
-        'age': 17,
-    }
-    compare_two_dicts(old, new)
+
+    qs = Employee.objects.annotate(
+        test1=TruncDate(Now()),
+        test=models.ExpressionWrapper(
+            TruncDate(Now()) - models.F('birth_date'),
+            output_field=models.DecimalField()
+        ),
+        test_age=models.F('test') / models.Value(86_400_000_000) / models.Value(365)
+    )
+
+    for obj in qs:
+        print(obj.birth_date)
+        print(obj.test_age)
+        print('#' * 100)

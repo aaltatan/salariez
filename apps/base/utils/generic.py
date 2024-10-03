@@ -1,4 +1,23 @@
 import re
+from typing import Any
+from decimal import Decimal
+
+
+def compare_two_dicts(
+    old: dict, new: dict
+) -> list[tuple[str, Any, Any]]:
+    """
+    returns the differences between two dictionaries  
+    returns  
+    `list[tuple[key: str, old_value: Any, new_value: Any]]`
+    """
+
+    diffs: set = set(old.items()) ^ set(new.items())
+    diffs: set = set(i[0] for i in diffs)
+
+    return sorted(
+        [(diff, old.get(diff), new.get(diff)) for diff in diffs]
+    )
 
 
 def increase_last_digit(string: str) -> str:
@@ -49,7 +68,8 @@ def parse_decimals(numeric: str | None) -> int | float:
         if ',' in decimals:
             decimals = decimals.split(',')[0]
             
-        return float(f'{number}.{decimals}')
+        float_number = float(f'{number}.{decimals}')
+        return Decimal.from_float(float_number)
     
     numeric = numeric.replace(',', '')
     return int(numeric)

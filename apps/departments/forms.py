@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from . import models
 
 from apps.cost_centers import models as cc_models
-from apps.base.utils import get_search_input, Object
+from apps.base.utils import get_search_field, Object
 from apps.base.utils.fields import get_textarea_field
 
 
@@ -36,7 +36,7 @@ class InitializerMixin:
             model=models.Department,
             value_attributes=['department_id', 'name'],
         )
-        self.fields['parent'].widget = get_search_input(
+        self.fields['parent'].widget = get_search_field(
             widget=widgets.TextInput,
             form=self, 
             obj=parent
@@ -52,7 +52,7 @@ class InitializerMixin:
             is_modal=True,
             add_new_url=('cost_centers:create', 'cost_centers.add_costcenter')
         )
-        self.fields['cost_center'].widget = get_search_input(
+        self.fields['cost_center'].widget = get_search_field(
             widget=widgets.TextInput,
             form=self, 
             obj=cost_center,

@@ -8,6 +8,6 @@ class EmployeeRecourse(resources.ModelResource):
 
     class Meta:
         model = models.Employee
-        fields = ["firstname"]
+        fields = "__all__"
     
     # def dehydrate_name(self, obj):

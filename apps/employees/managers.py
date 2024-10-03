@@ -7,8 +7,8 @@ from django.db.models.functions import (
     ExtractMonth,
     ExtractDay,
     TruncDate,
-    Now,
     Concat,
+    Now,
 )
 
 
@@ -20,7 +20,10 @@ def get_age_timedelta(field_name: str) -> ExpressionWrapper:
     utility function return ExpressionWrapper
     to generate differences between field date and now as database field `MySQL`
     """
-    return ExpressionWrapper(TruncDate(Now()) - F(field_name), models.IntegerField())
+    return ExpressionWrapper(
+        TruncDate(Now()) - F(field_name), 
+        models.DecimalField()
+    )
 
 
 def get_age(field_name: str) -> ExpressionWrapper:
@@ -35,6 +38,7 @@ def get_age(field_name: str) -> ExpressionWrapper:
 
 
 class EmployeeManager(models.Manager):
+    
     def get_ages(
         self,
         age: int,
@@ -56,7 +60,9 @@ class EmployeeManager(models.Manager):
         lookup: LOOKUPS = "",
     ) -> models.QuerySet:
         if oldness_years <= 0:
-            raise ValueError("oldness_years must be grater than or equal than 1")
+            raise ValueError(
+                "oldness_years must be grater than or equal than 1"
+            )
 
         key = "oldness_years_taking_pasts" if taking_pasts else "oldness_years"
 

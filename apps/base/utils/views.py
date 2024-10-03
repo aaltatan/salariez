@@ -16,7 +16,6 @@ class Deleter(ABC):
     - `get_delete_message()` -> str  
     - `get_cannot_delete_message()` -> str  
     ### optional attributes:  
-    - `schema_class: ninja.ModelSchema` to use it to serialize complex data types into Activity.old_data: JSONField  
     """
     def __init__(
         self, 
@@ -35,7 +34,12 @@ class Deleter(ABC):
     ) -> None:
         
         app_label = self.instance.__class__._meta.app_label
-        content_type = ContentType.objects.get(app_label=app_label)
+        content_type = (
+            ContentType
+            .objects
+            .filter(app_label=app_label)
+            .first()
+        )
 
         activity = {
             'user': self.request.user,
@@ -45,11 +49,7 @@ class Deleter(ABC):
         }
 
         if old_data:
-            if hasattr(self, 'schema_class'):
-                schema = self.schema_class(**old_data)
-                activity['old_data'] = schema.model_dump()
-            else:
-                activity['old_data'] = old_data
+            activity['old_data'] = old_data
 
         Activity(**activity).save()
     

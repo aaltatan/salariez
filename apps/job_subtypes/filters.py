@@ -8,7 +8,7 @@ import django_filters as filters
 from . import models
 
 from apps.base.mixins.filters import FiltersMixin
-from apps.base.utils import get_search_input, Object
+from apps.base.utils import get_search_field, Object
 
 
 class JobSubtypeFilterSet(FiltersMixin, filters.FilterSet):
@@ -57,7 +57,7 @@ class JobSubtypeFilterSet(FiltersMixin, filters.FilterSet):
             multiple=True,
         )
         
-        self.form.fields['job_type'].widget = get_search_input(
+        self.form.fields['job_type'].widget = get_search_field(
             widget=widgets.SelectMultiple,
             form=self.form, 
             obj=job_type,

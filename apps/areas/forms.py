@@ -6,7 +6,7 @@ from . import models
 
 from apps.base.utils.fields import (
     Object, 
-    get_search_input, 
+    get_search_field, 
     get_textarea_field,
 )
 
@@ -42,7 +42,7 @@ class AreaForm(forms.ModelForm):
             add_new_url=('cities:create', 'cities.add_city')
         )
 
-        self.fields['city'].widget = get_search_input(
+        self.fields['city'].widget = get_search_field(
             widget=widgets.TextInput,
             form=self, 
             obj=city,
