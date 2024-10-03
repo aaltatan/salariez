@@ -94,6 +94,12 @@
               hx-get="{{ index_path }}"
               hx-target="{{ target }}"
               code_name="job_status"
+              name="{% translate 'job status' %}" />
+
+              <c-table.header-cell 
+              hx-get="{{ index_path }}"
+              hx-target="{{ target }}"
+              code_name="status"
               name="{% translate 'status' %}" />
 
               <c-table.header-cell />
@@ -164,6 +170,12 @@
               <c-table.td>
                 <c-layout.badge theme="{% if obj.job_status.has_salary %}green{% else %}red{% endif %}">
                   {{ obj.job_status }}
+                </c-layout.badge>
+              </c-table.td>
+
+              <c-table.td>
+                <c-layout.badge theme="{% if obj.status == 'A' %}green{% else %}red{% endif %}">
+                  {{ obj.get_status_display }}
                 </c-layout.badge>
               </c-table.td>
 

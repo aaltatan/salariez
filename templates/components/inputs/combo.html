@@ -83,7 +83,7 @@
             x-show="option.show"
           >
             <input
-              :id="option.value"
+              :id="'{{ name }}-' + option.value"
               :checked="option.selected"
               :value="option.value"
               x-model="option.selected"
@@ -92,7 +92,7 @@
               class="check"
             />
             <label
-              :for="option.value"
+              :for="'{{ name }}-' + option.value"
               x-text="option.text"
               class="w-full block first-letter:capitalize"
             ></label>

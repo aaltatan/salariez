@@ -5,13 +5,6 @@
 
 {% block body %}
 
-<input 
-type="text" 
-class="input" 
-x-mask="9999-99-99" 
-@keydown.Down="handleDateInputKeyDown($el, 'up')"
-@keydown.Up="handleDateInputKeyDown($el, 'down')"
-value="2024-09-29"
-id="date">
+<c-inputs.number />
 
 {% endblock %}

@@ -232,7 +232,7 @@ class Employee(models.Model):
         return self.fullname
 
     class Meta:
-        ordering = ['department__department_id', 'firstname']
+        ordering = ['status', 'department__department_id', 'firstname']
 
 
 def employee_pre_save(sender, instance: Employee, *args, **kwargs):
