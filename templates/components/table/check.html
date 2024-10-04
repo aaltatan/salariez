@@ -20,19 +20,21 @@
   }
 </script>
 {% else %}
-<input
-  type="checkbox"
-  class="check"
-  name="obj-{{ obj.id }}-selected"
-  data-check
-  id="{{ obj.id }}"
-  @change="
-    let targetId = $event.target.getAttribute('id');
-    let criteria = selectedRows.filter(el => el === targetId).length;
-    if (criteria) {
-        selectedRows = selectedRows.filter(el => el !== targetId);
-    } else {
-        selectedRows.push(targetId);
-    }"
-/>
+<td class="p-2">
+  <input
+    type="checkbox"
+    class="check"
+    name="obj-{{ obj.id }}-selected"
+    data-check
+    id="{{ obj.id }}"
+    @change="
+      let targetId = $event.target.getAttribute('id');
+      let criteria = selectedRows.filter(el => el === targetId).length;
+      if (criteria) {
+          selectedRows = selectedRows.filter(el => el !== targetId);
+      } else {
+          selectedRows.push(targetId);
+      }"
+  />
+</td>
 {% endif %}

@@ -25,7 +25,7 @@
     x-transition:leave-start="opacity-100 scale-100"
     x-transition:leave-end="opacity-0 scale-90"
     x-cloak
-    class="rounded-lg overflow-hidden py-2 absolute rtl:left-0 ltr:right-0 top-[calc(100%+.5rem)] bg-[hsl(0,0%,99%)] dark:bg-neutral-900 border  dark:border-neutral-800 shadow-md z-10 ltr:text-left rtl:text-right ltr:origin-top-right rtl:origin-top-left w-[max-content]"
+    class="rounded-lg overflow-hidden py-2 absolute rtl:left-0 ltr:right-0 top-[calc(100%+.5rem)] dark:bg-neutral-900 border  dark:border-neutral-800 bg-white z-10 ltr:text-left rtl:text-right ltr:origin-top-right rtl:origin-top-left w-[max-content] custom-shadow dark:shadow-none"
   >
     <div class="flex items-center gap-x-2 text-nowrap p-4">
       
@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <hr class="border-neutral-200 dark:border-neutral-700" />
+    <hr class="border-neutral-200 dark:border-neutral-800" />
 
     {% if user.is_superuser %}
 
@@ -68,7 +68,7 @@
     </c-context.btn>
     {% endif %}
 
-    <hr class="border-neutral-200 dark:border-neutral-700" />
+    <hr class="border-neutral-200 dark:border-neutral-800" />
 
     {% endif %}
 

@@ -87,12 +87,6 @@
               <c-table.header-cell 
               hx-get="{{ index_path }}"
               hx-target="{{ target }}"
-              code_name="gender"
-              name="{% translate 'gender' %}" />
-
-              <c-table.header-cell 
-              hx-get="{{ index_path }}"
-              hx-target="{{ target }}"
               code_name="job_status"
               name="{% translate 'job status' %}" />
 
@@ -107,7 +101,7 @@
             </c-table.header-row>
     
             {% if can_delete %}
-            <c-table.unselect-all colspan="4">
+            <c-table.unselect-all colspan="10">
               {% if can_delete %}
                 <c-table.action-input
                   name="bulk_delete"
@@ -124,13 +118,13 @@
           <c-table.tbody>
             {% for obj in qs %}
             <c-table.tr title="{% include 'apps/employees/partials/table/tr-title.html' %}">
-              <td class="p-2"><c-table.check /></td>
+              <c-table.check />
 
               {% if can_update %}
               <c-table.td href="{{ obj.get_update_path }}">
                 <div class="flex items-center gap-2 whitespace-nowrap">
                   <img 
-                  class="size-8 object-cover rounded-full block" 
+                  class="size-8 aspect-square border-2 {% if obj.gender == 'M' %}border-blue-500{% else %}border-pink-500{% endif %} object-cover rounded-full block" 
                   alt=""
                   src="{% if obj.profile %}
                           {{ obj.profile.url }}
@@ -162,24 +156,22 @@
               <c-table.td>{{ obj.salary|money }}</c-table.td>
 
               <c-table.td>
-                <c-layout.badge theme="{% if obj.gender == 'F' %}pink{% else %}blue{% endif %}">
-                  {{ obj.get_gender_display }}
-                </c-layout.badge>
+                <div class="flex items-center justify-center">
+                  <c-layout.badge theme="{% if obj.job_status.has_salary %}green{% else %}red{% endif %}">
+                    {{ obj.job_status }}
+                  </c-layout.badge>
+                </div>
               </c-table.td>
 
               <c-table.td>
-                <c-layout.badge theme="{% if obj.job_status.has_salary %}green{% else %}red{% endif %}">
-                  {{ obj.job_status }}
-                </c-layout.badge>
+                <div class="flex items-center justify-center">
+                  <c-layout.badge theme="{% if obj.status == 'A' %}green{% else %}red{% endif %}">
+                    {{ obj.get_status_display }}
+                  </c-layout.badge>
+                </div>
               </c-table.td>
 
-              <c-table.td>
-                <c-layout.badge theme="{% if obj.status == 'A' %}green{% else %}red{% endif %}">
-                  {{ obj.get_status_display }}
-                </c-layout.badge>
-              </c-table.td>
-
-              <td>{% include 'partials/context/base.html' %}</td>
+              <c-table.td>{% include 'partials/context/base.html' %}</c-table.td>
 
             </c-table.tr>
             {% empty %}

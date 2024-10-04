@@ -55,12 +55,12 @@
     x-transition:leave="transition ease-in duration-100"
     x-transition:leave-start="opacity-100 scale-100"
     x-transition:leave-end="opacity-0 scale-90"
-    class="origin-top min-w-64 bg-[hsl(0,0%,99%)] dark:bg-neutral-950 absolute top-[calc(100%_+_.5rem)] z-50 left-0 rounded-lg border border-neutral-300 dark:border-neutral-800 overflow-hidden"
+    class="origin-top min-w-64 bg-white custom-shadow dark:shadow-none dark:bg-neutral-950 absolute top-[calc(100%_+_.5rem)] z-50 left-0 rounded-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden"
     x-cloak
   >
     <div x-show="options.length">
       <input
-        class="w-full border-none border-b border-neutral-300 bg-neutral-50 py-2.5 px-4 text-sm text-neutral-600 focus:outline-none focus-visible:border-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-300 dark:focus-visible:border-blue-500"
+        class="w-full border-none border-b border-neutral-200 bg-neutral-50 py-2.5 px-4 text-sm text-neutral-600 focus:outline-none focus-visible:border-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-300 dark:focus-visible:border-blue-500"
         type="search"
         @search="searchHandler"
         @keyup="searchHandler"

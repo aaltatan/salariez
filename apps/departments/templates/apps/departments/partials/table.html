@@ -98,7 +98,7 @@
           <c-table.tbody>
             {% for obj in qs %}
             <c-table.tr>
-              <td class="p-2"><c-table.check /></td>
+              <c-table.check />
 
               {% if can_update %}
               <c-table.td href="{{ obj.get_update_path }}">
@@ -164,7 +164,7 @@
                 {% endif %}
               </c-table.td>
 
-              <td>{% include 'partials/context/base.html' %}</td>
+              <c-table.td>{% include 'partials/context/base.html' %}</c-table.td>
               
             </c-table.tr>
             {% empty %}

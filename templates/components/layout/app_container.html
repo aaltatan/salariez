@@ -8,7 +8,7 @@
   <div
     x-cloak
     id="container"
-    class="rounded-lg bg-[hsl(0,0%,99%)] shadow-sm scrollbar-thin scrollbar-track-neutral-100/80 scrollbar-thumb-blue-500 ~space-y-2/4 ~p-2/3 dark:bg-neutral-900 dark:shadow-none dark:scrollbar-track-neutral-950 max-lg:order-2 lg:col-span-3"
+    class="rounded-lg scrollbar-thin scrollbar-track-neutral-100/80 scrollbar-thumb-blue-500 ~space-y-2/4 dark:bg-neutral-900 dark:scrollbar-track-neutral-950 max-lg:order-2 lg:col-span-3 border border-neutral-200 dark:border-none"
   >
     {{ body }} 
     {% if pagination %}
@@ -19,9 +19,9 @@
   <div
     :class="{
       'max-lg:ltr:-right-full': !showFilters,
-      'max-lg:inset-0': showFilters,
+      'max-lg:inset-4': showFilters,
     }"
-    class="w-full rounded-lg bg-[hsl(0,0%,99%)] shadow-sm duration-150 scrollbar-thin scrollbar-track-neutral-100/80 scrollbar-thumb-blue-500 ~p-2/3 dark:bg-neutral-900 dark:shadow-none dark:scrollbar-track-neutral-950 max-lg:fixed max-lg:top-4 max-lg:z-[100] max-lg:order-1 max-lg:w-[90%] max-lg:border border-neutral-200 dark:border-neutral-800 max-lg:mx-auto"
+    class="w-full bg-white rounded-lg duration-150 scrollbar-thin scrollbar-track-neutral-100/80 scrollbar-thumb-blue-500 ~p-2/3 dark:bg-neutral-900 dark:scrollbar-track-neutral-950 max-lg:fixed max-lg:top-4 max-lg:z-[100] max-lg:order-1 max-lg:m-auto max-lg:w-[90%] border border-neutral-200 dark:border-neutral-800 dark:lg:border-none"
   >
     {{ filters }}
   </div>
