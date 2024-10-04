@@ -1,0 +1,13 @@
+{% load widget_tweaks %}
+
+<div id="id__{{ field.id_for_label }}">
+
+  {% if title != 'off' %}
+  <label for="{{ field.id_for_label }}">
+    {{ field.label|title }}
+  </label>
+  {% endif %}
+
+  {% render_field field|add_class:class %}
+  
+</div>

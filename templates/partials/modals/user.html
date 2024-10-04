@@ -38,6 +38,15 @@
           </span>
         </button>
 
+        <button class="{{ theme }}" @click="mainContainer = !mainContainer">
+          <span x-show="mainContainer" title="{% translate 'disable main container'|title %}">
+            {% translate 'disable main container' %}
+          </span>
+          <span x-show="!mainContainer" title="{% translate 'activate main container'|title %}">
+            {% translate 'activate main container' %}
+          </span>
+        </button>
+
         <button class="{{ theme }}" @click="asideFixed = !asideFixed">
           <span x-show="asideFixed" title="{% translate 'fixed aside'|title %}">
             {% translate 'fixed aside' %}

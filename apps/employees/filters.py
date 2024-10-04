@@ -10,8 +10,11 @@ from . import models
 from apps.job_types.models import JobType
 from apps.job_subtypes.models import JobSubtype
 from apps.base.mixins.filters import FiltersMixin
+from apps.base.utils.generic import parse_decimals
 from apps.base.utils.fields import (
-    get_search_field, Object
+    get_search_field,
+    get_date_field, 
+    Object
 )
 
 
@@ -50,6 +53,62 @@ class EmployeeFilterSet(FiltersMixin, filters.FilterSet):
         label=_('job subtype'),
         method="filter_combobox",
     )
+    salary_gte = filters.CharFilter(
+        field_name='salary__gte',
+        label=_('salary from'),
+        method="filter_salary",
+        widget=widgets.TextInput({
+            'x-mask:dynamic': '$money($input)'
+        })
+    )
+    salary_lte = filters.CharFilter(
+        field_name='salary__lte',
+        label=_('salary to'),
+        method="filter_salary",
+        widget=widgets.TextInput({
+            'x-mask:dynamic': '$money($input)'
+        })
+    )
+    # hire_date_gte = filters.CharFilter(
+    #     field_name='hire_date__gte',
+    #     label=_('hire date from'),
+    #     method="filter_hire_date",
+    #     widget=get_date_field()
+    # )
+    # hire_date_lte = filters.CharFilter(
+    #     field_name='hire_date__lte',
+    #     label=_('hire date to'),
+    #     method="filter_hire_date",
+    #     widget=get_date_field()
+    # )
+    age_gte = filters.NumberFilter(
+        field_name='age__gte',
+        label=_('age from'),
+        method="filter_age",
+    )
+    age_lte = filters.NumberFilter(
+        field_name='age__lte',
+        label=_('age to'),
+        method="filter_age",
+    )
+
+    def filter_salary(self, qs, name, value):
+        if value:
+            lookup = {name: parse_decimals(value)}
+            return qs.filter(**lookup)
+        return qs
+
+    def filter_hire_date(self, qs, name, value):
+        if value:
+            lookup = {name: value}
+            return qs.filter(**lookup)
+        return qs
+
+    def filter_age(self, qs, name, value):
+        if value:
+            lookup = {name: value}
+            return qs.filter(**lookup)
+        return qs
 
 
     def __init__(

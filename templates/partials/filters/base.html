@@ -8,5 +8,9 @@
   hx-replace-url="true"
   data-include
 >
-  {{ filter }}
+  <div class="p-2 space-y-2">
+    {% for field in filter %}
+      <c-forms.filter-field class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"/>
+    {% endfor %}
+  </div>
 </c-forms.filters>

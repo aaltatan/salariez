@@ -2,9 +2,10 @@
 <!-- ring-1 dark:ring-neutral-800 -->
 <header
   x-data="{ atTop: false }"
-  class="container sticky top-2 left-0 md:mx-auto p-2 shadow-md rounded-lg dark:bg-neutral-900 duration-150 bg-[hsl(0,0%,99%)] dark:shadow-none z-40 mx-auto"
+  class="sticky top-2 left-0 md:mx-auto p-2 shadow-md rounded-lg dark:bg-neutral-900 duration-150 bg-[hsl(0,0%,99%)] dark:shadow-none z-40 mx-auto"
   :class="{ 
   'bg-opacity-50 backdrop-blur-sm ring-1 dark:ring-neutral-800 ring-neutral-200': atTop, 
+  'container': mainContainer,
   }"
   @scroll.window="atTop = (window.pageYOffset < 10) ? false: true"
 >

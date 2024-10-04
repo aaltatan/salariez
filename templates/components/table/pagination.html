@@ -84,6 +84,14 @@
 
     <div class="flex items-center gap-1 justify-center">
       {{ pagination_form }}
+      <span class="lg:hidden">
+        <c-btns.icon 
+        @click="showFilters = !showFilters"
+        id="page-filter-show"
+        title="{% translate 'show filters'|title %}">
+          <c-icons.filters ratio="1.25rem" />
+        </c-btns.icon>
+      </span>
       <c-btns.icon 
       hx-get="{{ url }}"
       hx-target="{{ target }}"
@@ -93,7 +101,7 @@
       type="reset"
       id="page-reset-btn"
       title="{% translate 'reset'|title %}">
-        <c-icons.reset ratio="1.25rem"></c-icons.reset>
+        <c-icons.reset ratio="1.25rem" />
       </c-btns.icon>
       {{ slot }}
       <!--  -->

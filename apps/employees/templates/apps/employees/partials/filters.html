@@ -1,0 +1,72 @@
+{% load i18n %}
+
+<c-forms.filters
+  id="{{ filter_form }}"
+  hx-get="{{ index_path }}"
+  hx-target="#container"
+  hx-select="#container"
+  hx-disabled-elt="*[data-disabled]"
+  hx-disinherit="hx-select"
+  hx-replace-url="true"
+  data-include
+>
+  <div class="@container p-1 space-y-1">
+
+    <c-forms.filter-field
+      :field="filter.firstname"
+      class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+    />
+    <c-forms.filter-field
+      :field="filter.job_status"
+      class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+    />
+    <c-forms.filter-field
+      :field="filter.job_type"
+      class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+    />
+    <c-forms.filter-field
+      :field="filter.job_subtype"
+      class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+    />
+
+    <span>{% translate 'job age' %}</span>
+
+    <div class="flex items-center justify-center gap-1">
+      <c-forms.filter-field
+        :field="filter.age_gte"
+        class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+        title="off"
+      />
+      <c-forms.filter-field
+        :field="filter.age_lte"
+        class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+        title="off"
+      />
+    </div>
+
+    <span>{% translate 'salary' %}</span>
+
+    <div class="flex items-center justify-center gap-1">
+      <c-forms.filter-field
+        :field="filter.salary_gte"
+        class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+        title="off"
+      />
+      <c-forms.filter-field
+        :field="filter.salary_lte"
+        class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+        title="off"
+      />
+    </div>
+
+    <c-forms.filter-field
+      :field="filter.gender"
+      class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+    />
+    <c-forms.filter-field
+      :field="filter.status"
+      class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+    />
+
+  </div>
+</c-forms.filters>
