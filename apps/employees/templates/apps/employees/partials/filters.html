@@ -21,6 +21,14 @@
       class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
     />
     <c-forms.filter-field
+      :field="filter.position"
+      class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+    />
+    <c-forms.filter-field
+      :field="filter.department"
+      class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+    />
+    <c-forms.filter-field
       :field="filter.job_type"
       class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
     />
@@ -29,22 +37,22 @@
       class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
     />
 
-    <span>{% translate 'job age' %}</span>
+    <span class="capitalize">{% translate 'job age' %}</span>
 
     <div class="flex items-center justify-center gap-1">
       <c-forms.filter-field
-        :field="filter.age_gte"
+        :field="filter.job_age_gte"
         class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
         title="off"
       />
       <c-forms.filter-field
-        :field="filter.age_lte"
+        :field="filter.job_age_lte"
         class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
         title="off"
       />
     </div>
 
-    <span>{% translate 'salary' %}</span>
+    <span class="capitalize">{% translate 'salary' %}</span>
 
     <div class="flex items-center justify-center gap-1">
       <c-forms.filter-field
@@ -54,6 +62,36 @@
       />
       <c-forms.filter-field
         :field="filter.salary_lte"
+        class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+        title="off"
+      />
+    </div>
+
+    <span class="capitalize">{% translate 'hire date' %}</span>
+
+    <div class="flex items-center justify-center gap-1">
+      <c-forms.filter-field
+        :field="filter.hire_date_gte"
+        class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+        title="off"
+      />
+      <c-forms.filter-field
+        :field="filter.hire_date_lte"
+        class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+        title="off"
+      />
+    </div>
+
+    <span class="capitalize">{% translate 'age' %}</span>
+
+    <div class="flex items-center justify-center gap-1">
+      <c-forms.filter-field
+        :field="filter.age_gte"
+        class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+        title="off"
+      />
+      <c-forms.filter-field
+        :field="filter.age_lte"
         class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
         title="off"
       />

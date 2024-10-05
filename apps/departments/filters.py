@@ -59,17 +59,6 @@ class DepartmentFilterSet(FiltersMixin, filters.FilterSet):
         }),
     )
 
-    def filter_parent(self, qs, name, value):
-
-        if not value:
-            return qs
-        
-        stmt = qs.none()
-        for obj in value:
-            stmt = obj.get_descendants() | stmt
-
-        return stmt
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

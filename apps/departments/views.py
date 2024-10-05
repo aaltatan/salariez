@@ -83,7 +83,7 @@ class ListTableView(
         return (
             super()
             .get_queryset()
-            .select_related('cost_center')
+            .select_related('cost_center', 'parent')
             .order_by('department_id')
         )
 

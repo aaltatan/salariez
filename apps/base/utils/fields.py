@@ -77,6 +77,7 @@ def get_search_field(
 
 def get_date_field(
     required: bool = True,
+    fill_on_focus: bool = True,
     placeholder: str = 'YYYY-MM-DD',
     **kwargs: dict[str, str],
 ) -> DateInput:
@@ -89,11 +90,13 @@ def get_date_field(
         "@keydown.Alt.Up.prevent": 'handleDateInputAltKeyDown($el, "down")',
         "@keydown.Down.prevent": 'handleDateInputKeyDown($el, "up")',
         "@keydown.Up.prevent": 'handleDateInputKeyDown($el, "down")',
-        "@focus": 'handleDateInputFocus',
         "@dblclick": 'handleDateInputDblClick',
         "title": _("use down/up arrows to increase/decrease days\nuse Alt key + down/up arrows to increase/decrease years\nclick double to insert date of today"),
         **kwargs
     }
+
+    if fill_on_focus:
+        attrs["@focus"] = 'handleDateInputFocus'
 
     if required:
         attrs['required'] = ''
