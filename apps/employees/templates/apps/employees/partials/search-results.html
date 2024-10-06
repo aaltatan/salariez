@@ -1,24 +1,22 @@
-{% load i18n %}
+{% load i18n %} 
+{% load static %}
 
 {% for obj in qs %}
+<c-inputs.search-item href="{{ obj.get_update_path }}">
+  
+  <div class="flex items-center gap-1">
+    <img
+    class="object-cover size-10 rounded-full aspect-square block"
+    src="{% if obj.profile %}{{ obj.profile.url }}{% else %}{% static 'images/user.png' %}{% endif %}"
+    alt="obj.fullname">
+    <span>
+      {{ obj.fullname }}
+    </span>
+  </div>
 
-   <c-inputs.search-item
-   hx-get="{{ path }}?name=cost_center&id={{ obj.id }}&value={{ obj.name }}&required=true"
-   hx-indicator="#search-spinner-{{ container_id }}"
-   hx-disabled-elt="*[data-disabled]"
-   hx-target="#{{ container_id }}">
-      {{ obj.name }}
-   </c-inputs.search-item>
-
+</c-inputs.search-item>
 {% empty %}
-
-   <c-inputs.search-item 
-   hx-get="{{ path }}?required=true" 
-   hx-indicator="#search-spinner-{{ container_id }}"
-   hx-disabled-elt="*[data-disabled]"
-   hx-target="#{{ container_id }}"
-   data-empty="true">
-        {% translate 'no results' %}
-   </c-inputs.search-item>
-   
+<c-inputs.search-item data-empty="true">
+  {% translate 'no results' %}
+</c-inputs.search-item>
 {% endfor %}

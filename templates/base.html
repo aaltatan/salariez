@@ -17,7 +17,8 @@ x-data="{ dark: $persist(false).as('dark') }">
   hx-boost="true"
   hx-history="false"
   hx-indicator="#spinner"
-  hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'>
+  hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'
+  @keydown.alt.equal="handleSearchFocus">
 
       <c-layout.messages-loader />
 

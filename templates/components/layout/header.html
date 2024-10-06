@@ -36,8 +36,16 @@
 
     </ul>
 
-    <div class="hidden lg:block">
+    <div class="hidden lg:block ltr:ml-auto ltr:mr-2 rtl:mr-auto rtl:ml-2">
       <c-layout.breadcrumb />
+    </div>
+
+    <div class="ltr:ml-auto ltr:mr-2 rtl:mr-auto rtl:ml-2">
+      <c-inputs.search
+      path="{% url 'employees:search' %}"
+      name="employee"
+      container_id="main-employee-search"
+      placeholder="{% translate 'Alt + =' %}"/>
     </div>
 
     <c-context.user />

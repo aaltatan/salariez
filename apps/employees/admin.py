@@ -7,18 +7,22 @@ from .models import Mobile, Employee, Email, Phone
 class EmailAdmin(admin.ModelAdmin):
     list_display = ['employee', 'email']
     list_per_page = 10
+    search_fields = ['email']
 
 
 @admin.register(Phone)
 class PhoneAdmin(admin.ModelAdmin):
     list_display = ['employee', 'phone']
     list_per_page = 10
+    search_fields = ['phone']
 
 
 @admin.register(Mobile)
 class MobileAdmin(admin.ModelAdmin):
     list_display = ['employee', 'mobile', 'has_whatsapp']
     list_per_page = 10
+    search_fields = ['mobile']
+    list_filter = ['has_whatsapp']
 
 
 class EmailInline(admin.TabularInline):

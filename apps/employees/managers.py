@@ -1,13 +1,16 @@
 from typing import Literal
 
 from django.db import models
-from django.db.models import Case, When, Q, Value, F, ExpressionWrapper
+from django.db.models import (
+    Case, When, Q, Value, F, ExpressionWrapper, Count
+)
 from django.db.models.functions import (
     ExtractYear,
     ExtractMonth,
     ExtractDay,
     TruncDate,
     Concat,
+    Round,
     Now,
 )
 
@@ -49,6 +52,27 @@ class EmployeeManager(models.Manager):
 
     def get_today_birthdays(self) -> models.QuerySet:
         return self.get_queryset().filter(is_today_birthday=True)
+    
+    def get_male_female_count(self) -> dict:
+        return self.get_queryset().aggregate(
+            count=Count('gender'),
+            male=Count('gender', filter=Q(gender='m')),
+            female=Count('gender', filter=Q(gender='f')),
+            male_avg=ExpressionWrapper(
+                Round(
+                    F('male') / F('count') * Value(100),
+                    precision=2
+                ), 
+                output_field=models.FloatField()
+            ),
+            female_avg=ExpressionWrapper(
+                Round(
+                    F('female') / F('count') * Value(100),
+                    precision=2
+                ), 
+                output_field=models.FloatField()
+            ),
+        )
 
     def get_upcoming_birthdays_this_month(self) -> models.QuerySet:
         return self.get_queryset().filter(is_month_birthday=True)
@@ -102,6 +126,8 @@ class EmployeeManager(models.Manager):
                 ),
                 search=Concat(
                     models.F("full_name"),
+                    models.Value(" "),
+                    models.F("department__name"),
                     models.Value(" "),
                     models.F("full_name"),
                 ),

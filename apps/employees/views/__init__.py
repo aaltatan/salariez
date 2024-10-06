@@ -15,6 +15,9 @@ from .formsets import (
   EmailFormSetView,
   PhoneFormSetView,
 )
+from .dashboard import (
+  male_female_card,
+)
 
 __all__ = [
   ListTableView,
@@ -27,7 +30,10 @@ __all__ = [
   BulkReslugifyView,
   SearchView,
   UpdateView,
+  # formsets
   MobileFormSetView,
   EmailFormSetView,
   PhoneFormSetView,
+  # dashboard
+  male_female_card,
 ]

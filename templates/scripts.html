@@ -71,6 +71,11 @@
 
   }
 
+  function handleSearchFocus() {
+    const element = document.querySelector('#main-employee-search input');
+    element.focus();
+  }
+
   function handleConfirmMessage(e) {
     const message = e.target.getAttribute("data-confirm").toUpperCase();
 

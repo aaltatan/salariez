@@ -13,10 +13,10 @@ data-aside
 x-cloak
 x-data="{ search: '', localUrls: urls }"
 :class="{ 
-'ltr:!left-0 rtl:!right-0 dark:!ring-2': asideOpen, 
+'ltr:!left-0 rtl:!right-0 dark:!ring-2 lg:shadow-md': asideOpen, 
 'ltr:lg:!left-0 rtl:lg:!right-0': asideFixed, 
 }"
-class="fixed w-[min(100%,300px)] ltr:left-[-350px] rtl:right-[-350px] h-[calc(100vh_-_1rem)] rounded-lg m-2 bg-white dark:bg-neutral-900 dark:max-lg:ring-2 dark:ring-neutral-800 ltr:ml-2 rtl:mr-2 border border-neutral-200 dark:border-none z-[300] duration-150 custom-shadow dark:shadow-none"
+class="fixed w-[min(100%,300px)] ltr:left-[-350px] rtl:right-[-350px] h-[calc(100vh_-_1rem)] rounded-lg m-2 bg-white dark:bg-neutral-900 dark:max-lg:ring-2 dark:ring-neutral-800 ltr:ml-2 rtl:mr-2 border border-neutral-200 dark:border-none z-[300] duration-150 max-lg:custom-shadow dark:!shadow-none"
 >
 
   <aside class="relative ~p-2/3 h-full">

@@ -1,21 +1,30 @@
-from django.db.models.functions import Now, TruncDate
 from django.db import models
+from django.db.models import Count, Q, ExpressionWrapper, F, Value
+from django.db.models.functions import Round
 
 from apps.employees.models import Employee
 
 
 def run() -> None:
 
-    qs = Employee.objects.annotate(
-        test1=TruncDate(Now()),
-        test=models.ExpressionWrapper(
-            TruncDate(Now()) - models.F('birth_date'),
-            output_field=models.DecimalField()
+    qs = Employee.objects.aggregate(
+        count=Count('gender'),
+        male=Count('gender', filter=Q(gender='m')),
+        female=Count('gender', filter=Q(gender='f')),
+        male_avg=ExpressionWrapper(
+            Round(
+                F('male') / F('count') * Value(100),
+                precision=2
+            ), 
+            output_field=models.FloatField()
         ),
-        test_age=models.F('test') / models.Value(86_400_000_000) / models.Value(365)
+        female_avg=ExpressionWrapper(
+            Round(
+                F('female') / F('count') * Value(100),
+                precision=2
+            ), 
+            output_field=models.FloatField()
+        ),
     )
 
-    for obj in qs:
-        print(obj.birth_date)
-        print(obj.test_age)
-        print('#' * 100)
+    print(qs)

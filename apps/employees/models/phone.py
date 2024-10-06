@@ -26,6 +26,10 @@ class Phone(models.Model):
         max_length=255, default='', blank=True
     )
 
+    @property
+    def get_absolute_path(self) -> str:
+        return f'tel:+963{self.phone[1:]}'
+
     def __str__(self) -> str:
         return f'{self.employee.fullname} [{self.phone}]]'
     

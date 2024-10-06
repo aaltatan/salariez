@@ -10,9 +10,12 @@ from .views import (
     BulkReslugifyView,
     SearchView,
     ExportView,
+    # formsets
     MobileFormSetView,
     EmailFormSetView,
     PhoneFormSetView,
+    # dashboard
+    male_female_card,
 )
 
 
@@ -28,7 +31,10 @@ urlpatterns = [
     path('bulk/reslugify/', BulkReslugifyView.as_view(), name='bulk-reslugify'),
     path('delete/<str:slug>/', DeleteView.as_view(), name='delete'),
     path('update/<str:slug>/', UpdateView.as_view(), name='update'),
+    # formsets
     path('update/<str:slug>/mobiles/', MobileFormSetView.as_view(), name='update-mobiles'),
     path('update/<str:slug>/emails/', EmailFormSetView.as_view(), name='update-emails'),
     path('update/<str:slug>/phones/', PhoneFormSetView.as_view(), name='update-phones'),
+    # dashboard
+    path('dashboard/male-female-counts/', male_female_card, name='dashboard-male-female')
 ]

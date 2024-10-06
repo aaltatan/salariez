@@ -16,5 +16,9 @@ class Email(models.Model):
         max_length=255, default='', blank=True
     )
 
+    @property
+    def get_absolute_path(self) -> str:
+        return f'mailto:{self.email}'
+    
     def __str__(self) -> str:
         return f'{self.employee.fullname} [{self.email}]]'

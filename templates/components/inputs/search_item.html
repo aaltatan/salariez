@@ -1,10 +1,22 @@
+{% if href %}
+<li class="hover:bg-neutral-100 focus-within:bg-neutral-200 dark:focus-within:bg-neutral-800 dark:hover:bg-neutral-800">
+    <a 
+    {{ attrs }}
+    role="button"
+    data-disabled
+    class="block cursor-pointer px-4 py-2 focus:outline-none w-full ltr:text-left rtl:text-right">
+        {{ slot }}
+    </a>
+</li>
+{% else %}
 <li class="hover:bg-neutral-100 focus-within:bg-neutral-200 dark:focus-within:bg-neutral-800 dark:hover:bg-neutral-800">
     <button 
     {{ attrs }}
     hx-replace-url="false"
     role="button"
     data-disabled
-    class="cursor-pointer px-4 py-2 focus:outline-none w-full ltr:text-left rtl:text-right">
+    class="block cursor-pointer px-4 py-2 focus:outline-none w-full ltr:text-left rtl:text-right">
         {{ slot }}
     </button>
 </li>
+{% endif %}
