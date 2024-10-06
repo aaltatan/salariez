@@ -1,6 +1,6 @@
 <td class="~p-0.5/1 {{ class }}" {{ attrs }} >
   {% if href %}
-  <a class="hover:underline" href="{{ href }}">
+  <a hx-include="#no-content" class="hover:underline" href="{{ href }}">
     {{ slot }}
   </a>
   {% else %}

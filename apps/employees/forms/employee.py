@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import gettext as _
 
-from . import models
+from .. import models
 from apps.base.utils.generic import parse_decimals
 from apps.base.utils.fields import (
     Object,

@@ -57,12 +57,9 @@
   {% render_field field|add_class:'input w-full' %}
 
   {% if field.errors %}
-  <ul data-form-errors class="text-[red] tracking-tight">
+  <ul data-form-errors>
       {% for error in field.errors %}
-          <li
-          class="first-letter:capitalize pl-2 font-semibold my-2">
-              {{ error }}
-          </li>
+      <c-forms.error-li>{{ error }}</c-forms.error-li>
       {% endfor %}
   </ul>
   {% endif %}

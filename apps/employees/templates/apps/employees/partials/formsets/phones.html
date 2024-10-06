@@ -1,0 +1,71 @@
+{% load widget_tweaks %} 
+{% load i18n %}
+
+{% url 'employees:update-phones' slug=instance.slug as url %}
+
+<div id="formset-container">
+  <form
+    hx-post="{{ url }}"
+    hx-target="#formset-container"
+  >
+    {{ formset.management_form }}
+
+    <div class="table-inner border border-neutral-200 dark:border-neutral-800 rounded-lg overflow-hidden">
+      <c-table.table class="table-auto w-full">
+
+        <c-table.header-row>
+          <c-table.header-cell>
+            {% translate 'email' %}
+          </c-table.header-cell>
+          <c-table.header-cell>
+            {% translate 'notes' %}
+          </c-table.header-cell>
+          <c-table.header-cell>
+            {% translate 'delete' %}
+          </c-table.header-cell>
+        </c-table.header-row>
+
+        {% for form in formset %}
+        <c-table.tr>
+          <c-table.td class="!px-4 !py-2">
+            {{ form.id }} 
+            {% render_field form.phone|add_class:'input w-full' %} 
+            {% for error in form.phone.errors %}
+              <c-forms.error-li>{{ error }}</c-forms.error-li>
+            {% endfor %}
+          </c-table.td>
+          <c-table.td class="!px-4 !py-2">
+            {% render_field form.notes|add_class:'input w-full' %} 
+            {% for error in form.notes.errors %}
+              <c-forms.error-li>{{ error }}</c-forms.error-li>
+            {% endfor %}
+          </c-table.td>
+          <c-table.td>
+            <div class="flex items-center justify-center">
+              {% render_field form.DELETE|add_class:'check' %}
+            </div>
+          </c-table.td>
+        </c-table.tr>
+        {% endfor %}
+
+      </c-table.table>
+    </div>
+
+    <div class="my-2 flex items-center justify-center gap-1">
+
+      <c-btns.btn 
+      @click="handleConfirmMessage" 
+      data-confirm="{% translate 'are you sure you want to continue?' %}"
+      datatype="button" 
+      type="submit">
+        {% translate 'save' %}
+      </c-btns.btn>
+
+      <c-btns.btn datatype="href" datatheme="secondary" type="reset" hx-target="body" href="{{ url }}">
+        {% translate 'reset' %}
+      </c-btns.btn>
+
+    </div>
+    
+  </form>
+</div>

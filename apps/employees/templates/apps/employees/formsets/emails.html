@@ -1,0 +1,41 @@
+{% extends 'base.html' %} 
+{% load widget_tweaks %} 
+{% load i18n %}
+
+{% block title %}
+{{ instance.fullname}}
+{% endblock %} 
+
+{% block body %}
+
+<template
+  x-init="let hrefs = [
+      {
+          text: '{% translate 'employees' %}', 
+          href: '{% url 'employees:index' %}'
+      },
+      {
+          text: '{{ instance.fullname }}', 
+          href: '{{ instance.get_update_path }}'
+      },
+      {
+          text: '{% translate 'emails' %}', 
+          href: '{% url 'employees:update-emails' slug=instance.slug %}'
+      },
+  ];
+  breadCrumbs = [...breadCrumbs, ...hrefs]"
+></template>
+
+<div class="grid grid-cols-5 gap-2">
+
+  {% include 'apps/employees/partials/formsets/update-aside.html' %}
+
+  <div class="col-span-4">
+    <div id="formset-container">
+      {% include 'apps/employees/partials/formsets/emails.html' %}
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

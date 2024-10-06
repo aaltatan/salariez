@@ -70,4 +70,15 @@
     insertDate(el, date)
 
   }
+
+  function handleConfirmMessage(e) {
+    const message = e.target.getAttribute("data-confirm").toUpperCase();
+
+    const confirmDialog = confirm(message);
+
+    if (!confirmDialog) {
+      e.preventDefault();
+    }
+  }
+  
 </script>

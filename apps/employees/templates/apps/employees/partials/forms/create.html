@@ -19,9 +19,7 @@
 
       <ul>
         {% for error in form.non_field_errors %}
-        <li class="bg-red-100 font-semibold p-4 rounded-lg text-red-600">
-            {{ error }}
-        </li>
+        <c-forms.error-li>{{ error }}</c-forms.error-li>
         {% endfor %}
       </ul>
     

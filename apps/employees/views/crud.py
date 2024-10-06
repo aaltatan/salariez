@@ -6,9 +6,11 @@ from django.contrib.auth.mixins import (
     PermissionRequiredMixin
 )
 
-from braces.views import SuperuserRequiredMixin
+from braces.views import (
+    SuperuserRequiredMixin,
+)
 
-from . import (
+from .. import (
     models, forms, filters, mixins, resources, utils
 )
 
@@ -24,7 +26,6 @@ from apps.base.mixins import (
     SearchMixin,
     ExportMixin,
 )
-
 
 class SearchView(LoginRequiredMixin, SearchMixin, View):
     

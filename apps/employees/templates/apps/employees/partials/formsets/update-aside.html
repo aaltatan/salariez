@@ -1,0 +1,47 @@
+{% load i18n %}
+
+<div class="relative col-span-1">
+
+  <ul 
+  x-data="{
+    urls: [
+      {
+        text: '{% translate 'basic information' %}', 
+        href: '{{ instance.get_update_path }}', 
+        isActive: false,
+      },
+      {
+        text: '{% translate 'mobiles' %}', 
+        href: '{% url 'employees:update-mobiles' slug=instance.slug %}', 
+        isActive: false,
+      },
+      {
+        text: '{% translate 'emails' %}', 
+        href: '{% url 'employees:update-emails' slug=instance.slug %}', 
+        isActive: false,
+      },
+      {
+        text: '{% translate 'phones' %}', 
+        href: '{% url 'employees:update-phones' slug=instance.slug %}', 
+        isActive: false,
+      },
+    ]
+  }"
+  class="sticky top-[4.5rem] left-0 h-[85vh] ~p-1/2 rounded-lg bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-none space-y-2">
+
+    <template x-for="url in urls" :key="url.href">
+      <li class="flex items-center gap-1">
+        <a 
+        :href="url.href"
+        x-init="url.isActive = location.pathname === url.href"
+        :class="{'text-blue-500': url.isActive}"
+        class="capitalize w-full rounded-md px-4 py-2 cursor-pointer duration-150 hover:bg-neutral-100 dark:hover:bg-neutral-800 flex items-center gap-1">
+          <c-layout.li-dot />
+          <span x-text="url.text"></span>
+        </a>
+      </li>
+    </template>
+
+  </ul>
+
+</div>

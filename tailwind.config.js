@@ -84,7 +84,14 @@ module.exports = {
     }),
     plugin(function ({ addVariant }) {
       addVariant(
-        "has-checked", ['&:has(input[type="checkbox"]:checked)']
+        "has-checked", 
+        ['&:has(input[type="checkbox"][name$="-selected"]:checked)']
+      );
+    }),
+    plugin(function ({ addVariant }) {
+      addVariant(
+        "has-delete-checked", 
+        ['&:has(input[type="checkbox"][name$="-DELETE"]:checked)']
       );
     }),
     fluid,
