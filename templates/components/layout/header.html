@@ -2,26 +2,19 @@
 <!-- ring-1 dark:ring-neutral-800 -->
 <header
   x-data="{ atTop: false }"
-  class="sticky left-0 top-2 z-[201] mx-auto rounded-lg  p-2 duration-150 dark:bg-neutral-900 md:mx-auto border border-neutral-200 dark:border-none"
+  class="sticky left-0 top-2 z-[201] mx-auto rounded-lg p-2 duration-150 bg-white dark:bg-neutral-900 md:mx-auto border border-neutral-200 dark:border-none"
   :class="{ 
-  'bg-opacity-50 backdrop-blur-sm ring-1 dark:ring-neutral-800 ring-neutral-200': atTop, 
+  'ring-1 dark:ring-neutral-800 ring-neutral-200': atTop, 
   'container': mainContainer,
+  '!mx-2': !mainContainer,
   }"
   @scroll.window="atTop = (window.pageYOffset < 10) ? false: true"
 >
   <nav class="flex items-center justify-between">
+
+    {% include 'partials/menubar.html' %}
+
     <ul class="flex items-center justify-between gap-2">
-      <span :class="{ 'lg:hidden': asideFixed }">
-        <li>
-          <c-btns.icon
-            role="button"
-            @click="asideOpen = true"
-            title="{% translate 'menu'|title %}"
-          >
-            <c-icons.bars ratio="1.25rem" />
-          </c-btns.icon>
-        </li>
-      </span>
 
       <li>
         <c-btns.icon

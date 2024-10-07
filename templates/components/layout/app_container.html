@@ -2,14 +2,16 @@
 
 <div
   {{ attrs }}
-  hx-indicator="#spinner"
   class="grid grid-cols-1 gap-2 duration-150 lg:grid-cols-4"
 >
+
   <div
     x-cloak
     id="container"
-    class="rounded-lg scrollbar-thin scrollbar-track-neutral-100/80 scrollbar-thumb-blue-500 ~space-y-2/4 dark:bg-neutral-900 dark:scrollbar-track-neutral-950 max-lg:order-2 lg:col-span-3 border border-neutral-200 dark:border-none table-inner"
+    hx-indicator="#table-indicator"
+    class="relative rounded-lg scrollbar-thin scrollbar-track-neutral-100/80 scrollbar-thumb-blue-500 dark:bg-neutral-900 dark:scrollbar-track-neutral-950 max-lg:order-2 lg:col-span-3 border border-neutral-200 dark:border-none table-inner"
   >
+    <c-skeletons.table id="table-indicator" />
     {{ body }} 
     {% if pagination %}
     <div>{{ pagination }}</div>
@@ -21,8 +23,10 @@
       'max-lg:ltr:-right-full': !showFilters,
       'max-lg:inset-4': showFilters,
     }"
-    class="w-full bg-white rounded-lg duration-150 scrollbar-thin scrollbar-track-neutral-100/80 scrollbar-thumb-blue-500 ~p-2/3 dark:bg-neutral-900 dark:scrollbar-track-neutral-950 max-lg:fixed max-lg:top-4 max-lg:z-[100] max-lg:order-1 max-lg:m-auto max-lg:w-[90%] border border-neutral-200 dark:border-neutral-800 dark:lg:border-none max-lg:custom-shadow dark:shadow-none"
+    hx-indicator="#filters-indicator"
+    class="relative w-full bg-white rounded-lg duration-150 scrollbar-thin scrollbar-track-neutral-100/80 scrollbar-thumb-blue-500 ~p-2/3 dark:bg-neutral-900 dark:scrollbar-track-neutral-950 max-lg:fixed max-lg:top-4 max-lg:z-[100] max-lg:order-1 max-lg:m-auto max-lg:w-[90%] border border-neutral-200 dark:border-neutral-800 dark:lg:border-none max-lg:custom-shadow dark:shadow-none"
   >
+    <c-skeletons.table id="filters-indicator" />
     {{ filters }}
   </div>
 </div>

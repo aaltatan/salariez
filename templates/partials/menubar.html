@@ -1,0 +1,317 @@
+{% load i18n %}
+
+{% with perms.employees.view_employee as can_employee %}
+
+{% with perms.areas.view_area as can_area %}
+{% with perms.cities.view_city as can_city %}
+{% with perms.statuses.view_status as can_status %}
+{% with perms.job_types.view_jobtype as can_job_type %}
+{% with perms.positions.view_position as can_position %}
+{% with perms.departments.view_department as can_department %}
+{% with perms.job_subtypes.view_jobsubtype as can_job_subtype %}
+{% with perms.cost_centers.view_costcenter as can_cost_center %}
+{% with perms.nationalities.view_nationality as can_nationality %}
+
+<div x-data="{
+  menuBarOpen: false, 
+  menuBarMenu: ''
+}" 
+@click.away="menuBarOpen=false" 
+class="relative top-0 left-0 z-[400] w-fit transition-all duration-150 ease-out"
+>
+<div class="relative top-0 left-0 z-[400] w-auto h-10 transition duration-200 ease-out">
+  <div class="w-full h-full p-1 bg-white rounded-md">
+      <div class="flex justify-between w-full h-full select-none text-neutral-900">
+              
+          <div class="relative h-full cursor-default">
+              <c-menubar.main-button item="salariez">
+                  {% translate 'salariez' %}
+              </c-menubar.main-button>
+              <c-menubar.main-menu item="salariez">
+
+                {% if user.is_superuser %}
+                <c-menubar.submenu-container>
+
+                  <c-menubar.submenu-button>
+                    <span>{% translate 'admin' %}</span>
+                  </c-menubar.submenu-button>
+
+                  <c-menubar.submenu>
+
+                    <c-menubar.sublink hx-boost="false" href="/admin/">
+                      {% translate 'admin site' %}
+                    </c-menubar.sublink>
+
+                    {% if debug %}
+                    <c-menubar.sublink hx-boost="false" href="/silk/">
+                      silk
+                    </c-menubar.sublink>
+                    {% endif %}
+
+                  </c-menubar.submenu>
+
+                </c-menubar.submenu-container>
+                {% endif %}
+
+                {% if can_employee %}
+                <c-menubar.submenu-container>
+
+                  <c-menubar.submenu-button>
+                    <span>{% translate 'employees' %}</span>
+                  </c-menubar.submenu-button>
+
+                  <c-menubar.submenu>
+
+                    {% if can_employee %}
+                    <c-menubar.sublink href="{% url 'employees:index' %}">
+                      {% translate 'employees' %}
+                    </c-menubar.sublink>
+                    {% endif %}
+
+                  </c-menubar.submenu>
+
+                </c-menubar.submenu-container>
+                {% endif %}
+
+                {% if can_area or can_city or can_status or can_job_type or can_position or can_department or can_job_subtype or can_cost_center or can_nationality %}
+                <c-menubar.submenu-container>
+
+                  <c-menubar.submenu-button>
+                    <span>{% translate 'constants' %}</span>
+                  </c-menubar.submenu-button>
+
+                  <c-menubar.submenu>
+
+                    {% if can_area %}
+                    <c-menubar.sublink href="{% url 'areas:index' %}">
+                      {% translate 'areas' %}
+                    </c-menubar.sublink>
+                    {% endif %}
+
+                    {% if can_city %}
+                    <c-menubar.sublink href="{% url 'cities:index' %}">
+                      {% translate 'cities' %}
+                    </c-menubar.sublink>
+                    {% endif %}
+
+                    {% if can_status %}
+                    <c-menubar.sublink href="{% url 'statuses:index' %}">
+                      {% translate 'statuses' %}
+                    </c-menubar.sublink>
+                    {% endif %}
+
+                    {% if can_job_type %}
+                    <c-menubar.sublink href="{% url 'job_types:index' %}">
+                      {% translate 'job types' %}
+                    </c-menubar.sublink>
+                    {% endif %}
+
+                    {% if can_job_subtype %}
+                    <c-menubar.sublink href="{% url 'job_subtypes:index' %}">
+                      {% translate 'job subtypes' %}
+                    </c-menubar.sublink>
+                    {% endif %}
+
+                    {% if can_position %}
+                    <c-menubar.sublink href="{% url 'positions:index' %}">
+                      {% translate 'positions' %}
+                    </c-menubar.sublink>
+                    {% endif %}
+
+                    {% if can_cost_center %}
+                    <c-menubar.sublink href="{% url 'cost_centers:index' %}">
+                      {% translate 'cost centers' %}
+                    </c-menubar.sublink>
+                    {% endif %}
+
+                    {% if can_department %}
+                    <c-menubar.sublink href="{% url 'departments:index' %}">
+                      {% translate 'departments' %}
+                    </c-menubar.sublink>
+                    {% endif %}
+
+                    {% if can_nationality %}
+                    <c-menubar.sublink href="{% url 'nationalities:index' %}">
+                      {% translate 'nationalities' %}
+                    </c-menubar.sublink>
+                    {% endif %}
+
+                  </c-menubar.submenu>
+
+                </c-menubar.submenu-container>
+                {% endif %}
+
+                <c-menubar.divider />
+
+                <c-menubar.button>
+                  <form 
+                  method="POST"
+                  action="{% url 'logout' %}"
+                  hx-boost="false"
+                  >
+                    {% csrf_token %}
+                    <input
+                    type="submit" 
+                    role="button" 
+                    title="{% translate 'logout'|title %}" 
+                    value="{% translate 'logout'|title %}">
+                  </form>
+                </c-menubar.button>
+                
+              </c-menubar.main-menu>
+          </div>
+      
+          <!-- Edit Button -->
+          <!-- <div class="relative h-full cursor-default">
+              <button @click="menuBarOpen=true; menuBarMenu='edit'" @mouseover="menuBarMenu='edit'" :class="{ 'bg-neutral-100' : menuBarOpen && menuBarMenu == 'edit'}" class="rounded text-sm cursor-default flex items-center leading-tight justify-center px-3 py-1.5 h-full hover:bg-neutral-100">
+                  Edit
+              </button>
+              <div 
+                  x-show="menuBarOpen && menuBarMenu=='edit'" 
+                  x-transition:enter="transition ease-linear duration-100" 
+                  x-transition:enter-start="-translate-y-1 opacity-90" 
+                  x-transition:enter-end="translate-y-0 opacity-100"
+                  class="absolute top-0 z-50 min-w-[8rem] text-neutral-800 rounded-md border border-neutral-200/70 bg-white mt-10 text-sm p-1 shadow-md w-48 -translate-x-0.5"
+                  x-cloak>
+
+                  <button @click="menuBarOpen=false" class="relative flex justify-between w-full cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-neutral-100 hover:text-neutral-900 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
+                      <span>Undo</span>
+                      <span class="ml-auto text-xs tracking-widest text-neutral-400 group-hover:text-neutral-600">⌘Z</span>
+                  </button>
+                  <button @click="menuBarOpen=false" class="relative flex justify-between w-full cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-neutral-100 hover:text-neutral-900 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
+                      <span>Redo</span>
+                      <span class="ml-auto text-xs tracking-widest text-neutral-400 group-hover:text-neutral-600">⇧⌘Z</span>
+                  </button>
+                  <div class="h-px my-1 -mx-1 bg-neutral-200"></div>
+                  <button class="relative w-full group">
+                      <div class="flex cursor-default select-none items-center rounded px-2 hover:bg-neutral-100 py-1.5 outline-none">
+                          <span>Find</span>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 ml-auto"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                      </div>
+                      <div data-submenu="" class="absolute top-0 right-0 invisible mr-1 duration-200 ease-out translate-x-full opacity-0 group-hover:mr-0 group-hover:visible group-hover:opacity-100">
+                          <div class="z-50 min-w-[8rem] overflow-hidden rounded-md border bg-white p-1 shadow-md animate-in slide-in-from-left-1 w-32">
+                              <div @click="menuBarOpen=false" class="relative flex cursor-default select-none items-center rounded px-2 py-1.5 hover:bg-neutral-100 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50">Search the web</div>
+                              <div class="h-px my-1 -mx-1 bg-neutral-200"></div>
+                              <div @click="menuBarOpen=false" class="relative flex cursor-default select-none items-center rounded px-2 py-1.5 hover:bg-neutral-100 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50">Find...</div>
+                              <div @click="menuBarOpen=false" class="relative flex cursor-default select-none items-center rounded px-2 py-1.5 hover:bg-neutral-100 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50">Find Next</div>
+                              <div @click="menuBarOpen=false" class="relative flex cursor-default select-none items-center rounded px-2 py-1.5 hover:bg-neutral-100 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50">Find Previous</div>
+                          </div>
+                      </div>
+                  </button>
+                  <div class="h-px my-1 -mx-1 bg-neutral-200"></div>
+                  <button @click="menuBarOpen=false" class="relative flex justify-between w-full cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-neutral-100 hover:text-neutral-900 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
+                      <span>Cut</span>
+                  </button>
+                  <button @click="menuBarOpen=false" class="relative flex justify-between w-full cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-neutral-100 hover:text-neutral-900 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
+                      <span>Copy</span>
+                  </button>
+                  <button @click="menuBarOpen=false" class="relative flex justify-between w-full cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-neutral-100 hover:text-neutral-900 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
+                      <span>Paste</span>
+                  </button>
+              </div>
+          </div> -->
+          <!-- End Edit Button -->
+
+          <!-- View Button -->
+          <!-- <div class="relative h-full cursor-default">
+              <button @click="menuBarOpen=true; menuBarMenu='view'" @mouseover="menuBarMenu='view'" :class="{ 'bg-neutral-100' : menuBarOpen && menuBarMenu == 'view'}" class="rounded text-sm cursor-default flex items-center leading-tight justify-center px-3 py-1.5 h-full hover:bg-neutral-100">
+                  View
+              </button>
+              <div 
+                  x-show="menuBarOpen && menuBarMenu=='view'" 
+                  x-transition:enter="transition ease-linear duration-100" 
+                  x-transition:enter-start="-translate-y-1 opacity-90" 
+                  x-transition:enter-end="translate-y-0 opacity-100"
+                  class="absolute top-0 z-50 min-w-[15rem] text-neutral-800 rounded-md border border-neutral-200/70 bg-white mt-10 text-sm p-1 shadow-md w-48 -translate-x-0.5"
+                  x-cloak>
+
+                  <button @click="menuBarOpen=false; alwaysShowBookmarks=!alwaysShowBookmarks;" x-data="{ alwaysShowBookmarks: false }" class="relative flex justify-between w-full pl-8 cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-neutral-100 hover:text-neutral-900 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
+                      <span x-show="alwaysShowBookmarks" class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                      <span>Always Show Bookmarks Bar</span>
+                  </button>
+                  <button @click="menuBarOpen=false; alwaysShowFullURL=!alwaysShowFullURL" x-data="{ alwaysShowFullURL: true }" class="relative flex justify-between w-full pl-8 cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-neutral-100 hover:text-neutral-900 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
+                      <span x-show="alwaysShowFullURL" class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                      <span>Always Show Full URLs</span>
+                  </button>
+                  <div class="h-px my-1 -mx-1 bg-neutral-200"></div>
+                  <button @click="menuBarOpen=false" class="relative flex justify-between w-full pl-8 cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-neutral-100 hover:text-neutral-900 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
+                      <span>Reload</span>
+                      <span class="ml-auto text-xs tracking-widest text-neutral-400 group-hover:text-neutral-600">⌘R</span>
+                  </button>
+                  <button @click="menuBarOpen=false" class="relative flex justify-between w-full pl-8 cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-neutral-100 hover:text-neutral-900 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none" data-disabled>
+                      <span>Force Reload</span>
+                      <span class="ml-auto text-xs tracking-widest text-neutral-400 group-hover:text-neutral-600">⇧⌘R</span>
+                  </button>
+                  <div class="h-px my-1 -mx-1 bg-neutral-200"></div>
+                  <button @click="menuBarOpen=false" class="relative flex justify-between w-full pl-8 cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-neutral-100 hover:text-neutral-900 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
+                      <span>Toggle Fullscreen</span>
+                  </button>
+                  <div class="h-px my-1 -mx-1 bg-neutral-200"></div>
+                  <button @click="menuBarOpen=false" class="relative flex justify-between w-full pl-8 cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-neutral-100 hover:text-neutral-900 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
+                      <span>Hide Sidebar</span>
+                  </button>
+              </div>
+          </div> -->
+          <!-- End View Button -->
+
+          <!-- Profiles Button -->
+          <div class="relative h-full cursor-default">
+
+              <c-menubar.main-button item="settings">
+                {% translate 'settings' %}
+              </c-menubar.main-button>
+
+              <c-menubar.main-menu item="settings">
+
+                <c-menubar.button @click.debounce.1="dark = !dark">
+                  <span x-show="dark" title="{% translate 'light theme'|title %}">
+                    {% translate 'light theme' %}
+                  </span>
+                  <span x-show="!dark" title="{% translate 'dark theme'|title %}">
+                    {% translate 'dark theme' %}
+                  </span>
+                </c-menubar.button>
+
+                <c-menubar.button @click.debounce.1="mainContainer = !mainContainer">
+                  <span x-show="mainContainer" title="{% translate 'disable main container'|title %}">
+                    {% translate 'disable main container' %}
+                  </span>
+                  <span x-show="!mainContainer" title="{% translate 'activate main container'|title %}">
+                    {% translate 'activate main container' %}
+                  </span>
+                </c-menubar.button>
+
+                <c-menubar.button>
+                  <form action="{% url 'set_language' %}" method="post">
+                    <input name="next" type="hidden" value="{{ redirect_to }}" />
+                    <input
+                      type="hidden"
+                      name="language"
+                      value="{% if LANGUAGE_CODE == 'ar' %}en{% else %}ar{% endif %}"
+                    />
+                    <span role="button">
+                      {% if LANGUAGE_CODE == 'ar' %}English{% else %}Arabic{% endif %}
+                    </span>
+                  </form>
+                </c-menubar.button>
+
+              </c-menubar.main-menu>
+
+          </div>
+          <!-- End Profiles Button -->
+      </div>     
+  </div>
+</div>
+</div>
+
+{% endwith %}
+
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endwith %}

@@ -1,0 +1,7 @@
+<button 
+@click="menuBarOpen=true; menuBarMenu='{{ item }}'" 
+@mouseover="menuBarMenu='{{ item }}'" 
+:class="{ 'bg-neutral-100' : menuBarOpen && menuBarMenu == '{{ item }}'}"
+class="rounded text-sm cursor-default flex items-center leading-tight justify-center px-3 py-1.5 h-full hover:bg-neutral-100 capitalize">
+  {{ slot }}
+</button>

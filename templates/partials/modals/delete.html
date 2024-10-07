@@ -3,9 +3,10 @@
 <c-modal.container>
   <form hx-post="{{ delete_path }}" hx-include="[data-include]" @submit="modalOpen = false">
     <c-modal.modal>
+
       <c-slot name="header">
         <span class="capitalize">{% translate 'delete' %}</span>
-        <span>{{ instance.name }}</span>
+        <span>{{ instance }}</span>
         <span>{% translate '?' %}</span>
       </c-slot>
 
@@ -26,6 +27,7 @@
           {% translate 'delete' %}
         </c-btns.btn>
       </c-slot>
+      
     </c-modal.modal>
   </form>
 </c-modal.container>

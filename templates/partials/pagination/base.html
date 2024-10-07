@@ -5,6 +5,7 @@
   {% if can_export %}
   <c-btns.icon
     hx-post="{{ export_path }}"
+    hx-indicator="#spinner"
     hx-target="#modal"
     @click="modalOpen = true"
     title="{% translate 'export'|title %}"
@@ -17,6 +18,7 @@
   {% if can_create %}
   <c-btns.icon
     datatype="href"
+    hx-indicator="#spinner"
     title="{% translate 'add new record'|title %}"
     href="{{ create_path }}"
   >

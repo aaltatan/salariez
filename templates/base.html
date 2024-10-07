@@ -26,15 +26,18 @@ x-data="{ dark: $persist(false).as('dark') }">
         id="app" 
         class="realtive dark:text-white/80 dark:bg-neutral-950 font-cairo ~text-sm/base" 
         dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}"
-        x-data="{% include 'x-data.html' %}"
-        x-init="
-        urls.map(el => {
-          return el.children.map(subElement => {
-            return location.pathname.startsWith(subElement.url) 
-                      ? subElement.isActive = true 
-                      : subElement.isActive = false;
-          });
-        })">
+        x-data="{
+          mainContainer: $persist(true).as('main-container'), 
+          showFilters: false, 
+          modalOpen: true,
+          messagesTimeout: $persist(10000).as('messages-timeout'),
+          breadCrumbs: [
+              {
+                text: '{% translate 'home' %}', 
+                href: '{% url 'base:index' %}'
+              },
+          ],
+        }">
 
         <c-layout.messages-container />
 
@@ -42,29 +45,18 @@ x-data="{ dark: $persist(false).as('dark') }">
         <c-layout.spinner></c-layout.spinner>
         <div id="modal"></div>
         
-        <div class="relative">
-
-          <c-layout.aside></c-layout.aside>
-
-          <div 
-          :class="{ 
-          'ltr:lg:pr-2 rtl:lg:pl-2 max-lg:!mx-2 ltr:lg:ml-[calc(300px_+_1rem)] rtl:lg:mr-[calc(300px_+_1rem)]': asideFixed, 
-          'mx-2': !asideFixed
-          }"
-          class="relative min-h-screen">
+        <div class="relative min-h-screen" :class="!mainContainer && 'mx-2'">
 
             <c-layout.header></c-layout.header>
 
             <main 
-            :class="{ 'container': mainContainer }"
+            :class="{ 'container p-2': mainContainer }"
             class="w-full relative pb-4 lg:pt-4 mx-auto">
               <div class="my-4 lg:hidden">
                 <c-layout.breadcrumb></c-layout.breadcrumb>
               </div>
               {% block body %}{% endblock %}
             </main>
-
-          </div>
 
         </div>
 

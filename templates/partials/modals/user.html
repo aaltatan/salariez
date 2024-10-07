@@ -47,15 +47,6 @@
           </span>
         </button>
 
-        <button class="{{ theme }}" @click="asideFixed = !asideFixed">
-          <span x-show="asideFixed" title="{% translate 'disable fixed aside'|title %}">
-            {% translate 'disable fixed aside' %}
-          </span>
-          <span x-show="!asideFixed" title="{% translate 'activate fixed aside'|title %}">
-            {% translate 'activate hidden aside' %}
-          </span>
-        </button>
-
         <form action="{% url 'set_language' %}" method="post">
           <input name="next" type="hidden" value="{{ redirect_to }}" />
           <input
