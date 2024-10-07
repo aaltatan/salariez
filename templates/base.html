@@ -45,12 +45,12 @@ x-data="{ dark: $persist(false).as('dark') }">
         <c-layout.spinner></c-layout.spinner>
         <div id="modal"></div>
         
-        <div class="relative min-h-screen" :class="!mainContainer && 'mx-2'">
+        <div class="relative min-h-screen mx-2">
 
             <c-layout.header></c-layout.header>
 
             <main 
-            :class="{ 'container p-2': mainContainer }"
+            :class="{ 'container': mainContainer }"
             class="w-full relative pb-4 lg:pt-4 mx-auto">
               <div class="my-4 lg:hidden">
                 <c-layout.breadcrumb></c-layout.breadcrumb>

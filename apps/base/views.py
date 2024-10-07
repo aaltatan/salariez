@@ -24,11 +24,6 @@ def get_avatar_field(request: HttpRequest, id: str, name: str) -> HttpResponse:
 
 
 @login_required
-def user_configurations_modal(request: HttpRequest) -> HttpResponse:
-    return render(request, 'partials/modals/user.html')
-
-
-@login_required
 def logout_after_change_password(request: HttpRequest):
     logout(request)
     messages.success(

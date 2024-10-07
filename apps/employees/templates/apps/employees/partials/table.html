@@ -75,12 +75,6 @@
               <c-table.header-cell 
               hx-get="{{ index_path }}"
               hx-target="{{ target }}"
-              code_name="job_age"
-              name="{% translate 'job age' %}" />
-
-              <c-table.header-cell 
-              hx-get="{{ index_path }}"
-              hx-target="{{ target }}"
               code_name="salary"
               name="{% translate 'salary' %}" />
 
@@ -89,12 +83,6 @@
               hx-target="{{ target }}"
               code_name="job_status"
               name="{% translate 'job status' %}" />
-
-              <c-table.header-cell 
-              hx-get="{{ index_path }}"
-              hx-target="{{ target }}"
-              code_name="status"
-              name="{% translate 'status' %}" />
 
               <c-table.header-cell />
               
@@ -117,32 +105,17 @@
           <!-- start rows -->
           <c-table.tbody>
             {% for obj in qs %}
-            <c-table.tr title="{% include 'apps/employees/partials/table/tr-title.html' %}">
+            <c-table.tr>
               <c-table.check />
 
               {% if can_update %}
               <c-table.td href="{{ obj.get_update_path }}">
-                <div class="flex items-center gap-2 whitespace-nowrap">
-                  <img 
-                  class="size-8 aspect-square border-2 {% if obj.gender == 'M' %}border-blue-500{% else %}border-pink-500{% endif %} object-cover rounded-full block" 
-                  alt=""
-                  src="{% if obj.profile %}
-                          {{ obj.profile.url }}
-                       {% else %}
-                          {% static 'images/user.png' %}
-                       {% endif %}">
-                  <div>
-                    <p>
-                      {{ obj.fullname }}
-                    </p>
-                    <p class="text-xs text-neutral-500 tracking-tighter">
-                      {{ obj.job_subtype }} - {{ obj.position }}
-                    </p>
-                  </div>
-                </div>
+                 <c-user-card />
               </c-table.td>
               {% else %}
-              <c-table.td>{{ obj.fullname }}</c-table.td>
+              <c-table.td>
+                 <c-user-card />
+              </c-table.td>
               {% endif %}
 
               <c-table.td>{{ obj.job_subtype.job_type }}</c-table.td>
@@ -151,22 +124,12 @@
 
               <c-table.td>{{ obj.department }}</c-table.td>
               
-              <c-table.td>{{ obj.hire_date|timesince }}</c-table.td>
-
               <c-table.td>{{ obj.salary|money }}</c-table.td>
 
               <c-table.td>
                 <div class="flex items-center justify-center">
                   <c-layout.badge theme="{% if obj.job_status.has_salary %}green{% else %}red{% endif %}">
                     {{ obj.job_status }}
-                  </c-layout.badge>
-                </div>
-              </c-table.td>
-
-              <c-table.td>
-                <div class="flex items-center justify-center">
-                  <c-layout.badge theme="{% if obj.status == 'A' %}green{% else %}red{% endif %}">
-                    {{ obj.get_status_display }}
                   </c-layout.badge>
                 </div>
               </c-table.td>

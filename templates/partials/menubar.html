@@ -1,4 +1,5 @@
 {% load i18n %}
+{% get_current_language as LANGUAGE_CODE %} 
 
 {% with perms.employees.view_employee as can_employee %}
 
@@ -17,17 +18,23 @@
   menuBarMenu: ''
 }" 
 @click.away="menuBarOpen=false" 
-class="relative top-0 left-0 z-[400] w-fit transition-all duration-150 ease-out"
+class="relative top-0 ltr:left-0 rtl:right-0 z-[400] w-fit transition-all duration-150 ease-out"
 >
-<div class="relative top-0 left-0 z-[400] w-auto h-10 transition duration-200 ease-out">
-  <div class="w-full h-full p-1 bg-white rounded-md">
-      <div class="flex justify-between w-full h-full select-none text-neutral-900">
+<div class="relative top-0 ltr:left-0 rtl:right-0 z-[400] w-auto h-10 transition duration-200 ease-out">
+  <div class="w-full h-full p-1 rounded-md border border-neutral-200 dark:border-neutral-800">
+      <div class="flex justify-between w-full h-full select-none">
               
           <div class="relative h-full cursor-default">
               <c-menubar.main-button item="salariez">
                   {% translate 'salariez' %}
               </c-menubar.main-button>
               <c-menubar.main-menu item="salariez">
+                <c-menubar.button>
+                  <a class="block w-full text-start" href="{% url 'base:index' %}">
+                    {% translate 'home' %}
+                  </a>
+                </c-menubar.button>
+                <c-menubar.divider />
 
                 {% if user.is_superuser %}
                 <c-menubar.submenu-container>
@@ -144,13 +151,21 @@ class="relative top-0 left-0 z-[400] w-fit transition-all duration-150 ease-out"
                 <c-menubar.divider />
 
                 <c-menubar.button>
+                  <a class="block w-full text-start" href="{% url 'password_change' %}">
+                    {% translate 'change password' %}
+                  </a>
+                </c-menubar.button>
+
+                <c-menubar.button @click="menuBarOpen=false">
                   <form 
+                  class="w-full"
                   method="POST"
                   action="{% url 'logout' %}"
                   hx-boost="false"
                   >
                     {% csrf_token %}
                     <input
+                    class="block w-full text-start"
                     type="submit" 
                     role="button" 
                     title="{% translate 'logout'|title %}" 
@@ -161,100 +176,6 @@ class="relative top-0 left-0 z-[400] w-fit transition-all duration-150 ease-out"
               </c-menubar.main-menu>
           </div>
       
-          <!-- Edit Button -->
-          <!-- <div class="relative h-full cursor-default">
-              <button @click="menuBarOpen=true; menuBarMenu='edit'" @mouseover="menuBarMenu='edit'" :class="{ 'bg-neutral-100' : menuBarOpen && menuBarMenu == 'edit'}" class="rounded text-sm cursor-default flex items-center leading-tight justify-center px-3 py-1.5 h-full hover:bg-neutral-100">
-                  Edit
-              </button>
-              <div 
-                  x-show="menuBarOpen && menuBarMenu=='edit'" 
-                  x-transition:enter="transition ease-linear duration-100" 
-                  x-transition:enter-start="-translate-y-1 opacity-90" 
-                  x-transition:enter-end="translate-y-0 opacity-100"
-                  class="absolute top-0 z-50 min-w-[8rem] text-neutral-800 rounded-md border border-neutral-200/70 bg-white mt-10 text-sm p-1 shadow-md w-48 -translate-x-0.5"
-                  x-cloak>
-
-                  <button @click="menuBarOpen=false" class="relative flex justify-between w-full cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-neutral-100 hover:text-neutral-900 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
-                      <span>Undo</span>
-                      <span class="ml-auto text-xs tracking-widest text-neutral-400 group-hover:text-neutral-600">⌘Z</span>
-                  </button>
-                  <button @click="menuBarOpen=false" class="relative flex justify-between w-full cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-neutral-100 hover:text-neutral-900 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
-                      <span>Redo</span>
-                      <span class="ml-auto text-xs tracking-widest text-neutral-400 group-hover:text-neutral-600">⇧⌘Z</span>
-                  </button>
-                  <div class="h-px my-1 -mx-1 bg-neutral-200"></div>
-                  <button class="relative w-full group">
-                      <div class="flex cursor-default select-none items-center rounded px-2 hover:bg-neutral-100 py-1.5 outline-none">
-                          <span>Find</span>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 ml-auto"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                      </div>
-                      <div data-submenu="" class="absolute top-0 right-0 invisible mr-1 duration-200 ease-out translate-x-full opacity-0 group-hover:mr-0 group-hover:visible group-hover:opacity-100">
-                          <div class="z-50 min-w-[8rem] overflow-hidden rounded-md border bg-white p-1 shadow-md animate-in slide-in-from-left-1 w-32">
-                              <div @click="menuBarOpen=false" class="relative flex cursor-default select-none items-center rounded px-2 py-1.5 hover:bg-neutral-100 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50">Search the web</div>
-                              <div class="h-px my-1 -mx-1 bg-neutral-200"></div>
-                              <div @click="menuBarOpen=false" class="relative flex cursor-default select-none items-center rounded px-2 py-1.5 hover:bg-neutral-100 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50">Find...</div>
-                              <div @click="menuBarOpen=false" class="relative flex cursor-default select-none items-center rounded px-2 py-1.5 hover:bg-neutral-100 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50">Find Next</div>
-                              <div @click="menuBarOpen=false" class="relative flex cursor-default select-none items-center rounded px-2 py-1.5 hover:bg-neutral-100 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50">Find Previous</div>
-                          </div>
-                      </div>
-                  </button>
-                  <div class="h-px my-1 -mx-1 bg-neutral-200"></div>
-                  <button @click="menuBarOpen=false" class="relative flex justify-between w-full cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-neutral-100 hover:text-neutral-900 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
-                      <span>Cut</span>
-                  </button>
-                  <button @click="menuBarOpen=false" class="relative flex justify-between w-full cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-neutral-100 hover:text-neutral-900 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
-                      <span>Copy</span>
-                  </button>
-                  <button @click="menuBarOpen=false" class="relative flex justify-between w-full cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-neutral-100 hover:text-neutral-900 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
-                      <span>Paste</span>
-                  </button>
-              </div>
-          </div> -->
-          <!-- End Edit Button -->
-
-          <!-- View Button -->
-          <!-- <div class="relative h-full cursor-default">
-              <button @click="menuBarOpen=true; menuBarMenu='view'" @mouseover="menuBarMenu='view'" :class="{ 'bg-neutral-100' : menuBarOpen && menuBarMenu == 'view'}" class="rounded text-sm cursor-default flex items-center leading-tight justify-center px-3 py-1.5 h-full hover:bg-neutral-100">
-                  View
-              </button>
-              <div 
-                  x-show="menuBarOpen && menuBarMenu=='view'" 
-                  x-transition:enter="transition ease-linear duration-100" 
-                  x-transition:enter-start="-translate-y-1 opacity-90" 
-                  x-transition:enter-end="translate-y-0 opacity-100"
-                  class="absolute top-0 z-50 min-w-[15rem] text-neutral-800 rounded-md border border-neutral-200/70 bg-white mt-10 text-sm p-1 shadow-md w-48 -translate-x-0.5"
-                  x-cloak>
-
-                  <button @click="menuBarOpen=false; alwaysShowBookmarks=!alwaysShowBookmarks;" x-data="{ alwaysShowBookmarks: false }" class="relative flex justify-between w-full pl-8 cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-neutral-100 hover:text-neutral-900 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
-                      <span x-show="alwaysShowBookmarks" class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
-                      <span>Always Show Bookmarks Bar</span>
-                  </button>
-                  <button @click="menuBarOpen=false; alwaysShowFullURL=!alwaysShowFullURL" x-data="{ alwaysShowFullURL: true }" class="relative flex justify-between w-full pl-8 cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-neutral-100 hover:text-neutral-900 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
-                      <span x-show="alwaysShowFullURL" class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
-                      <span>Always Show Full URLs</span>
-                  </button>
-                  <div class="h-px my-1 -mx-1 bg-neutral-200"></div>
-                  <button @click="menuBarOpen=false" class="relative flex justify-between w-full pl-8 cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-neutral-100 hover:text-neutral-900 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
-                      <span>Reload</span>
-                      <span class="ml-auto text-xs tracking-widest text-neutral-400 group-hover:text-neutral-600">⌘R</span>
-                  </button>
-                  <button @click="menuBarOpen=false" class="relative flex justify-between w-full pl-8 cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-neutral-100 hover:text-neutral-900 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none" data-disabled>
-                      <span>Force Reload</span>
-                      <span class="ml-auto text-xs tracking-widest text-neutral-400 group-hover:text-neutral-600">⇧⌘R</span>
-                  </button>
-                  <div class="h-px my-1 -mx-1 bg-neutral-200"></div>
-                  <button @click="menuBarOpen=false" class="relative flex justify-between w-full pl-8 cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-neutral-100 hover:text-neutral-900 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
-                      <span>Toggle Fullscreen</span>
-                  </button>
-                  <div class="h-px my-1 -mx-1 bg-neutral-200"></div>
-                  <button @click="menuBarOpen=false" class="relative flex justify-between w-full pl-8 cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-neutral-100 hover:text-neutral-900 outline-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
-                      <span>Hide Sidebar</span>
-                  </button>
-              </div>
-          </div> -->
-          <!-- End View Button -->
-
-          <!-- Profiles Button -->
           <div class="relative h-full cursor-default">
 
               <c-menubar.main-button item="settings">
@@ -263,42 +184,89 @@ class="relative top-0 left-0 z-[400] w-fit transition-all duration-150 ease-out"
 
               <c-menubar.main-menu item="settings">
 
-                <c-menubar.button @click.debounce.1="dark = !dark">
-                  <span x-show="dark" title="{% translate 'light theme'|title %}">
-                    {% translate 'light theme' %}
-                  </span>
-                  <span x-show="!dark" title="{% translate 'dark theme'|title %}">
-                    {% translate 'dark theme' %}
-                  </span>
-                </c-menubar.button>
-
-                <c-menubar.button @click.debounce.1="mainContainer = !mainContainer">
-                  <span x-show="mainContainer" title="{% translate 'disable main container'|title %}">
-                    {% translate 'disable main container' %}
-                  </span>
-                  <span x-show="!mainContainer" title="{% translate 'activate main container'|title %}">
-                    {% translate 'activate main container' %}
+                <c-menubar.button 
+                class="ltr:pl-8 rtl:pr-8 relative"
+                @click="dark = !dark">
+                  {% translate 'dark theme' %}
+                  <span x-show="dark" class="absolute ltr:left-2 rtl:right-2 top-1/2 -translate-y-1/2">
+                    <c-icons.check ratio="1rem" />
                   </span>
                 </c-menubar.button>
 
-                <c-menubar.button>
-                  <form action="{% url 'set_language' %}" method="post">
-                    <input name="next" type="hidden" value="{{ redirect_to }}" />
+                <c-menubar.button 
+                class="ltr:pl-8 rtl:pr-8 relative"
+                @click="mainContainer = !mainContainer">
+                  {% translate 'main container' %}
+                  <span x-show="mainContainer" class="absolute ltr:left-2 rtl:right-2 top-1/2 -translate-y-1/2">
+                    <c-icons.check ratio="1rem" />
+                  </span>
+                </c-menubar.button>
+
+                <c-menubar.divider />
+
+                <c-menubar.button 
+                class="ltr:pl-8 rtl:pr-8 relative"
+                @click="messagesTimeout = 60_000">
+                  {% translate 'message timeout 1m' %}
+                  <span x-show="messagesTimeout == 60_000" class="absolute ltr:left-2 rtl:right-2 top-1/2 -translate-y-1/2">
+                    <c-icons.check ratio="1rem" />
+                  </span>
+                </c-menubar.button>
+
+                <c-menubar.button 
+                class="ltr:pl-8 rtl:pr-8 relative"
+                @click="messagesTimeout = 30_000">
+                  {% translate 'message timeout 30s' %}
+                  <span x-show="messagesTimeout == 30_000" class="absolute ltr:left-2 rtl:right-2 top-1/2 -translate-y-1/2">
+                    <c-icons.check ratio="1rem" />
+                  </span>
+                </c-menubar.button>
+
+                <c-menubar.button 
+                class="ltr:pl-8 rtl:pr-8 relative"
+                @click="messagesTimeout = 15_000">
+                  {% translate 'message timeout 15s' %}
+                  <span x-show="messagesTimeout == 15_000" class="absolute ltr:left-2 rtl:right-2 top-1/2 -translate-y-1/2">
+                    <c-icons.check ratio="1rem" />
+                  </span>
+                </c-menubar.button>
+
+                <c-menubar.button 
+                class="ltr:pl-8 rtl:pr-8 relative"
+                @click="messagesTimeout = 5_000">
+                  {% translate 'message timeout 5s' %}
+                  <span x-show="messagesTimeout == 5_000" class="absolute ltr:left-2 rtl:right-2 top-1/2 -translate-y-1/2">
+                    <c-icons.check ratio="1rem" />
+                  </span>
+                </c-menubar.button>
+
+                <c-menubar.divider />
+
+                <c-menubar.button class="ltr:pl-8 rtl:pr-8">
+                  <form 
+                  action="{% url 'set_language' %}"
+                  class="w-full" 
+                  method="post">
+                    <input 
+                    name="next" 
+                    type="hidden" 
+                    value="{{ redirect_to }}" />
                     <input
                       type="hidden"
                       name="language"
                       value="{% if LANGUAGE_CODE == 'ar' %}en{% else %}ar{% endif %}"
                     />
-                    <span role="button">
-                      {% if LANGUAGE_CODE == 'ar' %}English{% else %}Arabic{% endif %}
-                    </span>
+                    <input 
+                    class="block w-full text-start"
+                    type="submit" 
+                    value="{% if LANGUAGE_CODE == 'ar' %}English{% else %}Arabic{% endif %}">
                   </form>
                 </c-menubar.button>
 
               </c-menubar.main-menu>
 
           </div>
-          <!-- End Profiles Button -->
+
       </div>     
   </div>
 </div>

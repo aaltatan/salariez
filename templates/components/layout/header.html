@@ -6,7 +6,6 @@
   :class="{ 
   'ring-1 dark:ring-neutral-800 ring-neutral-200': atTop, 
   'container': mainContainer,
-  '!mx-2': !mainContainer,
   }"
   @scroll.window="atTop = (window.pageYOffset < 10) ? false: true"
 >
@@ -14,26 +13,11 @@
 
     {% include 'partials/menubar.html' %}
 
-    <ul class="flex items-center justify-between gap-2">
-
-      <li>
-        <c-btns.icon
-          datatype="href"
-          href="{{ request.META.HTTP_REFERER }}"
-          role="button"
-          title="{% translate 'back'|title %}"
-        >
-          <c-icons.arrow-back ratio="1.25rem" />
-        </c-btns.icon>
-      </li>
-
-    </ul>
-
     <div class="hidden lg:block ltr:ml-auto ltr:mr-2 rtl:mr-auto rtl:ml-2">
       <c-layout.breadcrumb />
     </div>
 
-    <div class="ltr:ml-auto ltr:mr-2 rtl:mr-auto rtl:ml-2">
+    <div class="ltr:ml-auto rtl:mr-auto">
       <c-inputs.search
       path="{% url 'employees:search' %}"
       name="employee"
@@ -41,7 +25,6 @@
       placeholder="{% translate 'Alt + =' %}"/>
     </div>
 
-    <c-context.user />
   </nav>
 
   {{ slot }}
