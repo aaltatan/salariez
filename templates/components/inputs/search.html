@@ -46,6 +46,7 @@ class="relative z-[200]">
       class="input w-full select-none peer ltr:!pl-12 rtl:!pr-12" 
       value="{{ value }}" 
       disabled
+      x-init="$el.setAttribute('id', $refs.id_{{ name }}.getAttribute('for'))"
       {% if required %}required{% endif %} 
       name="q" />
       <input 

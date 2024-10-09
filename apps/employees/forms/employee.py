@@ -19,6 +19,9 @@ class EmployeeForm(forms.ModelForm):
         model = models.Employee
         fields = '__all__'
         widgets = {
+            'address': forms.widgets.TextInput({
+                'autocomplete': 'off'
+            }),
             'notes': get_textarea_field(
                 rows=2, placeholder=_("notes")
             ),

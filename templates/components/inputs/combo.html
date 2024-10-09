@@ -5,6 +5,8 @@
   x-effect="
   textsConcat = options.filter(el => el.selected).map(el => el.text).join(', ')"
   x-init="
+    let forId = $el.previousElementSibling.getAttribute('for');
+    $refs.{{ name }}comboBoxSearch.setAttribute('id', forId);
     let initials = location.href.match(/(?<={{ name }}\=)\d+/g)
     initials = initials && initials.map(e => +e);
     if (initials) {
@@ -62,6 +64,8 @@
       <input
         class="w-full border-none border-b border-neutral-200 bg-neutral-50 py-2.5 px-4 text-sm text-neutral-600 focus:outline-none focus-visible:border-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-300 dark:focus-visible:border-blue-500"
         type="search"
+        id="combobox-search-{{ name }}"
+        x-ref="{{ name }}comboBoxSearch"
         @search="searchHandler"
         @keyup="searchHandler"
         @keyup.Escape="
