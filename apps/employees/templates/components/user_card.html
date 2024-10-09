@@ -30,7 +30,7 @@
   @mouseover="hoverCardEnter()"
   @mouseleave="hoverCardLeave(); full = false"
 >
-  <a href="{{ obj.get_update_path }}" class="hover:underline">
+  <a href="{{ obj.get_absolute_path }}" class="hover:underline">
     {{ obj.fullname }}
   </a>
   <div

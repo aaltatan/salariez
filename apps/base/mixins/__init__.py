@@ -8,7 +8,6 @@ from .list import ListMixin
 from .search import SearchMixin
 from .update import UpdateMixin
 from .export import ExportMixin
-from .tree import TreeMixin
 from .debug_required import DebugRequiredMixin
 from .formset import FormSetMixin
 
@@ -25,7 +24,6 @@ __all__ = [
     SearchMixin,
     UpdateMixin,
     ExportMixin,
-    TreeMixin,
     ListMixin,
     FormSetMixin,
 ]

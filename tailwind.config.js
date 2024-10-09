@@ -50,12 +50,14 @@ module.exports = {
     "border-yellow-500",
     "border-blue-500",
     "border-pink-500",
+    "border-neutral-500",
     // bg colors
     "bg-green-500",
     "bg-red-500",
     "bg-yellow-500",
     "bg-blue-500",
     "bg-pink-500",
+    "bg-neutral-500",
   ],
   darkMode: "class",
   theme: {

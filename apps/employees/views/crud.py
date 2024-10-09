@@ -1,4 +1,4 @@
-from django.views.generic import ListView, View, RedirectView
+from django.views.generic import ListView, View, RedirectView, DetailView
 from django.utils.translation import gettext as _
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import (
@@ -26,6 +26,13 @@ from apps.base.mixins import (
     SearchMixin,
     ExportMixin,
 )
+
+
+class EmployeeDetailView(DetailView):
+
+    model = models.Employee
+    template_name = 'apps/employees/details.html'
+
 
 class SearchView(LoginRequiredMixin, SearchMixin, View):
     

@@ -206,6 +206,12 @@ class Employee(models.Model):
         return reverse('activities:index', kwargs=kwargs)
 
     @property
+    def get_absolute_path(self):
+        return reverse(
+            f'{self._get_app_label()}:details',  kwargs={'slug': self.slug}
+        )
+
+    @property
     def get_create_path(self):
         return reverse(f'{self._get_app_label()}:create')
 

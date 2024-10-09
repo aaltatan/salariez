@@ -1,3 +1,5 @@
+from urllib.parse import urlencode
+
 from django.db import models
 from django.utils.translation import gettext as _
 from django.core.validators import RegexValidator
@@ -27,6 +29,12 @@ class Mobile(models.Model):
     notes = models.CharField(
         max_length=255, default='', blank=True
     )
+
+    def get_whatsapp_path(self, text: str = 'hello world!') -> str:
+        query = {
+            'phone': f'+963{self.mobile[1:]}', 'text': text,
+        }
+        return f'https://web.whatsapp.com/send?{urlencode(query)}'
 
     @property
     def get_absolute_path(self) -> str:

@@ -10,6 +10,7 @@ from .views import (
     BulkReslugifyView,
     SearchView,
     ExportView,
+    EmployeeDetailView,
     # formsets
     MobileFormSetView,
     EmailFormSetView,
@@ -29,6 +30,7 @@ urlpatterns = [
     path('export/', ExportView.as_view(), name='export'),
     path('bulk/delete/', BulkDeleteView.as_view(), name='bulk-delete'),
     path('bulk/reslugify/', BulkReslugifyView.as_view(), name='bulk-reslugify'),
+    path('details/<str:slug>/', EmployeeDetailView.as_view(), name='details'),
     path('delete/<str:slug>/', DeleteView.as_view(), name='delete'),
     path('update/<str:slug>/', UpdateView.as_view(), name='update'),
     # formsets

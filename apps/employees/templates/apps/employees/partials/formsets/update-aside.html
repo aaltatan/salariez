@@ -27,7 +27,7 @@
       },
     ]
   }"
-  class="sticky top-[4.75rem] left-0 h-[85vh] ~p-1/2 rounded-lg bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-none">
+  class="sticky top-[4.75rem] left-0 h-[85vh] ~p-2/4 rounded-lg bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-none">
 
     <template x-for="url in urls" :key="url.href">
       <li class="flex items-center gap-1">
@@ -36,7 +36,6 @@
         x-init="url.isActive = location.pathname === url.href"
         :class="{'text-blue-500': url.isActive}"
         class="capitalize w-full rounded-md px-2 py-1 cursor-pointer duration-150 hover:underline flex items-center gap-1">
-          <c-layout.li-dot />
           <span x-text="url.text"></span>
         </a>
       </li>

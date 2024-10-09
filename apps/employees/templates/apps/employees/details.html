@@ -1,0 +1,90 @@
+{% extends 'base.html' %} 
+{% load i18n static %} 
+
+{% block title %}
+{{ object.fullname}}
+{% endblock %} 
+
+{% block body %}
+
+<template
+  x-init="let hrefs = [
+        {
+            text: '{% translate 'employees' %}', 
+            href: '{% url 'employees:index' %}'
+        },
+        {
+            text: '{{ object.fullname }}', 
+            href: '{{ object.get_absolute_path }}'
+        },
+    ];
+    breadCrumbs = [...breadCrumbs, ...hrefs]"
+></template>
+
+<div>
+  <div class="rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-800">
+
+    <div>
+      <img src="{% static 'images/cover.jpg' %}" class="block max-h-48 object-cover w-full" alt="">
+    </div>
+
+    <div class="grid grid-cols-3 ~gap-2/4 lg:grid-cols-4 p-4">
+
+      <div>
+        <img src="{{ object.profile.url }}" class=" object-cover aspect-square rounded-full block ring-4 lg:ring-8 ring-white dark:ring-neutral-950 w-full -translate-y-1/2 relative ~max-w-32/48 mx-auto" alt="">
+      </div>
+
+      <div class="col-span-2 lg:col-span-3 tracking-tighter font-medium ~space-y-2/4">
+        <p class="~text-xl/3xl">{{ object.fullname }}</p>
+        <p class="text-neutral-500">{{ object.position }}</p>
+        <div class="flex items-center ~gap-1/2 flex-wrap">
+          <c-layout.tag>{{ object.job_subtype }}</c-layout.tag>
+          <c-layout.tag>{{ object.job_subtype.job_type }}</c-layout.tag>
+        </div>
+
+        <div class="flex items-center flex-wrap gap-2">
+
+          {% for mobile in object.mobiles.all %}
+            <div class="flex items-center gap-1 hover:underline">
+              <c-icons.mobile ratio="1rem" />
+              <a href="{{ mobile.get_absolute_path }}">
+                {{ mobile.mobile }}
+              </a>
+            </div>
+            {% if mobile.has_whatsapp %}
+            <div class="flex items-center gap-1 hover:underline">
+              <c-icons.whatsapp ratio="1rem" />
+              <a target="_blank" href="{{ mobile.get_whatsapp_path }}">
+                {{ mobile.mobile }}
+              </a>
+            </div>
+            {% endif %}
+          {% endfor %}
+
+          {% for phone in object.phones.all %}
+            <div class="flex items-center gap-1 hover:underline">
+              <c-icons.phone ratio="1rem" />
+              <a href="{{ phone.get_absolute_path }}">
+                {{ phone.phone }}
+              </a>
+            </div>
+          {% endfor %}
+
+          {% for email in object.emails.all %}
+            <div class="flex items-center gap-1 hover:underline">
+              <c-icons.email ratio="1rem" />
+              <a href="{{ email.get_absolute_path }}">
+                {{ email.email }}
+              </a>
+            </div>
+          {% endfor %}
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

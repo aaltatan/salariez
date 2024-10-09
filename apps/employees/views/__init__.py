@@ -9,6 +9,7 @@ from .crud import (
   UpdateView,
   BulkReslugifyView,
   SearchView,
+  EmployeeDetailView,
 )
 from .formsets import (
   MobileFormSetView,
@@ -30,6 +31,7 @@ __all__ = [
   BulkReslugifyView,
   SearchView,
   UpdateView,
+  EmployeeDetailView,
   # formsets
   MobileFormSetView,
   EmailFormSetView,

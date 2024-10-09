@@ -1,12 +1,12 @@
 {% load i18n %}
 
-<div x-cloak x-show="breadCrumbs.length >= 2">
-  <ul class="flex items-center flex-wrap gap-1 px-4">
+<nav x-cloak class="flex justify-center items-center rounded-md border border-neutral-200 dark:border-neutral-800 py-1 px-2" x-show="breadCrumbs.length >= 2">
+  <ol class="inline-flex items-center space-x-1 text-sm text-neutral-500 dark:text-neutral-400 [&_.active-breadcrumb]:font-bold [&_.active-breadcrumb]:text-neutral-600 [&_.active-breadcrumb]:dark:text-neutral-400">
     <template x-for="(breadCrumb, idx) in breadCrumbs" :key="breadCrumb.text">
-      <li class="flex items-center gap-1">
+      <li class="flex h-full items-center">
         <a
-          class="capitalize font-semibold hover:underline duration-150"
-          :class="(idx === breadCrumbs.length - 1) && 'text-blue-500'"
+          class="inline-flex items-center py-1 font-normal hover:text-neutral-900 hover:dark:text-neutral-300 focus:outline-none capitalize duration-100"
+          :class="(idx === breadCrumbs.length - 1) && 'active-breadcrumb'"
           :href="breadCrumb.href"
           x-text="breadCrumb.text"
         >
@@ -14,10 +14,24 @@
 
         <template x-if="idx !== breadCrumbs.length - 1">
           <span class="rtl:rotate-180">
-            <c-icons.arrow-right ratio="1rem" />
+            <svg
+            class="h-5 w-5 text-gray-400/70"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            >
+              <g fill="none" stroke="none">
+                <path
+                  d="M10 8.013l4 4-4 4"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </g>
+            </svg>
           </span>
         </template>
       </li>
     </template>
-  </ul>
-</div>
+  </ol>
+</nav>
