@@ -2,8 +2,8 @@
   {{ attrs }}
   class="hover:bg-neutral-100 dark:hover:bg-black 
   has-checked:bg-blue-100 has-checked:dark:bg-blue-900 has-checked:border-blue-200 has-checked:dark:border-blue-950 has-checked:hover:bg-blue-200 has-checked:dark:hover:bg-blue-950 has-delete-checked:bg-red-200 dark:has-delete-checked:bg-red-900"
-  x-on:contextmenu.prevent="handleContextClick"
-  x-on:contextmenu.prevent.debounce.1="setOffset"
+  @contextmenu.prevent="handleContextClick"
+  @contextmenu.prevent.debounce.1="setOffsetTr"
   hx-indicator="#spinner"
 >
   {{ slot }}
@@ -17,7 +17,7 @@
     Alpine.$data(contextMenuBtn).openContext = true;
   }
 
-  function setOffset(element) {
+  function setOffsetTr(element) {
     const ul = element.target.closest('tr').querySelector('td:last-child ul');
     const ulWidth = getComputedStyle(ul).width;
     const ulHeight = Math.floor(+getComputedStyle(ul).height.replace('px', ''))

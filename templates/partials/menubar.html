@@ -196,8 +196,8 @@ class="relative top-0 ltr:left-0 rtl:right-0 z-[400] w-fit transition-all durati
                 <c-menubar.button 
                 class="ltr:pl-8 rtl:pr-8 relative"
                 @click="mainContainer = !mainContainer">
-                  {% translate 'main container' %}
-                  <span x-show="mainContainer" class="absolute ltr:left-2 rtl:right-2 top-1/2 -translate-y-1/2">
+                  {% translate 'stretch' %}
+                  <span x-show="!mainContainer" class="absolute ltr:left-2 rtl:right-2 top-1/2 -translate-y-1/2">
                     <c-icons.check ratio="1rem" />
                   </span>
                 </c-menubar.button>

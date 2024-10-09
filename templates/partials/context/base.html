@@ -4,12 +4,13 @@
 <c-context.context
   class="ltr:right-[calc(100%+4px)] rtl:left-[calc(100%+4px)] bottom-2 min-w-[100px]"
 >
-  {% if can_log %}
-  <c-context.btn hx-get="{{ obj.get_activity_path }}" hx-target="#modal" @click="modalOpen = true">
-    {% translate 'activities' %}
+
+  {% if can_update %}
+  <c-context.btn hx-include="#no-content" href="{{ obj.get_update_path }}" datatype="href">
+    {% translate 'update' %}
   </c-context.btn>
-  {% endif %} 
-  
+  {% endif %}
+
   {% if can_delete %}
   <c-context.btn
     hx-get="{{ obj.get_delete_path }}"
@@ -21,11 +22,13 @@
   </c-context.btn>
   {% endif %} 
 
-  {% if can_update %}
-  <c-context.btn hx-include="#no-content" href="{{ obj.get_update_path }}" datatype="href">
-    {% translate 'update' %}
+  <c-menubar.divider />
+
+  {% if can_log %}
+  <c-context.btn hx-get="{{ obj.get_activity_path }}" hx-target="#modal" @click="modalOpen = true">
+    {% translate 'activities' %}
   </c-context.btn>
-  {% endif %}
+  {% endif %} 
   
 </c-context.context>
 {% endif %}
