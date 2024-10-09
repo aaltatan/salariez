@@ -2,8 +2,12 @@ from apps.base.utils import views
 
 
 class Deleter(views.Deleter):
-    def can_delete_criteria(self):
-        return not self.instance.children.all().exists()
+    def can_delete_condition(self):
+        conditions = [
+            not self.instance.children.all().exists(),
+            not self.instance.employees.all().exists(),
+        ]
+        return all(conditions)
 
 
 def generate_department_id(instance):

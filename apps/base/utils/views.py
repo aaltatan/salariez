@@ -86,12 +86,12 @@ class Deleter(ABC):
             )
 
     @abstractmethod
-    def can_delete_criteria(self) -> bool:
+    def can_delete_condition(self) -> bool:
         ...
 
     def delete(self) -> None:
         
-        can_be_deleted = self.can_delete_criteria()
+        can_be_deleted = self.can_delete_condition()
         
         if can_be_deleted:
             self.success_scenario()

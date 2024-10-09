@@ -102,7 +102,6 @@ class DeleteView(
     
     permission_required = 'departments.delete_department'
     model = models.Department
-    hx_location_target = '#departments-body'
     deleter = utils.Deleter
 
 

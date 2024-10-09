@@ -2,5 +2,8 @@ from apps.base.utils import views
 
 
 class Deleter(views.Deleter):
-    def can_delete_criteria(self) -> bool:
-        return True
+    def can_delete_condition(self) -> bool:
+        conditions = [
+            not self.instance.employees.all().exists(),
+        ]
+        return all(conditions)
