@@ -28,11 +28,32 @@ from apps.base.mixins import (
 )
 
 
+select_related: list[str] = [
+    'area',
+    'position',
+    'job_status',
+    'job_subtype',
+    'job_subtype__job_type',
+    'department',
+    'department__cost_center',
+]
+prefetch_related: list[str] = [
+    'mobiles', 'phones', 'emails',
+]
+
+
 class EmployeeDetailView(DetailView):
 
     model = models.Employee
     template_name = 'apps/employees/details.html'
 
+    def get_queryset(self):
+        return (
+            super()
+            .get_queryset()
+            .select_related(*select_related)
+            .prefetch_related(*prefetch_related)
+        )
 
 class SearchView(LoginRequiredMixin, SearchMixin, View):
     
@@ -58,18 +79,6 @@ class ListTableView(
     }
 
     def get_queryset(self):
-        select_related: list[str] = [
-            'area',
-            'position',
-            'job_status',
-            'job_subtype',
-            'job_subtype__job_type',
-            'department',
-            'department__cost_center',
-        ]
-        prefetch_related: list[str] = [
-            'mobiles', 'phones', 'emails',
-        ]
         return (
             super()
             .get_queryset()

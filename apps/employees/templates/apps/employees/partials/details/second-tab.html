@@ -1,0 +1,114 @@
+{% load i18n %}
+
+<ul class="divide-y divide-neutral-200 dark:divide-neutral-800">
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'card id' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.card_id }}
+      </span>
+    </div>
+  </li>
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'civil registry office' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.civil_registry_office }}
+      </span>
+    </div>
+  </li>
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'registry office name' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.registry_office_name }}
+      </span>
+    </div>
+  </li>
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'registry office id' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.registry_office_id }}
+      </span>
+    </div>
+  </li>
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'gender' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.get_gender_display }}
+      </span>
+    </div>
+  </li>
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'face color' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.face_color }}
+      </span>
+    </div>
+  </li>
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'eyes color' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.eyes_color }}
+      </span>
+    </div>
+  </li>
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'address' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.address }}
+      </span>
+    </div>
+  </li>
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'special signs' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.special_signs }}
+      </span>
+    </div>
+  </li>
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'card date' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.card_date }}
+      </span>
+    </div>
+  </li>
+</ul>

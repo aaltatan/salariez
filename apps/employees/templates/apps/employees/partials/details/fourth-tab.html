@@ -1,0 +1,48 @@
+{% load i18n %}
+
+<ul class="divide-y divide-neutral-200 dark:divide-neutral-800">
+{% for mobile in object.mobiles.all %}
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.mobile ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'mobile' %}:
+      </span>
+      <a href="{{ mobile.get_absolute_path }}" class="ltr:ml-auto rtl:mr-auto hover:underline">
+        {{ mobile.mobile }}
+      </a>
+      {% if mobile.has_whatsapp %}
+      <a target="_blank" href="{{ mobile.get_whatsapp_path }}" class="hover:underline">
+        <c-icons.whatsapp ratio="1rem" />
+      </a>
+      {% endif %}
+    </div>
+  </li>
+{% endfor %}
+{% for phone in object.phones.all %}
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.phone ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'phone' %}:
+      </span>
+      <a href="{{ phone.get_absolute_path }}" class="ltr:ml-auto rtl:mr-auto hover:underline">
+        {{ phone.phone }}
+      </a>
+    </div>
+  </li>
+{% endfor %}
+{% for email in object.emails.all %}
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.email ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'email' %}:
+      </span>
+      <a href="{{ email.get_absolute_path }}" class="ltr:ml-auto rtl:mr-auto hover:underline">
+        {{ email.email }}
+      </a>
+    </div>
+  </li>
+{% endfor %}
+</ul>

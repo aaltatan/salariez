@@ -1,0 +1,43 @@
+<div
+  x-data="{
+        tabSelected: 1,
+        tabId: $id('tabs'),
+        tabButtonClicked(tabButton){
+            this.tabSelected = tabButton.id.replace(this.tabId + '-', '');
+            this.tabRepositionMarker(tabButton);
+        },
+        tabRepositionMarker(tabButton){
+            this.$refs.tabMarker.style.width=tabButton.offsetWidth + 'px';
+            this.$refs.tabMarker.style.height=tabButton.offsetHeight + 'px';
+            this.$refs.tabMarker.style.left=tabButton.offsetLeft + 'px';
+        },
+        tabContentActive(tabContent){
+            return this.tabSelected == tabContent.id.replace(this.tabId + '-content-', '');
+        },
+        tabButtonActive(tabContent){
+            const tabId = tabContent.id.split('-').slice(-1);
+            return this.tabSelected == tabId;
+        }
+    }"
+  x-init="tabRepositionMarker($refs.tabButtons.firstElementChild);"
+  class="relative w-full my-2"
+>
+  <div
+    x-ref="tabButtons"
+    class="relative inline-grid h-10 w-full select-none grid-cols-{{ count }} items-center justify-center rounded-lg border border-neutral-200 dark:border-neutral-800 p-1"
+  >
+    {{ buttons }}
+    <div
+      x-ref="tabMarker"
+      class="absolute left-0 z-10 h-full w-1/2 duration-300 ease-out"
+      x-cloak
+    >
+      <div class="h-full w-full rounded-md bg-neutral-100 dark:bg-neutral-800 shadow-sm"></div>
+    </div>
+  </div>
+  <div
+    class="content relative mt-2 w-full rounded-md border border-neutral-200 dark:border-neutral-800 p-5"
+  >
+    {{ contents }}
+  </div>
+</div>

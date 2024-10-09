@@ -1,30 +1,6 @@
-from django.db import models
-from django.db.models import Count, Q, ExpressionWrapper, F, Value
-from django.db.models.functions import Round
-
-from apps.employees.models import Employee
-
+from apps.departments.models import Department
 
 def run() -> None:
 
-    qs = Employee.objects.aggregate(
-        count=Count('gender'),
-        male=Count('gender', filter=Q(gender='m')),
-        female=Count('gender', filter=Q(gender='f')),
-        male_avg=ExpressionWrapper(
-            Round(
-                F('male') / F('count') * Value(100),
-                precision=2
-            ), 
-            output_field=models.FloatField()
-        ),
-        female_avg=ExpressionWrapper(
-            Round(
-                F('female') / F('count') * Value(100),
-                precision=2
-            ), 
-            output_field=models.FloatField()
-        ),
-    )
-
-    print(qs)
+    obj = Department.objects.filter(name__contains='رواتب').first()
+    print(obj.get_ancestors(include_self=True))

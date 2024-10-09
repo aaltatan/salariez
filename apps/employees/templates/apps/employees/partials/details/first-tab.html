@@ -1,0 +1,81 @@
+{% load i18n %}
+
+<ul class="divide-y divide-neutral-200 dark:divide-neutral-800">
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'firstname' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.firstname }}
+      </span>
+    </div>
+  </li>
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'lastname' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.lastname }}
+      </span>
+    </div>
+  </li>
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'father name' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.father_name }}
+      </span>
+    </div>
+  </li>
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'mother name' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.mother_name }}
+      </span>
+    </div>
+  </li>
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'birth place' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.birth_place }}
+      </span>
+    </div>
+  </li>
+  <li class="py-2" title="{{ object.birth_date|timesince }}">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'birth date' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.birth_date }}
+      </span>
+    </div>
+  </li>
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'national id' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.national_id }}
+      </span>
+    </div>
+  </li>
+</ul>

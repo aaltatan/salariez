@@ -30,7 +30,7 @@ class Mobile(models.Model):
         max_length=255, default='', blank=True
     )
 
-    def get_whatsapp_path(self, text: str = 'hello world!') -> str:
+    def get_whatsapp_path(self, text: str = 'hello!') -> str:
         query = {
             'phone': f'+963{self.mobile[1:]}', 'text': text,
         }

@@ -1,5 +1,5 @@
 {% extends 'base.html' %} 
-{% load i18n static %} 
+{% load i18n static tree_filters %} 
 
 {% block title %}
 {{ object.fullname}}
@@ -21,70 +21,120 @@
     breadCrumbs = [...breadCrumbs, ...hrefs]"
 ></template>
 
-<div>
-  <div class="rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-800">
+<div class="col-span-3 rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-800">
+
+  <div>
+    <img src="{% static 'images/cover.jpg' %}" class="block max-h-48 object-cover w-full" alt="">
+  </div>
+
+  <div class="grid grid-cols-3 ~gap-2/4 lg:grid-cols-4 p-4">
 
     <div>
-      <img src="{% static 'images/cover.jpg' %}" class="block max-h-48 object-cover w-full" alt="">
+      <a href="{% if object.profile %}{{ object.profile.url }}{% else %}{% static 'images/user.png' %}{% endif %}" target="_blank">
+        <img src="{% if object.profile %}{{ object.profile.url }}{% else %}{% static 'images/user.png' %}{% endif %}" class=" object-cover aspect-square rounded-full block ring-4 lg:ring-8 ring-white dark:ring-neutral-950 w-full -translate-y-1/2 relative ~max-w-32/48 mx-auto" alt="">
+      </a>
     </div>
 
-    <div class="grid grid-cols-3 ~gap-2/4 lg:grid-cols-4 p-4">
-
-      <div>
-        <img src="{{ object.profile.url }}" class=" object-cover aspect-square rounded-full block ring-4 lg:ring-8 ring-white dark:ring-neutral-950 w-full -translate-y-1/2 relative ~max-w-32/48 mx-auto" alt="">
-      </div>
-
-      <div class="col-span-2 lg:col-span-3 tracking-tighter font-medium ~space-y-2/4">
+    <div class="col-span-2 lg:col-span-3 tracking-tighter font-medium ~space-y-2/4">
+      <div class="flex items-center gap-2">
         <p class="~text-xl/3xl">{{ object.fullname }}</p>
-        <p class="text-neutral-500">{{ object.position }}</p>
-        <div class="flex items-center ~gap-1/2 flex-wrap">
-          <c-layout.tag>{{ object.job_subtype }}</c-layout.tag>
-          <c-layout.tag>{{ object.job_subtype.job_type }}</c-layout.tag>
+        <c-layout.badge theme="{% if object.job_status.has_salary %}green{% else %}red{% endif %}">
+          {{ object.job_status }}
+        </c-layout.badge>
+        {% if perms.employees.update_employee %}
+        <div class="ltr:ml-auto rtl:mr-auto">
+          <c-btns.icon>
+            <a href="{{ object.get_update_path }}">
+              <c-icons.pencil ratio="1.25rem" />
+            </a>
+          </c-btns.icon>
         </div>
-
-        <div class="flex items-center flex-wrap gap-2">
-
-          {% for mobile in object.mobiles.all %}
-            <div class="flex items-center gap-1 hover:underline">
-              <c-icons.mobile ratio="1rem" />
-              <a href="{{ mobile.get_absolute_path }}">
-                {{ mobile.mobile }}
-              </a>
+        {% endif %}
+      </div>
+      <div 
+      title="{{ object.hire_date }}"
+      class="flex items-center gap-1">
+        <c-icons.calendar ratio="1rem" />
+        <span>{% translate 'since'|title %}</span>
+        <p>
+          {{ object.hire_date|timesince }}
+        </p>
+      </div>
+      <ul class="text-neutral-500 flex items-center flex-wrap gap-1">
+        {% for department in object|ancestors %}
+          <li>
+            <div class="flex items-center gap-1">
+              {{ department }}
+              {% if not forloop.last %}
+              <span class="ltr:rotate-180">
+                <c-icons.arrow-left ratio="1rem" />
+              </span>
+              {% endif %}
             </div>
-            {% if mobile.has_whatsapp %}
-            <div class="flex items-center gap-1 hover:underline">
-              <c-icons.whatsapp ratio="1rem" />
-              <a target="_blank" href="{{ mobile.get_whatsapp_path }}">
-                {{ mobile.mobile }}
-              </a>
-            </div>
-            {% endif %}
-          {% endfor %}
-
-          {% for phone in object.phones.all %}
-            <div class="flex items-center gap-1 hover:underline">
-              <c-icons.phone ratio="1rem" />
-              <a href="{{ phone.get_absolute_path }}">
-                {{ phone.phone }}
-              </a>
-            </div>
-          {% endfor %}
-
-          {% for email in object.emails.all %}
-            <div class="flex items-center gap-1 hover:underline">
-              <c-icons.email ratio="1rem" />
-              <a href="{{ email.get_absolute_path }}">
-                {{ email.email }}
-              </a>
-            </div>
-          {% endfor %}
-
-        </div>
+          </li>
+        {% endfor %}
+      </ul>
+      <div class="flex items-center ~gap-1/2 flex-wrap">
+        <c-layout.tag>{{ object.department.cost_center }}</c-layout.tag>
+        <c-layout.tag>{{ object.position }}</c-layout.tag>
+        <c-layout.tag>{{ object.job_subtype }}</c-layout.tag>
+        <c-layout.tag>{{ object.job_subtype.job_type }}</c-layout.tag>
       </div>
 
     </div>
 
   </div>
+
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-1">
+
+  <c-tabs.container count="5">
+
+    <c-slot name="buttons">
+      <c-tabs.btn>
+        {% translate 'front' %}
+      </c-tabs.btn>
+      <c-tabs.btn>
+        {% translate 'back' %}
+      </c-tabs.btn>
+      <c-tabs.btn>
+        {% translate 'other' %}
+      </c-tabs.btn>
+      <c-tabs.btn>
+        {% translate 'contact' %}
+      </c-tabs.btn>
+      <c-tabs.btn>
+        {% translate 'notes' %}
+      </c-tabs.btn>
+    </c-slot>
+  
+    <c-slot name="contents">
+      <c-tabs.tab>
+        {% include 'apps/employees/partials/details/first-tab.html' %}
+      </c-tabs.tab>
+      <c-tabs.tab>
+        {% include 'apps/employees/partials/details/second-tab.html' %}
+      </c-tabs.tab>
+      <c-tabs.tab>
+        {% include 'apps/employees/partials/details/third-tab.html' %}
+      </c-tabs.tab>
+      <c-tabs.tab>
+        {% include 'apps/employees/partials/details/fourth-tab.html' %}
+      </c-tabs.tab>
+      <c-tabs.tab>
+        <p class="first-letter:capitalize">
+          {% if object.notes %}
+            {{ object.notes }}
+          {% else %}
+            {% translate 'no notes' %}
+          {% endif %}
+        </p>
+      </c-tabs.tab>
+    </c-slot>
+  
+  </c-tabs.container>
+
 </div>
 
 {% endblock %}

@@ -1,0 +1,59 @@
+{% load i18n %}
+
+<ul class="divide-y divide-neutral-200 dark:divide-neutral-800">
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'martial status' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.get_martial_status_display }}
+      </span>
+    </div>
+  </li>
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'military status' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.get_military_status_display }}
+      </span>
+    </div>
+  </li>
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'nationality' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.nationality }}
+      </span>
+    </div>
+  </li>
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'hire date' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.hire_date }}
+      </span>
+    </div>
+  </li>
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'institution id' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.institution_id }}
+      </span>
+    </div>
+  </li>
+</ul>

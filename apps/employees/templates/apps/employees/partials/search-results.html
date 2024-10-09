@@ -2,7 +2,7 @@
 {% load static %}
 
 {% for obj in qs %}
-<c-inputs.search-item href="{{ obj.get_update_path }}">
+<c-inputs.search-item href="{{ obj.get_absolute_path }}">
   
   <div class="flex items-center gap-1">
     <img

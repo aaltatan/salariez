@@ -1,0 +1,11 @@
+<button
+  :id="$id(tabId)"
+  @click="tabButtonClicked($el);"
+  type="button"
+  :class="{
+   'bg-neutral-100 dark:bg-neutral-800' : tabButtonActive($el)
+  }"
+  class="relative z-20 inline-flex h-8 w-full cursor-pointer items-center justify-center whitespace-nowrap rounded-md px-3 text-sm font-medium transition-all capitalize"
+>
+  {{ slot }}
+</button>
