@@ -1,19 +1,5 @@
 {% load i18n %}
 
-{% with 'city-filter-form' as filter_form %}
-{% with '#cities-table' as target %}
-
-{% with perms.cities.add_city as can_create %}
-{% with perms.cities.delete_city as can_delete %}
-{% with perms.cities.change_city as can_update %}
-{% with perms.cities.can_export as can_export %}
-{% with perms.activities.view_activity as can_log %}
-
-{% url 'cities:index' as index_path %}
-{% url 'cities:bulk' as bulk_path %}
-{% url 'cities:create' as create_path %}
-{% url 'cities:export' as export_path %}
-
 <c-layout.app-container id="cities-table" app_title="{% translate 'cities' %}">
 
   <c-slot name="filters">
@@ -113,11 +99,3 @@
   </c-slot>
 
 </c-layout.app-container>
-
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}

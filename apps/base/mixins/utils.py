@@ -61,6 +61,15 @@ class HelperMixin:
         
         return app_label
     
+    def _get_object_name(self):
+        """
+        get app label from model class
+        """
+        model_class = self._get_model_class()
+        object_name: str = model_class._meta.object_name
+        
+        return object_name.lower()
+    
     def _get_modal_template_name(self):
         """
         you can set `modal_template_name` in view class instead.  

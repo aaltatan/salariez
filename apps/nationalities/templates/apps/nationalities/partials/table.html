@@ -1,19 +1,5 @@
 {% load i18n %}
 
-{% with 'nationality-filter-form' as filter_form %}
-{% with '#nationalities-table' as target %}
-
-{% with perms.nationalities.add_nationality as can_create %}
-{% with perms.nationalities.delete_nationality as can_delete %}
-{% with perms.nationalities.change_nationality as can_update %}
-{% with perms.nationalities.can_export as can_export %}
-{% with perms.activities.view_activity as can_log %}
-
-{% url 'nationalities:index' as index_path %}
-{% url 'nationalities:bulk' as bulk_path %}
-{% url 'nationalities:create' as create_path %}
-{% url 'nationalities:export' as export_path %}
-
 <c-layout.app-container id="nationalities-table" app_title="{% translate 'nationalities' %}">
 
   <c-slot name="filters">
@@ -130,11 +116,3 @@
   </c-slot>
 
 </c-layout.app-container>
-
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}

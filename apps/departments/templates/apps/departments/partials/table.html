@@ -1,19 +1,4 @@
-{% load i18n %}
-{% load math_filters %}
-
-{% with 'department-filter-form' as filter_form %}
-{% with '#departments-table' as target %}
-
-{% with perms.departments.add_department as can_create %}
-{% with perms.departments.delete_department as can_delete %}
-{% with perms.departments.change_department as can_update %}
-{% with perms.departments.can_export as can_export %}
-{% with perms.activities.view_activity as can_log %}
-
-{% url 'departments:index' as index_path %}
-{% url 'departments:bulk' as bulk_path %}
-{% url 'departments:create' as create_path %}
-{% url 'departments:export' as export_path %}
+{% load i18n math_filters %}
 
 <c-layout.app-container id="departments-table" app_title="{% translate 'departments' %}">
 
@@ -183,11 +168,3 @@
   </c-slot>
 
 </c-layout.app-container>
-
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}

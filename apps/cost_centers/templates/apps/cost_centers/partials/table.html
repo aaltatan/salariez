@@ -1,19 +1,5 @@
 {% load i18n %}
 
-{% with 'cost-centers-filter-form' as filter_form %}
-{% with '#cost-centers-table' as target %}
-
-{% with perms.cost_centers.add_costcenter as can_create %}
-{% with perms.cost_centers.delete_costcenter as can_delete %}
-{% with perms.cost_centers.change_costcenter as can_update %}
-{% with perms.cost_centers.can_export as can_export %}
-{% with perms.activities.view_activity as can_log %}
-
-{% url 'cost_centers:index' as index_path %}
-{% url 'cost_centers:bulk' as bulk_path %}
-{% url 'cost_centers:create' as create_path %}
-{% url 'cost_centers:export' as export_path %}
-
 <c-layout.app-container id="cost-centers-table" app_title="{% translate 'cost centers' %}">
 
   <c-slot name="filters">
@@ -120,11 +106,3 @@
   </c-slot>
 
 </c-layout.app-container>
-
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}

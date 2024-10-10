@@ -1,19 +1,5 @@
 {% load i18n %}
 
-{% with 'area-filter-form' as filter_form %}
-{% with '#areas-table' as target %}
-
-{% with perms.areas.add_area as can_create %}
-{% with perms.areas.delete_area as can_delete %}
-{% with perms.areas.change_area as can_update %}
-{% with perms.areas.can_export as can_export %}
-{% with perms.activities.view_activity as can_log %}
-
-{% url 'areas:index' as index_path %}
-{% url 'areas:bulk' as bulk_path %}
-{% url 'areas:create' as create_path %}
-{% url 'areas:export' as export_path %}
-
 <c-layout.app-container id="areas-table" app_title="{% translate 'areas' %}">
 
   <c-slot name="filters">
@@ -131,11 +117,3 @@
   </c-slot>
 
 </c-layout.app-container>
-
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}

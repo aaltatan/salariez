@@ -1,20 +1,4 @@
-{% load i18n %}
-{% load static %}
-{% load format_numbers %}
-
-{% with 'employees-filter-form' as filter_form %}
-{% with '#employees-table' as target %}
-
-{% with perms.employees.add_employee as can_create %}
-{% with perms.employees.delete_employee as can_delete %}
-{% with perms.employees.change_employee as can_update %}
-{% with perms.employees.can_export as can_export %}
-{% with perms.activities.view_activity as can_log %}
-
-{% url 'employees:index' as index_path %}
-{% url 'employees:bulk' as bulk_path %}
-{% url 'employees:create' as create_path %}
-{% url 'employees:export' as export_path %}
+{% load i18n static format_numbers%}
 
 <c-layout.app-container id="employees-table" app_title="{% translate 'employees' %}">
 
@@ -153,11 +137,3 @@
   </c-slot>
 
 </c-layout.app-container>
-
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}

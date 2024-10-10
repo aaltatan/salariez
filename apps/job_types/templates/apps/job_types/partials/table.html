@@ -1,19 +1,5 @@
 {% load i18n %}
 
-{% with 'job-type-filter-form' as filter_form %}
-{% with '#job-types-table' as target %}
-
-{% with perms.job_types.add_jobtype as can_create %}
-{% with perms.job_types.delete_jobtype as can_delete %}
-{% with perms.job_types.change_jobtype as can_update %}
-{% with perms.job_types.can_export as can_export %}
-{% with perms.activities.view_activity as can_log %}
-
-{% url 'job_types:index' as index_path %}
-{% url 'job_types:bulk' as bulk_path %}
-{% url 'job_types:create' as create_path %}
-{% url 'job_types:export' as export_path %}
-
 <c-layout.app-container id="job-types-table" app_title="{% translate 'job types' %}">
 
   <c-slot name="filters">
@@ -113,11 +99,3 @@
   </c-slot>
 
 </c-layout.app-container>
-
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}

@@ -1,19 +1,5 @@
 {% load i18n %}
 
-{% with 'position-filter-form' as filter_form %}
-{% with '#positions-table' as target %}
-
-{% with perms.positions.add_position as can_create %}
-{% with perms.positions.delete_position as can_delete %}
-{% with perms.positions.change_position as can_update %}
-{% with perms.positions.can_export as can_export %}
-{% with perms.activities.view_activity as can_log %}
-
-{% url 'positions:index' as index_path %}
-{% url 'positions:bulk' as bulk_path %}
-{% url 'positions:create' as create_path %}
-{% url 'positions:export' as export_path %}
-
 <c-layout.app-container id="positions-table" app_title="{% translate 'positions' %}">
 
   <c-slot name="filters">
@@ -113,11 +99,3 @@
   </c-slot>
 
 </c-layout.app-container>
-
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
-{% endwith %}
