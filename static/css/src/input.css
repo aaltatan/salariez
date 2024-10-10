@@ -7,6 +7,11 @@
     .custom-shadow {
         box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.1);
     }
+    .scrollbar {
+        @apply scrollbar-thin scrollbar-track-neutral-100 
+        scrollbar-thumb-neutral-300
+        dark:scrollbar-track-neutral-800 dark:scrollbar-thumb-neutral-600;
+    }
     .input {
         @apply block placeholder-neutral-500 rounded-md border border-neutral-200 bg-white ~text-sm/base ltr:~pl-2/4 ltr:~pr-4/6 ~py-1/2 text-neutral-700 focus:border-blue-500 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:focus:border-blue-300 outline-none duration-75 aria-[invalid]:!border-[red] placeholder:capitalize disabled:opacity-90 dark:disabled:opacity-50 disabled:text-blue-500;
     }
@@ -62,22 +67,6 @@
 .table-inner tr:not(:first-of-type) :where(th, td):not(:first-child):not(:last-child) {
   @apply border-t border-x border-neutral-200 dark:border-neutral-800;
 }
-
-/* width */
-::-webkit-scrollbar {
-    width: 4px;
-}
- 
-/* Track */
-::-webkit-scrollbar-track {
-    @apply dark:bg-neutral-950 bg-neutral-100/80;
-}
- 
-/* Handle */
-::-webkit-scrollbar-thumb {
-    @apply bg-blue-500 rounded-md;
-}
-
 
 .fade-animation {
     animation: fade 150ms ease-in;

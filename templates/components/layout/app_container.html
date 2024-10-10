@@ -1,17 +1,12 @@
 {% load i18n %}
 
-<div
-  {{ attrs }}
-  class="grid grid-cols-1 gap-2 duration-150 lg:grid-cols-4"
->
-
+<div {{ attrs }} class="grid grid-cols-1 gap-2 duration-150 lg:grid-cols-4">
   <div
     x-cloak
     id="container"
-    class="relative rounded-lg scrollbar-thin scrollbar-track-neutral-100/80 scrollbar-thumb-blue-500 dark:bg-neutral-900 dark:scrollbar-track-neutral-950 max-lg:order-2 lg:col-span-3 border border-neutral-200 dark:border-none table-inner"
+    class="table-inner relative rounded-lg border border-neutral-200 dark:border-none dark:bg-neutral-900 max-lg:order-2 lg:col-span-3 scrollbar"
   >
-    {{ body }} 
-    {% if pagination %}
+    {{ body }} {% if pagination %}
     <div>{{ pagination }}</div>
     {% endif %}
   </div>
@@ -21,7 +16,7 @@
       'max-lg:ltr:-right-full': !showFilters,
       'max-lg:inset-4': showFilters,
     }"
-    class="relative w-full bg-white rounded-lg duration-150 scrollbar-thin scrollbar-track-neutral-100/80 scrollbar-thumb-blue-500 ~p-2/3 dark:bg-neutral-900 dark:scrollbar-track-neutral-950 max-lg:fixed max-lg:top-4 max-lg:z-[100] max-lg:order-1 max-lg:m-auto max-lg:w-[90%] border border-neutral-200 dark:border-neutral-800 dark:lg:border-none max-lg:custom-shadow dark:shadow-none"
+    class="max-lg:custom-shadow relative w-full rounded-lg border border-neutral-200 bg-white duration-150 ~p-2/3 dark:border-neutral-800 dark:bg-neutral-900 dark:shadow-none max-lg:fixed max-lg:top-4 max-lg:z-[100] max-lg:order-1 max-lg:m-auto max-lg:w-[90%] dark:lg:border-none scrollbar"
   >
     {{ filters }}
   </div>
