@@ -124,6 +124,11 @@ class EmployeeManager(models.Manager):
                     models.Value(" "),
                     models.F("lastname"),
                 ),
+                short_name=Concat(
+                    models.F("firstname"),
+                    models.Value(" "),
+                    models.F("lastname"),
+                ),
                 search=Concat(
                     models.F("full_name"),
                     models.Value(" "),

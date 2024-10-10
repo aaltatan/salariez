@@ -47,11 +47,12 @@
       class="flex min-h-full w-full items-start gap-2 rounded-md border border-neutral-200 dark:border-none bg-white dark:bg-neutral-800 p-4 shadow-sm"
       x-transition
     >
-      <img
+      <!-- <img
         src="{% if obj.profile %}{{ obj.profile.url }}{% else %}{% static 'images/user.png' %}{% endif %}"
         alt="{{ obj.fullname }}"
+        loading="lazy"
         class="h-14 w-14 rounded-full aspect-square object-cover"
-      />
+      /> -->
       <div class="relative">
         <p class="mb-1 font-bold">
           {{ obj.fullname }}

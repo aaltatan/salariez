@@ -31,7 +31,7 @@ from apps.base.mixins import (
 select_related: list[str] = [
     'area',
     'position',
-    'job_status',
+    'status',
     'job_subtype',
     'job_subtype__job_type',
     'department',

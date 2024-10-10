@@ -35,10 +35,10 @@ class EmployeeFilterSet(FiltersMixin, filters.FilterSet):
             "data-disabled": "",
         }),
     )
-    job_status = filters.ModelMultipleChoiceFilter(
+    status = filters.ModelMultipleChoiceFilter(
         queryset=models.employee.Status.objects.all(),
-        field_name='job_status',
-        label=_('job status'),
+        field_name='status',
+        label=_('status'),
         method="filter_combobox",
     )
     job_type = filters.ModelMultipleChoiceFilter(
@@ -76,17 +76,17 @@ class EmployeeFilterSet(FiltersMixin, filters.FilterSet):
     ):
         super().__init__(data, queryset, request=request, prefix=prefix)
 
-        job_status = Object(
+        status = Object(
             url_name='statuses:search', 
-            field_name='job_status', 
+            field_name='status', 
             model=models.employee.Status,
             value_attributes=['name'],
             multiple=True,
         )
-        self.form.fields['job_status'].widget = get_search_field(
+        self.form.fields['status'].widget = get_search_field(
             widget=widgets.SelectMultiple, 
             form=self.form, 
-            obj=job_status
+            obj=status
         )
 
         job_type = Object(
@@ -137,4 +137,4 @@ class EmployeeFilterSet(FiltersMixin, filters.FilterSet):
 
     class Meta:
         model = models.Employee
-        fields = ["firstname", "status", "gender"]
+        fields = ["firstname", "gender"]

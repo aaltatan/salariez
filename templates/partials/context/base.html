@@ -6,7 +6,7 @@
 >
 
   {% if can_update %}
-  <c-context.btn hx-include="#no-content" href="{{ obj.get_update_path }}" datatype="href">
+  <c-context.btn href="{{ obj.get_update_path }}" datatype="href">
     {% translate 'update' %}
   </c-context.btn>
   {% endif %}

@@ -52,7 +52,31 @@
         {% translate 'institution id' %}:
       </span>
       <span class="ltr:ml-auto rtl:mr-auto">
+        {% if object.institution_id %}
         {{ object.institution_id }}
+        {% endif %}
+      </span>
+    </div>
+  </li>
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'religion' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.get_religion_display }}
+      </span>
+    </div>
+  </li>
+  <li class="py-2">
+    <div class="flex items-center gap-2">
+      <c-icons.info ratio="1rem" />
+      <span class="capitalize">
+        {% translate 'address' %}:
+      </span>
+      <span class="ltr:ml-auto rtl:mr-auto">
+        {{ object.current_address }}
       </span>
     </div>
   </li>

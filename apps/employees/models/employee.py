@@ -19,10 +19,12 @@ from apps.statuses.models import Status
 
 
 class Employee(models.Model):
-    
-    class StatusChoices(models.TextChoices):
-        ACTIVE = 'A', _('active').title()
-        INACTIVE = 'I', _('inactive').title()
+
+    class ReligionChoices(models.TextChoices):
+        MUSLIM = 'M', _('muslim').title()
+        CHRISTIAN = 'C', _('christian').title()
+        JEWISH = 'J', _('jewish').title()
+        OTHER = 'O', _('other').title()
     
     class GenderChoices(models.TextChoices):
         MALE = 'M', _('male').title()
@@ -134,6 +136,14 @@ class Employee(models.Model):
         choices=MilitaryStatus.choices,
         default=MilitaryStatus.EXCUSED,
     )
+    religion = models.CharField(
+        max_length=6,
+        choices=ReligionChoices.choices,
+        default=ReligionChoices.MUSLIM,
+    )
+    current_address = models.CharField(
+        max_length=255, default='', blank=True
+    )
     nationality = models.ForeignKey(
         Nationality, on_delete=models.PROTECT, related_name='employees'
     )
@@ -149,13 +159,8 @@ class Employee(models.Model):
     job_subtype = models.ForeignKey(
         JobSubtype, on_delete=models.PROTECT, related_name='employees'
     )
-    job_status = models.ForeignKey(
+    status = models.ForeignKey(
         Status, on_delete=models.PROTECT, related_name='employees'
-    )
-    status = models.CharField(
-        max_length=7,
-        choices=StatusChoices.choices,
-        default=StatusChoices.ACTIVE,
     )
     hire_date = models.DateField()
     institution_id = models.CharField(
@@ -192,6 +197,10 @@ class Employee(models.Model):
     @property
     def fullname(self) -> str:
         return f'{self.firstname} {self.father_name} {self.lastname}'
+
+    @property
+    def shortname(self) -> str:
+        return f'{self.firstname} {self.lastname}'
 
     def _get_app_label(self):
         return self.__class__._meta.app_label

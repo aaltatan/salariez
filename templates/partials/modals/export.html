@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <c-modal.container>
-  <form hx-get="{{ path }}" hx-include="[data-include]">
+  <form hx-get="{{ path }}">
     <c-modal.modal>
       <c-slot name="header">
         <span class="capitalize"> {% translate 'export' %} </span>

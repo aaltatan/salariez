@@ -25,11 +25,10 @@
   <c-slot name="body">
     <form 
     hx-get="{{ bulk_path }}" 
-    hx-include="[data-include]"
     x-data="{ selectedRows: [] }">
-    
+
       <c-table.container>
-    
+
         <input
         data-include
         type="hidden"
@@ -39,7 +38,7 @@
         <c-table.table>
           
           <thead>
-    
+
             <c-table.header-row>
 
               <c-table.header-cell>
@@ -87,7 +86,7 @@
               <c-table.header-cell />
               
             </c-table.header-row>
-    
+
             {% if can_delete %}
             <c-table.unselect-all colspan="10">
               {% if can_delete %}
@@ -98,7 +97,7 @@
               {% endif %}
             </c-table.unselect-all>
             {% endif %}
-    
+
           </thead>
           <!-- end header -->
       
@@ -110,11 +109,11 @@
 
               {% if can_update %}
               <c-table.td href="{{ obj.get_update_path }}">
-                 <c-user-card />
+                <c-user-card />
               </c-table.td>
               {% else %}
               <c-table.td>
-                 <c-user-card />
+                <c-user-card />
               </c-table.td>
               {% endif %}
 
@@ -128,8 +127,8 @@
 
               <c-table.td>
                 <div class="flex items-center justify-center">
-                  <c-layout.badge theme="{% if obj.job_status.has_salary %}green{% else %}red{% endif %}">
-                    {{ obj.job_status }}
+                  <c-layout.badge theme="{% if obj.status.has_salary %}green{% else %}red{% endif %}">
+                    {{ obj.status }}
                   </c-layout.badge>
                 </div>
               </c-table.td>
@@ -143,9 +142,9 @@
           </c-table.tbody>
           <!-- end rows -->
         </c-table.table>
-    
+
       </c-table.container>
-    
+
     </form>
   </c-slot>
 

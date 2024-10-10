@@ -21,7 +21,8 @@
 </script>
 {% else %}
 <td class="p-2">
-  <input
+  <div class="flex items-center justify-center">
+    <input
     type="checkbox"
     class="check"
     name="obj-{{ obj.id }}-selected"
@@ -36,5 +37,6 @@
           selectedRows.push(targetId);
       }"
   />
+  </div>
 </td>
 {% endif %}

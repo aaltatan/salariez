@@ -1,12 +1,11 @@
 {% load i18n %}
 
 <c-vars 
-theme="flex items-center gap-2 duration-150 ~py-2/4 ~px-1/2 whitespace-nowrap" 
+theme="flex items-center justify-center gap-2 duration-150 ~py-2/4 ~px-1/2 whitespace-nowrap" 
 th_theme="sticky top-0 z-20 left-0 bg-white dark:bg-neutral-900"/>
 
 {% if code_name %}
 <th 
-hx-indicator="#spinner"
 class="{{ th_theme }} cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-800" >
   <div
     hx-include="[data-include]"
@@ -17,8 +16,8 @@ class="{{ th_theme }} cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-
     hx-target="{{ target }}"
     hx-replace-url="true"
     hx-swap="outerHTML"
-    data-include
     class="{{ theme }}"
+    data-include
     {{ attrs }}
   >
     <span>{{ name }}</span>

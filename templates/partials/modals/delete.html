@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <c-modal.container>
-  <form hx-post="{{ delete_path }}" hx-include="[data-include]" @submit="modalOpen = false">
+  <form hx-post="{{ delete_path }}" @submit="modalOpen = false">
     <c-modal.modal>
 
       <c-slot name="header">

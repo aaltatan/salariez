@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <c-modal.container>
-  <form hx-post="{{ bulk_path }}" hx-include="[data-include]" @submit="modalOpen = false">
+  <form hx-post="{{ bulk_path }}" @submit="modalOpen = false">
     <c-modal.modal>
       <c-slot name="header">
         <span class="capitalize">{% translate 'confirm' %}</span>

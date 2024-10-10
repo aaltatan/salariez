@@ -1,7 +1,9 @@
 {% load i18n %}
 {% get_current_language as LANGUAGE_CODE %}
 
-<div dir="ltr" class="flex max-md:flex-col items-center justify-between gap-4 ~px-2/4 ~my-2/4">
+<div 
+dir="ltr" 
+class="flex max-md:flex-col items-center justify-between gap-4 ~px-2/4 ~my-2/4">
 
     <div class="flex items-center justify-between">
       {% if page_obj.has_previous %}
@@ -10,7 +12,6 @@
         hx-target="{{ target }}"
         hx-select="{{ target }}"
         hx-replace-url="true"
-        hx-include="{{ include }}"
         title="{% translate 'first page'|title %}"
       >
         <c-icons.arrow-double-left ratio="1.25rem"></c-icons.arrow-double-left>
@@ -27,7 +28,6 @@
         hx-target="{{ target }}"
         hx-select="{{ target }}"
         hx-replace-url="true"
-        hx-include="{{ include }}"
         title="{% translate 'previous page'|title %}"
       >
         <c-icons.arrow-left ratio="1.25rem"></c-icons.arrow-left>
@@ -54,7 +54,6 @@
         hx-target="{{ target }}"
         hx-select="{{ target }}"
         hx-replace-url="true"
-        hx-include="{{ include }}"
         title="{% translate 'next page'|title %}"
       >
         <c-icons.arrow-right ratio="1.25rem"></c-icons.arrow-right>
@@ -70,7 +69,6 @@
         hx-target="{{ target }}"
         hx-select="{{ target }}"
         hx-replace-url="true"
-        hx-include="{{ include }}"
         title="{% translate 'last page'|title %}"
       >
         <c-icons.arrow-double-right ratio="1.25rem"></c-icons.arrow-double-right>
@@ -82,7 +80,10 @@
       {% endif %}
     </div>
 
-    <div class="flex items-center gap-1 justify-center">
+    <div 
+    class="flex items-center gap-1 justify-center"
+    hx-include="#no-content"
+    >
       {{ pagination_form }}
       <span class="lg:hidden">
         <c-btns.icon 
@@ -96,7 +97,6 @@
       hx-get="{{ url }}"
       hx-target="{{ target }}"
       hx-select="{{ target }}"
-      hx-replace-url="true"
       hx-replace-url="true"
       type="reset"
       id="page-reset-btn"

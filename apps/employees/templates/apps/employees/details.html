@@ -38,8 +38,8 @@
     <div class="col-span-2 lg:col-span-3 tracking-tighter font-medium ~space-y-2/4">
       <div class="flex items-center gap-2">
         <p class="~text-xl/3xl">{{ object.fullname }}</p>
-        <c-layout.badge theme="{% if object.job_status.has_salary %}green{% else %}red{% endif %}">
-          {{ object.job_status }}
+        <c-layout.badge theme="{% if object.status.has_salary %}green{% else %}red{% endif %}">
+          {{ object.status }}
         </c-layout.badge>
         {% if perms.employees.update_employee %}
         <div class="ltr:ml-auto rtl:mr-auto">
@@ -75,7 +75,6 @@
         {% endfor %}
       </ul>
       <div class="flex items-center ~gap-1/2 flex-wrap">
-        <c-layout.tag>{{ object.department.cost_center }}</c-layout.tag>
         <c-layout.tag>{{ object.position }}</c-layout.tag>
         <c-layout.tag>{{ object.job_subtype }}</c-layout.tag>
         <c-layout.tag>{{ object.job_subtype.job_type }}</c-layout.tag>

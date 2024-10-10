@@ -63,18 +63,20 @@
   {% translate 'community information' %}
 </c-forms.divider>
 
-<div class="grid grid-cols-1 @lg:grid-cols-2 ~gap-1/2">
+<div class="grid grid-cols-1 @lg:grid-cols-3 ~gap-1/2">
   <c-forms.form-field :field="form.martial_status" />
   <c-forms.form-field :field="form.military_status" />
+  <c-forms.form-field :field="form.religion" />
 </div>
 
 <c-forms.divider>
   {% translate 'location information' %}
 </c-forms.divider>
 
-<div class="grid grid-cols-1 @lg:grid-cols-2 ~gap-1/2">
+<div class="grid grid-cols-1 @lg:grid-cols-3 ~gap-1/2">
   <c-forms.form-field :field="form.nationality" />
   <c-forms.form-field :field="form.area" />
+  <c-forms.form-field :field="form.current_address" />
 </div>
 
 <c-forms.divider>
@@ -85,12 +87,19 @@
   <c-forms.form-field :field="form.department" />
   <c-forms.form-field :field="form.position" />
   <c-forms.form-field :field="form.job_subtype" />
-  <c-forms.form-field :field="form.job_status" />
   <c-forms.form-field :field="form.status" />
   <c-forms.form-field :field="form.institution_id" />
   <c-forms.form-field :field="form.hire_date" />
+</div>
+
+<c-forms.divider>
+  {% translate 'salary information' %}
+</c-forms.divider>
+
+<div class="grid grid-cols-1 ~gap-1/2">
   <c-forms.form-field :field="form.salary" />
 </div>
+
 
 <div class="grid grid-cols-1 ~gap-1/2">
   <c-forms.form-field :field="form.notes" />
