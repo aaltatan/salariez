@@ -10,7 +10,6 @@ from braces.views import SuperuserRequiredMixin
 
 from . import models, forms, filters, mixins, resources, utils
 
-from apps.base import forms as base_forms
 from apps.base.mixins import (
     ListMixin,
     CreateMixin,
@@ -36,12 +35,7 @@ class ListTableView(
     
     permission_required = 'positions.view_position'
     
-    model = models.Position
     filter_class = filters.PositionFilterSet
-    
-    template_name = 'apps/positions/index.html'
-    
-    paginate_by_form = base_forms.PaginatedByForm
     paginate_by_form_attributes = {
         'hx-get': reverse_lazy('positions:index'),
         'hx-target': '#positions-table',

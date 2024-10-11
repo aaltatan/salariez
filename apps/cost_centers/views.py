@@ -10,7 +10,6 @@ from braces.views import SuperuserRequiredMixin
 
 from . import models, forms, filters, mixins, resources, utils
 
-from apps.base import forms as base_forms
 from apps.base.mixins import (
     ListMixin,
     CreateMixin,
@@ -36,12 +35,7 @@ class ListTableView(
     
     permission_required = 'cost_centers.view_costcenter'
     
-    model = models.CostCenter
     filter_class = filters.CostCenterFilterSet
-    
-    template_name = 'apps/cost_centers/index.html'
-    
-    paginate_by_form = base_forms.PaginatedByForm
     paginate_by_form_attributes = {
         'hx-get': reverse_lazy('cost_centers:index'),
         'hx-target': '#cost-centers-table',

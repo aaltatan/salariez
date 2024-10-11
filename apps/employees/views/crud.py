@@ -14,7 +14,6 @@ from .. import (
     models, forms, filters, mixins, resources, utils
 )
 
-from apps.base import forms as base_forms
 from apps.base.mixins import (
     ListMixin,
     CreateMixin,
@@ -67,12 +66,7 @@ class ListTableView(
     
     permission_required = 'employees.view_employee'
     
-    model = models.Employee
     filter_class = filters.EmployeeFilterSet
-    
-    template_name = 'apps/employees/index.html'
-    
-    paginate_by_form = base_forms.PaginatedByForm
     paginate_by_form_attributes = {
         'hx-get': reverse_lazy('employees:index'),
         'hx-target': '#employees-table',

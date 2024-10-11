@@ -9,6 +9,8 @@ from django.urls import reverse
 
 from .utils import HelperMixin
 
+from apps.base import forms as base_forms
+
 
 PERMS = Literal['create', 'update', 'delete', 'export', 'log']
 
@@ -17,19 +19,7 @@ class AbstractList(ABC):
     
     @property
     @abstractmethod
-    def model(self): ...
-    
-    @property
-    @abstractmethod
     def filter_class(self): ...
-    
-    @property
-    @abstractmethod
-    def template_name(self): ...
-    
-    @property
-    @abstractmethod
-    def paginate_by_form(self): ...
     
     @property
     @abstractmethod
@@ -42,14 +32,14 @@ class ListMixin(HelperMixin, AbstractList):
     utility class to implement list(table) view and its functionality.  
     
     ### required attributes:  
-    - `model: Model`
     - `filter_class: FilterSet`
-    - `template_name: str` table template path like `apps/<app_name>/partials/table.html`
-    - `paginate_by_form: Form`
     - `paginate_by_form_attributes: dict[str, reverse_lazy | str]` to set hx-get and hx-target attrs on form attributes  
 
     ### optional attributes:  
+    - `model: Model`
+    - `template_name: str` table template path like `apps/<app_name>/partials/table.html`
     - `filter_form_id: str` like `<app_name>-filter-form`
+    - `paginate_by_form: Form`
     
     # Note:  
     and also you need to implement `get_delete_path`, `get_delete_path` and `get_create_path` in the model which you will use in the view.
@@ -57,17 +47,29 @@ class ListMixin(HelperMixin, AbstractList):
     
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
 
+        model = self._get_model_class()
+
         for property in ['get_delete_path', 'get_update_path']:
-            if not hasattr(self.model, property):
-                model_name = self.model._meta.model_name.title()
+            if not hasattr(model, property):
+                model_name = model._meta.model_name.title()
                 raise NotImplementedError(
                     f'you implement {property} property on {model_name} model'
                 )
+            
+        template_name = self.get_template_name()
         
         context = self.get_context_data()
-        response = render(request, self.template_name, context)
+        response = render(request, template_name, context)
         response['Hx-Trigger'] = 'get-messages'
         return response
+    
+    def get_template_name(self) -> str:
+
+        if getattr(self, 'template_name', None) is not None:
+            return self.template_name
+        
+        app_label = self._get_app_label()
+        return f'apps/{app_label}/index.html'
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         """
@@ -179,10 +181,15 @@ class ListMixin(HelperMixin, AbstractList):
     
     def get_pagination_form(self):
 
+        if getattr(self, 'paginate_by_form', None) is not None:
+            paginate_by_form = self.paginate_by_form
+        else:
+            paginate_by_form = base_forms.PaginatedByForm
+
         attrs = self.paginate_by_form_attributes
         attrs['hx-select'] = attrs['hx-target']
         
-        pagination_form = self.paginate_by_form(
+        pagination_form = paginate_by_form(
             data=self.request.GET, attrs=attrs
         )
         return pagination_form
@@ -191,7 +198,7 @@ class ListMixin(HelperMixin, AbstractList):
         
         pagination_form = self.get_pagination_form()
         
-        per_page = self.paginate_by_form.PaginationChoices.TEN
+        per_page = pagination_form.PaginationChoices.TEN
             
         if pagination_form.data.get('per_page'):
             per_page = pagination_form.data.get('per_page')

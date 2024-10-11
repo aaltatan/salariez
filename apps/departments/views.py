@@ -10,7 +10,6 @@ from django.contrib.auth.mixins import (
 from braces.views import SuperuserRequiredMixin
 
 from . import models, forms, resources, utils, filters
-from apps.base import forms as base_forms
 
 from apps.base.mixins import (
     BulkModalMixin,
@@ -68,12 +67,7 @@ class ListTableView(
     
     permission_required = 'departments.view_department'
     
-    model = models.Department
     filter_class = filters.DepartmentFilterSet
-    
-    template_name = 'apps/departments/index.html'
-    
-    paginate_by_form = base_forms.PaginatedByForm
     paginate_by_form_attributes = {
         'hx-get': reverse_lazy('departments:index'),
         'hx-target': '#departments-table',

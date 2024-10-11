@@ -10,7 +10,6 @@ from braces.views import SuperuserRequiredMixin
 
 from . import models, forms, filters, mixins, resources, utils
 
-from apps.base import forms as base_forms
 from apps.base.mixins import (
     ListMixin,
     CreateMixin,
@@ -36,12 +35,7 @@ class ListTableView(
     
     permission_required = 'job_subtypes.view_jobsubtype'
     
-    model = models.JobSubtype
     filter_class = filters.JobSubtypeFilterSet
-    
-    template_name = 'apps/job_subtypes/index.html'
-    
-    paginate_by_form = base_forms.PaginatedByForm
     paginate_by_form_attributes = {
         'hx-get': reverse_lazy('job_subtypes:index'),
         'hx-target': '#job-subtypes-table',

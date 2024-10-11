@@ -3,7 +3,6 @@ from typing import Literal
 
 from django.urls import reverse
 from django.http import HttpResponse
-from django.forms import ModelForm
 
 
 class HelperMixin:
@@ -45,12 +44,18 @@ class HelperMixin:
         """
         get model class from derived `form_class` if model does not exists
         """
-        if hasattr(self, 'model'):
+        if getattr(self, 'model', None):
             return self.model
         
-        form_class: ModelForm = self.form_class
-        model_class = form_class._meta.model
-        return model_class
+        if getattr(self, 'form_class', None):
+            return self.form_class._meta.model
+        
+        if getattr(self, 'filter_class', None):
+            return self.filter_class._meta.model
+        
+        raise NotImplementedError(
+            'you need to set one of model, form_class or filter_class at least.'
+        )
     
     def _get_app_label(self):
         """
