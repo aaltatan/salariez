@@ -3,12 +3,16 @@
 <div class="border border-neutral-200 dark:border-none dark:bg-neutral-900 rounded-lg ~p-2/4">
   <div class="flex items-center justify-between">
     <span>{% translate 'male' %}</span>
-    <span class="ltr:ml-auto ltr:mr-1 rtl:mr-auto trl:ml-1">{{ counts.male }}</span>
+    <a href="{% url 'employees:index' %}?gender=M" class="ltr:ml-auto ltr:mr-1 rtl:mr-auto trl:ml-1">
+      {{ counts.male }}
+    </a>
     <span>{{ counts.male_avg }}%</span>
   </div>
   <div class="flex items-center justify-between">
     <span>{% translate 'female' %}</span>
-    <span class="ltr:ml-auto ltr:mr-1 rtl:mr-auto trl:ml-1">{{ counts.female }}</span>
+    <a href="{% url 'employees:index' %}?gender=F" class="ltr:ml-auto ltr:mr-1 rtl:mr-auto trl:ml-1">
+      {{ counts.male }}
+    </a>
     <span>{{ counts.female_avg }}%</span>
   </div>
   <span>{{ counts.count }}</span>

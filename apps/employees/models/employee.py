@@ -253,7 +253,13 @@ class Employee(models.Model):
         return self.fullname
 
     class Meta:
-        ordering = ['status', 'department__department_id', 'firstname']
+        ordering = [
+            '-status__has_salary', 
+            'department__department_id', 
+            'job_subtype__job_type',
+            'job_subtype',
+            'firstname'
+        ]
 
 
 def employee_pre_save(sender, instance: Employee, *args, **kwargs):

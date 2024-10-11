@@ -7,8 +7,8 @@
   <div class="flex items-center gap-1">
     <img
     class="object-cover size-10 rounded-full aspect-square block"
-    src="{% if obj.profile %}{{ obj.profile.url }}{% else %}{% static 'images/user.png' %}{% endif %}"
-    alt="obj.fullname">
+    data-src="{% if obj.profile %}{{ obj.profile.url }}{% else %}{% static 'images/user.png' %}{% endif %}"
+    alt="obj.fullname" x-intersect.once="$el.src = $el.dataset.src">
     <span>
       {{ obj.fullname }}
     </span>
