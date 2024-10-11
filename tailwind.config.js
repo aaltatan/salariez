@@ -85,6 +85,12 @@ module.exports = {
       addVariant("hx-request", ["&.htmx-request"]);
     }),
     plugin(function ({ addVariant }) {
+      addVariant("hx-swap", ["&.htmx-swapping"]);
+    }),
+    plugin(function ({ addVariant }) {
+      addVariant("hx-settle", ["&.htmx-settling"]);
+    }),
+    plugin(function ({ addVariant }) {
       addVariant(
         "has-checked", 
         ['&:has(input[type="checkbox"][name$="-selected"]:checked)']

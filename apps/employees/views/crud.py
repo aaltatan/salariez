@@ -69,7 +69,7 @@ class ListTableView(
     filter_class = filters.EmployeeFilterSet
     paginate_by_form_attributes = {
         'hx-get': reverse_lazy('employees:index'),
-        'hx-target': '#employees-table',
+        'hx-target': '#employees-table #container > div',
     }
 
     def get_queryset(self):

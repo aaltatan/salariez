@@ -85,5 +85,70 @@
       e.preventDefault();
     }
   }
+
+  function handleContextClick(e) {
+    const contextMenuBtn = e.target.closest('tr').querySelector('td:last-child span');
+    Alpine.$data(contextMenuBtn).openContext = true;
+  }
+
+  function setOffsetTr(element) {
+    const ul = element.target.closest('tr').querySelector('td:last-child ul');
+    const ulWidth = getComputedStyle(ul).width;
+    const ulHeight = Math.floor(+getComputedStyle(ul).height.replace('px', ''))
+    const portHeight = document.documentElement.clientHeight;
+    const direction = document.getElementById('app').dir;
+    const rightOrLeft = direction === 'ltr' ? '-' : '+';
+
+    let left = element.x;
+    let top = element.y;
+
+    if (direction === 'rtl') {
+      left = `${element.x + 16}px`
+    } else {
+      left = `calc(${element.x - 16}px - ${ulWidth})`
+    }
+
+    const topCriteria = (portHeight - element.y) > ulHeight;
+    top = topCriteria ? top : (portHeight - ulHeight - 16);
+
+    ul.style.left = left;
+    ul.style.top = `${top}px`;
+  }
+
+  function setOffsetContextMenu(element) {
+    const ul = element.target.closest('div[data-container]').querySelector('ul');
+    const ulWidth = getComputedStyle(ul).width;
+    const ulHeight = Math.floor(+getComputedStyle(ul).height.replace('px', ''))
+    const portHeight = document.documentElement.clientHeight;
+    const direction = document.getElementById('app').dir;
+
+    let left = element.x;
+    let top = element.y;
+
+    if (direction === 'rtl') {
+      left = `${element.x + 16}px`
+    } else {
+      left = `calc(${element.x - 16}px - ${ulWidth})`
+    }
+
+    const topCriteria = (portHeight - element.y) > ulHeight;
+    top = topCriteria ? top : (portHeight - ulHeight - 16);
+
+    ul.style.left = left;
+    ul.style.top = `${top}px`;
+  }
+
+  function handleCheckBoxSelect(e) {
+    let isChecked = e.target.checked;
+    let rowsChecks = document.querySelectorAll(`input[data-check]`);
+    let form = document.querySelector('[x-data="{ selectedRows: [] }"]')
+    rowsChecks.forEach(el => {
+      el.checked = isChecked;
+      let id = el.getAttribute('id');
+      if (isChecked) Alpine.$data(form).selectedRows.push(id);
+    });
+    Alpine.$data(form).selectedRows = [...new Set(Alpine.$data(form).selectedRows)]
+    if (!isChecked) Alpine.$data(form).selectedRows = [];
+  }
   
 </script>

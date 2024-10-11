@@ -12,8 +12,9 @@ class="{{ th_theme }} cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-
     hx-vals='js:{
     order: `{% firstof request.GET.order code_name %}` === "{{ code_name }}" ? "-" + "{{ code_name }}" : "{{ code_name }}" }'
     hx-trigger="click"
-    hx-select="{{ target }}"
     hx-target="{{ target }}"
+    hx-push-url="true"
+    hx-headers='{"partial": true}'
     hx-replace-url="true"
     hx-swap="outerHTML"
     class="{{ theme }}"

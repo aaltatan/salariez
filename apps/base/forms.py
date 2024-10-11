@@ -26,6 +26,7 @@ class PaginatedByForm(forms.Form):
         )
         self.fields['per_page'].widget.attrs['hx-include'] = '[data-include]'
         self.fields['per_page'].widget.attrs['hx-replace-url'] = 'true'
+        self.fields['per_page'].widget.attrs['hx-headers'] = '{"partial": true}'
         self.fields['per_page'].widget.attrs['data-include']= ''
         
         for k, v in attrs.items():

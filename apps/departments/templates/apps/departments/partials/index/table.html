@@ -1,6 +1,6 @@
 {% load i18n math_filters %}
 
-<div>
+<c-layout.table-container>
   <form hx-get="{{ bulk_path }}" x-data="{ selectedRows: [] }">
     <c-table.container>
       <input
@@ -150,4 +150,4 @@
     </c-table.container>
   </form>
   {% include 'partials/pagination/base.html' %}
-</div>
+</c-layout.table-container>

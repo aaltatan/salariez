@@ -27,7 +27,6 @@ class AbstractList(ABC):
     
     
 class ListMixin(HelperMixin, AbstractList):
-    
     """
     utility class to implement list(table) view and its functionality.  
     
@@ -57,6 +56,8 @@ class ListMixin(HelperMixin, AbstractList):
                 )
             
         template_name = self.get_template_name()
+        if request.headers.get('partial'):
+            template_name = self.get_partial_template_name()
         
         context = self.get_context_data()
         response = render(request, template_name, context)
@@ -70,6 +71,14 @@ class ListMixin(HelperMixin, AbstractList):
         
         app_label = self._get_app_label()
         return f'apps/{app_label}/index.html'
+    
+    def get_partial_template_name(self) -> str:
+
+        if getattr(self, 'partial_template_name', None) is not None:
+            return self.partial_template_name
+        
+        app_label = self._get_app_label()
+        return f'apps/{app_label}/partials/index/table.html'
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         """
@@ -187,7 +196,6 @@ class ListMixin(HelperMixin, AbstractList):
             paginate_by_form = base_forms.PaginatedByForm
 
         attrs = self.paginate_by_form_attributes
-        attrs['hx-select'] = attrs['hx-target']
         
         pagination_form = paginate_by_form(
             data=self.request.GET, attrs=attrs

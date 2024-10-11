@@ -1,24 +1,10 @@
 {% if data_check == 'all' %}
 <input
-  @change="handleChange"
+  @change="handleCheckBoxSelect"
   id="check-all"
   class="check"
   type="checkbox"
 />
-<script>
-  function handleChange(e) {
-    let isChecked = e.target.checked;
-    let rowsChecks = document.querySelectorAll(`input[data-check]`);
-    let form = document.querySelector('[x-data="{ selectedRows: [] }"]')
-    rowsChecks.forEach(el => {
-      el.checked = isChecked;
-      let id = el.getAttribute('id');
-      if (isChecked) Alpine.$data(form).selectedRows.push(id);
-    });
-    Alpine.$data(form).selectedRows = [...new Set(Alpine.$data(form).selectedRows)]
-    if (!isChecked) Alpine.$data(form).selectedRows = [];
-  }
-</script>
 {% else %}
 <td class="p-2">
   <div class="flex items-center justify-center">

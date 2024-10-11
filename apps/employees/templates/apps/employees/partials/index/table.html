@@ -1,6 +1,6 @@
 {% load i18n static format_numbers%}
 
-<div>
+<c-layout.table-container>
   <form 
   hx-get="{{ bulk_path }}" 
   x-data="{ selectedRows: [] }">
@@ -86,12 +86,12 @@
             <c-table.check />
 
             {% if can_update %}
-            <c-table.td href="{{ obj.get_update_path }}">
-              <c-user-card />
+            <c-table.td href="{{ obj.get_absolute_path }}">
+              {{ obj.fullname }}
             </c-table.td>
             {% else %}
             <c-table.td>
-              <c-user-card />
+              {{ obj.fullname }}
             </c-table.td>
             {% endif %}
 
@@ -104,11 +104,7 @@
             <c-table.td>{{ obj.salary|money }}</c-table.td>
 
             <c-table.td>
-              <div class="flex items-center justify-center">
-                <c-layout.badge theme="{% if obj.status.has_salary %}green{% else %}red{% endif %}">
-                  {{ obj.status }}
-                </c-layout.badge>
-              </div>
+                {{ obj.status }}
             </c-table.td>
 
             <c-table.td>{% include 'partials/context/base.html' %}</c-table.td>
@@ -125,4 +121,4 @@
 
   </form>
   {% include 'partials/pagination/base.html' %}
-</div>
+</c-layout.table-container>

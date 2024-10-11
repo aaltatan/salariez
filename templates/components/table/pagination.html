@@ -11,7 +11,8 @@ class="flex max-md:flex-col items-center justify-between gap-4 ~px-2/4 ~my-2/4">
       <c-btns.icon
         hx-get="{{ url }}?page=1"
         hx-target="{{ target }}"
-        hx-select="{{ target }}"
+        hx-headers='{"partial": true}'
+        hx-push-url="true"
         hx-replace-url="true"
         title="{% translate 'first page'|title %}"
       >
@@ -27,7 +28,8 @@ class="flex max-md:flex-col items-center justify-between gap-4 ~px-2/4 ~my-2/4">
       <c-btns.icon
         hx-get="{{ url }}?page={{ page_obj.previous_page_number }}"
         hx-target="{{ target }}"
-        hx-select="{{ target }}"
+        hx-headers='{"partial": true}'
+        hx-push-url="true"
         hx-replace-url="true"
         title="{% translate 'previous page'|title %}"
       >
@@ -53,7 +55,8 @@ class="flex max-md:flex-col items-center justify-between gap-4 ~px-2/4 ~my-2/4">
       <c-btns.icon
         hx-get="{{ url }}?page={{ page_obj.next_page_number }}"
         hx-target="{{ target }}"
-        hx-select="{{ target }}"
+        hx-headers='{"partial": true}'
+        hx-push-url="true"
         hx-replace-url="true"
         title="{% translate 'next page'|title %}"
       >
@@ -68,7 +71,8 @@ class="flex max-md:flex-col items-center justify-between gap-4 ~px-2/4 ~my-2/4">
       <c-btns.icon
         hx-get="{{ url }}?page={{ page_obj.paginator.num_pages }}"
         hx-target="{{ target }}"
-        hx-select="{{ target }}"
+        hx-headers='{"partial": true}'
+        hx-push-url="true"
         hx-replace-url="true"
         title="{% translate 'last page'|title %}"
       >
