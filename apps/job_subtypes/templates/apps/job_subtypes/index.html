@@ -6,13 +6,23 @@
 
 {% block body %}
 
-    <span
-    class="hidden"
-    x-init="breadCrumbs.push({
-        text: '{% translate 'job subtypes' %}', 
-        href: '{% url 'job_subtypes:index' %}'
-    })"></span>
+<span
+class="hidden"
+x-init="breadCrumbs.push({
+    text: '{% translate 'job subtypes' %}', 
+    href: '{% url 'job_subtypes:index' %}'
+})"></span>
 
-    {% include 'apps/job_subtypes/partials/table.html' %}
+<c-layout.app-container id="job-subtypes-table" app_title="{% translate 'job subtypes' %}">
+
+    <c-slot name="filters">
+        {% include 'partials/filters/base.html' %}
+    </c-slot>
+
+    <c-slot name="table">
+        {% include 'apps/job_subtypes/partials/index/table.html' %}
+    </c-slot>
+
+</c-layout.app-container>
 
 {% endblock %}

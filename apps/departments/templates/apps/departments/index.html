@@ -15,6 +15,16 @@ x-init="breadCrumbs.push(
 )"  
 ></span>
 
-{% include 'apps/departments/partials/table.html' %}
+<c-layout.app-container id="departments-table" app_title="{% translate 'departments' %}">
+
+    <c-slot name="filters">
+        {% include 'partials/filters/base.html' %}
+    </c-slot>
+
+    <c-slot name="table">
+        {% include 'apps/departments/partials/index/table.html' %}
+    </c-slot>
+
+</c-layout.app-container>
 
 {% endblock %}

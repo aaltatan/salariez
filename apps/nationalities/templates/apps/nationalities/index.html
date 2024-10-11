@@ -5,13 +5,24 @@
 
 {% block body %}
 
-    <span
-    class="hidden"
-    x-init="breadCrumbs.push({
-        text: '{% translate 'nationalities' %}', 
-        href: '{% url 'nationalities:index' %}'
-    })"></span>
+<span
+class="hidden"
+x-init="breadCrumbs.push({
+    text: '{% translate 'nationalities' %}', 
+    href: '{% url 'nationalities:index' %}'
+})"></span>
 
-    {% include 'apps/nationalities/partials/table.html' %}
+
+<c-layout.app-container id="nationalities-table" app_title="{% translate 'nationalities' %}">
+
+    <c-slot name="filters">
+        {% include 'partials/filters/base.html' %}
+    </c-slot>
+    
+    <c-slot name="table">
+        {% include 'apps/nationalities/partials/index/table.html' %}
+    </c-slot>
+    
+</c-layout.app-container>
 
 {% endblock %}

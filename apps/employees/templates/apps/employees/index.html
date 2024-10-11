@@ -13,6 +13,16 @@
         href: '{% url 'employees:index' %}'
     })"></span>
 
-    {% include 'apps/employees/partials/table.html' %}
+    <c-layout.app-container id="employees-table" app_title="{% translate 'employees' %}">
+
+        <c-slot name="filters">
+          {% include 'apps/employees/partials/index/filters.html' %}
+        </c-slot>
+      
+        <c-slot name="table">
+          {% include 'apps/employees/partials/index/table.html' %}
+        </c-slot>
+      
+    </c-layout.app-container>
 
 {% endblock %}
