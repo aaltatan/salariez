@@ -1,3 +1,5 @@
+import json
+
 from django.http import HttpRequest, HttpResponse
 from django.contrib.auth.decorators import (
   login_required, permission_required
@@ -14,6 +16,6 @@ def male_female_card(request: HttpRequest) -> HttpResponse:
     counts = models.Employee.objects.get_male_female_count()
     template_name = 'apps/employees/partials/dashboard/male-female-count.html'
 
-    context = {'counts': counts}
+    context = {'data': json.dumps(counts)}
 
     return render(request, template_name, context)
