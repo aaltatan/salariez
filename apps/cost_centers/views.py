@@ -38,7 +38,7 @@ class ListTableView(
     filter_class = filters.CostCenterFilterSet
     paginate_by_form_attributes = {
         'hx-get': reverse_lazy('cost_centers:index'),
-        'hx-target': '#cost-centers-table',
+        'hx-target': '#cost-centers-table #container > div',
     }
 
 

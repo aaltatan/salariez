@@ -92,7 +92,7 @@ class ListMixin(HelperMixin, AbstractList):
         return f'apps/{app_label}/partials/index/table.html'
 
     def get_context_data(
-        self, partial: bool = False, **kwargs: Any
+        self, **kwargs: Any
     ) -> dict[str, Any]:
         """
         append `qs`, `filter_form` and `pagination_form` to the context

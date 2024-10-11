@@ -70,7 +70,7 @@ class ListTableView(
     filter_class = filters.DepartmentFilterSet
     paginate_by_form_attributes = {
         'hx-get': reverse_lazy('departments:index'),
-        'hx-target': '#departments-table',
+        'hx-target': '#departments-table #container > div',
     }
     
     def get_queryset(self):

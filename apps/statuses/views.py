@@ -38,7 +38,7 @@ class ListTableView(
     filter_class = filters.StatusFilterSet
     paginate_by_form_attributes = {
         'hx-get': reverse_lazy('statuses:index'),
-        'hx-target': '#statuses-table',
+        'hx-target': '#statuses-table #container > div',
     }
 
 

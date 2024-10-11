@@ -85,7 +85,7 @@
 
             <c-table.td>{{ obj.description }}</c-table.td>
 
-            <c-table.td>{% include 'partials/context/base.html' %}</c-table.td>
+            <c-table.td><c-context.context /></c-table.td>
           </c-table.tr>
           {% empty %}
           <c-table.empty-tr colspan="5" />

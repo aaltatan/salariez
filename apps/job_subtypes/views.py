@@ -38,7 +38,7 @@ class ListTableView(
     filter_class = filters.JobSubtypeFilterSet
     paginate_by_form_attributes = {
         'hx-get': reverse_lazy('job_subtypes:index'),
-        'hx-target': '#job-subtypes-table',
+        'hx-target': '#job-subtypes-table #container > div',
     }
     
     def get_queryset(self):

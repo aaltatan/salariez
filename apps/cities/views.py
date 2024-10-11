@@ -38,7 +38,7 @@ class ListTableView(
     filter_class = filters.CityFilterSet
     paginate_by_form_attributes = {
         'hx-get': reverse_lazy('cities:index'),
-        'hx-target': '#cities-table',
+        'hx-target': '#cities-table #container > div',
     }
 
 

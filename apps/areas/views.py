@@ -38,7 +38,7 @@ class ListTableView(
     filter_class = filters.AreaFilterSet
     paginate_by_form_attributes = {
         'hx-get': reverse_lazy('areas:index'),
-        'hx-target': '#areas-table',
+        'hx-target': '#areas-table #container > div',
     }
 
     def get_queryset(self):

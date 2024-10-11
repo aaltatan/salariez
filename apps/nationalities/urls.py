@@ -17,6 +17,7 @@ app_name = 'nationalities'
 
 urlpatterns = [
     path('', ListTableView.as_view(), name='index'),
+    path('<int:id>/', ListTableView.as_view(), name='index'),
     path('create/', CreateView.as_view(), name='create'),
     path('bulk/', BulkModalView.as_view(), name='bulk'),
     path('search/', SearchView.as_view(), name='search'),
