@@ -1,7 +1,7 @@
 from typing import Any, Literal
 from abc import ABC, abstractmethod
 
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, HttpRequest
 from django.core.paginator import Paginator
 from django.db.models import QuerySet
@@ -64,6 +64,17 @@ class ListMixin(HelperMixin, AbstractList):
         response['Hx-Trigger'] = 'get-messages'
         return response
     
+    # get contextmenu list
+    def post(self, request: HttpRequest, id: int):
+
+        model = self._get_model_class()
+        object = get_object_or_404(model, id=id)
+
+        context = self.get_context_data()
+        context['obj'] = object
+
+        return render(request, 'partials/context/base.html', context)
+    
     def get_template_name(self) -> str:
 
         if getattr(self, 'template_name', None) is not None:
@@ -80,10 +91,13 @@ class ListMixin(HelperMixin, AbstractList):
         app_label = self._get_app_label()
         return f'apps/{app_label}/partials/index/table.html'
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(
+        self, partial: bool = False, **kwargs: Any
+    ) -> dict[str, Any]:
         """
         append `qs`, `filter_form` and `pagination_form` to the context
         """
+        
         context = super().get_context_data(
             object_list=self.get_queryset(), **kwargs
         )

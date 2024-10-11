@@ -115,27 +115,28 @@
     ul.style.top = `${top}px`;
   }
 
-  function setOffsetContextMenu(element) {
-    const ul = element.target.closest('div[data-container]').querySelector('ul');
+  function setOffsetContextMenu(e) {
+    const ul = e.target.closest('div[data-container]').querySelector('ul');
     const ulWidth = getComputedStyle(ul).width;
-    const ulHeight = Math.floor(+getComputedStyle(ul).height.replace('px', ''))
+    const ulHeight = 100;
     const portHeight = document.documentElement.clientHeight;
     const direction = document.getElementById('app').dir;
 
-    let left = element.x;
-    let top = element.y;
+    let left = e.x;
+    let top = e.y;
 
     if (direction === 'rtl') {
-      left = `${element.x + 16}px`
+      left = `${e.x + 16}px`
     } else {
-      left = `calc(${element.x - 16}px - ${ulWidth})`
+      left = `calc(${e.x - 16}px - ${ulWidth})`
     }
 
-    const topCriteria = (portHeight - element.y) > ulHeight;
+    const topCriteria = (portHeight - e.y) > ulHeight;
     top = topCriteria ? top : (portHeight - ulHeight - 16);
 
     ul.style.left = left;
     ul.style.top = `${top}px`;
+
   }
 
   function handleCheckBoxSelect(e) {

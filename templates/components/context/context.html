@@ -1,35 +1,29 @@
 {% load i18n %}
-{% get_current_language as LANGUAGE_CODE %}
 
-<div 
-data-container 
-class="relative inline-block" 
-@click.outside="openContext = false"
-@scroll.window="openContext = false"
-x-data="{openContext: false}" >
-
+<div
+  data-container
+  class="relative inline-block"
+  @click.outside="openContext = false"
+  @scroll.window="openContext = false"
+  x-data="{openContext: false}"
+>
   <c-btns.icon
-    @click.debounce.1="setOffsetContextMenu"
-    @click="openContext = true"
+    hx-post="{{ obj.get_contextmenu_path }}"
+    hx-target="next ul"
+    hx-swap="innerHTML"
+    hx-indicator="#no-content"
+    @click="openContext = true; setOffsetContextMenu($event)"
     role="button"
-    x-bind:class="openContext && '!bg-neutral-300 dark:!bg-neutral-700'"
+    :class="openContext && '!bg-neutral-300 dark:!bg-neutral-700'"
   >
-    ...
+    <div class="size-4 flex items-center justify-center">...</div>
   </c-btns.icon>
 
   <ul
-    role="menu"
-    x-show="openContext"
-    x-transition:enter="transition ease-out duration-100"
-    x-transition:enter-start="opacity-0 scale-90"
-    x-transition:enter-end="opacity-100 scale-100"
-    x-transition:leave="transition ease-in duration-100"
-    x-transition:leave-start="opacity-100 scale-100"
-    x-transition:leave-end="opacity-0 scale-90"
-    x-cloak
-    class="rounded overflow-hidden p-1 fixed min-w-[8rem] dark:bg-neutral-800 ltr:origin-top-right rtl:origin-top-left border border-neutral-200 bg-white custom-shadow dark:border-none dark:shadow-none dark:border-neutral-800 z-50"
-  >
-    {{ slot }}
+    role="menu" x-cloak class="contextmenu" x-show="openContext"
+    x-transition:enter="transition ease-linear duration-100"
+    x-transition:enter-start="-translate-y-1 opacity-90"
+    x-transition:enter-end="translate-y-0 opacity-100">
+    <span class="p-4 capitalize">{% translate 'loading' %}</span>
   </ul>
-
 </div>

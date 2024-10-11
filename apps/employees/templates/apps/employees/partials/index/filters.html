@@ -3,8 +3,8 @@
 <c-forms.filters
   id="{{ filter_form }}"
   hx-get="{{ index_path }}"
-  hx-target="#container"
-  hx-select="#container"
+  hx-target="{{ target }}"
+  hx-headers='{"partial": true}'
   hx-disabled-elt="*[data-disabled]"
   hx-disinherit="hx-select"
   hx-replace-url="true"
