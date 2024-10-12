@@ -1,47 +1,7 @@
 {% load i18n %}
 
-<c-vars 
-theme="flex items-center justify-center gap-2 duration-150 ~py-2/4 ~px-1/2 whitespace-nowrap" 
-th_theme="sticky top-0 z-20 left-0 bg-white dark:bg-neutral-900"/>
-
-{% if code_name %}
-<th 
-class="{{ th_theme }} cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-800" >
-  <div
-    hx-include="[data-include]"
-    hx-vals='js:{
-    order: `{% firstof request.GET.order code_name %}` === "{{ code_name }}" ? "-" + "{{ code_name }}" : "{{ code_name }}" }'
-    hx-trigger="click"
-    hx-target="{{ target }}"
-    hx-push-url="true"
-    hx-headers='{"partial": true}'
-    hx-replace-url="true"
-    hx-swap="outerHTML"
-    class="{{ theme }}"
-    data-include
-    {{ attrs }}
-  >
+<th class="sticky top-0 z-20 left-0 bg-white dark:bg-neutral-900">
+  <div class="flex items-center justify-center gap-2 duration-150 ~py-1/2 ~px-2/4 whitespace-nowrap">
     <span>{{ name }}</span>
-    <span class="duration-150" :class="
-      let orderValue = document.getElementsByName('order')[0].value;
-      let criteria = orderValue.endsWith('{{ code_name }}');
-      if (criteria) {
-        return !orderValue.startsWith('-') && 'rotate-180';
-      } else {
-        return 'hidden';
-      }">
-      <c-icons.triangle ratio="0.5rem"></c-icons.triangle>
-    </span>
   </div>
 </th>
-{% else %}
-<th class="{{ th_theme }}">
-  <div class="{{ theme }}">
-    {% if name %}
-    <span>{{ name }}</span>
-    {% else %}
-    {{ slot }}
-    {% endif %}
-  </div>
-</th>
-{% endif %}

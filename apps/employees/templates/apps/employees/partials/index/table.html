@@ -5,14 +5,12 @@
   hx-get="{{ bulk_path }}" 
   x-data="{ selectedRows: [] }">
 
+    <div class="m-2 flex items-center justify-end">
+      <c-inputs.sort-by />
+    </div>
+
     <c-table.container>
 
-      <input
-      data-include
-      type="hidden"
-      name="order"
-      value="{% firstof request.GET.order default_column %}"/>
-    
       <c-table.table>
         
         <thead>

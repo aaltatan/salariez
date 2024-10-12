@@ -65,6 +65,19 @@ class ListTableView(
 ):
     
     permission_required = 'employees.view_employee'
+
+    sortable_by = [
+        'gender',
+        'department__department_id',
+        'department',
+        'job_subtype',
+        'job_subtype__job_type',
+        'position',
+        'status',
+        'status__has_salary',
+        'hire_date',
+        'birth_date',
+    ]
     
     filter_class = filters.EmployeeFilterSet
     paginate_by_form_attributes = {

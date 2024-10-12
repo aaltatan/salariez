@@ -33,13 +33,6 @@ class HelperMixin:
         response['HX-Trigger'] = 'get-messages'
         return response
 
-    def _get_default_ordering(self):
-        """
-        to use it to set default order in list mixin queryset  
-        """
-        model = self._get_model_class()
-        return model._meta.ordering
-    
     def _get_model_class(self):
         """
         get model class from derived `form_class` if model does not exists

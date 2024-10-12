@@ -23,18 +23,14 @@
     dropdownOpen: false, 
     concatItems: '',
     selectedCount: 0,
-    rawItems: [
-      {name: 'name', checked: true}
-    ],
-    items: [
-      {name: 'name', checked: true}
-    ],
+    items: JSON.parse('{{ ordering }}'),
 }">
 
-  <button
+  <span
     @click="dropdownOpen = canOpen"
     :title="concatItems"
     class="flex items-center justify-center gap-2 rounded-md border border-neutral-200 dark:border-neutral-800 py-2 px-4 text-sm font-medium transition-colors focus:outline-none  disabled:pointer-events-none disabled:opacity-50"
+    role="button"
   >
     <span x-text="selectedCount ?  selectedCount + '{% translate ' selected' %}' : '{% translate 'sort by' %}'" class="translate-y-px leading-none capitalize">
       
@@ -42,7 +38,7 @@
     <span class="rotate-90">
       <c-icons.double-arrow ratio="0.75rem" />
     </span>
-  </button>
+  </span>
 
   <div
     x-show="dropdownOpen"
@@ -50,7 +46,7 @@
     x-transition:enter="ease-out duration-200"
     x-transition:enter-start="-translate-y-2"
     x-transition:enter-end="translate-y-0"
-    class="absolute top-0 z-50 mt-12 ltr:left-0 rtl:right-0 min-w-56"
+    class="absolute top-0 z-50 mt-8 end-2 min-w-56"
     x-cloak
   >
     <div
@@ -58,28 +54,26 @@
     >
 
       <div x-sort>
-        <template id="template" x-for="(item, idx) in items" :key="item.code">
+        <template x-for="(item, idx) in items" :key="item.value">
           <div
           x-sort:item
-          :data-sort-item="idx"
-          class="relative flex cursor-default select-none gap-2 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors  hover:bg-neutral-100 dark:hover:bg-neutral-900"
+          class="relative flex select-none gap-2 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-900 cursor-pointer"
           >
-            <input type="checkbox" class="check" name="order" x-model="item.checked" :value="item.value">
-  
-            <div 
+            <div class="flex items-center gap-1 w-full">
+              <input type="checkbox" class="check" name="order" x-model="item.checked" :id="'id_' + item.value" :value="item.value" data-include>
+              <label :for="'id_' + item.value" x-text="item.text" class="capitalize whitespace-nowrap block">
+              </label>
+            </div>
+            
+            <span 
             @click="
             let direction = item.direction; 
             item.direction = direction === 'asc' ? 'desc' : 'asc';
-            item.value = direction === 'asc' ? '-' + item.code : item.code;
-            " 
-            class="flex items-center justify-between gap-1 w-full cursor-pointer">
-              <span x-text="item.text" class="capitalize whitespace-nowrap"></span>
-              <span 
-              :class="{ 'rotate-180 text-blue-500': item.direction === 'desc' }" 
-              class="text-xs tracking-widest opacity-60 duration-150">
-                <c-icons.sort-arrows ratio="1rem" />
-              </span>
-            </div>
+            item.value = direction === 'asc' ? '-' + item.code : item.code;" 
+            :class="{ 'text-blue-500': item.direction === 'desc' }" 
+            :title="item.direction === 'asc' ? '{% translate 'ascending'|title %}' : '{% translate 'descending'|title %}'"
+            class="block font-semibold tracking-tighter text-xs cursor-pointer duration-150 capitalize" x-text="item.direction === 'asc' ? '{% translate 'asc' %}' : '{% translate 'desc' %}'">
+            </span>
   
           </div>
         </template>
@@ -88,31 +82,13 @@
       <div class="flex items-center justify-end gap-1 me-1">
   
         <c-btns.btn 
-        datatype="button" 
         datatheme="secondary" 
-        hx-post="{% url 'base:index' %}"
-        hx-include="[name='order']"
-        hx-indicator="#no-content"
-        hx-swap="none">
+        hx-get="{{ index_path }}"
+        hx-target="{{ target }}"
+        hx-replace-url="true"
+        hx-headers='{"partial": true}'
+        hx-include="[data-include]">
           {% translate 'sort' %}
-        </c-btns.btn>
-  
-        <c-btns.btn 
-        datatype="button" 
-        datatheme="secondary"
-        @click="items = rawItems.map(e => {
-          let direction = e.name.startsWith('-') ? 'desc' : 'asc';
-          let code = direction === 'asc' ? e.name : e.name.slice(1);
-          let text = code.replace(/_{1,2}/g, ' ').trim();
-          return {
-            direction: direction,
-            code: code,
-            text: text,
-            value: e.name,
-            checked: e.checked,
-          }
-        })">
-          {% translate 'reset' %}
         </c-btns.btn>
   
       </div>

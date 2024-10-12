@@ -1,3 +1,4 @@
+import json
 from typing import Any, Literal
 from abc import ABC, abstractmethod
 
@@ -121,6 +122,8 @@ class ListMixin(HelperMixin, AbstractList):
             'can_export': self._has_perm('export'),
             'can_log': self._has_perm('log'),
             ######
+            'ordering': json.dumps(self.get_ordering()) ,
+            ######
             'target': self.paginate_by_form_attributes['hx-target'],
             'filter_form': self._get_filter_form_id()
         }
@@ -161,20 +164,64 @@ class ListMixin(HelperMixin, AbstractList):
         page = self.get_current_page()
         
         return paginator.get_page(page).object_list
+    
+    def normalize_sort_item(self, string: str) -> str:
+        return string[1:] if string.startswith('-') else string 
+    
+    def normalize_sort_list(self, lst: list[str]) -> list[str]:
+        return [
+            self.normalize_sort_item(o) for o in lst
+        ]
+    
+    def get_default_ordering(self) -> tuple[list[str], list[str]]:
+
+        ordering: list = self.request.GET.getlist('order')
+        default_ordering: list = self._get_model_class()._meta.ordering
+
+        if not any(ordering):
+            checked_list = default_ordering
+            return checked_list, []
+        
+        unchecked_list = []
+        checked_list = ordering
+
+        normalize_ordering = self.normalize_sort_list(ordering)
+        for o in default_ordering:
+            normlize_item = self.normalize_sort_item(o)
+            if normlize_item not in normalize_ordering:
+                unchecked_list.append(o)
+        
+        return checked_list, unchecked_list
+    
+    def get_ordering(self):
+
+        checked, unchecked = self.get_default_ordering()
+        ordering = checked + unchecked
+
+        normalize_ordering = self.normalize_sort_list(ordering)
+
+        for item in self.sortable_by:
+            normalize_item = self.normalize_sort_item(item)
+            if normalize_item not in normalize_ordering:
+                unchecked.append(item)
+
+        checked = [
+            {'name': o, 'checked': True} for o in checked
+        ]
+        unchecked = [
+            {'name': o, 'checked': False} for o in unchecked
+        ]
+
+        return checked + unchecked
 
     def get_queryset(self):
         """
         filtering the queryset by filter_class
         """
+        order = [
+            o['name'] for o in self.get_ordering() if o['checked']
+        ]
         
-        default_ordering = self._get_default_ordering()
-        request_ordering = self.request.GET.get('order')
-        
-        order = default_ordering
-        
-        if request_ordering is not None and request_ordering != '':
-            order = [request_ordering]
-
         qs: QuerySet = (
             self
             .filter_class(self.request.GET or self.request.POST)
