@@ -2,7 +2,6 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <!-- htmx configuration -->
 <meta 
 name="htmx-config" 
@@ -11,40 +10,35 @@ content='{
     "refreshOnHistoryMiss": true,
     "defaultSwapStyle": "outerHTML"
 }'>
-
 <!-- fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
-
 <!-- css files -->
 {% if debug %}
-    <link rel="stylesheet" href="{% static 'css/dev/styles.css' %}">
+<link rel="stylesheet" href="{% static 'css/dev/styles.css' %}">
 {% else %}
-    <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}">
+<link rel="stylesheet" href="{% static 'css/dist/styles.css' %}">
 {% endif %}
-
 <!-- global styles -->
 <style>
 [x-cloak] {
     display: none;
 }
-
 [role="modal"] > * {
     width: min(100%,600px);
     margin-inline: 1rem;
 }
 </style>
-
 <!-- alpine plugins -->
 <script src="{% static 'js/plugins/intersect.min.js' %}" defer></script>
 <script src="{% static 'js/plugins/autosize.min.js' %}" defer></script>
 <script src="{% static 'js/plugins/collapse.min.js' %}" defer></script>
 <script src="{% static 'js/plugins/persist.min.js' %}" defer></script>
 <script src="{% static 'js/plugins/mask.min.js' %}" defer></script>
-
+<script src="{% static 'js/plugins/sort.min.js' %}" defer></script>
 <!-- js libraries -->
 <script src="{% static 'js/alpine.min.js' %}" defer></script>
 <script src="{% static 'js/htmx.min.js' %}" defer></script>
-
+<!-- favicon -->
 <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
