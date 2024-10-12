@@ -22,6 +22,13 @@
             <c-table.header-cell
               hx-get="{{ index_path }}"
               hx-target="{{ target }}"
+              code_name="pk"
+              name="{% translate 'id' %}"
+            />
+
+            <c-table.header-cell
+              hx-get="{{ index_path }}"
+              hx-target="{{ target }}"
               code_name="name"
               name="{% translate 'name' %}"
             />
@@ -69,6 +76,7 @@
           <c-table.tr>
             <c-table.check />
 
+            <c-table.td>{{ obj.pk }}</c-table.td>
             {% if can_update %}
             <c-table.td href="{{ obj.get_update_path }}">
               {{ obj.name }}

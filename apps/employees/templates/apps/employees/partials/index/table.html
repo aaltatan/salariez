@@ -25,6 +25,13 @@
               {% endif %}
             </c-table.header-cell>
 
+            <c-table.header-cell
+              hx-get="{{ index_path }}"
+              hx-target="{{ target }}"
+              code_name="pk"
+              name="{% translate 'id' %}"
+            />
+
             <c-table.header-cell 
             hx-get="{{ index_path }}"
             hx-target="{{ target }}"
@@ -90,7 +97,8 @@
           {% for obj in qs %}
           <c-table.tr>
             <c-table.check />
-
+            
+            <c-table.td>{{ obj.pk }}</c-table.td>
             {% if can_update %}
             <c-table.td href="{{ obj.get_absolute_path }}">
               <div class="flex items-center gap-2 p-1">
@@ -107,9 +115,7 @@
               </div>
             </c-table.td>
             {% else %}
-            <c-table.td>
-              {{ obj.fullname }}
-            </c-table.td>
+            <c-table.td>{{ obj.fullname }}</c-table.td>
             {% endif %}
 
             <c-table.td>{{ obj.job_subtype.job_type }}</c-table.td>

@@ -19,10 +19,17 @@
           </c-table.header-cell>
 
           <c-table.header-cell
+          hx-get="{{ index_path }}"
+          hx-target="{{ target }}"
+          code_name="pk"
+          name="{% translate 'id' %}"
+          />
+
+          <c-table.header-cell
             hx-get="{{ index_path }}"
             hx-target="{{ target }}"
             code_name="department_id"
-            name="{% translate 'id' %}"
+            name="{% translate 'code' %}"
           />
 
           <c-table.header-cell
@@ -78,6 +85,7 @@
           <c-table.tr>
             <c-table.check />
 
+            <c-table.td>{{ obj.id }}</c-table.td>
             {% if can_update %}
             <c-table.td href="{{ obj.get_update_path }}">
               {{ obj.department_id }}
