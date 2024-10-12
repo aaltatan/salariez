@@ -34,7 +34,7 @@
   class="input ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base w-full !flex items-center justify-between">
     <span
       class="capitalize text-neutral-500 whitespace-nowrap truncate"
-      x-text="textsConcat || '{{ placeholder }}'"
+      x-text="options.filter(el => el.selected).length && options.filter(el => el.selected).length + ' {% translate 'selected' %}' || '{{ placeholder }}'"
     >
     </span>
     <c-icons.arrow-down ratio="1rem" />
@@ -57,7 +57,7 @@
     x-transition:leave="transition ease-in duration-100"
     x-transition:leave-start="opacity-100 scale-100"
     x-transition:leave-end="opacity-0 scale-90"
-    class="origin-top min-w-64 bg-white custom-shadow dark:shadow-none dark:bg-neutral-950 absolute top-[calc(100%_+_.5rem)] z-50 left-0 rounded-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden"
+    class="origin-top w-full bg-white custom-shadow dark:shadow-none dark:bg-neutral-950 absolute top-[calc(100%_+_.5rem)] z-50 left-0 rounded-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden"
     x-cloak
   >
     <div x-show="options.length">
@@ -80,7 +80,7 @@
         placeholder="{% translate 'search'|title %} ..."
       />
 
-      <ul class="text-sm max-h-32 overflow-y-auto">
+      <ul class="text-sm max-h-32 overflow-y-auto scrollbar">
         <template x-for="option in options" :key="option.value">
           <li
             class="~px-2/4 ~py-1/2 flex items-center gap-2 hover:dark:bg-neutral-800 hover:bg-neutral-200"
@@ -98,7 +98,7 @@
             <label
               :for="'{{ name }}-' + option.value"
               x-text="option.text"
-              class="w-full block first-letter:capitalize"
+              class="w-full block first-letter:capitalize text-xs"
             ></label>
           </li>
         </template>
