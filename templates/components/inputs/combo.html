@@ -30,7 +30,7 @@
   role="button"
   :title="textsConcat"
   @click="open = !open; options.sort((a, b) => b.selected - a.selected)" 
-  @click.1000="document.getElementById('search').focus()" 
+  @click.debounce.200="$refs.{{ name }}comboBoxSearch.focus()" 
   class="input ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base w-full !flex items-center justify-between">
     <span
       class="capitalize text-neutral-500 whitespace-nowrap truncate"

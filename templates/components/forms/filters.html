@@ -1,51 +1,37 @@
 {% load i18n %} 
 
-<form class="rounded-lg w-full" {{ attrs }}>
+<form class="rounded-t-lg w-full overflow-hidden" {{ attrs }}>
 
-  <div class="@container flex flex-col gap-4">
+  <div class="@container relative overflow-auto scrollbar max-h-[80vh]">
 
-      <h1 class="capitalize text-2xl tracking-tighter">
-        <span></span>
-        {% translate 'filters' %}
-      </h1>
+      <div class="flex items-center sticky bg-white dark:bg-neutral-900 left-0 top-0 w-full z-[200] p-2">
 
-      <div class="overflow-auto scrollbar flex-grow flex-shrink-0">
-        {{ slot }}
+        <h1 class="capitalize text-2xl tracking-tighter">
+          {% translate 'filters' %}
+        </h1>
+
+        <div class="ms-auto flex items-center gap-2">
+          <button
+            class="hover:underline first-letter:capitalize"
+            id="filter-submit-btn"
+            title="{% translate 'filter'|title %}"
+            type="submit"
+          >{% translate 'apply' %}</button>
+          <button
+            @click="
+            document.getElementById('page-reset-btn').click();
+            $el.closest('form').reset();"
+            class="hover:underline first-letter:capitalize"
+            value="{% translate 'reset' %}"
+            title="{% translate 'reset'|title %}"
+            type="reset"
+          >{% translate 'reset' %}</button>
+        </div>
+
       </div>
 
-      <div class="flex items-center justify-center my-auto ~gap-1/2">
-        <c-btns.btn
-          datatype="button"
-          datatheme="primary"
-          id="filter-submit-btn"
-          title="{% translate 'filter'|title %}"
-          type="submit"
-        >
-          <span>{% translate 'apply' %}</span>
-        </c-btns.btn>
-        <c-btns.btn
-          datatype="button"
-          datatheme="secondary"
-          @click="
-          document.getElementById('page-reset-btn').click();
-          $el.closest('form').reset();
-          "
-          value="{% translate 'reset' %}"
-          title="{% translate 'reset'|title %}"
-          type="reset"
-        >
-          <span>{% translate 'reset' %}</span>
-        </c-btns.btn>
-        <span class="lg:hidden">
-          <c-btns.btn
-            datatheme="secondary"
-            @click="showFilters = false"
-            value="{% translate 'close' %}"
-            title="{% translate 'close'|title %}"
-          >
-            <span>{% translate 'close' %}</span>
-          </c-btns.btn>
-        </span>
+      <div class="p-2">
+        {{ slot }}
       </div>
 
   </div>

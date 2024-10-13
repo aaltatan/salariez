@@ -53,7 +53,7 @@ x-data="{ dark: $persist(false).as('dark') }">
             <main 
             :class="{ 'container': mainContainer }"
             class="w-full relative pb-4 lg:pt-4 mx-auto">
-              <div class="my-4 lg:hidden">
+              <div class="mb-2 mt-4 lg:hidden">
                 <c-layout.breadcrumb></c-layout.breadcrumb>
               </div>
               {% block body %}{% endblock %}
