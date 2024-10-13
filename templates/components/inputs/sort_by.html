@@ -3,7 +3,7 @@
 <div 
   class="w-fit relative" 
   x-effect="
-  concatItems = items.filter(e => e.checked).map(e => e.text).join(', ');
+  concatItems = items.filter(e => e.checked).map((e, idx) => `${idx + 1} - ${e.text} (${e.direction})`).join('\n');
   selectedCount = items.filter(e => e.checked).length"
   x-init="canOpen = Boolean(items.length);
   items = items.map(e => {
@@ -79,17 +79,19 @@
         </template>
       </div>
     
-      <div class="flex items-center justify-end gap-1 me-1">
+      <div class="flex items-center justify-end gap-2 my-2 me-1 text-sm">
   
-        <c-btns.btn 
-        datatheme="secondary" 
+        <span 
+        class="hover:underline first-letter:capitalize cursor-pointer"
         hx-get="{{ index_path }}"
         hx-target="{{ target }}"
         hx-replace-url="true"
         hx-headers='{"partial": true}'
-        hx-include="[data-include]">
-          {% translate 'sort' %}
-        </c-btns.btn>
+        hx-include="[data-include]">{% translate 'sort' %}</span>
+  
+        <span 
+        class="hover:underline first-letter:capitalize cursor-pointer"
+        @click="items = items.map(item => { item.checked = false; return item })">{% translate 'unselect all' %}</span>
   
       </div>
 
