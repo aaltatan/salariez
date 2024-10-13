@@ -1,11 +1,14 @@
 import os
-import json
-from datetime import date, datetime
+from datetime import date
 from pathlib import Path
 from dataclasses import asdict, dataclass, field, InitVar
 
 from django.core.files import File
 from django.utils.text import slugify
+
+import openpyxl
+from openpyxl.worksheet.worksheet import Worksheet
+from openpyxl.cell.cell import Cell
 
 from apps.nationalities.models import Nationality
 from apps.areas.models import Area
@@ -31,7 +34,7 @@ class EmployeeData:
     lastname: str = ''
     mother_name: str = ''
     birth_place: str = ''
-    birth_date: str = ''
+    birth_date: date | None = None
     national_id: str = ''
     card_id: str = ''
     civil_registry_office: str = ''
@@ -39,9 +42,9 @@ class EmployeeData:
     registry_office_id: str = ''
     gender: str = ''
     current_address: str = ''
-    card_date: str = ''
+    card_date: date | None = None
     religion: str = ''
-    hire_date: str = ''
+    hire_date: date | None = None
 
     salary: int = field(init=False)
     status: str = field(init=False)
@@ -51,10 +54,6 @@ class EmployeeData:
     area: str = field(init=False)
     job_subtype: str = field(init=False)
     slug: str = field(init=False)
-    
-    @staticmethod
-    def _parse_date(string: str) -> date:
-        return datetime.strptime(string ,'%d/%m/%Y')  if string else date.today()
     
     def get_image_name(self, extension: str):
         return self.fullname.strip().replace(' ', '_') + '.' + extension
@@ -68,10 +67,6 @@ class EmployeeData:
         job_subtype_id, 
         mobile_number, 
     ):
-
-        self.birth_date = self._parse_date(self.birth_date)
-        self.hire_date = self._parse_date(self.hire_date)
-        self.card_date = self._parse_date(self.card_date)
 
         self.nationality = Nationality.objects.get(id=int(nationality_id))
         self.area = Area.objects.get(id=int(area_id))
@@ -92,11 +87,41 @@ class EmployeeData:
 
         self.mobile = None
 
+        if self.current_address is None:
+            self.current_address = ''
+
+        if not self.hire_date:
+            self.hire_date = date.today()
+
+        if not self.card_date:
+            self.card_date = date.today()
+
         if mobile_number:
-            self.mobile = '0' + mobile_number[3:]
+            self.mobile = '0' + str(mobile_number)[3:]
         
         if self.mobile and len(self.mobile) < 10:
             self.mobile = None
+
+
+
+def get_employees_data() -> list[EmployeeData]:
+    
+    file_path = Path('D:').resolve() / 'OneDrive' / 'financial' / 'In_Progress' / 'employees.xlsx'
+    
+    wb = openpyxl.load_workbook(file_path)
+    ws: Worksheet = wb['employees']
+    lr = ws.max_row
+    table: tuple[tuple[Cell]] = ws[f'A1:V{lr}']
+
+    data = [[cell.value for cell in row] for row in table ]
+    
+    headers, data = data[0], data[1:]
+
+    employee_data = [
+        EmployeeData(**{k:v for k,v in zip(headers, row)}) for row in data
+    ]
+
+    return employee_data
 
 
 def get_onedrive_images() -> dict[str, Path]:
@@ -111,19 +136,6 @@ def get_onedrive_images() -> dict[str, Path]:
         images[name] = images_pathes[idx]
 
     return images
-
-
-def get_employees_data() -> list[EmployeeData]:
-    with open('./scripts/employees_data.json', 'r', encoding='utf-8') as file:
-        data = json.loads(file.read())
-        headers, data = data[0], data[1:]
-    
-    data: list = [
-        EmployeeData(**{k:v for k,v in zip(headers, row)})
-        for row in data
-    ]
-
-    return data
 
 
 def run() -> None:

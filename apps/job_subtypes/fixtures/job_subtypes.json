@@ -1,49 +1,4 @@
 [
-  {
-    "model": "job_subtypes.jobsubtype",
-    "pk": 1,
-    "fields": {
-      "name": "موظف إداري",
-      "description": "",
-      "slug": "موظف-غداري",
-      "search": "موظف إداري موظف إداري",
-      "job_type": 2
-    }
-  },
-  {
-    "model": "job_subtypes.jobsubtype",
-    "pk": 2,
-    "fields": {
-      "name": "عامل إداري",
-      "description": "",
-      "slug": "عامل-إداري",
-      "search": "عامل إداري عامل إداري",
-      "job_type": 2
-    }
-  },
-  {
-    "model": "job_subtypes.jobsubtype",
-    "pk": 3,
-    "fields": {
-      "name": "عضو هيئة فنية",
-      "description": "",
-      "slug": "عضو-هيئة-فنية",
-      "search": "عضو هيئة فنية عضو هيئة فنية",
-      "job_type": 1
-    }
-  },
-  {
-    "model": "job_subtypes.jobsubtype",
-    "pk": 4,
-    "fields": {
-      "name": "عضو هيئة تدريسية",
-      "description": "",
-      "slug": "عضو-هيئة-تدريسية",
-      "search": "عضو هيئة تدريسية عضو هيئة تدريسية",
-      "job_type": 1
-    }
-  }
-][
 {
     "model": "job_subtypes.jobsubtype",
     "pk": 1,
