@@ -52,17 +52,15 @@
     })
     options.sort((a, b) => b.selected - a.selected);"
     x-transition:enter="transition ease-out duration-100"
-    x-transition:enter-start="opacity-0 scale-90"
-    x-transition:enter-end="opacity-100 scale-100"
-    x-transition:leave="transition ease-in duration-100"
-    x-transition:leave-start="opacity-100 scale-100"
-    x-transition:leave-end="opacity-0 scale-90"
-    class="origin-top w-full bg-white custom-shadow dark:shadow-none dark:bg-neutral-950 absolute top-[calc(100%_+_.5rem)] z-50 left-0 rounded-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden"
+    x-transition:enter="ease-out duration-200"
+    x-transition:enter-start="-translate-y-2"
+    x-transition:enter-end="translate-y-0"
+    class="origin-top w-full bg-white custom-shadow dark:shadow-none dark:bg-neutral-800 absolute top-[calc(100%_+_.5rem)] z-50 left-0 rounded-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden"
     x-cloak
   >
     <div x-show="options.length">
       <input
-        class="w-full border-none border-b border-neutral-200 bg-neutral-50 py-2.5 px-4 text-sm text-neutral-600 focus:outline-none focus-visible:border-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-300 dark:focus-visible:border-blue-500"
+        class="w-full border-none border-b border-neutral-200 bg-neutral-50 py-2.5 px-4 text-sm text-neutral-600 focus:outline-none focus-visible:border-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:focus-visible:border-blue-500"
         type="search"
         id="combobox-search-{{ name }}"
         x-ref="{{ name }}comboBoxSearch"
@@ -80,10 +78,10 @@
         placeholder="{% translate 'search'|title %} ..."
       />
 
-      <ul class="text-sm max-h-32 overflow-y-auto scrollbar">
+      <ul class="text-sm max-h-32 overflow-y-auto scrollbar p-1">
         <template x-for="option in options" :key="option.value">
           <li
-            class="~px-2/4 ~py-1/2 flex items-center gap-2 hover:dark:bg-neutral-800 hover:bg-neutral-200"
+            class="~px-2/4 ~py-1/2 rounded flex items-center gap-2 hover:dark:bg-neutral-900 hover:bg-neutral-200"
             x-show="option.show"
           >
             <input

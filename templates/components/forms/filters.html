@@ -2,14 +2,14 @@
 
 <form class="rounded-lg w-full" {{ attrs }}>
 
-  <div class="@container grid grid-cols-1 grid-rows-[1fr_65vh_1fr] gap-1">
+  <div class="@container flex flex-col gap-4">
 
       <h1 class="capitalize text-2xl tracking-tighter">
         <span></span>
         {% translate 'filters' %}
       </h1>
 
-      <div class="overflow-auto scrollbar">
+      <div class="overflow-auto scrollbar flex-grow flex-shrink-0">
         {{ slot }}
       </div>
 
