@@ -54,4 +54,137 @@
             "city": 3
         }
     }
+][
+{
+    "model": "areas.area",
+    "pk": 1,
+    "fields": {
+        "name": "مدينة حماه",
+        "description": "",
+        "slug": "مدينة-حماه",
+        "search": "مدينة حماه مدينة حماه",
+        "city": 2
+    }
+},
+{
+    "model": "areas.area",
+    "pk": 2,
+    "fields": {
+        "name": "بلدة كفربهم",
+        "description": "",
+        "slug": "بلدة-كفربهم",
+        "search": "بلدة كفربهم بلدة كفربهم",
+        "city": 2
+    }
+},
+{
+    "model": "areas.area",
+    "pk": 3,
+    "fields": {
+        "name": "مدينة السلمية",
+        "description": "",
+        "slug": "مدينة-السلمية",
+        "search": "مدينة السلمية مدينة السلمية",
+        "city": 2
+    }
+},
+{
+    "model": "areas.area",
+    "pk": 4,
+    "fields": {
+        "name": "مدينة حمص",
+        "description": "",
+        "slug": "مدينة-حمص",
+        "search": "مدينة حمص مدينة حمص",
+        "city": 3
+    }
+},
+{
+    "model": "areas.area",
+    "pk": 5,
+    "fields": {
+        "name": "مدينة الرستن",
+        "description": "",
+        "slug": "مدينة-الرستن",
+        "search": "مدينة الرستن مدينة الرستن",
+        "city": 3
+    }
+},
+{
+    "model": "areas.area",
+    "pk": 6,
+    "fields": {
+        "name": "مدينة اللاذقية",
+        "description": "",
+        "slug": "مدينة-اللاذقية",
+        "search": "مدينة اللاذقية مدينة اللاذقية",
+        "city": 1
+    }
+},
+{
+    "model": "areas.area",
+    "pk": 8,
+    "fields": {
+        "name": "بانياس",
+        "description": "",
+        "slug": "بانياس",
+        "search": "بانياس بانياس",
+        "city": 7
+    }
+},
+{
+    "model": "areas.area",
+    "pk": 12,
+    "fields": {
+        "name": "مدينة دير الزور",
+        "description": "",
+        "slug": "مدينة-دير-الزور",
+        "search": "مدينة دير الزور مدينة دير الزور",
+        "city": 21
+    }
+},
+{
+    "model": "areas.area",
+    "pk": 13,
+    "fields": {
+        "name": "مدينة ادلب",
+        "description": "",
+        "slug": "مدينة-ادلب",
+        "search": "مدينة ادلب مدينة ادلب",
+        "city": 22
+    }
+},
+{
+    "model": "areas.area",
+    "pk": 14,
+    "fields": {
+        "name": "مدينة حلب",
+        "description": "",
+        "slug": "مدينة-حلب",
+        "search": "مدينة حلب مدينة حلب",
+        "city": 4
+    }
+},
+{
+    "model": "areas.area",
+    "pk": 15,
+    "fields": {
+        "name": "مدينة دمشق",
+        "description": "",
+        "slug": "مدينة-دمشق",
+        "search": "مدينة دمشق مدينة دمشق",
+        "city": 5
+    }
+},
+{
+    "model": "areas.area",
+    "pk": 16,
+    "fields": {
+        "name": "مدينة طرطوس",
+        "description": "",
+        "slug": "مدينة-طرطوس",
+        "search": "مدينة طرطوس مدينة طرطوس",
+        "city": 7
+    }
+}
 ]

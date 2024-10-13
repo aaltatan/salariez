@@ -109,4 +109,135 @@
             "search": "محافظة الرقة محافظة الرقة"
         }
     }
+][
+{
+    "model": "cities.city",
+    "pk": 1,
+    "fields": {
+        "name": "محافظة اللاذقية",
+        "description": "",
+        "slug": "محافظة-اللاذقية",
+        "search": "محافظة اللاذقية محافظة اللاذقية"
+    }
+},
+{
+    "model": "cities.city",
+    "pk": 2,
+    "fields": {
+        "name": "محافظة حماه",
+        "description": "",
+        "slug": "محافظة-حماه",
+        "search": "محافظة حماه محافظة حماه"
+    }
+},
+{
+    "model": "cities.city",
+    "pk": 3,
+    "fields": {
+        "name": "محافظة حمص",
+        "description": "",
+        "slug": "محافظة-حمص",
+        "search": "محافظة حمص محافظة حمص"
+    }
+},
+{
+    "model": "cities.city",
+    "pk": 4,
+    "fields": {
+        "name": "محافظة حلب",
+        "description": "",
+        "slug": "محافظة-حلب",
+        "search": "محافظة حلب محافظة حلب"
+    }
+},
+{
+    "model": "cities.city",
+    "pk": 5,
+    "fields": {
+        "name": "محافظة دمشق",
+        "description": "",
+        "slug": "محافظة-دمشق",
+        "search": "محافظة دمشق محافظة دمشق"
+    }
+},
+{
+    "model": "cities.city",
+    "pk": 6,
+    "fields": {
+        "name": "محافظة ريف دمشق",
+        "description": "",
+        "slug": "محافظة-ريف-دمشق",
+        "search": "محافظة ريف دمشق محافظة ريف دمشق"
+    }
+},
+{
+    "model": "cities.city",
+    "pk": 7,
+    "fields": {
+        "name": "محافظة طرطوس",
+        "description": "",
+        "slug": "محافظة-طرطوس",
+        "search": "محافظة طرطوس محافظة طرطوس"
+    }
+},
+{
+    "model": "cities.city",
+    "pk": 8,
+    "fields": {
+        "name": "محافظة درعا",
+        "description": "",
+        "slug": "محافظة-درعا",
+        "search": "محافظة درعا محافظة درعا"
+    }
+},
+{
+    "model": "cities.city",
+    "pk": 9,
+    "fields": {
+        "name": "محافظة القامشلي",
+        "description": "",
+        "slug": "محافظة-القامشلي",
+        "search": "محافظة القامشلي محافظة القامشلي"
+    }
+},
+{
+    "model": "cities.city",
+    "pk": 10,
+    "fields": {
+        "name": "محافظة الحسكة",
+        "description": "",
+        "slug": "محافظة-الحسكة",
+        "search": "محافظة الحسكة محافظة الحسكة"
+    }
+},
+{
+    "model": "cities.city",
+    "pk": 11,
+    "fields": {
+        "name": "محافظة الرقة",
+        "description": "",
+        "slug": "محافظة-الرقة",
+        "search": "محافظة الرقة محافظة الرقة"
+    }
+},
+{
+    "model": "cities.city",
+    "pk": 21,
+    "fields": {
+        "name": "محافظة دير الزور",
+        "description": "",
+        "slug": "محافظة-دير-الزور",
+        "search": "محافظة دير الزور محافظة دير الزور"
+    }
+},
+{
+    "model": "cities.city",
+    "pk": 22,
+    "fields": {
+        "name": "محافظة ادلب",
+        "description": "",
+        "slug": "محافظة-ادلب",
+        "search": "محافظة ادلب محافظة ادلب"
+    }
+}
 ]

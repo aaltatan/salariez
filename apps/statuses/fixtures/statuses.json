@@ -43,4 +43,49 @@
       "has_salary": true
     }
   }
+][
+{
+    "model": "statuses.status",
+    "pk": 1,
+    "fields": {
+        "name": "مفعل",
+        "description": "",
+        "slug": "مفعل",
+        "search": "مفعل مفعل",
+        "has_salary": true
+    }
+},
+{
+    "model": "statuses.status",
+    "pk": 2,
+    "fields": {
+        "name": "مستقيل",
+        "description": "",
+        "slug": "مستقيل",
+        "search": "مستقيل مستقيل",
+        "has_salary": false
+    }
+},
+{
+    "model": "statuses.status",
+    "pk": 3,
+    "fields": {
+        "name": "متدرب",
+        "description": "",
+        "slug": "متدرب",
+        "search": "متدرب متدرب",
+        "has_salary": true
+    }
+},
+{
+    "model": "statuses.status",
+    "pk": 4,
+    "fields": {
+        "name": "معلق",
+        "description": "",
+        "slug": "معلق",
+        "search": "معلق معلق",
+        "has_salary": false
+    }
+}
 ]
