@@ -10,6 +10,7 @@ from braces.views import SuperuserRequiredMixin
 
 from . import models, forms, filters, mixins, resources, utils
 
+from apps.base.utils.generic import OrderItem, OrderList
 from apps.base.mixins import (
     ListMixin,
     CreateMixin,
@@ -34,7 +35,11 @@ class ListTableView(
 ):
     
     permission_required = 'cost_centers.view_costcenter'
-    
+    sortable_by = OrderList([
+        OrderItem(_('accounting id'), 'cost_center_accounting_id', checked=True),
+        OrderItem(_('name'), 'name', checked=True),
+        OrderItem(_('description'), 'description'),
+    ])
     filter_class = filters.CostCenterFilterSet
     paginate_by_form_attributes = {
         'hx-get': reverse_lazy('cost_centers:index'),

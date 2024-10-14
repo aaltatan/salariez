@@ -14,6 +14,7 @@ from .. import (
     models, forms, filters, mixins, resources, utils
 )
 
+from apps.base.utils.generic import OrderList, OrderItem
 from apps.base.mixins import (
     ListMixin,
     CreateMixin,
@@ -66,19 +67,20 @@ class ListTableView(
     
     permission_required = 'employees.view_employee'
 
-    sortable_by = [
-        'gender',
-        'department__department_id',
-        'department',
-        'job_subtype',
-        'job_subtype__job_type',
-        'position',
-        'status',
-        'status__has_salary',
-        'hire_date',
-        'birth_date',
-    ]
-    
+    sortable_by = OrderList([
+        OrderItem(_('has salary'), '-status__has_salary', checked=True),
+        OrderItem(_('department id'), 'department__department_id', checked=True),
+        OrderItem(_('job type'), 'job_subtype__job_type', checked=True),
+        OrderItem(_('job subtype'), 'job_subtype', checked=True),
+        OrderItem(_('firstname'), 'firstname', checked=True),
+        OrderItem(_('gender'), 'gender'),
+        OrderItem(_('department name'), 'department'),
+        OrderItem(_('position'), 'position'),
+        OrderItem(_('status'), 'status'),
+        OrderItem(_('hire date'), 'hire_date'),
+        OrderItem(_('birth date'), 'birth_date'),
+        OrderItem(_('salary'), 'salary'),
+    ])
     filter_class = filters.EmployeeFilterSet
     paginate_by_form_attributes = {
         'hx-get': reverse_lazy('employees:index'),

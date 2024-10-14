@@ -10,6 +10,7 @@ from braces.views import SuperuserRequiredMixin
 
 from . import models, forms, filters, mixins, resources, utils
 
+from apps.base.utils.generic import OrderItem, OrderList
 from apps.base.mixins import (
     ListMixin,
     CreateMixin,
@@ -34,7 +35,11 @@ class ListTableView(
 ):
     
     permission_required = 'job_subtypes.view_jobsubtype'
-    
+    sortable_by = OrderList([
+        OrderItem(_('job type'), 'job_type__name', checked=True),
+        OrderItem(_('name'), 'name', checked=True),
+        OrderItem(_('description'), 'description'),
+    ])
     filter_class = filters.JobSubtypeFilterSet
     paginate_by_form_attributes = {
         'hx-get': reverse_lazy('job_subtypes:index'),

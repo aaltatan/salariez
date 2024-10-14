@@ -1,14 +1,13 @@
-import json
 from typing import Any, Literal
 from abc import ABC, abstractmethod
 
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, HttpRequest
 from django.core.paginator import Paginator
-from django.db.models import QuerySet
 from django.urls import reverse
 
 from .utils import HelperMixin
+from ..utils.generic import OrderItem, OrderList
 
 from apps.base import forms as base_forms
 
@@ -24,6 +23,10 @@ class AbstractList(ABC):
     
     @property
     @abstractmethod
+    def sortable_by(self) -> OrderList: ...
+    
+    @property
+    @abstractmethod
     def paginate_by_form_attributes(self): ...
     
     
@@ -33,6 +36,7 @@ class ListMixin(HelperMixin, AbstractList):
     
     ### required attributes:  
     - `filter_class: FilterSet`
+    - `sortable_by: OrderList` to use it in order functionality, it must be `OrderList` which contains `OrderItem` objects.  
     - `paginate_by_form_attributes: dict[str, reverse_lazy | str]` to set hx-get and hx-target attrs on form attributes  
 
     ### optional attributes:  
@@ -122,7 +126,7 @@ class ListMixin(HelperMixin, AbstractList):
             'can_export': self._has_perm('export'),
             'can_log': self._has_perm('log'),
             ######
-            'ordering': json.dumps(self.get_ordering()) ,
+            'ordering': self.get_ordering().get_order_json() ,
             ######
             'target': self.paginate_by_form_attributes['hx-target'],
             'filter_form': self._get_filter_form_id()
@@ -173,62 +177,48 @@ class ListMixin(HelperMixin, AbstractList):
             self.normalize_sort_item(o) for o in lst
         ]
     
-    def get_default_ordering(self) -> tuple[list[str], list[str]]:
+    def get_ordering(self) -> OrderList:
 
-        ordering: list = self.request.GET.getlist('order')
-        default_ordering: list = self._get_model_class()._meta.ordering
+        request_order: list = self.request.GET.getlist('order')
+        sortable_by: OrderList = self.sortable_by
 
-        if not any(ordering):
-            checked_list = default_ordering
-            return checked_list, []
+        if not any(request_order):
+            return sortable_by
         
-        unchecked_list = []
-        checked_list = ordering
+        order_list: list = []
 
-        normalize_ordering = self.normalize_sort_list(ordering)
-        for o in default_ordering:
-            normlize_item = self.normalize_sort_item(o)
-            if normlize_item not in normalize_ordering:
-                unchecked_list.append(o)
-        
-        return checked_list, unchecked_list
-    
-    def get_ordering(self):
+        for request_item in request_order:
+            for sort_item in sortable_by.order_list:
+                if sort_item == request_item:
+                    order_list.append(OrderItem(
+                        name=sort_item.name, 
+                        code=request_item, 
+                        checked=True
+                    ))
 
-        checked, unchecked = self.get_default_ordering()
-        ordering = checked + unchecked
+        normalized_request_list = self.normalize_sort_list(
+            request_order
+        )
 
-        normalize_ordering = self.normalize_sort_list(ordering)
+        for sort_item in sortable_by.order_list:
+            if sort_item.normalize_name not in normalized_request_list:
+                order_list.append(OrderItem(
+                    name=sort_item.name, 
+                    code=sort_item.code, 
+                ))
 
-        for item in self.sortable_by:
-            normalize_item = self.normalize_sort_item(item)
-            if normalize_item not in normalize_ordering:
-                unchecked.append(item)
-
-        checked = [
-            {'name': o, 'checked': True} for o in checked
-        ]
-        unchecked = [
-            {'name': o, 'checked': False} for o in unchecked
-        ]
-
-        return checked + unchecked
+        return OrderList(order_list)
 
     def get_queryset(self):
         """
         filtering the queryset by filter_class
         """
-        order = [
-            o['name'] for o in self.get_ordering() if o['checked']
-        ]
-        
-        qs: QuerySet = (
+        return (
             self
             .filter_class(self.request.GET or self.request.POST)
             .qs
-            .order_by(*order)
+            .order_by(*self.get_ordering().get_order_list())
         )
-        return qs
     
     def get_current_page(self) -> int:
         return int(self.request.GET.get('page', 1))

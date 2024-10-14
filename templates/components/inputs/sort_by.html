@@ -3,21 +3,9 @@
 <div 
   class="w-fit relative" 
   x-effect="
-  concatItems = items.filter(e => e.checked).map((e, idx) => `${idx + 1} - ${e.text} (${e.direction})`).join('\n');
+  concatItems = items.filter(e => e.checked).map((e, idx) => `${idx + 1} - ${e.name.at(0).toUpperCase() + e.name.slice(1)} (${e.ascending ? '{% translate 'ascending'|title %}' : '{% translate 'descending'|title %}'})`).join('\n');
   selectedCount = items.filter(e => e.checked).length"
-  x-init="canOpen = Boolean(items.length);
-  items = items.map(e => {
-    let direction = e.name.startsWith('-') ? 'desc' : 'asc';
-    let code = direction === 'asc' ? e.name : e.name.slice(1);
-    let text = code.replace(/_{1,2}/g, ' ').trim();
-    return {
-      direction: direction,
-      code: code,
-      text: text,
-      value: e.name,
-      checked: e.checked,
-    }
-  })"
+  x-init="canOpen = Boolean(items.length)"
   x-data="{
     canOpen: true,
     dropdownOpen: false, 
@@ -54,26 +42,34 @@
     >
 
       <div x-sort>
-        <template x-for="(item, idx) in items" :key="item.value">
+        <template x-for="(item, idx) in items" :key="item.code">
           <div
           x-sort:item
           class="relative flex select-none gap-2 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-900 cursor-pointer"
           >
             <div class="flex items-center gap-1 w-full">
-              <input type="checkbox" class="check" name="order" x-model="item.checked" :id="'id_' + item.value" :value="item.value" data-include>
-              <label :for="'id_' + item.value" x-text="item.text" class="capitalize whitespace-nowrap block">
+              <input type="checkbox" class="check" name="order" x-model="item.checked" :id="'id_' + item.code" :value="item.code" data-include>
+              <label :for="'id_' + item.code" x-text="item.name" class="first-letter:capitalize whitespace-nowrap block">
               </label>
             </div>
             
-            <span 
-            @click="
-            let direction = item.direction; 
-            item.direction = direction === 'asc' ? 'desc' : 'asc';
-            item.value = direction === 'asc' ? '-' + item.code : item.code;" 
-            :class="{ 'text-blue-500': item.direction === 'desc' }" 
-            :title="item.direction === 'asc' ? '{% translate 'ascending'|title %}' : '{% translate 'descending'|title %}'"
-            class="block font-semibold tracking-tighter text-xs cursor-pointer duration-150 capitalize" x-text="item.direction === 'asc' ? '{% translate 'asc' %}' : '{% translate 'desc' %}'">
-            </span>
+            <div class="flex items-center gap-1">
+              <span
+              @click="
+              let direction = item.dir;
+              item.dir = direction === 'asc' ? 'desc' : 'asc';
+              item.code = direction === 'asc' ? '-' + item.normalize_name : item.normalize_name;"
+              :class="{ 'text-blue-500': item.dir === 'desc' }"
+              :title="item.dir === 'asc' ? '{% translate 'ascending'|title %}' : '{% translate 'descending'|title %}'"
+              class="block font-semibold tracking-tighter text-xs cursor-pointer duration-150 capitalize" x-text="item.dir === 'asc' ? '{% translate 'asc' %}' : '{% translate 'desc' %}'">
+              </span>
+              <span x-sort:handle>
+                <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 24 24">
+                  <rect width="24" height="24" fill="none" />
+                  <path fill="currentColor" d="M6.75 2.25h3v3h-3zm7.5 0h3v3h-3zm-7.5 5.5h3v3h-3zm7.5 0h3v3h-3zm-7.5 5.5h3v3h-3zm7.5 0h3v3h-3zm-7.5 5.5h3v3h-3zm7.5 0h3v3h-3z" />
+                </svg>
+              </span>
+            </div>
   
           </div>
         </template>

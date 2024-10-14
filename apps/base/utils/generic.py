@@ -1,6 +1,54 @@
 import re
-from typing import Any
+import json
+from typing import Any, Literal
 from decimal import Decimal
+from dataclasses import asdict, dataclass, field
+
+
+@dataclass
+class OrderItem:
+    name: str
+    code: str
+    checked: bool = False
+    normalize_name: str = field(init=False)
+    ascending: bool = field(default=True, init=False)
+    dir: Literal['asc', 'desc'] = field(
+       default='asc', init=False
+    )
+
+    def __post_init__(self):
+       
+       if self.code.startswith('-'):
+          self.dir = 'desc'
+          self.ascending = False
+          self.normalize_name = self.code[1:]
+       else:
+          self.normalize_name = self.code
+
+    def __eq__(self, obj):
+        if isinstance(obj, str):
+            obj = obj[1:] if obj.startswith('-') else obj
+            return obj == self.normalize_name
+        return obj.normalize_name == self.normalize_name
+
+
+@dataclass
+class OrderList:
+   order_list: list[OrderItem]
+
+   def __contains__(self, name):
+      if isinstance(name, str):
+          if name.startswith('-'):
+              name = name[1:]
+          return name in [i.normalize_name for i in self.order_list]
+      return name in self.order_list
+
+   def get_order_list(self) -> list[str]:
+      return [i.code for i in self.order_list]
+   
+   def get_order_json(self) -> str:
+       return json.dumps([asdict(i) for i in self.order_list])
+
 
 
 def compare_two_dicts(

@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, RedirectView
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext as _
 from django.contrib.auth.mixins import (
     LoginRequiredMixin,
     PermissionRequiredMixin,
@@ -11,6 +11,7 @@ from braces.views import SuperuserRequiredMixin
 
 from . import models, forms, resources, utils, filters
 
+from apps.base.utils.generic import OrderItem, OrderList
 from apps.base.mixins import (
     BulkModalMixin,
     ReslugifyModalMixin,
@@ -66,7 +67,12 @@ class ListTableView(
 ):
     
     permission_required = 'departments.view_department'
-    
+    sortable_by = OrderList([
+        OrderItem(_('code'), 'department_id', checked=True),
+        OrderItem(_('parent'), 'parent'),
+        OrderItem(_('level'), 'level'),
+        OrderItem(_('cost center'), 'cost_center__cost_center_accounting_id'),
+    ])
     filter_class = filters.DepartmentFilterSet
     paginate_by_form_attributes = {
         'hx-get': reverse_lazy('departments:index'),
@@ -78,7 +84,6 @@ class ListTableView(
             super()
             .get_queryset()
             .select_related('cost_center', 'parent')
-            .order_by('department_id')
         )
 
 

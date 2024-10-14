@@ -1,9 +1,7 @@
 {% load i18n static format_numbers%}
 
 <c-layout.table-container>
-  <form 
-  hx-get="{{ bulk_path }}" 
-  x-data="{ selectedRows: [] }">
+  <form hx-get="{{ bulk_path }}" x-data="{ selectedRows: [] }">
 
     <div class="m-2 flex items-center justify-end">
       <c-inputs.sort-by />
