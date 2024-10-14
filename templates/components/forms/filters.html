@@ -2,7 +2,7 @@
 
 <form class="rounded-t-lg w-full overflow-hidden" {{ attrs }}>
 
-  <div class="@container relative overflow-auto scrollbar max-h-[80vh]">
+  <div class="@container relative overflow-auto scrollbar h-[90vh] lg:h-[80vh]">
 
       <div class="flex items-center sticky bg-white dark:bg-neutral-900 left-0 top-0 w-full z-[200] p-2">
 
@@ -18,14 +18,18 @@
             type="submit"
           >{% translate 'apply' %}</button>
           <button
-            @click="
-            document.getElementById('page-reset-btn').click();
-            $el.closest('form').reset();"
+            @click="document.getElementById('page-reset-btn').click();
+            $el.closest('form').reset()"
             class="hover:underline first-letter:capitalize"
-            value="{% translate 'reset' %}"
             title="{% translate 'reset'|title %}"
             type="reset"
           >{% translate 'reset' %}</button>
+          <span
+            role="button"
+            @click="showFilters = false"
+            class="hover:underline first-letter:capitalize"
+            title="{% translate 'close'|title %}"
+          >{% translate 'close' %}</span>
         </div>
 
       </div>

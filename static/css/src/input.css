@@ -57,16 +57,16 @@
 }
 
 .table-inner tr:not(:last-of-type) :where(th, td):first-child {
-  @apply border-b ltr:border-r rtl:border-l border-neutral-200 dark:border-neutral-800;
+  @apply border-b border-e border-neutral-200 dark:border-neutral-800;
 }
 .table-inner tr:last-of-type :where(th, td):first-child {
-  @apply ltr:border-r rtl:border-l border-neutral-200 dark:border-neutral-800;
+  @apply border-e border-neutral-200 dark:border-neutral-800;
 }
 .table-inner tr:not(:last-of-type) :where(th, td):last-child {
-  @apply border-b ltr:border-l rtl:border-r border-neutral-200 dark:border-neutral-800;
+  @apply border-b border-s border-neutral-200 dark:border-neutral-800;
 }
 .table-inner tr:last-of-type :where(th, td):last-child {
-  @apply ltr:border-l rtl:border-r border-neutral-200 dark:border-neutral-800;
+  @apply border-s border-neutral-200 dark:border-neutral-800;
 }
 .table-inner tr:first-of-type :where(th, td):not(:first-child):not(:last-child) {
   @apply border-b border-x border-neutral-200 dark:border-neutral-800;
