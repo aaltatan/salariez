@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load static %}
 
-<div class="p-3 lg:p-6">
+<div class="p-3 lg:p-6" id="employee-create-form-container">
   <div class="@container max-w-2xl mx-auto">
 
     <h1
@@ -13,7 +13,7 @@
     <form 
     hx-post="{{ instance.get_create_path }}" 
     hx-encoding="multipart/form-data"
-    hx-target="this">
+    hx-target="#employee-create-form-container">
 
     <div>
 
