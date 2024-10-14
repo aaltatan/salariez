@@ -16,7 +16,11 @@
             href: '{% url 'employees:create' %}'
         },
     ];
-    breadCrumbs = [...breadCrumbs, ...hrefs]"
+    breadCrumbs = [...breadCrumbs, ...hrefs]
+    if (breadCrumbs.length > 2 && sessionStorage.getItem('query')) {
+      breadCrumbs.at(1).href += sessionStorage.getItem('query')
+    }
+    "
     ></template>
 
     {% include 'apps/employees/partials/forms/create.html' %}

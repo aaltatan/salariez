@@ -18,7 +18,11 @@
             href: '{{ instance.get_update_path }}'
         },
     ];
-    breadCrumbs = [...breadCrumbs, ...hrefs]"
+    breadCrumbs = [...breadCrumbs, ...hrefs]
+    if (breadCrumbs.length > 2 && sessionStorage.getItem('query')) {
+      breadCrumbs.at(1).href += sessionStorage.getItem('query')
+    }
+    "
 ></template>
 
 <div class="grid grid-cols-5 gap-2">

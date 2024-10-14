@@ -151,5 +151,11 @@
     Alpine.$data(form).selectedRows = [...new Set(Alpine.$data(form).selectedRows)]
     if (!isChecked) Alpine.$data(form).selectedRows = [];
   }
-  
+
+  function setQueryString() {
+    if (location.search) {
+      sessionStorage.setItem('query', location.search);
+    }
+  }
+
 </script>

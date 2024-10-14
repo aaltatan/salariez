@@ -96,7 +96,7 @@
             
             <c-table.td>{{ obj.pk }}</c-table.td>
             {% if can_update %}
-            <c-table.td href="{{ obj.get_absolute_path }}">
+            <c-table.td @click="setQueryString" href="{{ obj.get_absolute_path }}">
               <div class="flex items-center gap-2 p-1">
                 <div>
                   <img class="block rounded-full object-cover aspect-square max-w-8 ring-2 {% if obj.status.has_salary %}ring-green-500{% else %}ring-[red]{% endif %}" data-src="{% if obj.profile %}{{ obj.profile.url }}{% else %}{% static 'images/user.png' %}{% endif %}" x-intersect.once="$el.src = $el.dataset.src" alt="{{ obj.fullname }}">

@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<div {{ attrs }} class="grid grid-cols-1 gap-2 duration-150 lg:grid-cols-4">
+<div {{ attrs }} class="grid grid-cols-1 gap-2 duration-150 lg:grid-cols-4" x-init="sessionStorage.clear()">
   <div
     x-cloak
     id="container"

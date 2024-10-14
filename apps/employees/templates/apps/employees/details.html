@@ -18,7 +18,11 @@
             href: '{{ object.get_absolute_path }}'
         },
     ];
-    breadCrumbs = [...breadCrumbs, ...hrefs]"
+    breadCrumbs = [...breadCrumbs, ...hrefs]
+    if (breadCrumbs.length > 2 && sessionStorage.getItem('query')) {
+      breadCrumbs.at(1).href += sessionStorage.getItem('query')
+    }
+    "
 ></template>
 
 <div class="col-span-3 rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-800">
