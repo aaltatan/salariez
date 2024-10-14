@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 from . import models
 
+from apps.base.widgets import SearchWidget
 from apps.base.utils.fields import get_textarea_field
 
 
@@ -17,7 +18,7 @@ class JobSubtypeForm(forms.ModelForm):
                 'autofocus': 'true',
                 'autocomplete': 'off',
             }),
-            'job_type': forms.Select({
+            'job_type': SearchWidget({
                 'data_add_new': '/job-types/create/?modal=true',
                 'data_permission': 'job_types.add_jobtype',
                 'data_hx_target': '#modal'

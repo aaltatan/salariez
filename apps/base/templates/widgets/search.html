@@ -1,0 +1,100 @@
+{% load i18n %}
+
+<div 
+x-effect="checkedItem = data.filter(e => e.checked)[0].label"
+x-init="items = data"
+x-data="{
+  open: false,
+  checkedItem: '',
+  items: [],
+  data: [
+  {% for group_name, group_choices, group_index in widget.optgroups %}
+    {% for option in group_choices %}
+      {
+        name: '{{ option.name }}',
+        value: '{{ option.value }}',
+        label: '{{ option.label }}',
+        selected: '{{ option.selected }}' === 'True',
+        index: '{{ option.index }}',
+        type: '{{ option.type }}',
+        wrap_label: '{{ option.wrap_label }}',
+        checked: '{{ option.attrs.checked }}' === 'True'
+      },
+    {% endfor %}
+  {% endfor %}
+  ]
+}" 
+@click.outside="open = false" 
+class="relative">
+
+  <input
+  @keypress.debounce.100="
+  open = true; 
+  items = data;
+  items = items.filter(e => {
+  let searchName = e.label + ' ' + e.label;
+  let pattern = new RegExp($el.value.split(' ').join('.+'));
+  return searchName.match(pattern);
+  })
+  "
+  x-model="checkedItem"
+  x-ref="search"
+  style="padding-inline-start: 2rem;"
+  {% for name, value in widget.attrs.items %}
+  {% if value is not False %}
+  {{ name }}
+  {% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}
+  {% endif %}
+  {% endfor %}
+  required="off">
+
+  <span class="absolute start-2 top-1/2 -translate-y-1/2">
+    <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m21 21l-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607"/>
+    </svg>
+  </span>
+
+  <ul 
+  x-show="open"
+  x-transition:enter="transition ease-out duration-100"
+  x-transition:enter="ease-out duration-200"
+  x-transition:enter-start="-translate-y-2"
+  x-transition:enter-end="translate-y-0"
+  class="absolute left-0 top-full w-full rounded-lg max-h-48 overflow-auto bg-white dark:bg-neutral-800 my-4 scrollbar p-1">
+    <template x-for="(item, idx) in items" :key="item.value">
+      <a 
+      @click="
+      open = false; 
+      showSelected = true;
+      data = data.map(e => {
+        e.checked = false;
+        if (item === e) {
+          e.checked = true;
+        }
+        return e;
+      })
+      $refs.search.focus();
+      "
+      href="#{{ widget.attrs.id }}" 
+      class="flex items-center gap-1 w-full p-1.5 hover:bg-neutral-200 hover:dark:bg-neutral-900 focus:outline-none focus:bg-neutral-200 focus:dark:bg-neutral-900 rounded">
+
+          <input 
+          type="radio"
+          class="peer hidden"
+          :value="item.value"
+          :id="item.name + '-' + item.value"
+          :checked="item.checked"
+          :name="item.name">
+
+          <label class="block w-full cursor-pointer peer-checked:text-blue-500" :for="item.name + '-' + item.value" x-text="item.label"></label>
+
+      </a>
+    </template>
+    <template x-if="!items.length">
+      <a 
+      @focus="open = false"
+      class="flex items-center gap-1 w-full p-1.5 hover:bg-neutral-200 hover:dark:bg-neutral-900 focus:outline-none focus:bg-neutral-200 focus:dark:bg-neutral-900 rounded capitalize" href="#">{% translate 'no results' %}</a>
+    </template>
+  </ul>
+
+</div>

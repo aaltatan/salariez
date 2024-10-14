@@ -21,7 +21,7 @@
           <div
           @click="modalOpen = true"
           x-init="
-          const nextInput = $el.parentElement.parentElement.nextElementSibling.nextElementSibling;
+          const nextInput = $el.parentElement.parentElement.nextElementSibling.nextElementSibling.querySelector('input');
           const href = nextInput.getAttribute('data_add_new');
           const target = nextInput.getAttribute('data_hx_target');
           if (href) {
