@@ -1,6 +1,11 @@
 from django.contrib import admin
 
-from .tabular import MobileTabular, EmailTabular, PhoneTabular
+from .tabular import (
+    MobileTabular, 
+    EmailTabular, 
+    PhoneTabular, 
+    EducationTransactionTabular,
+)
 from ..models import Employee
 
 
@@ -8,7 +13,10 @@ from ..models import Employee
 class EmployeeAdmin(admin.ModelAdmin):
     
     inlines = [
-        MobileTabular, EmailTabular, PhoneTabular,
+        MobileTabular, 
+        EmailTabular, 
+        PhoneTabular,
+        EducationTransactionTabular,
     ]
     raw_id_fields = [
         'area', 'department', 'position'

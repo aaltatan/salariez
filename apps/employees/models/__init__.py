@@ -2,6 +2,7 @@ from .employee import Employee
 from .email import Email
 from .mobile import Mobile
 from .phone import Phone
+from .educational_transaction import EducationTransaction
 
 
 __all__ = [
@@ -9,4 +10,5 @@ __all__ = [
   Email,
   Mobile,
   Phone,
+  EducationTransaction,
 ]
