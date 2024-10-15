@@ -21,54 +21,17 @@
               {% endif %}
             </c-table.header-cell>
 
-            <c-table.header-cell
-              hx-get="{{ index_path }}"
-              hx-target="{{ target }}"
-              code_name="pk"
-              name="{% translate 'id' %}"
-            />
-
-            <c-table.header-cell 
-            hx-get="{{ index_path }}"
-            hx-target="{{ target }}"
-            code_name="firstname"
-            name="{% translate 'fullname' %}" />
-
-            <c-table.header-cell 
-            hx-get="{{ index_path }}"
-            hx-target="{{ target }}"
-            code_name="job_subtype__job_type"
-            name="{% translate 'job type' %}" />
-
-            <c-table.header-cell 
-            hx-get="{{ index_path }}"
-            hx-target="{{ target }}"
-            code_name="job_subtype"
-            name="{% translate 'job subtype' %}" />
-
-            <c-table.header-cell 
-            hx-get="{{ index_path }}"
-            hx-target="{{ target }}"
-            code_name="department__cost_center__cost_center_accounting_id"
-            name="{% translate 'cost center' %}" />
-
-            <c-table.header-cell 
-            hx-get="{{ index_path }}"
-            hx-target="{{ target }}"
-            code_name="department__department_id"
-            name="{% translate 'department' %}" />
-
-            <c-table.header-cell 
-            hx-get="{{ index_path }}"
-            hx-target="{{ target }}"
-            code_name="salary"
-            name="{% translate 'salary' %}" />
-
-            <c-table.header-cell 
-            hx-get="{{ index_path }}"
-            hx-target="{{ target }}"
-            code_name="status"
-            name="{% translate 'job status' %}" />
+            <c-table.header-cell name="{% translate 'id' %}"/>
+            <c-table.header-cell name="{% translate 'fullname' %}" />
+            <c-table.header-cell name="{% translate 'job type' %}" />
+            <c-table.header-cell name="{% translate 'job subtype' %}" />
+            <c-table.header-cell name="{% translate 'position' %}" />
+            <c-table.header-cell name="{% translate 'cost center' %}" />
+            <c-table.header-cell name="{% translate 'department' %}" />
+            <c-table.header-cell name="{% translate 'salary' %}" />
+            <c-table.header-cell name="{% translate 'job status' %}" />
+            <c-table.header-cell name="{% translate 'gender' %}" />
+            <c-table.header-cell name="{% translate 'since' %}" />
 
             <c-table.header-cell />
             
@@ -96,19 +59,10 @@
             
             <c-table.td>{{ obj.pk }}</c-table.td>
             {% if can_update %}
-            <c-table.td @click="setQueryString" href="{{ obj.get_absolute_path }}">
-              <div class="flex items-center gap-2 p-1">
-                <div>
-                  <img class="block rounded-full object-cover aspect-square max-w-8 ring-2 {% if obj.status.has_salary %}ring-green-500{% else %}ring-[red]{% endif %}" data-src="{% if obj.profile %}{{ obj.profile.url }}{% else %}{% static 'images/user.png' %}{% endif %}" x-intersect.once="$el.src = $el.dataset.src" alt="{{ obj.fullname }}">
-                </div>
-                <div class="w-full">
-                  <div class="flex items-center justify-between">
-                    <h1>{{ obj.fullname }}</h1>
-                    <span class="size-2 rounded-full block {% if obj.gender == 'M' %}bg-blue-500{% else %}bg-pink-500{% endif %}"></span>
-                  </div>
-                  <span class="text-xs text-neutral-500">{{ obj.position }}</span>
-                </div>
-              </div>
+            <c-table.td 
+            @click="setQueryString" 
+            href="{{ obj.get_absolute_path }}">
+              {{ obj.fullname }}
             </c-table.td>
             {% else %}
             <c-table.td>{{ obj.fullname }}</c-table.td>
@@ -116,10 +70,13 @@
 
             <c-table.td>{{ obj.job_subtype.job_type }}</c-table.td>
             <c-table.td>{{ obj.job_subtype }}</c-table.td>
+            <c-table.td>{{ obj.position }}</c-table.td>
             <c-table.td>{{ obj.department.cost_center }}</c-table.td>
             <c-table.td>{{ obj.department }}</c-table.td>
             <c-table.td>{{ obj.salary|money }}</c-table.td>
             <c-table.td>{{ obj.status }}</c-table.td>
+            <c-table.td>{{ obj.get_gender_display }}</c-table.td>
+            <c-table.td>{{ obj.hire_date|timesince }}</c-table.td>
             <c-table.td><c-context.context /></c-table.td>
 
           </c-table.tr>

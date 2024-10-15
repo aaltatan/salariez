@@ -12,34 +12,18 @@
       <c-table.table>
         <thead>
           <c-table.header-row>
+
             <c-table.header-cell>
               {% if can_delete %}
               <c-table.check data_check="all" />
               {% endif %}
             </c-table.header-cell>
 
-            <c-table.header-cell
-              hx-get="{{ index_path }}"
-              hx-target="{{ target }}"
-              code_name="pk"
-              name="{% translate 'id' %}"
-            />
-
-            <c-table.header-cell
-              hx-get="{{ index_path }}"
-              hx-target="{{ target }}"
-              code_name="name"
-              name="{% translate 'name' %}"
-            />
-
-            <c-table.header-cell
-              hx-get="{{ index_path }}"
-              hx-target="{{ target }}"
-              code_name="description"
-              name="{% translate 'description' %}"
-            />
-
+            <c-table.header-cell name="{% translate 'id' %}" />
+            <c-table.header-cell name="{% translate 'name' %}" />
+            <c-table.header-cell name="{% translate 'description' %}" />
             <c-table.header-cell />
+            
           </c-table.header-row>
 
           {% if can_delete %}

@@ -25,7 +25,7 @@ x-data="{ dark: $persist(false).as('dark') }">
 
       <div 
         id="app" 
-        class="realtive dark:text-white/80 dark:bg-neutral-950 font-cairo ~text-sm/base" 
+        class="realtive dark:text-white/80 dark:bg-neutral-950 ~text-sm/base" 
         dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}"
         x-data="{
           mainContainer: $persist(true).as('main-container'), 
