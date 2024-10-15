@@ -1,4 +1,9 @@
-from django.forms.widgets import ChoiceWidget
+from django.forms.widgets import ChoiceWidget, SelectMultiple
+
+
+
+class ComboboxWidget(SelectMultiple):
+    template_name = "widgets/combobox.html"
 
 
 class SearchWidget(ChoiceWidget):

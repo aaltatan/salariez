@@ -3,11 +3,11 @@
 <div
   data-combo
   x-effect="
-  textsConcat = options.filter(el => el.selected).map(el => el.text).join(', ')"
+  textsConcat = options.filter(el => el.selected).map(el => el.label).join(', ')"
   x-init="
     let forId = $el.previousElementSibling.getAttribute('for');
-    $refs.{{ name }}comboBoxSearch.setAttribute('id', forId);
-    let initials = location.href.match(/(?<={{ name }}\=)\d+/g)
+    $refs.comboBoxSearch.setAttribute('id', forId);
+    let initials = location.href.match(new RegExp(`(?<=${name}\=)\d+`))
     initials = initials && initials.map(e => +e);
     if (initials) {
       options = options.map(e => {
@@ -19,25 +19,58 @@
   class="relative w-full"
   x-data="{ 
     open: false,
+    name: $refs.comboBoxSearch.dataset.name,
     optionsConcat: '',
     textsConcat: '',
     keywords: '',
-    options: JSON.parse('{{ options }}'),
+    options: [
+      {% for group_name, group_choices, group_index in widget.optgroups %}
+        {% for option in group_choices %}
+          {
+            name: '{{ option.name }}',
+            value: '{{ option.value }}',
+            label: '{{ option.label }}',
+            selected: '{{ option.selected }}' === 'True',
+            index: '{{ option.index }}',
+            type: '{{ option.type }}',
+            wrap_label: '{{ option.wrap_label }}',
+            checked: '{{ option.attrs.checked }}' === 'True',
+            show: true,
+          },
+        {% endfor %}
+      {% endfor %}
+    ]
   }">
-  <!-- { value: '1', text: 'google', selected: false, show: true }, -->
 
   <span 
   role="button"
   :title="textsConcat"
   @click="open = !open; options.sort((a, b) => b.selected - a.selected)" 
-  @click.debounce.200="$refs.{{ name }}comboBoxSearch.focus()" 
+  @click.debounce.200="$refs.comboBoxSearch.focus()" 
   class="input ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base w-full !flex items-center justify-between">
+
     <span
       class="capitalize text-neutral-500 whitespace-nowrap truncate"
-      x-text="options.filter(el => el.selected).length && options.filter(el => el.selected).length + ' {% translate 'selected' %}' || '{{ placeholder }}'"
+      x-text="
+      options.filter(e => e.selected).length ? `${options.filter(e => e.selected).length} {% translate 'selected' %}` : `{% translate 'select' %} ${name}`;
+      "
+    ></span>
+
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="1rem"
+      height="1rem"
+      viewBox="0 0 16 16"
     >
-    </span>
-    <c-icons.arrow-down ratio="1rem" />
+      <rect width="16" height="16" fill="none" />
+      <path
+        fill="currentColor"
+        fill-rule="evenodd"
+        d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06"
+        clip-rule="evenodd"
+      />
+    </svg>
+
   </span>
 
   <div
@@ -62,8 +95,7 @@
       <input
         class="w-full border-none border-b border-neutral-200 bg-neutral-50 py-2.5 px-4 text-sm text-neutral-600 focus:outline-none focus-visible:border-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:focus-visible:border-blue-500"
         type="search"
-        id="combobox-search-{{ name }}"
-        x-ref="{{ name }}comboBoxSearch"
+        x-ref="comboBoxSearch"
         @search="searchHandler"
         @keyup="searchHandler"
         @keyup.Escape="
@@ -76,6 +108,12 @@
         options.sort((a, b) => b.selected - a.selected);"
         x-model="keywords"
         placeholder="{% translate 'search'|title %} ..."
+        {% for name, value in widget.attrs.items %}
+        {% if value is not False %}
+        {{ name }}
+        {% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}
+        {% endif %}
+        {% endfor %}
       />
 
       <ul class="text-sm max-h-32 overflow-y-auto scrollbar p-1">
@@ -85,17 +123,17 @@
             x-show="option.show"
           >
             <input
-              :id="'{{ name }}-' + option.value"
+              :id="option.name + '-' + option.value"
               :checked="option.selected"
               :value="option.value"
+              :name="option.name"
               x-model="option.selected"
-              name="{{ name }}"
               type="checkbox"
               class="check"
             />
             <label
-              :for="'{{ name }}-' + option.value"
-              x-text="option.text"
+              :for="option.name + '-' + option.value"
+              x-text="option.label"
               class="w-full block first-letter:capitalize text-xs"
             ></label>
           </li>
@@ -113,16 +151,15 @@
     const container = el.target.closest("div[data-combo]");
     const keywords = Alpine.$data(container).keywords;
 
-    let options = Alpine.$data(container).options;
-    Alpine.$data(container).options = options.map((e) => {
+    Alpine.$data(container).options = Alpine.$data(container).options.map((e) => {
       e.show = false;
-      e.show = e.text.includes(keywords);
-      return e;
+      let searchName = e.label + ' ' + e.label;
+      let pattern = new RegExp(keywords.split(' ').join('.+'), 'g');
+      if (searchName.match(pattern)) {
+        e.show = true
+      }
+      return e
     });
-  }
-
-  function reSortOptionsHandler(el) {
-    
   }
 
 </script>

@@ -8,7 +8,6 @@ from .views import (
     BulkModalView,
     BulkDeleteView,
     BulkReslugifyView,
-    SearchView,
     ExportView,
 )
 
@@ -20,7 +19,6 @@ urlpatterns = [
     path('<int:id>/', ListTableView.as_view(), name='index'),
     path('create/', CreateView.as_view(), name='create'),
     path('bulk/', BulkModalView.as_view(), name='bulk'),
-    path('search/', SearchView.as_view(), name='search'),
     path('export/', ExportView.as_view(), name='export'),
     path('bulk/delete/', BulkDeleteView.as_view(), name='bulk-delete'),
     path('bulk/reslugify/', BulkReslugifyView.as_view(), name='bulk-reslugify'),

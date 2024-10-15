@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from django.utils.translation import gettext_lazy as _
 from django.forms import widgets
 
@@ -7,8 +5,8 @@ import django_filters as filters
 
 from . import models
 
+from apps.base.widgets import ComboboxWidget
 from apps.base.mixins.filters import FiltersMixin
-from apps.base.utils.fields import Object, get_search_field
 
 
 class DepartmentFilterSet(FiltersMixin, filters.FilterSet):
@@ -39,6 +37,7 @@ class DepartmentFilterSet(FiltersMixin, filters.FilterSet):
         lookup_expr='in',
         label=_('cost center'),
         method="filter_combobox",
+        widget=ComboboxWidget({'data-name': _('cost center')}),
     )
     parent = filters.ModelMultipleChoiceFilter(
         queryset=models.Department.objects.all(),
@@ -46,6 +45,7 @@ class DepartmentFilterSet(FiltersMixin, filters.FilterSet):
         lookup_expr='in',
         label=_('parent'),
         method="filter_parent",
+        widget=ComboboxWidget({'data-name': _('parent')}),
     )
     level = filters.NumberFilter(label=_('level'))
     description = filters.CharFilter(
@@ -61,34 +61,6 @@ class DepartmentFilterSet(FiltersMixin, filters.FilterSet):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        cost_center = Object(
-            url_name='cost_centers:search', 
-            field_name='cost_center', 
-            model=models.cc_models.CostCenter,
-            value_attributes=['name'],
-            multiple=True,
-        )
-        
-        self.form.fields['cost_center'].widget = get_search_field(
-            widget=widgets.SelectMultiple,
-            form=self.form, 
-            obj=cost_center,
-        )
-
-        parent = Object(
-            url_name='departments:search', 
-            field_name='parent', 
-            model=models.Department,
-            value_attributes=['name'],
-            multiple=True,
-        )
-        
-        self.form.fields['parent'].widget = get_search_field(
-            widget=widgets.SelectMultiple,
-            form=self.form, 
-            obj=parent,
-        )
         
         self.form.fields['level'].default = self.LevelChoices.NONE
         self.form.fields['level'].widget = widgets.Select(

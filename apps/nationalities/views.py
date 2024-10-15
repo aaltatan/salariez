@@ -19,15 +19,8 @@ from apps.base.mixins import (
     BulkModalMixin,
     BulkMapperMixin,
     ReslugifyModalMixin,
-    SearchMixin,
     ExportMixin,
 )
-
-
-class SearchView(LoginRequiredMixin, SearchMixin, View):
-    
-    model = models.Nationality
-    input_placeholder = _('search nationality')
 
 
 class ListTableView(

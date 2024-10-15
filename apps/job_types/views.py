@@ -20,14 +20,7 @@ from apps.base.mixins import (
     BulkMapperMixin,
     ReslugifyModalMixin,
     ExportMixin,
-    SearchMixin,
 )
-
-
-class SearchView(LoginRequiredMixin, SearchMixin, View):
-    
-    model = models.JobType
-    input_placeholder = _('search job type')
 
 
 class ListTableView(

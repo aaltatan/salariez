@@ -19,15 +19,8 @@ from apps.base.mixins import (
     BulkModalMixin,
     BulkMapperMixin,
     ReslugifyModalMixin,
-    SearchMixin,
     ExportMixin,
 )
-
-
-class SearchView(LoginRequiredMixin, SearchMixin, View):
-    
-    model = models.CostCenter
-    input_placeholder = _('search cost center')
 
 
 class ListTableView(

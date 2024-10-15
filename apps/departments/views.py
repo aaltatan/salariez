@@ -19,21 +19,9 @@ from apps.base.mixins import (
     CreateMixin,
     DeleteMixin,
     UpdateMixin,
-    SearchMixin,
     ExportMixin,
     ListMixin,
 )
-
-
-class SearchView(
-    LoginRequiredMixin, SearchMixin, View,
-):
-    
-    model = models.Department
-    input_placeholder = _('search department')
-
-    def get_queryset(self):
-        return super().get_queryset().order_by('department_id')
 
 
 class BulkModalView(LoginRequiredMixin, BulkMapperMixin, RedirectView):
