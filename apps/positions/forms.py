@@ -10,7 +10,7 @@ class PositionForm(forms.ModelForm):
     
     class Meta:
         model = models.Position
-        fields = ['name', 'description']
+        fields = ['name', 'order', 'description']
         widgets = {
             'name': forms.TextInput({
                 'placeholder': _('position name'),

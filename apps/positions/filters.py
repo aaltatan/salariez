@@ -23,6 +23,7 @@ class PositionFilterSet(FiltersMixin, filters.FilterSet):
             }
         ),
     )
+    order = filters.ChoiceFilter(label=_('order'))
     description = filters.CharFilter(
         label=_('description'),
         method="filter_description",
@@ -38,4 +39,4 @@ class PositionFilterSet(FiltersMixin, filters.FilterSet):
 
     class Meta:
         model = models.Position
-        fields = ["name", "description"]
+        fields = ["name", "order", "description"]

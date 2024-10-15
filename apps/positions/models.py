@@ -1,3 +1,5 @@
+from django.db import models
+from django.utils.translation import gettext_lazy as _
 from django.db.models.signals import pre_save
 
 from apps.base import models as base_models, utils
@@ -5,8 +7,14 @@ from apps.base import models as base_models, utils
 
 class Position(base_models.AbstractNameModel):
 
+    order = models.IntegerField(
+        verbose_name=_('order'),
+        help_text=_('order of position'),
+        default=1,
+    )
+
     class Meta:
-        ordering = ['name']
+        ordering = ['order', 'name']
         permissions = [
             ['can_export', 'Can export data']
         ]

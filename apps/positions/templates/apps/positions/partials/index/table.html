@@ -21,6 +21,7 @@
 
             <c-table.header-cell name="{% translate 'id' %}" />
             <c-table.header-cell name="{% translate 'name' %}" />
+            <c-table.header-cell name="{% translate 'order' %}" />
             <c-table.header-cell name="{% translate 'description' %}" />
             <c-table.header-cell />
             
@@ -59,6 +60,7 @@
             {% else %}
             <c-table.td>{{ obj.name }}</c-table.td>
             {% endif %}
+            <c-table.td>{{ obj.order }}</c-table.td>
             <c-table.td>{{ obj.description }}</c-table.td>
             <c-table.td><c-context.context /></c-table.td>
           </c-table.tr>

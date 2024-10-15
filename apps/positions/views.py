@@ -29,6 +29,7 @@ class ListTableView(
     
     permission_required = 'positions.view_position'
     sortable_by = OrderList([
+        OrderItem(_('order'), 'order', checked=True),
         OrderItem(_('name'), 'name', checked=True),
         OrderItem(_('description'), 'description'),
     ])
