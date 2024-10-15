@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% translate 'educational degrees'|title %}{% endblock %}
+
+{% block body %}
+
+<span
+class="hidden"
+x-init="breadCrumbs.push({
+    text: '{% translate 'educational degrees' %}', 
+    href: '{% url 'educational_degrees:index' %}'
+})"></span>
+
+<c-layout.app-container id="educational-degrees-table" app_title="{% translate 'educational degrees' %}">
+
+    <c-slot name="filters">
+        {% include 'partials/filters/base.html' %}
+    </c-slot>
+    
+    <c-slot name="table">
+        {% include 'apps/educational_degrees/partials/index/table.html' %}
+    </c-slot>
+    
+</c-layout.app-container>
+
+{% endblock %}

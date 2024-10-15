@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% translate 'add new degree'|title %}{% endblock %}
+
+{% block body %}
+
+    <template 
+    x-init="let hrefs = [
+        {
+            text: '{% translate 'educational degrees' %}', 
+            href: '{% url 'educational_degrees:index' %}'
+        },
+        {
+            text: '{% translate 'add new' %}', 
+            href: '{% url 'educational_degrees:create' %}'
+        },
+    ];
+    breadCrumbs = [...breadCrumbs, ...hrefs]"
+    ></template>
+
+    {% include 'partials/create-form.html' %}
+
+{% endblock %}

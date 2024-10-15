@@ -60,7 +60,7 @@ class="relative">
   x-transition:enter="ease-out duration-200"
   x-transition:enter-start="-translate-y-2"
   x-transition:enter-end="translate-y-0"
-  class="absolute left-0 top-full w-full z-[200] rounded-lg max-h-48 overflow-auto bg-white dark:bg-neutral-800 my-4 scrollbar p-1">
+  class="absolute left-0 top-full w-full z-[200] rounded-lg max-h-48 overflow-auto bg-white shadow-lg dark:shadow-none border border-neutral-200 dark:border-none dark:bg-neutral-800 my-4 scrollbar p-1">
     <template x-for="(item, idx) in items" :key="item.value">
       <a 
       @click="

@@ -1,0 +1,277 @@
+[
+    {
+        "model": "specializations.specialization",
+        "pk": 1,
+        "fields": {
+            "name": "طب الأسنان",
+            "description": "",
+            "slug": "طب-الأسنان",
+            "search": "طب الأسنان طب الأسنان",
+            "is_specialist": true
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 2,
+        "fields": {
+            "name": "الصيدلة",
+            "description": "",
+            "slug": "الصيدلة",
+            "search": "الصيدلة الصيدلة",
+            "is_specialist": true
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 3,
+        "fields": {
+            "name": "إدارة الأعمال",
+            "description": "",
+            "slug": "إدارة-الأعمال",
+            "search": "إدارة الأعمال إدارة الأعمال",
+            "is_specialist": true
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 4,
+        "fields": {
+            "name": "الحقوق",
+            "description": "",
+            "slug": "الحقوق",
+            "search": "الحقوق الحقوق",
+            "is_specialist": false
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 5,
+        "fields": {
+            "name": "الطب البشري",
+            "description": "",
+            "slug": "الطب-البشري",
+            "search": "الطب البشري الطب البشري",
+            "is_specialist": false
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 6,
+        "fields": {
+            "name": "الطب البيطري",
+            "description": "",
+            "slug": "الطب-البيطري",
+            "search": "الطب البيطري الطب البيطري",
+            "is_specialist": false
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 7,
+        "fields": {
+            "name": "الكيمياء",
+            "description": "",
+            "slug": "الكيمياء",
+            "search": "الكيمياء الكيمياء",
+            "is_specialist": false
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 8,
+        "fields": {
+            "name": "الفيزياء",
+            "description": "",
+            "slug": "الفيزياء",
+            "search": "الفيزياء الفيزياء",
+            "is_specialist": false
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 9,
+        "fields": {
+            "name": "الهندسة المعلوماتية",
+            "description": "",
+            "slug": "الهندسة-المعلوماتية",
+            "search": "الهندسة المعلوماتية الهندسة المعلوماتية",
+            "is_specialist": true
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 10,
+        "fields": {
+            "name": "هندسة الاتصالات",
+            "description": "",
+            "slug": "هندسة-الاتصالات",
+            "search": "هندسة الاتصالات هندسة الاتصالات",
+            "is_specialist": true
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 11,
+        "fields": {
+            "name": "الهندسة المدنية",
+            "description": "",
+            "slug": "الهندسة-المدنية",
+            "search": "الهندسة المدنية الهندسة المدنية",
+            "is_specialist": true
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 12,
+        "fields": {
+            "name": "الهندسة المعمارية",
+            "description": "",
+            "slug": "الهندسة-المعمارية",
+            "search": "الهندسة المعمارية الهندسة المعمارية",
+            "is_specialist": true
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 13,
+        "fields": {
+            "name": "الرياضيات",
+            "description": "",
+            "slug": "الرياضيات",
+            "search": "الرياضيات الرياضيات",
+            "is_specialist": false
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 14,
+        "fields": {
+            "name": "اللغة الانكليزية",
+            "description": "",
+            "slug": "اللغة-الانكليزية",
+            "search": "اللغة الانكليزية اللغة الانكليزية",
+            "is_specialist": false
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 15,
+        "fields": {
+            "name": "اللغة العربية",
+            "description": "",
+            "slug": "اللغة-العربية",
+            "search": "اللغة العربية اللغة العربية",
+            "is_specialist": false
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 16,
+        "fields": {
+            "name": "الهندسة الميكانيكية",
+            "description": "",
+            "slug": "الهندسة-الميكانيكية",
+            "search": "الهندسة الميكانيكية الهندسة الميكانيكية",
+            "is_specialist": false
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 17,
+        "fields": {
+            "name": "العلوم الطبيعية",
+            "description": "",
+            "slug": "العلوم-الطبيعية",
+            "search": "العلوم الطبيعية العلوم الطبيعية",
+            "is_specialist": false
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 18,
+        "fields": {
+            "name": "العلوم الصحية",
+            "description": "",
+            "slug": "العلوم-الصحية",
+            "search": "العلوم الصحية العلوم الصحية",
+            "is_specialist": false
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 19,
+        "fields": {
+            "name": "الإقتصاد",
+            "description": "",
+            "slug": "الإقتصاد",
+            "search": "الإقتصاد الإقتصاد",
+            "is_specialist": false
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 20,
+        "fields": {
+            "name": "هندسة الحاسوب",
+            "description": "",
+            "slug": "هندسة-الحاسوب",
+            "search": "هندسة الحاسوب هندسة الحاسوب",
+            "is_specialist": false
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 21,
+        "fields": {
+            "name": "هندسة التحكم",
+            "description": "",
+            "slug": "هندسة-التحكم",
+            "search": "هندسة التحكم هندسة التحكم",
+            "is_specialist": false
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 22,
+        "fields": {
+            "name": "الإعلام",
+            "description": "",
+            "slug": "الإعلام",
+            "search": "الإعلام الإعلام",
+            "is_specialist": false
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 23,
+        "fields": {
+            "name": "التاريخ",
+            "description": "",
+            "slug": "التاريخ",
+            "search": "التاريخ التاريخ",
+            "is_specialist": false
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 24,
+        "fields": {
+            "name": "المحاسبة",
+            "description": "",
+            "slug": "المحاسبة",
+            "search": "المحاسبة المحاسبة",
+            "is_specialist": true
+        }
+    },
+    {
+        "model": "specializations.specialization",
+        "pk": 25,
+        "fields": {
+            "name": "التسويق",
+            "description": "",
+            "slug": "التسويق",
+            "search": "التسويق التسويق",
+            "is_specialist": true
+        }
+    }
+]

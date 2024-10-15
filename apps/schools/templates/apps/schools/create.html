@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% translate 'add new school'|title %}{% endblock %}
+
+{% block body %}
+
+    <template 
+    x-init="let hrefs = [
+        {
+            text: '{% translate 'schools' %}', 
+            href: '{% url 'schools:index' %}'
+        },
+        {
+            text: '{% translate 'add new' %}', 
+            href: '{% url 'schools:create' %}'
+        },
+    ];
+    breadCrumbs = [...breadCrumbs, ...hrefs]"
+    ></template>
+
+    {% include 'partials/create-form.html' %}
+
+{% endblock %}

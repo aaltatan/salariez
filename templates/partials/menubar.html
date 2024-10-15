@@ -13,6 +13,11 @@
 {% with perms.cost_centers.view_costcenter as can_cost_center %}
 {% with perms.nationalities.view_nationality as can_nationality %}
 
+{% with perms.specializations.view_specialization as can_specialization %}
+{% with perms.educational_degrees.view_educationaldegree as can_educational_degree %}
+{% with perms.school_types.view_schooltype as can_school_types %}
+{% with perms.schools.view_school as can_schools %}
+
 <div x-data="{
   menuBarOpen: false, 
   menuBarMenu: ''
@@ -52,6 +57,44 @@ class="relative top-0 start-0 z-[400] w-fit transition-all duration-150 ease-out
                     {% if debug %}
                     <c-menubar.sublink hx-boost="false" href="/silk/">
                       silk
+                    </c-menubar.sublink>
+                    {% endif %}
+
+                  </c-menubar.submenu>
+
+                </c-menubar.submenu-container>
+                {% endif %}
+
+                {% if can_specialization or can_educational_degree or can_school_types or can_schools %}
+                <c-menubar.submenu-container>
+
+                  <c-menubar.submenu-button>
+                    <span>{% translate 'education constants' %}</span>
+                  </c-menubar.submenu-button>
+
+                  <c-menubar.submenu>
+
+                    {% if can_employee %}
+                    <c-menubar.sublink href="{% url 'specializations:index' %}">
+                      {% translate 'specializations' %}
+                    </c-menubar.sublink>
+                    {% endif %}
+
+                    {% if can_educational_degree %}
+                    <c-menubar.sublink href="{% url 'educational_degrees:index' %}">
+                      {% translate 'degrees' %}
+                    </c-menubar.sublink>
+                    {% endif %}
+
+                    {% if can_school_types %}
+                    <c-menubar.sublink href="{% url 'school_types:index' %}">
+                      {% translate 'school types' %}
+                    </c-menubar.sublink>
+                    {% endif %}
+
+                    {% if can_schools %}
+                    <c-menubar.sublink href="{% url 'schools:index' %}">
+                      {% translate 'schools' %}
                     </c-menubar.sublink>
                     {% endif %}
 
@@ -272,6 +315,11 @@ class="relative top-0 start-0 z-[400] w-fit transition-all duration-150 ease-out
 </div>
 </div>
 
+{% endwith %}
+
+{% endwith %}
+{% endwith %}
+{% endwith %}
 {% endwith %}
 
 {% endwith %}

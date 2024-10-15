@@ -62,7 +62,14 @@ INSTALLED_APPS = [
     "apps.areas",
     "apps.nationalities",
     "apps.statuses",
+    ##########################
+    "apps.specializations",
+    "apps.educational_degrees",
+    "apps.school_types",
+    "apps.schools",
+    ##########################
     "apps.employees",
+    ##########################
 ]
 
 MIDDLEWARE = [

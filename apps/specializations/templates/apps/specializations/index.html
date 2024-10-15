@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% translate 'specializations'|title %}{% endblock %}
+
+{% block body %}
+
+<span
+class="hidden"
+x-init="breadCrumbs.push({
+    text: '{% translate 'specializations' %}', 
+    href: '{% url 'specializations:index' %}'
+})"></span>
+
+<c-layout.app-container id="specializations-table" app_title="{% translate 'specializations' %}">
+
+    <c-slot name="filters">
+        {% include 'partials/filters/base.html' %}
+    </c-slot>
+    
+    <c-slot name="table">
+        {% include 'apps/specializations/partials/index/table.html' %}
+    </c-slot>
+    
+</c-layout.app-container>
+
+{% endblock %}
