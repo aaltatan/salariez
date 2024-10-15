@@ -1,0 +1,72 @@
+[
+  {
+    "model": "school_types.schooltype",
+    "pk": 1,
+    "fields": {
+      "name": "جامعة حكومية",
+      "description": "",
+      "slug": "جامعة-حكومية",
+      "search": "جامعة حكومية جامعة حكومية"
+    }
+  },
+  {
+    "model": "school_types.schooltype",
+    "pk": 2,
+    "fields": {
+      "name": "جامعة خاصة",
+      "description": "",
+      "slug": "جامعة-خاصة",
+      "search": "جامعة خاصة جامعة خاصة"
+    }
+  },
+  {
+    "model": "school_types.schooltype",
+    "pk": 3,
+    "fields": {
+      "name": "معهد وزارة التعليم العالي",
+      "description": "",
+      "slug": "معهد-وزارة-التعليم-العالي",
+      "search": "معهد وزارة التعليم العالي معهد وزارة التعليم العالي"
+    }
+  },
+  {
+    "model": "school_types.schooltype",
+    "pk": 4,
+    "fields": {
+      "name": "معهد خاص",
+      "description": "",
+      "slug": "معهد-خاص",
+      "search": "معهد خاص معهد خاص"
+    }
+  },
+  {
+    "model": "school_types.schooltype",
+    "pk": 5,
+    "fields": {
+      "name": "معهد متوسط",
+      "description": "",
+      "slug": "معهد-متوسط",
+      "search": "معهد متوسط معهد متوسط"
+    }
+  },
+  {
+    "model": "school_types.schooltype",
+    "pk": 6,
+    "fields": {
+      "name": "معهد تقاني",
+      "description": "",
+      "slug": "معهد-تقاني",
+      "search": "معهد تقاني معهد تقاني"
+    }
+  },
+  {
+    "model": "school_types.schooltype",
+    "pk": 7,
+    "fields": {
+      "name": "ثانوية",
+      "description": "",
+      "slug": "ثانوية",
+      "search": "ثانوية ثانوية"
+    }
+  }
+]

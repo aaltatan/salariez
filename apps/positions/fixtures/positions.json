@@ -1,162 +1,178 @@
 [
-{
-    "model": "positions.position",
-    "pk": 1,
-    "fields": {
-        "name": "رئيس الجامعة",
-        "description": "",
-        "slug": "رئيس-الجامعة",
-        "search": "رئيس الجامعة رئيس الجامعة"
+    {
+        "model": "positions.position",
+        "pk": 1,
+        "fields": {
+            "name": "رئيس الجامعة",
+            "description": "",
+            "slug": "رئيس-الجامعة",
+            "search": "رئيس الجامعة رئيس الجامعة",
+            "order": 1
+        }
+    },
+    {
+        "model": "positions.position",
+        "pk": 2,
+        "fields": {
+            "name": "نائب رئيس الجامعة للشؤون العلمية",
+            "description": "",
+            "slug": "نائب-رئيس-الجامعة-للشؤون-العلمية",
+            "search": "نائب رئيس الجامعة للشؤون العلمية نائب رئيس الجامعة للشؤون العلمية",
+            "order": 2
+        }
+    },
+    {
+        "model": "positions.position",
+        "pk": 3,
+        "fields": {
+            "name": "نائب رئيس الجامعة للشؤون الإدارية",
+            "description": "",
+            "slug": "نائب-رئيس-الجامعة-للشؤون-الإدارية",
+            "search": "نائب رئيس الجامعة للشؤون الإدارية نائب رئيس الجامعة للشؤون الإدارية",
+            "order": 2
+        }
+    },
+    {
+        "model": "positions.position",
+        "pk": 4,
+        "fields": {
+            "name": "رئيس مجلس الأمناء",
+            "description": "",
+            "slug": "رئيس-مجلس-الأمناء",
+            "search": "رئيس مجلس الأمناء رئيس مجلس الأمناء",
+            "order": 2
+        }
+    },
+    {
+        "model": "positions.position",
+        "pk": 5,
+        "fields": {
+            "name": "عميد كلية",
+            "description": "",
+            "slug": "عميد-كلية",
+            "search": "عميد كلية عميد كلية",
+            "order": 3
+        }
+    },
+    {
+        "model": "positions.position",
+        "pk": 6,
+        "fields": {
+            "name": "نائب عميد كلية",
+            "description": "",
+            "slug": "نائب-عميد-كلية",
+            "search": "نائب عميد كلية نائب عميد كلية",
+            "order": 4
+        }
+    },
+    {
+        "model": "positions.position",
+        "pk": 7,
+        "fields": {
+            "name": "مدير",
+            "description": "",
+            "slug": "مدير",
+            "search": "مدير مدير",
+            "order": 3
+        }
+    },
+    {
+        "model": "positions.position",
+        "pk": 8,
+        "fields": {
+            "name": "رئيس قسم إداري",
+            "description": "",
+            "slug": "رئيس-قسم-إداري",
+            "search": "رئيس قسم إداري رئيس قسم إداري",
+            "order": 4
+        }
+    },
+    {
+        "model": "positions.position",
+        "pk": 9,
+        "fields": {
+            "name": "رئيس قسم كلية",
+            "description": "",
+            "slug": "رئيس-قسم-كلية",
+            "search": "رئيس قسم كلية رئيس قسم كلية",
+            "order": 4
+        }
+    },
+    {
+        "model": "positions.position",
+        "pk": 10,
+        "fields": {
+            "name": "عضو هيئة تدريسية",
+            "description": "",
+            "slug": "عضو-هيئة-تدريسية",
+            "search": "عضو هيئة تدريسية عضو هيئة تدريسية",
+            "order": 4
+        }
+    },
+    {
+        "model": "positions.position",
+        "pk": 11,
+        "fields": {
+            "name": "عضو هيئة فنية",
+            "description": "",
+            "slug": "عضو-هيئة-فنية",
+            "search": "عضو هيئة فنية عضو هيئة فنية",
+            "order": 6
+        }
+    },
+    {
+        "model": "positions.position",
+        "pk": 12,
+        "fields": {
+            "name": "موظف إداري",
+            "description": "",
+            "slug": "موظف-إداري",
+            "search": "موظف إداري موظف إداري",
+            "order": 5
+        }
+    },
+    {
+        "model": "positions.position",
+        "pk": 13,
+        "fields": {
+            "name": "عامل إداري",
+            "description": "",
+            "slug": "عامل-إداري",
+            "search": "عامل إداري عامل إداري",
+            "order": 8
+        }
+    },
+    {
+        "model": "positions.position",
+        "pk": 14,
+        "fields": {
+            "name": "مشرف مخبر",
+            "description": "",
+            "slug": "مشرف-مخبر",
+            "search": "مشرف مخبر مشرف مخبر",
+            "order": 7
+        }
+    },
+    {
+        "model": "positions.position",
+        "pk": 15,
+        "fields": {
+            "name": "مشرف عيادة",
+            "description": "",
+            "slug": "مشرف-عيادة",
+            "search": "مشرف عيادة مشرف عيادة",
+            "order": 6
+        }
+    },
+    {
+        "model": "positions.position",
+        "pk": 16,
+        "fields": {
+            "name": "محضر عيادة",
+            "description": "",
+            "slug": "محضر-عيادة",
+            "search": "محضر عيادة محضر عيادة",
+            "order": 7
+        }
     }
-},
-{
-    "model": "positions.position",
-    "pk": 2,
-    "fields": {
-        "name": "نائب رئيس الجامعة للشؤون العلمية",
-        "description": "",
-        "slug": "نائب-رئيس-الجامعة-للشؤون-العلمية",
-        "search": "نائب رئيس الجامعة للشؤون العلمية نائب رئيس الجامعة للشؤون العلمية"
-    }
-},
-{
-    "model": "positions.position",
-    "pk": 3,
-    "fields": {
-        "name": "نائب رئيس الجامعة للشؤون الإدارية",
-        "description": "",
-        "slug": "نائب-رئيس-الجامعة-للشؤون-الإدارية",
-        "search": "نائب رئيس الجامعة للشؤون الإدارية نائب رئيس الجامعة للشؤون الإدارية"
-    }
-},
-{
-    "model": "positions.position",
-    "pk": 4,
-    "fields": {
-        "name": "رئيس مجلس الأمناء",
-        "description": "",
-        "slug": "رئيس-مجلس-الأمناء",
-        "search": "رئيس مجلس الأمناء رئيس مجلس الأمناء"
-    }
-},
-{
-    "model": "positions.position",
-    "pk": 5,
-    "fields": {
-        "name": "عميد كلية",
-        "description": "",
-        "slug": "عميد-كلية",
-        "search": "عميد كلية عميد كلية"
-    }
-},
-{
-    "model": "positions.position",
-    "pk": 6,
-    "fields": {
-        "name": "نائب عميد كلية",
-        "description": "",
-        "slug": "نائب-عميد-كلية",
-        "search": "نائب عميد كلية نائب عميد كلية"
-    }
-},
-{
-    "model": "positions.position",
-    "pk": 7,
-    "fields": {
-        "name": "مدير",
-        "description": "",
-        "slug": "مدير",
-        "search": "مدير مدير"
-    }
-},
-{
-    "model": "positions.position",
-    "pk": 8,
-    "fields": {
-        "name": "رئيس قسم إداري",
-        "description": "",
-        "slug": "رئيس-قسم-إداري",
-        "search": "رئيس قسم إداري رئيس قسم إداري"
-    }
-},
-{
-    "model": "positions.position",
-    "pk": 9,
-    "fields": {
-        "name": "رئيس قسم كلية",
-        "description": "",
-        "slug": "رئيس-قسم-كلية",
-        "search": "رئيس قسم كلية رئيس قسم كلية"
-    }
-},
-{
-    "model": "positions.position",
-    "pk": 10,
-    "fields": {
-        "name": "عضو هيئة تدريسية",
-        "description": "",
-        "slug": "عضو-هيئة-تدريسية",
-        "search": "عضو هيئة تدريسية عضو هيئة تدريسية"
-    }
-},
-{
-    "model": "positions.position",
-    "pk": 11,
-    "fields": {
-        "name": "عضو هيئة فنية",
-        "description": "",
-        "slug": "عضو-هيئة-فنية",
-        "search": "عضو هيئة فنية عضو هيئة فنية"
-    }
-},
-{
-    "model": "positions.position",
-    "pk": 12,
-    "fields": {
-        "name": "موظف إداري",
-        "description": "",
-        "slug": "موظف-إداري",
-        "search": "موظف إداري موظف إداري"
-    }
-},
-{
-    "model": "positions.position",
-    "pk": 13,
-    "fields": {
-        "name": "عامل إداري",
-        "description": "",
-        "slug": "عامل-إداري",
-        "search": "عامل إداري عامل إداري"
-    }
-},
-{
-    "model": "positions.position",
-    "pk": 14,
-    "fields": {
-        "name": "مشرف مخبر",
-        "description": "",
-        "slug": "مشرف-مخبر",
-        "search": "مشرف مخبر مشرف مخبر"
-    }
-},
-{
-    "model": "positions.position",
-    "pk": 15,
-    "fields": {
-        "name": "مشرف عيادة",
-        "description": "",
-        "slug": "مشرف-عيادة",
-        "search": "مشرف عيادة مشرف عيادة"
-    }
-},
-{
-    "model": "positions.position",
-    "pk": 16,
-    "fields": {
-        "name": "محضر عيادة",
-        "description": "",
-        "slug": "محضر-عيادة",
-        "search": "محضر عيادة محضر عيادة"
-    }
-}
 ]

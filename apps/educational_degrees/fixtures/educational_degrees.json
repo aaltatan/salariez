@@ -1,0 +1,146 @@
+[
+  {
+    "model": "educational_degrees.educationaldegree",
+    "pk": 1,
+    "fields": {
+      "name": "دكتوراه - أستاذ",
+      "description": "",
+      "slug": "دكتوراه-أستاذ",
+      "search": "دكتوراه - أستاذ دكتوراه - أستاذ",
+      "is_academic": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "educational_degrees.educationaldegree",
+    "pk": 2,
+    "fields": {
+      "name": "دكتوراه - استاذ مساعد",
+      "description": "",
+      "slug": "دكتوراه-استاذ-مساعد",
+      "search": "دكتوراه - استاذ مساعد دكتوراه - استاذ مساعد",
+      "is_academic": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "educational_degrees.educationaldegree",
+    "pk": 3,
+    "fields": {
+      "name": "دكتوراه - مدرس",
+      "description": "",
+      "slug": "دكتوراه-مدرس",
+      "search": "دكتوراه - مدرس دكتوراه - مدرس",
+      "is_academic": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "educational_degrees.educationaldegree",
+    "pk": 4,
+    "fields": {
+      "name": "دكتوراه تأهيل وتخصص",
+      "description": "",
+      "slug": "دكتوراه-تأهيل-وتخصص",
+      "search": "دكتوراه تأهيل وتخصص دكتوراه تأهيل وتخصص",
+      "is_academic": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "educational_degrees.educationaldegree",
+    "pk": 5,
+    "fields": {
+      "name": "دكتوراه - غير معادل نظري",
+      "description": "",
+      "slug": "دكتوراه-غير-معادل-نظري",
+      "search": "دكتوراه - غير معادل نظري دكتوراه - غير معادل نظري",
+      "is_academic": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "educational_degrees.educationaldegree",
+    "pk": 6,
+    "fields": {
+      "name": "ماجستير نظري",
+      "description": "",
+      "slug": "ماجستير-نظري",
+      "search": "ماجستير نظري ماجستير نظري",
+      "is_academic": true,
+      "order": 5
+    }
+  },
+  {
+    "model": "educational_degrees.educationaldegree",
+    "pk": 7,
+    "fields": {
+      "name": "ماجستير تطبيقي",
+      "description": "",
+      "slug": "ماجستير-تطبيقي",
+      "search": "ماجستير تطبيقي ماجستير تطبيقي",
+      "is_academic": false,
+      "order": 6
+    }
+  },
+  {
+    "model": "educational_degrees.educationaldegree",
+    "pk": 8,
+    "fields": {
+      "name": "ماجستير تأهيل وتخصص",
+      "description": "",
+      "slug": "ماجستير-تأهيل-وتخصص",
+      "search": "ماجستير تأهيل وتخصص ماجستير تأهيل وتخصص",
+      "is_academic": false,
+      "order": 6
+    }
+  },
+  {
+    "model": "educational_degrees.educationaldegree",
+    "pk": 9,
+    "fields": {
+      "name": "إجازة جامعية",
+      "description": "",
+      "slug": "إجازة-جامعية",
+      "search": "إجازة جامعية إجازة جامعية",
+      "is_academic": false,
+      "order": 8
+    }
+  },
+  {
+    "model": "educational_degrees.educationaldegree",
+    "pk": 10,
+    "fields": {
+      "name": "معهد",
+      "description": "",
+      "slug": "معهد",
+      "search": "معهد معهد",
+      "is_academic": false,
+      "order": 9
+    }
+  },
+  {
+    "model": "educational_degrees.educationaldegree",
+    "pk": 11,
+    "fields": {
+      "name": "ثانوية فما دون",
+      "description": "",
+      "slug": "ثانوية-فما-دون",
+      "search": "ثانوية فما دون ثانوية فما دون",
+      "is_academic": false,
+      "order": 10
+    }
+  },
+  {
+    "model": "educational_degrees.educationaldegree",
+    "pk": 12,
+    "fields": {
+      "name": "دبلوم",
+      "description": "",
+      "slug": "دبلوم",
+      "search": "دبلوم دبلوم",
+      "is_academic": false,
+      "order": 7
+    }
+  }
+]

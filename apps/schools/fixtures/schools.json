@@ -1,0 +1,74 @@
+[
+{
+    "model": "schools.school",
+    "pk": 1,
+    "fields": {
+        "name": "الجامعة الوطنية الخاصة",
+        "description": "",
+        "slug": "الجامعة-الوطنية-الخاصة",
+        "search": "الجامعة الوطنية الخاصة الجامعة الوطنية الخاصة",
+        "school_type": 2,
+        "nationality": 1
+    }
+},
+{
+    "model": "schools.school",
+    "pk": 2,
+    "fields": {
+        "name": "الجامعة الافتراضية السورية",
+        "description": "",
+        "slug": "الجامعة-الافتراضية-السورية",
+        "search": "الجامعة الافتراضية السورية الجامعة الافتراضية السورية",
+        "school_type": 1,
+        "nationality": 1
+    }
+},
+{
+    "model": "schools.school",
+    "pk": 3,
+    "fields": {
+        "name": "جامعة البعث",
+        "description": "",
+        "slug": "جامعة-البعث",
+        "search": "جامعة البعث جامعة البعث",
+        "school_type": 1,
+        "nationality": 1
+    }
+},
+{
+    "model": "schools.school",
+    "pk": 4,
+    "fields": {
+        "name": "جامعة تشرين",
+        "description": "",
+        "slug": "جامعة-تشرين",
+        "search": "جامعة تشرين جامعة تشرين",
+        "school_type": 1,
+        "nationality": 1
+    }
+},
+{
+    "model": "schools.school",
+    "pk": 5,
+    "fields": {
+        "name": "جامعة دمشق",
+        "description": "",
+        "slug": "جامعة-دمشق",
+        "search": "جامعة دمشق جامعة دمشق",
+        "school_type": 1,
+        "nationality": 1
+    }
+},
+{
+    "model": "schools.school",
+    "pk": 6,
+    "fields": {
+        "name": "جامعة حلب",
+        "description": "",
+        "slug": "جامعة-حلب",
+        "search": "جامعة حلب جامعة حلب",
+        "school_type": 1,
+        "nationality": 1
+    }
+}
+]
