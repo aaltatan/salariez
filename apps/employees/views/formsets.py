@@ -17,13 +17,15 @@ class MobileFormSetView(
     permissions = {
         'all': (
             'employees.change_employee', 
-            'mobiles.change_mobile',
-            'mobiles.delete_mobile',
+            'employees.change_mobile',
+            'employees.delete_mobile',
         ),
     }
     parent_model = models.Employee
     form_class = forms.MobileForm
 
+    def post_save(self):
+        return
 
 class EmailFormSetView(
     LoginRequiredMixin, 
@@ -34,13 +36,15 @@ class EmailFormSetView(
     permissions = {
         'all': (
             'employees.change_employee', 
-            'emails.change_email',
-            'emails.delete_email',
+            'employees.change_email',
+            'employees.delete_email',
         ),
     }
     parent_model = models.Employee
     form_class = forms.EmailForm
 
+    def post_save(self):
+        return
 
 class PhoneFormSetView(
     LoginRequiredMixin, 
@@ -51,9 +55,41 @@ class PhoneFormSetView(
     permissions = {
         'all': (
             'employees.change_employee', 
-            'phones.change_phone',
-            'phones.delete_phone',
+            'employees.change_phone',
+            'employees.delete_phone',
         ),
     }
     parent_model = models.Employee
     form_class = forms.PhoneForm
+
+    def post_save(self):
+        return
+
+class EducationalTransactionFormSetView(
+    LoginRequiredMixin, 
+    MultiplePermissionsRequiredMixin, 
+    FormSetMixin, 
+    View,
+):
+    permissions = {
+        'all': (
+            'employees.change_employee', 
+            'employees.change_educationtransaction',
+            'employees.delete_educationtransaction',
+        ),
+    }
+    parent_model = models.Employee
+    form_class = forms.EducationTransactionForm
+    
+    def post_save(self, instance):
+
+        Klass = self.get_model_class()
+
+        not_current_count = \
+              Klass.objects.filter(employee=instance, is_current=False).count()
+        all_count = Klass.objects.filter(employee=instance).count()
+        
+        if all_count and all_count == not_current_count:
+            obj = Klass.objects.filter(employee=instance).order_by('order').last()
+            obj.is_current = True
+            obj.save()

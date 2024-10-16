@@ -15,6 +15,7 @@ from .views import (
     MobileFormSetView,
     EmailFormSetView,
     PhoneFormSetView,
+    EducationalTransactionFormSetView,
     # dashboard
     male_female_card,
 )
@@ -38,6 +39,7 @@ urlpatterns = [
     path('update/<str:slug>/mobiles/', MobileFormSetView.as_view(), name='update-mobiles'),
     path('update/<str:slug>/emails/', EmailFormSetView.as_view(), name='update-emails'),
     path('update/<str:slug>/phones/', PhoneFormSetView.as_view(), name='update-phones'),
+    path('update/<str:slug>/educational-transactions/', EducationalTransactionFormSetView.as_view(), name='update-educational-transactions'),
     # dashboard
     path('dashboard/male-female-counts/', male_female_card, name='dashboard-male-female')
 ]

@@ -16,6 +16,9 @@ class FormsetMixinAbstract(ABC):
     @property
     @abstractmethod
     def form_class(self): ...
+
+    @abstractmethod
+    def post_save(self, instance): ...
     
 
 
@@ -25,6 +28,8 @@ class FormSetMixin(FormsetMixinAbstract):
     ### required attributes:  
     - `parent_model: Model`
     - `form_class: ModelForm`
+    ### required methods:  
+    - `post_save: Callable`: to perform an action after formset has been saved.  
     ### optional attributes:  
     - `model: Model`  
     - `template_name: str`  
@@ -55,6 +60,7 @@ class FormSetMixin(FormsetMixinAbstract):
 
         if formset.is_valid():
             formset.save()
+            self.post_save(instance=instance)
             messages.success(self.request, _('done'))
             formset = Formset(instance=instance)
 
@@ -74,7 +80,7 @@ class FormSetMixin(FormsetMixinAbstract):
         return self.form_class._meta.model
 
     def get_app_label(self) -> str:
-        return self.get_model_class()._meta.verbose_name_plural
+        return self.get_model_class()._meta.verbose_name_plural.replace(' ', '-')
 
     def get_parent_app_label(self) -> str:
         return self.parent_model._meta.app_label

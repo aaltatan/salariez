@@ -25,6 +25,11 @@
         href: '{% url 'employees:update-phones' slug=instance.slug %}', 
         isActive: false,
       },
+      {
+        text: '{% translate 'education' %}', 
+        href: '{% url 'employees:update-educational-transactions' slug=instance.slug %}', 
+        isActive: false,
+      },
     ]
   }"
   class="sticky top-[4.75rem] start-0 h-[85vh] ~p-2/4 rounded-lg bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-none">

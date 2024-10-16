@@ -15,6 +15,7 @@ from .formsets import (
   MobileFormSetView,
   EmailFormSetView,
   PhoneFormSetView,
+  EducationalTransactionFormSetView,
 )
 from .dashboard import (
   male_female_card,
@@ -36,6 +37,7 @@ __all__ = [
   MobileFormSetView,
   EmailFormSetView,
   PhoneFormSetView,
+  EducationalTransactionFormSetView,
   # dashboard
   male_female_card,
 ]

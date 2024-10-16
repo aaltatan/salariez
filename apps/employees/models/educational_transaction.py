@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext as _
+from django.db.models.signals import pre_save
 
 from ..models import Employee
 
@@ -63,17 +64,6 @@ class EducationTransaction(models.Model):
     def __str__(self) -> str:
         return f'{self.employee.fullname} {self.degree.name} in {self.specialization}'
     
-    def save(self, *args, **kwargs) -> None:
-        
-        if self.is_current:
-            Klass = self.__class__
-            qs = Klass.objects.filter(employee=self.employee).all()
-            for obj in qs:
-                obj.is_current = False
-                obj.save()
-
-        return super().save(*args, **kwargs)
-    
     class Meta:
         ordering = ['employee__firstname', 'order']
         unique_together = [
@@ -82,3 +72,20 @@ class EducationTransaction(models.Model):
         permissions = [
             ['can_export', 'Can export data']
         ]
+
+
+def education_transaction_pre_save(sender, instance: EducationTransaction, *args, **kwargs):
+
+    if instance.is_current:
+
+        qs = instance.__class__.objects.filter(employee=instance.employee, is_current=True)
+
+        if instance.pk is not None:
+            qs = qs.exclude(pk=instance.pk)
+
+        for obj in qs:
+            obj.is_current = False
+            obj.save()
+
+
+pre_save.connect(education_transaction_pre_save, EducationTransaction)

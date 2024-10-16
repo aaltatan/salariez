@@ -62,6 +62,9 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
+      containers: {
+        '2xs': '2rem',
+      },
       animation: {
         "slow-pulse": "pulse 500ms cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },

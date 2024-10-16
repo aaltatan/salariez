@@ -38,7 +38,7 @@ select_related: list[str] = [
     'department__cost_center',
 ]
 prefetch_related: list[str] = [
-    'mobiles', 'phones', 'emails',
+    'mobiles', 'phones', 'emails', 'education_transactions'
 ]
 
 
@@ -54,6 +54,7 @@ class EmployeeDetailView(DetailView):
             .select_related(*select_related)
             .prefetch_related(*prefetch_related)
         )
+
 
 class SearchView(LoginRequiredMixin, SearchMixin, View):
     
