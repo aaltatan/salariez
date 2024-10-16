@@ -14,6 +14,8 @@ def reslugify_action(modeladmin, request, queryset):
 
 @admin.register(models.EducationalDegree)
 class EducationalDegreeAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-    list_display = ["id", "name", "slug"]
+    list_display = ["id", "name", "is_academic", "order", "slug"]
+    search_fields = ["name"]
+    list_per_page = 20
     prepopulated_fields = {"slug": ["name"]}
     actions = [reslugify_action]

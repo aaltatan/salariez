@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.utils.translation import gettext_lazy as _
 
 from import_export.admin import ImportExportModelAdmin
 
@@ -15,6 +14,8 @@ def reslugify_action(modeladmin, request, queryset):
 
 @admin.register(models.Nationality)
 class NationalityAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-    list_display = ["id", "name", "slug"]
+    list_display = ["id", "name", "is_local", "slug"]
+    search_fields = ["name"]
+    list_per_page = 20
     prepopulated_fields = {"slug": ["name"]}
     actions = [reslugify_action]
