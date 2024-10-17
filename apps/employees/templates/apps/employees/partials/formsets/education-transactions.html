@@ -35,7 +35,11 @@
         <c-table.tr>
           <c-table.td class="!px-4 !py-2">
             {{ form.id }} 
+            {% if forloop.last %}
+            {% render_field form.degree|add_class:'input w-full text-xs' autofocus="true" %} 
+            {% else %}
             {% render_field form.degree|add_class:'input w-full text-xs' %} 
+            {% endif %}
             {% for error in form.degree.errors %}
               <c-forms.error-li>{{ error }}</c-forms.error-li>
             {% endfor %}

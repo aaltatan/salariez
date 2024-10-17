@@ -19,7 +19,7 @@ class EducationTransactionForm(forms.ModelForm):
             'is_current',
         ]
         widgets = {
-            'degree': SearchWidget({'autofocus': 'on'}),
+            'degree': SearchWidget(),
             'specialization': SearchWidget(),
             'school': SearchWidget(),
             'graduation_date': get_date_field(

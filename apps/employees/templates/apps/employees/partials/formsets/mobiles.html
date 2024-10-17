@@ -32,7 +32,11 @@
         <c-table.tr>
           <c-table.td class="!px-4 !py-2">
             {{ form.id }} 
+            {% if forloop.last %}
+            {% render_field form.mobile|add_class:'input w-full' autofocus="true" %} 
+            {% else %}
             {% render_field form.mobile|add_class:'input w-full' %} 
+            {% endif %}
             {% for error in form.mobile.errors %}
               <c-forms.error-li>{{ error }}</c-forms.error-li>
             {% endfor %}

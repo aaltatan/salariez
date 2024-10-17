@@ -64,6 +64,14 @@
           {{ object.hire_date|timesince }}
         </p>
       </div>
+      <div class="flex items-center gap-1">
+        <c-icons.education ratio="1rem" />
+        <p>
+          <span>{{ object.education_degree }}</span>
+          <span>{% translate 'in' %}</span>
+          <span>{{ object.specialization }}</span>
+        </p>
+      </div>
       <ul class="text-neutral-500 flex items-center flex-wrap gap-1">
         {% for department in object|ancestors %}
           <li>
