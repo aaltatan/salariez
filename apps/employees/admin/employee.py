@@ -6,10 +6,10 @@ from .tabular import (
     PhoneTabular, 
     EducationTransactionTabular,
 )
-from ..models import Employee
+from ..proxies import EmployeeProxy
 
 
-@admin.register(Employee)
+@admin.register(EmployeeProxy)
 class EmployeeAdmin(admin.ModelAdmin):
     
     inlines = [

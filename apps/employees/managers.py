@@ -1,14 +1,17 @@
 from typing import Literal
 
+from .models import EducationTransaction
+
 from django.db import models
 from django.db.models import (
-    Case, When, Q, Value, F, ExpressionWrapper, Count
+    Case, When, Q, Value, F, ExpressionWrapper, Count, Subquery, OuterRef
 )
 from django.db.models.functions import (
     ExtractYear,
     ExtractMonth,
     ExtractDay,
     TruncDate,
+    Coalesce,
     Concat,
     Round,
     Now,
@@ -99,10 +102,56 @@ class EmployeeManager(models.Manager):
         return self.get_queryset().filter(is_today_job_anniversary=True)
 
     def get_queryset(self) -> models.QuerySet:
+
+        education = (
+            EducationTransaction
+            .objects
+            .filter(is_current=True, employee=OuterRef("pk"))
+            .select_related(
+                "employee", "specialization", "degree", "school"
+            )
+            .order_by("order")
+        )
+
         return (
             super()
             .get_queryset()
             .annotate(
+                # ------ education information ------#
+                school=Coalesce(
+                    Subquery(
+                        education.values('school__name')[:1]
+                    ), Value('-')
+                ),
+                specialization=Coalesce(
+                    Subquery(
+                        education.values('specialization__name')[:1]
+                    ), Value('-')
+                ),
+                education_degree=Coalesce(
+                    Subquery(
+                        education.values('degree__name')[:1]
+                    ), Value('-')
+                ),
+                education_order=Coalesce(
+                    Subquery(
+                        education.values('degree__order')[:1]
+                    ), Value(1000)
+                ),
+                is_academic=Coalesce(
+                    Subquery(
+                        education.values('degree__is_academic')[:1]
+                    ), False
+                ),
+                is_specialist=Coalesce(
+                    Subquery(
+                        education
+                        .values('specialization__is_specialist')[:1]
+                    ), False
+                ),
+                graduation_date=Subquery(
+                    education.values('graduation_date')[:1]
+                ),
                 # ------ start helpers ------#
                 birth_year=ExtractYear("birth_date"),
                 birth_month=ExtractMonth("birth_date"),

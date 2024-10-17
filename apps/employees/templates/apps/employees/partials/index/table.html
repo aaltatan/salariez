@@ -2,83 +2,73 @@
 
 <c-layout.table-container>
   <form hx-get="{{ bulk_path }}" x-data="{ selectedRows: [] }">
-
     <div class="m-2 flex items-center justify-end">
       <c-inputs.sort-by />
     </div>
 
     <c-table.container>
-
       <c-table.table>
-        
         <thead>
-
           <c-table.header-row>
-
             <c-table.header-cell>
               {% if can_delete %}
               <c-table.check data_check="all" />
               {% endif %}
             </c-table.header-cell>
 
-            <c-table.header-cell name="{% translate 'id' %}"/>
+            <c-table.header-cell name="{% translate 'id' %}" />
             <c-table.header-cell name="{% translate 'fullname' %}" />
-            <c-table.header-cell name="{% translate 'job type' %}" />
             <c-table.header-cell name="{% translate 'job subtype' %}" />
-            <c-table.header-cell name="{% translate 'position' %}" />
-            <c-table.header-cell name="{% translate 'cost center' %}" />
             <c-table.header-cell name="{% translate 'department' %}" />
             <c-table.header-cell name="{% translate 'salary' %}" />
             <c-table.header-cell name="{% translate 'job status' %}" />
-            <c-table.header-cell name="{% translate 'gender' %}" />
-            <c-table.header-cell name="{% translate 'since' %}" />
+            <c-table.header-cell name="{% translate 'education degree' %}" />
+            <c-table.header-cell name="{% translate 'specialization' %}" />
+            <c-table.header-cell name="{% translate 'is specialist' %}" />
 
             <c-table.header-cell />
-            
           </c-table.header-row>
 
           {% if can_delete %}
           <c-table.unselect-all colspan="10">
             {% if can_delete %}
-              <c-table.action-input
-                name="bulk_delete"
-                value="{% translate 'delete'|title %}"
-                title="{% translate 'delete'|title %}" />
+            <c-table.action-input
+              name="bulk_delete"
+              value="{% translate 'delete'|title %}"
+              title="{% translate 'delete'|title %}"
+            />
             {% endif %}
           </c-table.unselect-all>
           {% endif %}
-
         </thead>
         <!-- end header -->
-    
+
         <!-- start rows -->
         <c-table.tbody>
           {% for obj in qs %}
           <c-table.tr>
             <c-table.check />
-            
+
             <c-table.td>{{ obj.pk }}</c-table.td>
             {% if can_update %}
-            <c-table.td 
-            @click="setQueryString" 
-            href="{{ obj.get_absolute_path }}">
+            <c-table.td
+              @click="setQueryString"
+              href="{{ obj.get_absolute_path }}"
+            >
               {{ obj.fullname }}
             </c-table.td>
             {% else %}
             <c-table.td>{{ obj.fullname }}</c-table.td>
             {% endif %}
 
-            <c-table.td>{{ obj.job_subtype.job_type }}</c-table.td>
             <c-table.td>{{ obj.job_subtype }}</c-table.td>
-            <c-table.td>{{ obj.position }}</c-table.td>
-            <c-table.td>{{ obj.department.cost_center }}</c-table.td>
             <c-table.td>{{ obj.department }}</c-table.td>
             <c-table.td>{{ obj.salary|money }}</c-table.td>
             <c-table.td>{{ obj.status }}</c-table.td>
-            <c-table.td>{{ obj.get_gender_display }}</c-table.td>
-            <c-table.td>{{ obj.hire_date|timesince }}</c-table.td>
+            <c-table.td>{{ obj.education_degree }}</c-table.td>
+            <c-table.td>{{ obj.specialization }}</c-table.td>
+            <c-table.td>{{ obj.is_specialist }}</c-table.td>
             <c-table.td><c-context.context /></c-table.td>
-
           </c-table.tr>
           {% empty %}
           <c-table.empty-tr colspan="3" />
@@ -86,9 +76,7 @@
         </c-table.tbody>
         <!-- end rows -->
       </c-table.table>
-
     </c-table.container>
-
   </form>
   {% include 'partials/pagination/base.html' %}
 </c-layout.table-container>

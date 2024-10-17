@@ -4,8 +4,6 @@ from django.utils.translation import gettext_lazy as _
 from django.db.models.signals import pre_save, pre_delete
 from django.utils.text import slugify
 
-from ..managers import EmployeeManager
-
 from apps.base.validators import (
     two_chars_validator,
     numeric_validator,
@@ -41,8 +39,6 @@ class Employee(models.Model):
         FINISHED = 'F', _('finished').title()
         EXCUSED = 'E', _('excused').title()
         OTHER = 'O', _('other').title()
-
-    objects = EmployeeManager()
 
     firstname = models.CharField(
         max_length=255,

@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import gettext as _
 
-from .. import models
+from ..proxies import EmployeeProxy
 
 from apps.base.widgets import SearchWidget
 from apps.base.utils.generic import parse_decimals
@@ -16,7 +16,7 @@ from apps.base.utils.fields import (
 class EmployeeForm(forms.ModelForm):
     
     class Meta:
-        model = models.Employee
+        model = EmployeeProxy
         fields = '__all__'
         widgets = {
             'address': forms.widgets.TextInput({

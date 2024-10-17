@@ -11,7 +11,6 @@ class EducationTransactionForm(forms.ModelForm):
     class Meta:
         model = EducationTransaction
         fields = [
-            'employee', 
             'degree', 
             'specialization',
             'school',
@@ -20,7 +19,6 @@ class EducationTransactionForm(forms.ModelForm):
             'is_current',
         ]
         widgets = {
-            'employee': SearchWidget(),
             'degree': SearchWidget({'autofocus': 'on'}),
             'specialization': SearchWidget(),
             'school': SearchWidget(),

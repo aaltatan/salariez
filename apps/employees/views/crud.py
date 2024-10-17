@@ -10,8 +10,9 @@ from braces.views import (
     SuperuserRequiredMixin,
 )
 
+from ..proxies import EmployeeProxy
 from .. import (
-    models, forms, filters, mixins, resources, utils
+    forms, filters, mixins, resources, utils
 )
 
 from apps.base.utils.generic import OrderList, OrderItem
@@ -44,7 +45,7 @@ prefetch_related: list[str] = [
 
 class EmployeeDetailView(DetailView):
 
-    model = models.Employee
+    model = EmployeeProxy
     template_name = 'apps/employees/details.html'
 
     def get_queryset(self):
@@ -58,7 +59,7 @@ class EmployeeDetailView(DetailView):
 
 class SearchView(LoginRequiredMixin, SearchMixin, View):
     
-    model = models.Employee
+    model = EmployeeProxy
     input_placeholder = _('search employee')
 
 
@@ -81,6 +82,7 @@ class ListTableView(
         OrderItem(_('hire date'), 'hire_date'),
         OrderItem(_('birth date'), 'birth_date'),
         OrderItem(_('salary'), 'salary'),
+        OrderItem(_('education degree'), 'education_order'),
     ])
     filter_class = filters.EmployeeFilterSet
     paginate_by_form_attributes = {
@@ -123,7 +125,7 @@ class BulkDeleteView(
 ):
     
     permission_required = 'employees:delete_employee'
-    model = models.Employee
+    model = EmployeeProxy
 
 
 class BulkReslugifyView(
@@ -133,7 +135,7 @@ class BulkReslugifyView(
     ReslugifyModalMixin,
     View
 ):
-    model = models.Employee
+    model = EmployeeProxy
     bulk_path = 'employees:bulk-reslugify'
 
 
@@ -161,5 +163,5 @@ class DeleteView(
 ):
 
     permission_required = 'employees.delete_employee'
-    model = models.Employee
+    model = EmployeeProxy
     deleter = utils.Deleter
