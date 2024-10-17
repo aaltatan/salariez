@@ -12,20 +12,20 @@
       <c-table.table>
         <c-table.header-row>
 
-          <c-table.header-cell>
+          <c-table.th>
           {% if can_delete %}
           <c-table.check data_check="all" />
           {% endif %}
-          </c-table.header-cell>
+          </c-table.th>
 
-          <c-table.header-cell name="{% translate 'id' %}" />
-          <c-table.header-cell name="{% translate 'code' %}" />
-          <c-table.header-cell name="{% translate 'name' %}" />
-          <c-table.header-cell name="{% translate 'type' %}" />
-          <c-table.header-cell name="{% translate 'level' %}" />
-          <c-table.header-cell name="{% translate 'cost center' %}" />
-          <c-table.header-cell name="{% translate 'parent' %}" />
-          <c-table.header-cell />
+          <c-table.th name="{% translate 'id' %}" />
+          <c-table.th name="{% translate 'code' %}" />
+          <c-table.th name="{% translate 'name' %}" />
+          <c-table.th name="{% translate 'type' %}" />
+          <c-table.th name="{% translate 'level' %}" />
+          <c-table.th name="{% translate 'cost center' %}" />
+          <c-table.th name="{% translate 'parent' %}" />
+          <c-table.th />
 
         </c-table.header-row>
 

@@ -10,23 +10,23 @@
       <c-table.table>
         <thead>
           <c-table.header-row>
-            <c-table.header-cell>
+            <c-table.th>
               {% if can_delete %}
               <c-table.check data_check="all" />
               {% endif %}
-            </c-table.header-cell>
+            </c-table.th>
 
-            <c-table.header-cell name="{% translate 'id' %}" />
-            <c-table.header-cell name="{% translate 'fullname' %}" />
-            <c-table.header-cell name="{% translate 'job subtype' %}" />
-            <c-table.header-cell name="{% translate 'department' %}" />
-            <c-table.header-cell name="{% translate 'salary' %}" />
-            <c-table.header-cell name="{% translate 'job status' %}" />
-            <c-table.header-cell name="{% translate 'education degree' %}" />
-            <c-table.header-cell name="{% translate 'specialization' %}" />
-            <c-table.header-cell name="{% translate 'is specialist' %}" />
+            <c-table.th name="{% translate 'id' %}" />
+            <c-table.th name="{% translate 'fullname' %}" />
+            <c-table.th name="{% translate 'job subtype' %}" />
+            <c-table.th name="{% translate 'department' %}" />
+            <c-table.th name="{% translate 'salary' %}" />
+            <c-table.th name="{% translate 'job status' %}" />
+            <c-table.th name="{% translate 'education degree' %}" />
+            <c-table.th name="{% translate 'specialization' %}" />
+            <c-table.th name="{% translate 'is specialist' %}" />
 
-            <c-table.header-cell />
+            <c-table.th />
           </c-table.header-row>
 
           {% if can_delete %}

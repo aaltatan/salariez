@@ -20,15 +20,15 @@
       <c-table.table class="table-auto w-full">
 
         <c-table.header-row>
-          <c-table.header-cell>{% translate 'degree' %}</c-table.header-cell>
-          <c-table.header-cell>{% translate 'school' %}</c-table.header-cell>
-          <c-table.header-cell>{% translate 'specialization' %}</c-table.header-cell>
-          <c-table.header-cell>{% translate 'order' %}</c-table.header-cell>
-          <c-table.header-cell>{% translate 'graduation date' %}</c-table.header-cell>
-          <c-table.header-cell>{% translate 'current' %}</c-table.header-cell>
-          <c-table.header-cell>
+          <c-table.th>{% translate 'degree' %}</c-table.th>
+          <c-table.th>{% translate 'school' %}</c-table.th>
+          <c-table.th>{% translate 'specialization' %}</c-table.th>
+          <c-table.th>{% translate 'order' %}</c-table.th>
+          <c-table.th>{% translate 'graduation date' %}</c-table.th>
+          <c-table.th>{% translate 'current' %}</c-table.th>
+          <c-table.th>
             {% translate 'delete' %}
-          </c-table.header-cell>
+          </c-table.th>
         </c-table.header-row>
 
         {% for form in formset %}

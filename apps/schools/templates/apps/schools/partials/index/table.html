@@ -13,19 +13,19 @@
         <thead>
           <c-table.header-row>
 
-            <c-table.header-cell>
+            <c-table.th>
               {% if can_delete %}
               <c-table.check data_check="all" />
               {% endif %}
-            </c-table.header-cell>
+            </c-table.th>
 
-            <c-table.header-cell name="{% translate 'id' %}" />
-            <c-table.header-cell name="{% translate 'name' %}" />
-            <c-table.header-cell name="{% translate 'nationality' %}" />
-            <c-table.header-cell name="{% translate 'local' %}" />
-            <c-table.header-cell name="{% translate 'type' %}" />
-            <c-table.header-cell name="{% translate 'description' %}" />
-            <c-table.header-cell />
+            <c-table.th name="{% translate 'id' %}" />
+            <c-table.th name="{% translate 'name' %}" />
+            <c-table.th name="{% translate 'nationality' %}" />
+            <c-table.th name="{% translate 'local' %}" />
+            <c-table.th name="{% translate 'type' %}" />
+            <c-table.th name="{% translate 'description' %}" />
+            <c-table.th />
             
           </c-table.header-row>
 
