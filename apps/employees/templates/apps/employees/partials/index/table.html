@@ -18,10 +18,6 @@
 
             <c-table.th name="{% translate 'id' %}" />
             <c-table.th name="{% translate 'fullname' %}" />
-            <c-table.th name="{% translate 'job subtype' %}" />
-            <c-table.th name="{% translate 'department' %}" />
-            <c-table.th name="{% translate 'salary' %}" />
-            <c-table.th name="{% translate 'job status' %}" />
             <c-table.th name="{% translate 'education degree' %}" />
             <c-table.th name="{% translate 'specialization' %}" />
             <c-table.th name="{% translate 'is specialist' %}" />
@@ -49,26 +45,23 @@
           <c-table.tr>
             <c-table.check />
 
-            <c-table.td>{{ obj.pk }}</c-table.td>
+            <c-table.td data-header="{% translate 'id' %}">{{ obj.pk }}</c-table.td>
             {% if can_update %}
             <c-table.td
               @click="setQueryString"
               href="{{ obj.get_absolute_path }}"
+              data-header="{% translate 'fullname' %}"
             >
               {{ obj.fullname }}
             </c-table.td>
             {% else %}
-            <c-table.td>{{ obj.fullname }}</c-table.td>
+            <c-table.td data-header="{% translate 'fullname' %}">{{ obj.fullname }}</c-table.td>
             {% endif %}
 
-            <c-table.td>{{ obj.job_subtype }}</c-table.td>
-            <c-table.td>{{ obj.department }}</c-table.td>
-            <c-table.td>{{ obj.salary|money }}</c-table.td>
-            <c-table.td>{{ obj.status }}</c-table.td>
-            <c-table.td>{{ obj.education_degree }}</c-table.td>
-            <c-table.td>{{ obj.specialization }}</c-table.td>
-            <c-table.td>{{ obj.is_specialist }}</c-table.td>
-            <c-table.td><c-context.context /></c-table.td>
+            <c-table.td data-header="{% translate 'degree' %}">{{ obj.education_degree }}</c-table.td>
+            <c-table.td data-header="{% translate 'specialization' %}">{{ obj.specialization }}</c-table.td>
+            <c-table.td data-header="{% translate 'specialist' %}">{{ obj.is_specialist }}</c-table.td>
+            <c-table.td fixed><c-context.context /></c-table.td>
           </c-table.tr>
           {% empty %}
           <c-table.empty-tr colspan="3" />

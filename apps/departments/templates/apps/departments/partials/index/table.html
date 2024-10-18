@@ -49,16 +49,18 @@
           <c-table.tr>
             <c-table.check />
 
-            <c-table.td>{{ obj.id }}</c-table.td>
+            <c-table.td data-header="{% translate 'id' %}">{{ obj.id }}</c-table.td>
             {% if can_update %}
-            <c-table.td href="{{ obj.get_update_path }}">
+            <c-table.td data-header="{% translate 'code' %}" href="{{ obj.get_update_path }}">
               {{ obj.department_id }}
             </c-table.td>
             {% else %}
-            <c-table.td>{{ obj.department_id }}</c-table.td>
-            {% endif %} {% if can_update %}
+            <c-table.td data-header="{% translate 'code' %}">{{ obj.department_id }}</c-table.td>
+            {% endif %} 
+            {% if can_update %}
             <c-table.td
               href="{{ obj.get_update_path }}"
+              data-header="{% translate 'name' %}"
               x-data="{ 
               name: '{{ obj.name }}',
               level: {{ obj.level }},
@@ -72,7 +74,7 @@
               ></span>
             </c-table.td>
             {% else %}
-            <c-table.td>
+            <c-table.td data-header="{% translate 'name' %}">
               <span
                 :class="'px-' + level * 3"
                 x-html="isPrimary ? name : `${name} <span class='text-[red]'>*</span>`"
@@ -81,7 +83,7 @@
             </c-table.td>
             {% endif %}
 
-            <c-table.td>
+            <c-table.td data-header="{% translate 'type' %}">
               {% if obj.is_leaf_node %}
               <span class="capitalize"> {% translate 'partial' %} </span>
               {% else %}
@@ -89,29 +91,29 @@
               {% endif %}
             </c-table.td>
 
-            <c-table.td>{{ obj.level }}</c-table.td>
+            <c-table.td data-header="{% translate 'level' %}">{{ obj.level }}</c-table.td>
 
             {% if perms.cost_centers.update_costcenter %}
-            <c-table.td href="{{ obj.cost_center.get_update_path }}">
+            <c-table.td data-header="{% translate 'cost center' %}" href="{{ obj.cost_center.get_update_path }}">
               <span class="whitespace-nowrap">
                 {{ obj.cost_center.name }}
               </span>
             </c-table.td>
             {% else %}
-            <c-table.td>
+            <c-table.td data-header="{% translate 'cost center' %}">
               <span class="whitespace-nowrap">
                 {{ obj.cost_center.name }}
               </span>
             </c-table.td>
             {% endif %}
 
-            <c-table.td>
+            <c-table.td data-header="{% translate 'parent' %}">
               {% if obj.parent %}
               <span class="whitespace-nowrap">{{ obj.parent }}</span>
               {% endif %}
             </c-table.td>
 
-            <c-table.td><c-context.context /></c-table.td>
+            <c-table.td fixed><c-context.context /></c-table.td>
           </c-table.tr>
           {% empty %}
           <c-table.empty-tr colspan="4" />

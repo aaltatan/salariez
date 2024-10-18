@@ -19,7 +19,7 @@
           href: '{{ instance.get_update_path }}'
       },
       {
-          text: '{% translate 'education' %}', 
+          text: '{% translate 'educations' %}', 
           href: '{% url 'employees:update-educational-transactions' slug=instance.slug %}'
       },
   ];
@@ -30,14 +30,12 @@
   "
 ></template>
 
-<div class="grid grid-cols-5 gap-2">
+<div>
 
-  {% include 'apps/employees/partials/formsets/update-aside.html' %}
+  {% include 'apps/employees/partials/formsets/header.html' %}
 
-  <div class="col-span-4">
-    <div id="formset-container">
+  <div>
       {% include 'apps/employees/partials/formsets/education-transactions.html' %}
-    </div>
   </div>
 
 </div>

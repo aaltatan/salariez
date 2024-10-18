@@ -4,7 +4,6 @@ from django.utils.translation import gettext as _
 from ..proxies import EmployeeProxy
 
 from apps.base.widgets import SearchWidget
-from apps.base.utils.generic import parse_decimals
 from apps.base.utils.fields import (
     get_date_field, 
     get_numeric_field, 
@@ -23,19 +22,13 @@ class EmployeeForm(forms.ModelForm):
                 'autocomplete': 'off'
             }),
             'notes': get_textarea_field(
-                rows=2, placeholder=_("notes")
+                rows=1, placeholder=_("notes")
             ),
             'profile': get_avatar_field(
                 'base:fields-avatar', id='id_profile', name='profile'
             ),
-            'salary': forms.widgets.TextInput({
-                'type': 'text',
-                'x-mask:dynamic': '$money($input, ".", ",", 2)'
-            }),
             # --- search fields ----
             'area': SearchWidget(),
-            'department': SearchWidget(),
-            'position': SearchWidget(),
             # --- date fields ----
             'birth_date': get_date_field(),
             'card_date': get_date_field(required=False),
@@ -59,10 +52,3 @@ class EmployeeForm(forms.ModelForm):
             ),
         }
 
-    def __init__(self, data = None, *args, **kwargs) -> None:
-
-        if data:
-            data = data.copy()
-            data['salary'] = parse_decimals(data['salary'])
-
-        super().__init__(data, *args, **kwargs)

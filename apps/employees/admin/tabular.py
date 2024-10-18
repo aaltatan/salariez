@@ -1,6 +1,8 @@
 from django.contrib import admin
 
-from ..models import Email, Mobile, Phone, EducationTransaction
+from ..models import (
+    Email, Mobile, Phone, EducationTransaction, Contract
+)
 
 
 class EmailTabular(admin.TabularInline):
@@ -36,5 +38,30 @@ class EducationTransactionTabular(admin.TabularInline):
         'specialization', 
         'order',
         'graduation_date',
+    ]
+    extra = 0
+
+
+class ContractTabular(admin.StackedInline):
+    model = Contract
+    raw_id_fields = [
+        'employee', 
+        'department', 
+        'job_subtype', 
+        'status', 
+        'position', 
+    ]
+    fields = [
+        'employee', 
+        'department', 
+        'job_subtype', 
+        'status', 
+        'position', 
+        'contract_type', 
+        'ownership', 
+        'salary', 
+        'start_date', 
+        'end_date', 
+        'institution_id', 
     ]
     extra = 0

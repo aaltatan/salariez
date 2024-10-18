@@ -10,10 +10,6 @@ from apps.base.validators import (
 )
 from apps.nationalities.models import Nationality
 from apps.areas.models import Area
-from apps.departments.models import Department
-from apps.job_subtypes.models import JobSubtype
-from apps.positions.models import Position
-from apps.statuses.models import Status
 
 
 class Employee(models.Model):
@@ -146,27 +142,7 @@ class Employee(models.Model):
     area = models.ForeignKey(
         Area, on_delete=models.PROTECT, related_name='employees'
     )
-    department = models.ForeignKey(
-        Department, on_delete=models.PROTECT, related_name='employees'
-    )
-    position = models.ForeignKey(
-        Position, on_delete=models.PROTECT, related_name='employees'
-    )
-    job_subtype = models.ForeignKey(
-        JobSubtype, on_delete=models.PROTECT, related_name='employees'
-    )
-    status = models.ForeignKey(
-        Status, on_delete=models.PROTECT, related_name='employees'
-    )
     hire_date = models.DateField()
-    institution_id = models.CharField(
-        max_length=255,
-        verbose_name=_('institution id'),
-        unique=True,
-        null=True,
-        blank=True,
-        validators=[numeric_validator]
-    )
     notes = models.TextField(
         verbose_name=_('notes'),
         max_length=1000,
@@ -178,9 +154,6 @@ class Employee(models.Model):
     )
     identity_document = models.FileField(
         upload_to='identities', null=True, blank=True
-    )
-    salary = models.DecimalField(
-        decimal_places=2, max_digits=12, default=0,
     )
     slug = models.SlugField(
         unique=True,
@@ -238,24 +211,11 @@ class Employee(models.Model):
             f'{self._get_app_label()}:index', kwargs={'id': self.pk}
         )
     
-    def save(self, *args, **kwargs) -> None:
-        
-        if self.gender == self.GenderChoices.FEMALE.value:
-            self.military_status = self.MilitaryStatus.EXCUSED.value
-
-        return super().save(*args, **kwargs)
-    
     def __str__(self) -> str:
         return self.fullname
 
     class Meta:
-        ordering = [
-            '-status__has_salary', 
-            'department__department_id', 
-            'job_subtype__job_type',
-            'job_subtype',
-            'firstname'
-        ]
+        ordering = ['firstname']
 
 
 def employee_pre_save(sender, instance: Employee, *args, **kwargs):
@@ -263,7 +223,8 @@ def employee_pre_save(sender, instance: Employee, *args, **kwargs):
         f'{instance.fullname}-{instance.national_id}',
         allow_unicode=True
     )
-
+    if instance.gender == instance.GenderChoices.FEMALE.value:
+        instance.military_status = instance.MilitaryStatus.EXCUSED.value
 
 def employee_post_delete(sender, instance: Employee, *args, **kwargs):
     instance.profile.delete()

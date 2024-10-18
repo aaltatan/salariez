@@ -3,6 +3,7 @@ from .mobile import MobileForm
 from .email import EmailForm
 from .phone import PhoneForm
 from .educational_transaction import EducationTransactionForm
+from .contract import ContractForm
 
 
 __all__ = [
@@ -11,4 +12,5 @@ __all__ = [
   EmailForm,
   PhoneForm,
   EducationTransactionForm,
+  ContractForm,
 ]

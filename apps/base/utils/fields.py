@@ -135,6 +135,20 @@ def get_textarea_field(rows: int = 1, **kwargs) -> Textarea:
     })
 
 
+def get_money_field(required: bool = False, **kwargs) -> TextInput:
+
+    attrs = {
+        'type': 'text',
+        'x-mask:dynamic': '$money($input, ".", ",", 2)',
+        **kwargs
+    }
+
+    if required:
+        attrs['required'] = ''
+
+    return TextInput(attrs)
+
+
 def get_avatar_field(
     url: str, **kwargs: dict[str, str]
 ) -> FileInput:

@@ -73,6 +73,7 @@
         </p>
       </div>
       <ul class="text-neutral-500 flex items-center flex-wrap gap-1">
+        {% comment %}
         {% for department in object|ancestors %}
           <li>
             <div class="flex items-center gap-1">
@@ -85,11 +86,12 @@
             </div>
           </li>
         {% endfor %}
+        {% endcomment %}
       </ul>
       <div class="flex items-center ~gap-1/2 flex-wrap">
-        <c-layout.tag>{{ object.position }}</c-layout.tag>
-        <c-layout.tag>{{ object.job_subtype }}</c-layout.tag>
-        <c-layout.tag>{{ object.job_subtype.job_type }}</c-layout.tag>
+        <!-- <c-layout.tag>{{ object.position }}</c-layout.tag> -->
+        <!-- <c-layout.tag>{{ object.job_subtype }}</c-layout.tag> -->
+        <!-- <c-layout.tag>{{ object.job_subtype.job_type }}</c-layout.tag> -->
       </div>
 
     </div>

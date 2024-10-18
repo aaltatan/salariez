@@ -74,7 +74,9 @@ class EducationTransaction(models.Model):
         ]
 
 
-def education_transaction_pre_save(sender, instance: EducationTransaction, *args, **kwargs):
+def education_transaction_pre_save(
+    sender, instance: EducationTransaction, *args, **kwargs
+):
 
     if instance.is_current:
 

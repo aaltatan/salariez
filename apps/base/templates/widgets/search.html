@@ -39,6 +39,7 @@ class="relative">
   "
   x-model="checkedItem"
   x-ref="search"
+  :title="checkedItem"
   style="padding-inline-start: 2rem;"
   {% for name, value in widget.attrs.items %}
   {% if value is not False %}

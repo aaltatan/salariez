@@ -1,12 +1,12 @@
 {% load i18n %}
 
-<div class="relative col-span-1">
+<div class="relative mb-2">
 
   <ul 
   x-data="{
     urls: [
       {
-        text: '{% translate 'basic information' %}', 
+        text: '{% translate 'personal' %}', 
         href: '{{ instance.get_update_path }}', 
         isActive: false,
       },
@@ -26,21 +26,26 @@
         isActive: false,
       },
       {
-        text: '{% translate 'education' %}', 
+        text: '{% translate 'educations' %}', 
         href: '{% url 'employees:update-educational-transactions' slug=instance.slug %}', 
+        isActive: false,
+      },
+      {
+        text: '{% translate 'contracts' %}', 
+        href: '{% url 'employees:update-contracts' slug=instance.slug %}', 
         isActive: false,
       },
     ]
   }"
-  class="sticky top-[4.75rem] start-0 h-[85vh] ~p-2/4 rounded-lg bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-none">
+  class="flex items-center flex-wrap gap-1 p-1 text-sm rounded-md  border border-neutral-200 dark:border-neutral-800">
 
     <template x-for="url in urls" :key="url.href">
       <li class="flex items-center gap-1">
         <a 
         :href="url.href"
         x-init="url.isActive = location.pathname === url.href"
-        :class="{'text-blue-500': url.isActive}"
-        class="capitalize w-full rounded-md px-2 py-1 cursor-pointer duration-150 hover:underline flex items-center gap-1">
+        :class="{'bg-neutral-100 dark:bg-neutral-800 font-medium': url.isActive}"
+        class="capitalize w-full rounded px-2 py-1 cursor-pointer duration-150 hover:underline flex items-center gap-1">
           <span x-text="url.text"></span>
         </a>
       </li>

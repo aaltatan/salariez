@@ -11,13 +11,13 @@
     {{ formset.management_form }}
 
     <ul>
-      {% for error in formset.errors %}
+      {% for error in formset.non_form_errors %}
         <c-forms.error-li>{{ error }}</c-forms.error-li>
       {% endfor %}
     </ul>
 
     <div class="table-inner @container border border-neutral-200 dark:border-neutral-800 rounded-lg">
-      <c-table.table class="table-auto w-full">
+      <c-table.table>
 
         <c-table.header-row>
           <c-table.th>{% translate 'degree' %}</c-table.th>
@@ -33,7 +33,7 @@
 
         {% for form in formset %}
         <c-table.tr>
-          <c-table.td class="!px-4 !py-2">
+          <c-table.td data-header="{% translate 'degree' %}">
             {{ form.id }} 
             {% if forloop.last %}
             {% render_field form.degree|add_class:'input w-full text-xs' autofocus="true" %} 
@@ -44,37 +44,37 @@
               <c-forms.error-li>{{ error }}</c-forms.error-li>
             {% endfor %}
           </c-table.td>
-          <c-table.td class="!px-4 !py-2">
+          <c-table.td data-header="{% translate 'school' %}">
             {% render_field form.school|add_class:'input w-full text-xs' %} 
             {% for error in form.school.errors %}
               <c-forms.error-li>{{ error }}</c-forms.error-li>
             {% endfor %}
           </c-table.td>
-          <c-table.td class="!px-4 !py-2">
+          <c-table.td data-header="{% translate 'specialization' %}">
             {% render_field form.specialization|add_class:'input w-full text-xs' %} 
             {% for error in form.specialization.errors %}
               <c-forms.error-li>{{ error }}</c-forms.error-li>
             {% endfor %}
           </c-table.td>
-          <c-table.td class="!px-4 !py-2">
+          <c-table.td data-header="{% translate 'order' %}">
             {% render_field form.order|add_class:'input w-full text-xs' %} 
             {% for error in form.order.errors %}
               <c-forms.error-li>{{ error }}</c-forms.error-li>
             {% endfor %}
           </c-table.td>
-          <c-table.td class="!px-4 !py-2">
+          <c-table.td data-header="{% translate 'graduation date' %}">
             {% render_field form.graduation_date|add_class:'input w-full text-xs' %} 
             {% for error in form.graduation_date.errors %}
               <c-forms.error-li>{{ error }}</c-forms.error-li>
             {% endfor %}
           </c-table.td>
-          <c-table.td class="!px-4 !py-2">
+          <c-table.td data-header="{% translate 'current' %}">
             {% render_field form.is_current|add_class:'check' %} 
             {% for error in form.is_current.errors %}
               <c-forms.error-li>{{ error }}</c-forms.error-li>
             {% endfor %}
           </c-table.td>
-          <c-table.td>
+          <c-table.td data-header="{% translate 'delete' %}">
             <div class="flex items-center justify-center">
               {% render_field form.DELETE|add_class:'check' %}
             </div>
@@ -95,6 +95,12 @@
         {% translate 'save' %}
       </c-btns.btn>
 
+      <c-btns.btn 
+      hx-get="{{ url }}?add_new_row=true" 
+      hx-select="#formset-container">
+          {% translate 'add new' %}
+      </c-btns.btn>
+      
       <c-btns.btn datatype="href" datatheme="secondary" type="reset" hx-target="body" href="{{ url }}">
         {% translate 'reset' %}
       </c-btns.btn>

@@ -31,12 +31,6 @@ from apps.base.mixins import (
 
 select_related: list[str] = [
     'area',
-    'position',
-    'status',
-    'job_subtype',
-    'job_subtype__job_type',
-    'department',
-    'department__cost_center',
 ]
 prefetch_related: list[str] = [
     'mobiles', 'phones', 'emails', 'education_transactions'
@@ -70,18 +64,10 @@ class ListTableView(
     permission_required = 'employees.view_employee'
 
     sortable_by = OrderList([
-        OrderItem(_('has salary'), '-status__has_salary', checked=True),
-        OrderItem(_('department id'), 'department__department_id', checked=True),
-        OrderItem(_('job type'), 'job_subtype__job_type', checked=True),
-        OrderItem(_('job subtype'), 'job_subtype', checked=True),
         OrderItem(_('firstname'), 'firstname', checked=True),
         OrderItem(_('gender'), 'gender'),
-        OrderItem(_('department name'), 'department'),
-        OrderItem(_('position'), 'position'),
-        OrderItem(_('status'), 'status'),
         OrderItem(_('hire date'), 'hire_date'),
         OrderItem(_('birth date'), 'birth_date'),
-        OrderItem(_('salary'), 'salary'),
         OrderItem(_('education degree'), 'education_order'),
     ])
     filter_class = filters.EmployeeFilterSet

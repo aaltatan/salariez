@@ -1,11 +1,11 @@
 {% load i18n %}
 
 <nav x-cloak class="flex justify-center items-center rounded-md border border-neutral-200 dark:border-neutral-800 py-1 px-2" x-show="breadCrumbs.length >= 2">
-  <ol class="inline-flex items-center space-x-1 text-sm text-neutral-500 dark:text-neutral-400 [&_.active-breadcrumb]:font-bold [&_.active-breadcrumb]:text-neutral-600 [&_.active-breadcrumb]:dark:text-neutral-400">
+  <ol class="inline-flex flex-wrap items-center space-x-1 ~text-xs/sm text-neutral-500 dark:text-neutral-400 [&_.active-breadcrumb]:font-bold [&_.active-breadcrumb]:text-neutral-600 [&_.active-breadcrumb]:dark:text-neutral-400">
     <template x-for="(breadCrumb, idx) in breadCrumbs" :key="breadCrumb.text">
       <li class="flex h-full items-center">
         <a
-          class="inline-flex items-center py-1 font-normal hover:text-neutral-900 hover:dark:text-neutral-300 focus:outline-none capitalize duration-100"
+          class="inline-flex items-center py-1 font-normal hover:text-neutral-900 hover:dark:text-neutral-300 focus:outline-none capitalize duration-100 whitespace-nowrap"
           :class="(idx === breadCrumbs.length - 1) && 'active-breadcrumb'"
           :href="breadCrumb.href"
           x-text="breadCrumb.text"

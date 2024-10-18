@@ -25,7 +25,7 @@ class MobileFormSetView(
     parent_model = EmployeeProxy
     form_class = forms.MobileForm
 
-    def post_save(self):
+    def post_save(self, instance):
         return
 
 class EmailFormSetView(
@@ -44,7 +44,7 @@ class EmailFormSetView(
     parent_model = EmployeeProxy
     form_class = forms.EmailForm
 
-    def post_save(self):
+    def post_save(self, instance):
         return
 
 class PhoneFormSetView(
@@ -63,7 +63,7 @@ class PhoneFormSetView(
     parent_model = EmployeeProxy
     form_class = forms.PhoneForm
 
-    def post_save(self):
+    def post_save(self, instance):
         return
 
 class EducationalTransactionFormSetView(
@@ -94,3 +94,22 @@ class EducationalTransactionFormSetView(
             obj = Klass.objects.filter(employee=instance).order_by('order').last()
             obj.is_current = True
             obj.save()
+
+class ContractFormSetView(
+    LoginRequiredMixin, 
+    MultiplePermissionsRequiredMixin, 
+    FormSetMixin, 
+    View,
+):
+    permissions = {
+        'all': (
+            'employees.change_employee', 
+            'employees.change_contract',
+            'employees.delete_contract',
+        ),
+    }
+    parent_model = EmployeeProxy
+    form_class = forms.ContractForm
+    
+    def post_save(self, instance):
+        pass

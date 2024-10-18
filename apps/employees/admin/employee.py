@@ -5,6 +5,7 @@ from .tabular import (
     EmailTabular, 
     PhoneTabular, 
     EducationTransactionTabular,
+    ContractTabular,
 )
 from ..proxies import EmployeeProxy
 
@@ -13,14 +14,13 @@ from ..proxies import EmployeeProxy
 class EmployeeAdmin(admin.ModelAdmin):
     
     inlines = [
+        ContractTabular,
         MobileTabular, 
         EmailTabular, 
         PhoneTabular,
         EducationTransactionTabular,
     ]
-    raw_id_fields = [
-        'area', 'department', 'position'
-    ]
+    raw_id_fields = ['area']
     list_per_page = 10
     search_fields = ['firstname', 'lastname', 'father_name']
     list_display = [
@@ -29,7 +29,6 @@ class EmployeeAdmin(admin.ModelAdmin):
         'father_name',
         'mother_name',
         'national_id',
-        'department',
         'gender',
     ]
     fields = [
@@ -45,9 +44,7 @@ class EmployeeAdmin(admin.ModelAdmin):
         ('address', 'special_signs', 'card_date',),
         ('martial_status', 'military_status', 'religion',),
         ('nationality', 'area', 'current_address',),
-        ('department', 'position', 'job_subtype',),
-        ('status', 'hire_date', 'institution_id',),
-        ('salary',),
+        ('hire_date',),
         ('slug',),
         ('notes',),
     ]

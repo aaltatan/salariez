@@ -1,11 +1,12 @@
-<td class="~p-0.5/1 {{ class }}" {{ attrs }} >
+<td
+  class="p-1 {% if not fixed %}max-md:grid max-md:grid-cols-3 max-md:gap-2 max-md:items-center max-md:px-2 max-md:py-1 max-md:before:content-[attr(data-header)] max-md:before:font-medium max-md:before:capitalize{% endif %} {{ class }}"
+  {{attrs}}
+>
   {% if href %}
-  <a hx-include="#no-content" class="hover:underline" href="{{ href }}">
+  <a hx-include="#no-content" class="hover:underline max-md:col-span-2" href="{{ href }}">
     {{ slot }}
   </a>
   {% else %}
-  <span>
-    {{ slot }}
-  </span>
+  <span class="max-md:col-span-2">{{ slot }}</span>
   {% endif %}
 </td>

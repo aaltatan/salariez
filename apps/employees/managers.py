@@ -181,8 +181,6 @@ class EmployeeManager(models.Manager):
                 search=Concat(
                     models.F("full_name"),
                     models.Value(" "),
-                    models.F("department__name"),
-                    models.Value(" "),
                     models.F("full_name"),
                 ),
                 # -------- birthdays --------#

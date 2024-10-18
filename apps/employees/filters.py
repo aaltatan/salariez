@@ -7,12 +7,12 @@ from .proxies import EmployeeProxy
 
 from apps.base.widgets import ComboboxWidget
 
-from apps.departments.models import Department
-from apps.positions.models import Position
-from apps.job_types.models import JobType
-from apps.job_subtypes.models import JobSubtype
-from apps.statuses.models import Status
-from apps.cost_centers.models import CostCenter
+# from apps.departments.models import Department
+# from apps.positions.models import Position
+# from apps.job_types.models import JobType
+# from apps.job_subtypes.models import JobSubtype
+# from apps.statuses.models import Status
+# from apps.cost_centers.models import CostCenter
 from apps.educational_degrees.models import EducationalDegree
 from apps.specializations.models import Specialization
 from apps.schools.models import School
@@ -37,48 +37,48 @@ class EmployeeFilterSet(FiltersMixin, filters.FilterSet):
             "data-disabled": "",
         }),
     )
-    status = filters.ModelMultipleChoiceFilter(
-        queryset=Status.objects.all(),
-        field_name='status',
-        label=_('status'),
-        method="filter_combobox",
-        widget=ComboboxWidget({'data-name': _('status')}),
-    )
-    job_type = filters.ModelMultipleChoiceFilter(
-        queryset=JobType.objects.all(),
-        field_name='job_subtype__job_type',
-        label=_('job type'),
-        method="filter_combobox",
-        widget=ComboboxWidget({'data-name': _('job type')}),
-    )
-    job_subtype = filters.ModelMultipleChoiceFilter(
-        queryset=JobSubtype.objects.all(),
-        field_name='job_subtype',
-        label=_('job subtype'),
-        method="filter_combobox",
-        widget=ComboboxWidget({'data-name': _('job subtype')}),
-    )
-    position = filters.ModelMultipleChoiceFilter(
-        queryset=Position.objects.all(),
-        field_name='position',
-        label=_('position'),
-        method="filter_combobox",
-        widget=ComboboxWidget({'data-name': _('position')}),
-    )
-    department = filters.ModelMultipleChoiceFilter(
-        queryset=Department.objects.all(),
-        field_name='department',
-        label=_('department'),
-        method="filter_parent",
-        widget=ComboboxWidget({'data-name': _('department')}),
-    )
-    cost_center = filters.ModelMultipleChoiceFilter(
-        queryset=CostCenter.objects.all(),
-        field_name='department__cost_center',
-        label=_('cost center'),
-        method="filter_combobox",
-        widget=ComboboxWidget({'data-name': _('cost center')}),
-    )
+    # status = filters.ModelMultipleChoiceFilter(
+    #     queryset=Status.objects.all(),
+    #     field_name='status',
+    #     label=_('status'),
+    #     method="filter_combobox",
+    #     widget=ComboboxWidget({'data-name': _('status')}),
+    # )
+    # job_type = filters.ModelMultipleChoiceFilter(
+    #     queryset=JobType.objects.all(),
+    #     field_name='job_subtype__job_type',
+    #     label=_('job type'),
+    #     method="filter_combobox",
+    #     widget=ComboboxWidget({'data-name': _('job type')}),
+    # )
+    # job_subtype = filters.ModelMultipleChoiceFilter(
+    #     queryset=JobSubtype.objects.all(),
+    #     field_name='job_subtype',
+    #     label=_('job subtype'),
+    #     method="filter_combobox",
+    #     widget=ComboboxWidget({'data-name': _('job subtype')}),
+    # )
+    # position = filters.ModelMultipleChoiceFilter(
+    #     queryset=Position.objects.all(),
+    #     field_name='position',
+    #     label=_('position'),
+    #     method="filter_combobox",
+    #     widget=ComboboxWidget({'data-name': _('position')}),
+    # )
+    # department = filters.ModelMultipleChoiceFilter(
+    #     queryset=Department.objects.all(),
+    #     field_name='department',
+    #     label=_('department'),
+    #     method="filter_parent",
+    #     widget=ComboboxWidget({'data-name': _('department')}),
+    # )
+    # cost_center = filters.ModelMultipleChoiceFilter(
+    #     queryset=CostCenter.objects.all(),
+    #     field_name='department__cost_center',
+    #     label=_('cost center'),
+    #     method="filter_combobox",
+    #     widget=ComboboxWidget({'data-name': _('cost center')}),
+    # )
     education_degree = filters.ModelMultipleChoiceFilter(
         queryset=EducationalDegree.objects.all(),
         field_name='education_degree',

@@ -52,15 +52,15 @@
           {% for obj in qs %}
           <c-table.tr>
             <c-table.check />
-            <c-table.td>{{ obj.pk }}</c-table.td>
+            <c-table.td data-header="{% translate 'id' %}">{{ obj.pk }}</c-table.td>
             {% if can_update %}
-            <c-table.td href="{{ obj.get_update_path }}">
+            <c-table.td data-header="{% translate 'name' %}" href="{{ obj.get_update_path }}">
               {{ obj.name }}
             </c-table.td>
             {% else %}
-            <c-table.td>{{ obj.name }}</c-table.td>
+            <c-table.td data-header="{% translate 'name' %}">{{ obj.name }}</c-table.td>
             {% endif %}
-            <c-table.td>
+            <c-table.td data-header="{% translate 'specialty' %}">
               {% if obj.is_specialist %}
                 <span class="capitalize">
                   {% translate 'specialist' %}
@@ -71,8 +71,8 @@
                 </span>
               {% endif %}
             </c-table.td>
-            <c-table.td>{{ obj.description }}</c-table.td>
-            <c-table.td><c-context.context /></c-table.td>
+            <c-table.td data-header="{% translate 'description' %}">{{ obj.description }}</c-table.td>
+            <c-table.td fixed><c-context.context /></c-table.td>
           </c-table.tr>
           {% empty %}
           <c-table.empty-tr colspan="4" />

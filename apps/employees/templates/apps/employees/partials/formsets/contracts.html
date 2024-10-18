@@ -1,0 +1,132 @@
+{% load widget_tweaks %} 
+{% load i18n %}
+
+{% url 'employees:update-contracts' slug=instance.slug as url %}
+
+<div id="formset-container">
+  <form
+    hx-post="{{ url }}"
+    hx-target="#formset-container"
+  >
+    {{ formset.management_form }}
+
+    <ul>
+      {% for error in formset.errors %}
+        <c-forms.error-li>{{ error }}</c-forms.error-li>
+      {% endfor %}
+    </ul>
+
+    <div class="table-inner @container border border-neutral-200 dark:border-neutral-800 rounded-lg w-full">
+      <c-table.table>
+
+        <c-table.header-row>
+          <c-table.th>{% translate 'department' %}</c-table.th>
+          <c-table.th>{% translate 'job subtype' %}</c-table.th>
+          <c-table.th>{% translate 'status' %}</c-table.th>
+          <c-table.th>{% translate 'position' %}</c-table.th>
+          <c-table.th>{% translate 'type' %}</c-table.th>
+          <c-table.th>{% translate 'ownership' %}</c-table.th>
+          <c-table.th>{% translate 'salary' %}</c-table.th>
+          <c-table.th>{% translate 'start date' %}</c-table.th>
+          <c-table.th>{% translate 'end date' %}</c-table.th>
+          <c-table.th>
+            {% translate 'delete' %}
+          </c-table.th>
+        </c-table.header-row>
+
+        {% for form in formset %}
+        <c-table.tr>
+          <c-table.td data-header="{% translate 'department' %}">
+            {{ form.id }} 
+            {% if forloop.last %}
+            {% render_field form.department|add_class:'input w-full text-xs' autofocus="true" %} 
+            {% else %}
+            {% render_field form.department|add_class:'input w-full text-xs' %} 
+            {% endif %}
+            {% for error in form.department.errors %}
+              <c-forms.error-li>{{ error }}</c-forms.error-li>
+            {% endfor %}
+          </c-table.td>
+          <c-table.td data-header="{% translate 'job subtype' %}">
+            {% render_field form.job_subtype|add_class:'input w-full text-xs' %} 
+            {% for error in form.job_subtype.errors %}
+              <c-forms.error-li>{{ error }}</c-forms.error-li>
+            {% endfor %}
+          </c-table.td>
+          <c-table.td data-header="{% translate 'status' %}">
+            {% render_field form.status|add_class:'input w-full text-xs' %} 
+            {% for error in form.status.errors %}
+              <c-forms.error-li>{{ error }}</c-forms.error-li>
+            {% endfor %}
+          </c-table.td>
+          <c-table.td data-header="{% translate 'position' %}">
+            {% render_field form.position|add_class:'input w-full text-xs' %} 
+            {% for error in form.position.errors %}
+              <c-forms.error-li>{{ error }}</c-forms.error-li>
+            {% endfor %}
+          </c-table.td>
+          <c-table.td data-header="{% translate 'type' %}">
+            {% render_field form.contract_type|add_class:'input w-full text-xs' %} 
+            {% for error in form.contract_type.errors %}
+              <c-forms.error-li>{{ error }}</c-forms.error-li>
+            {% endfor %}
+          </c-table.td>
+          <c-table.td data-header="{% translate 'ownership' %}">
+            {% render_field form.ownership|add_class:'input w-full text-xs' %} 
+            {% for error in form.ownership.errors %}
+              <c-forms.error-li>{{ error }}</c-forms.error-li>
+            {% endfor %}
+          </c-table.td>
+          <c-table.td data-header="{% translate 'salary' %}">
+            {% render_field form.salary|add_class:'input w-full text-xs' %} 
+            {% for error in form.salary.errors %}
+              <c-forms.error-li>{{ error }}</c-forms.error-li>
+            {% endfor %}
+          </c-table.td>
+          <c-table.td data-header="{% translate 'start date' %}">
+            {% render_field form.start_date|add_class:'input w-full text-xs' %} 
+            {% for error in form.start_date.errors %}
+              <c-forms.error-li>{{ error }}</c-forms.error-li>
+            {% endfor %}
+          </c-table.td>
+          <c-table.td data-header="{% translate 'end date' %}">
+            {% render_field form.end_date|add_class:'input w-full text-xs' %} 
+            {% for error in form.end_date.errors %}
+              <c-forms.error-li>{{ error }}</c-forms.error-li>
+            {% endfor %}
+          </c-table.td>
+          <c-table.td data-header="{% translate 'delete' %}"> 
+            <div class="flex items-center justify-center">
+              {% render_field form.DELETE|add_class:'check' %}
+            </div>
+          </c-table.td>
+        </c-table.tr>
+        {% endfor %}
+
+      </c-table.table>
+    </div>
+
+    <div class="my-2 flex items-center justify-center gap-1">
+
+      <c-btns.btn 
+      @click="handleConfirmMessage" 
+      data-confirm="{% translate 'are you sure you want to continue?' %}"
+      datatype="button" 
+      type="submit">
+        {% translate 'save' %}
+      </c-btns.btn>
+
+      <c-btns.btn 
+      hx-get="{{ url }}?add_new_row=true" 
+      hx-select="#formset-container">
+          {% translate 'add new' %}
+      </c-btns.btn>
+
+      <c-btns.btn datatype="href" datatheme="secondary" type="reset" hx-target="body" href="{{ url }}">
+        {% translate 'reset' %}
+      </c-btns.btn>
+
+    </div>
+    
+  </form>
+</div>

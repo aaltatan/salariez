@@ -19,8 +19,8 @@
           href: '{{ instance.get_update_path }}'
       },
       {
-          text: '{% translate 'phones' %}', 
-          href: '{% url 'employees:update-phones' slug=instance.slug %}'
+          text: '{% translate 'contracts' %}', 
+          href: '{% url 'employees:update-contracts' slug=instance.slug %}'
       },
   ];
   breadCrumbs = [...breadCrumbs, ...hrefs]
@@ -35,7 +35,7 @@
   {% include 'apps/employees/partials/formsets/header.html' %}
 
   <div>
-      {% include 'apps/employees/partials/formsets/phones.html' %}
+      {% include 'apps/employees/partials/formsets/contracts.html' %}
   </div>
 
 </div>

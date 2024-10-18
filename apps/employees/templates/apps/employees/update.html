@@ -25,12 +25,12 @@
     "
 ></template>
 
-<div class="grid grid-cols-5 gap-2">
+<div>
 
-  {% include 'apps/employees/partials/formsets/update-aside.html' %}
+  {% include 'apps/employees/partials/formsets/header.html' %}
 
-  <div class="col-span-4">
-    <div id="formset-container">
+  <div>
+    <div id="formset-container" class="max-w-3xl mx-auto">
       {% include 'apps/employees/partials/forms/update.html' %}
     </div>
   </div>

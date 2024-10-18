@@ -107,10 +107,15 @@ class FormSetMixin(FormsetMixinAbstract):
     
     def get_formset_class(self):
 
+        extra: int = 0
+
+        if self.request.GET.get('add_new_row'):
+            extra = 1
+
         return inlineformset_factory(
             parent_model=self.parent_model,
             model=self.get_model_class(),
             form=self.form_class,
             can_delete=True,
-            extra=1,
+            extra=extra,
         )

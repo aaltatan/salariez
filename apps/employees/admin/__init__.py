@@ -3,6 +3,7 @@ from .email import EmailAdmin
 from .employee import EmployeeAdmin
 from .mobile import MobileAdmin
 from .phone import PhoneAdmin
+from .contract import Contract
 
 
 __all__ = [
@@ -11,4 +12,5 @@ __all__ = [
   EmployeeAdmin,
   MobileAdmin,
   PhoneAdmin,
+  Contract,
 ]
