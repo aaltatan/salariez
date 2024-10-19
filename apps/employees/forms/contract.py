@@ -1,4 +1,6 @@
 from django import forms
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext as _
 
 from ..models import Contract
 
@@ -34,6 +36,18 @@ class ContractForm(forms.ModelForm):
                 required=False, fill_on_focus=False
             ),
         }
+
+    def clean_end_date(self):
+
+        start_date = self.cleaned_data.get('start_date')
+        end_date = self.cleaned_data.get('end_date')
+
+        if end_date is not None and end_date < start_date:
+            raise ValidationError(
+                _(f'the end date you\'ve input {end_date} is less than start date {start_date}'),
+            )
+        
+        return end_date
         
     def __init__(self, data = None, *args, **kwargs) -> None:
 
