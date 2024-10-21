@@ -43,9 +43,11 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
     also you need to implement `get_create_path` property in the model which the `form_class` inherit from.
     """
     
-    def get(self, request: HttpRequest, slug: str) -> HttpResponse:
-        
-        instance = get_object_or_404(self._get_model_class(), slug=slug)
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+
+        instance_kwargs = self._get_instance_kwargs(**kwargs)
+
+        instance = get_object_or_404(self._get_model_class(), **instance_kwargs)
         template_name = self._get_template_name_create_update('update')
         context = {
             'form': self.form_class(instance=instance),
@@ -54,9 +56,11 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
 
         return render(request, template_name, context)
     
-    def delete(self, request: HttpRequest, slug: int) -> HttpResponse:
+    def delete(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+
+        instance_kwargs = self._get_instance_kwargs(**kwargs)
         
-        instance = get_object_or_404(self._get_model_class(), slug=slug)
+        instance = get_object_or_404(self._get_model_class(), **instance_kwargs)
         
         context = {
             'form': self.form_class(instance=instance),
@@ -91,10 +95,12 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
         Activity(**activity).save()
 
     def post(
-        self, request: HttpRequest, slug: int, *args, **kwargs
+        self, request: HttpRequest, *args, **kwargs
     ) -> HttpResponse:
+        
+        instance_kwargs = self._get_instance_kwargs(**kwargs)
             
-        instance = get_object_or_404(self._get_model_class(), slug=slug)
+        instance = get_object_or_404(self._get_model_class(), **instance_kwargs)
         
         form = self.form_class(
             request.POST, request.FILES, instance=instance

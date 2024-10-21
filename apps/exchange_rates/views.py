@@ -6,8 +6,6 @@ from django.contrib.auth.mixins import (
     PermissionRequiredMixin
 )
 
-from braces.views import SuperuserRequiredMixin
-
 from . import models, forms, filters, mixins, resources, utils
 
 from apps.base.utils.generic import OrderItem, OrderList
@@ -18,7 +16,6 @@ from apps.base.mixins import (
     DeleteMixin,
     BulkModalMixin,
     BulkMapperMixin,
-    ReslugifyModalMixin,
     ExportMixin,
 )
 
@@ -29,9 +26,8 @@ class ListTableView(
     
     permission_required = 'exchange_rates.view_exchangerate'
     sortable_by = OrderList([
-        OrderItem(_('accounting id'), 'exchange_rate_accounting_id', checked=True),
-        OrderItem(_('name'), 'name', checked=True),
-        OrderItem(_('description'), 'description'),
+        OrderItem(_('date'), '-date', checked=True),
+        OrderItem(_('currency'), 'currency__name'),
     ])
     filter_class = filters.ExchangeRateFilterSet
     paginate_by_form_attributes = {
@@ -67,17 +63,6 @@ class BulkDeleteView(
     
     permission_required = 'exchange_rates:delete_exchangerate'
     model = models.ExchangeRate
-
-
-class BulkReslugifyView(
-    LoginRequiredMixin, 
-    SuperuserRequiredMixin, 
-    BulkModalMixin,
-    ReslugifyModalMixin,
-    View
-):
-    model = models.ExchangeRate
-    bulk_path = 'exchange_rates:bulk-reslugify'
 
 
 class CreateView(

@@ -19,6 +19,7 @@
 {% with perms.schools.view_school as can_schools %}
 
 {% with perms.currencies.view_currency as can_currencies %}
+{% with perms.exchange_rate.view_exchangerate as can_exchange_rates %}
 
 <div x-data="{
   menuBarOpen: false, 
@@ -125,7 +126,7 @@ class="relative top-0 start-0 z-[400] w-fit transition-all duration-150 ease-out
                 </c-menubar.submenu-container>
                 {% endif %}
 
-                {% if can_currencies %}
+                {% if can_currencies or can_exchange_rates %}
                 <c-menubar.submenu-container>
 
                   <c-menubar.submenu-button>
@@ -134,9 +135,15 @@ class="relative top-0 start-0 z-[400] w-fit transition-all duration-150 ease-out
 
                   <c-menubar.submenu>
 
-                    {% if can_employee %}
+                    {% if can_currencies %}
                     <c-menubar.sublink href="{% url 'currencies:index' %}">
                       {% translate 'currencies' %}
+                    </c-menubar.sublink>
+                    {% endif %}
+
+                    {% if can_exchange_rates %}
+                    <c-menubar.sublink href="{% url 'exchange_rates:index' %}">
+                      {% translate 'exchange rates' %}
                     </c-menubar.sublink>
                     {% endif %}
 
@@ -339,6 +346,7 @@ class="relative top-0 start-0 z-[400] w-fit transition-all duration-150 ease-out
 
 {% endwith %}
 
+{% endwith %}
 {% endwith %}
 
 {% endwith %}

@@ -8,12 +8,12 @@
     <template 
     x-init="let hrefs = [
         {
-            text: '{% translate 'cost centers' %}', 
-            href: '{% url 'cost_centers:index' %}'
+            text: '{% translate 'exchange rates' %}', 
+            href: '{% url 'exchange_rates:index' %}'
         },
         {
             text: '{{ instance.name }}', 
-            href: '{% url 'cost_centers:create' %}'
+            href: '{% url 'exchange_rates:create' %}'
         },
     ];
     breadCrumbs = [...breadCrumbs, ...hrefs]"

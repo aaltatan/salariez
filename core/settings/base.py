@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     "apps.statuses",
     ##########################
     "apps.currencies",
+    "apps.exchange_rates",
     ##########################
     "apps.specializations",
     "apps.educational_degrees",

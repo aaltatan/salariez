@@ -10,7 +10,14 @@ class ExchangeRateForm(forms.ModelForm):
     
     class Meta:
         model = models.ExchangeRate
-        fields = ['name', 'notes']
+        fields = [
+            'currency', 
+            'input_rate',
+            'is_inverse',
+            'date',
+            'bulletin_number',
+            'notes',
+        ]
         widgets = {
             "notes": get_textarea_field(
                 placeholder=_("notes")

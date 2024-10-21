@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.db.models.signals import pre_save, post_migrate
+from django.db.models.signals import pre_save
 
 from apps.base import models as base_models, utils
 
@@ -48,12 +48,5 @@ class Currency(base_models.AbstractNameModel):
 def currency_pre_save(sender, instance, *args, **kwargs):
     utils.slugify_instance(instance)
 
-def currency_post_migrate(sender, *args, **kwargs):
-    print(sender)
-    print(kwargs)
-    print('#' * 100)
-    # qs = sender.objects.filter(is_local__exact=True)
-    # if not qs.exists()
 
 pre_save.connect(currency_pre_save, Currency)
-post_migrate.connect(currency_post_migrate, Currency)

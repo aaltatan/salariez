@@ -33,6 +33,17 @@ class HelperMixin:
         response['HX-Trigger'] = 'get-messages'
         return response
 
+    def _get_instance_kwargs(self, **kwargs):
+
+        slug = kwargs.get('slug')
+
+        if slug:
+            instance_kwargs = {'slug': slug}
+        else:
+            instance_kwargs = {'pk': kwargs.get('pk')}
+
+        return instance_kwargs
+    
     def _get_model_class(self):
         """
         get model class from derived `form_class` if model does not exists

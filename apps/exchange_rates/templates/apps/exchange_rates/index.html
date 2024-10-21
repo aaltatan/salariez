@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% translate 'exchange rates'|title %}{% endblock %}
+
+{% block body %}
+
+<span
+class="hidden"
+x-init="breadCrumbs.push({
+    text: '{% translate 'exchange rates' %}', 
+    href: '{% url 'exchange_rates:index' %}'
+})"></span>
+
+<c-layout.app-container id="exchange-rates-table" app_title="{% translate 'exchange rates' %}">
+
+    <c-slot name="filters">
+        {% include 'apps/exchange_rates/partials/index/filters.html' %}
+    </c-slot>
+
+    <c-slot name="table">
+        {% include 'apps/exchange_rates/partials/index/table.html' %}
+    </c-slot>
+
+</c-layout.app-container>
+
+{% endblock %}

@@ -20,9 +20,10 @@
             </c-table.th>
 
             <c-table.th name="{% translate 'id' %}" />
-            <c-table.th name="{% translate 'name' %}" />
-            <c-table.th name="{% translate 'accounting id' %}" />
-            <c-table.th name="{% translate 'description' %}" />
+            <c-table.th name="{% translate 'currency' %}" />
+            <c-table.th name="{% translate 'rate' %}" />
+            <c-table.th name="{% translate 'date' %}" />
+            <c-table.th name="{% translate 'bulletin' %}" />
             <c-table.th />
 
           </c-table.header-row>
@@ -35,13 +36,7 @@
               value="{% translate 'delete'|title %}"
               title="{% translate 'delete'|title %}"
             />
-            {% endif %} {% if user.is_superuser %}
-            <c-table.action-input
-              name="bulk_reslugify"
-              value="{% translate 'reslugify'|title %}"
-              title="{% translate 'reslugify'|title %}"
-            />
-            {% endif %}
+            {% endif %} 
           </c-table.unselect-all>
           {% endif %}
         </thead>
@@ -54,14 +49,15 @@
             <c-table.check />
             <c-table.td data-header="{% translate 'id' %}">{{ obj.pk }}</c-table.td>
             {% if can_update %}
-            <c-table.td data-header="{% translate 'name' %}" href="{{ obj.get_update_path }}">
-              {{ obj.name }}
+            <c-table.td data-header="{% translate 'currency' %}" href="{{ obj.get_update_path }}">
+              {{ obj.currency }}
             </c-table.td>
             {% else %}
-            <c-table.td data-header="{% translate 'name' %}">{{ obj.name }}</c-table.td>
+            <c-table.td data-header="{% translate 'currency' %}">{{ obj.currency }}</c-table.td>
             {% endif %}
-            <c-table.td data-header="{% translate 'accounting id' %}">{{ obj.cost_center_accounting_id }}</c-table.td>
-            <c-table.td data-header="{% translate 'description' %}">{{ obj.description }}</c-table.td>
+            <c-table.td data-header="{% translate 'rate' %}">{{ obj.rate }}</c-table.td>
+            <c-table.td data-header="{% translate 'date' %}">{{ obj.date }}</c-table.td>
+            <c-table.td data-header="{% translate 'bulletin' %}">{{ obj.bulletin_number }}</c-table.td>
             <c-table.td><c-context.context /></c-table.td>
           </c-table.tr>
           {% empty %}

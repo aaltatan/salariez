@@ -1,19 +1,19 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% translate 'add new cost center'|title %}{% endblock %}
+{% block title %}{% translate 'add new exchange rate'|title %}{% endblock %}
 
 {% block body %}
 
     <template 
     x-init="let hrefs = [
         {
-            text: '{% translate 'cost center' %}', 
-            href: '{% url 'cost_centers:index' %}'
+            text: '{% translate 'exchange rates' %}', 
+            href: '{% url 'exchange_rates:index' %}'
         },
         {
             text: '{% translate 'add new' %}', 
-            href: '{% url 'cost_centers:create' %}'
+            href: '{% url 'exchange_rates:create' %}'
         },
     ];
     breadCrumbs = [...breadCrumbs, ...hrefs]"

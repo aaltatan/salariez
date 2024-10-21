@@ -25,6 +25,7 @@ urlpatterns = [
     path('activities/', include('apps.activities.urls')),
     ####################
     path('currencies/', include('apps.currencies.urls')),
+    path('exchange-rates/', include('apps.exchange_rates.urls')),
     ####################
     path('specializations/', include('apps.specializations.urls')),
     path('educational-degrees/', include('apps.educational_degrees.urls')),

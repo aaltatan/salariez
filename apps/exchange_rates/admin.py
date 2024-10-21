@@ -14,8 +14,9 @@ def reslugify_action(modeladmin, request, queryset):
 
 @admin.register(models.ExchangeRate)
 class ExchangeRateAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-    list_display = ["id", "name", "slug"]
-    search_fields = ["name"]
+    list_display = [
+        "id", "currency", "rate", "date", "bulletin_number"
+    ]
+    search_fields = ["currency__name"]
+    list_filter = ['currency']
     list_per_page = 20
-    prepopulated_fields = {"slug": ["name"]}
-    actions = [reslugify_action]

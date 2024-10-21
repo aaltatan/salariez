@@ -1,0 +1,61 @@
+{% load i18n %}
+
+<c-forms.filters
+  id="{{ filter_form }}"
+  hx-get="{{ index_path }}"
+  hx-target="{{ target }}"
+  hx-headers='{"partial": true}'
+  hx-disabled-elt="*[data-disabled]"
+  hx-disinherit="hx-select"
+  hx-replace-url="true"
+  hx-include="[data-include]"
+  data-include
+>
+  <div class="@container space-y-1 p-1">
+
+    <c-forms.filter-field
+      :field="filter.currency"
+      class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+    />
+
+    <c-forms.filter-field
+      :field="filter.bulletin_number"
+      class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+    />
+
+    <span class="capitalize ~@md/lg:~text-sm/base">
+      {% translate 'date' %}
+    </span>
+
+    <div class="flex items-center justify-center gap-1">
+      <c-forms.filter-field
+        :field="filter.date_from"
+        class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+        title="off"
+      />
+      <c-forms.filter-field
+        :field="filter.date_to"
+        class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+        title="off"
+      />
+    </div>
+
+    <span class="capitalize ~@md/lg:~text-sm/base">
+      {% translate 'rate' %}
+    </span>
+
+    <div class="flex items-center justify-center gap-1">
+      <c-forms.filter-field
+        :field="filter.rate_from"
+        class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+        title="off"
+      />
+      <c-forms.filter-field
+        :field="filter.rate_to"
+        class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+        title="off"
+      />
+    </div>
+
+  </div>
+</c-forms.filters>
