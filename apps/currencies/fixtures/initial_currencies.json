@@ -1,0 +1,15 @@
+[
+  {
+    "model": "currencies.currency",
+    "pk": 3,
+    "fields": {
+      "name": "mother currency",
+      "description": "",
+      "slug": "mother-currency",
+      "search": "mother currency mother currency",
+      "short_name": "mc",
+      "fraction_name": "mc",
+      "is_local": true
+    }
+  }
+]

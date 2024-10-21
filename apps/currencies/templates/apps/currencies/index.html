@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% translate 'currencies'|title %}{% endblock %}
+
+{% block body %}
+
+<span
+class="hidden"
+x-init="breadCrumbs.push({
+    text: '{% translate 'currencies' %}', 
+    href: '{% url 'currencies:index' %}'
+})"></span>
+
+
+<c-layout.app-container id="currencies-table" app_title="{% translate 'currencies' %}">
+
+    <c-slot name="filters">
+        {% include 'partials/filters/base.html' %}
+    </c-slot>
+    
+    <c-slot name="table">
+        {% include 'apps/currencies/partials/index/table.html' %}
+    </c-slot>
+    
+</c-layout.app-container>
+
+{% endblock %}

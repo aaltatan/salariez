@@ -24,6 +24,8 @@ urlpatterns = [
     path('statuses/', include('apps.statuses.urls')),
     path('activities/', include('apps.activities.urls')),
     ####################
+    path('currencies/', include('apps.currencies.urls')),
+    ####################
     path('specializations/', include('apps.specializations.urls')),
     path('educational-degrees/', include('apps.educational_degrees.urls')),
     path('school-types/', include('apps.school_types.urls')),

@@ -63,6 +63,8 @@ INSTALLED_APPS = [
     "apps.nationalities",
     "apps.statuses",
     ##########################
+    "apps.currencies",
+    ##########################
     "apps.specializations",
     "apps.educational_degrees",
     "apps.school_types",

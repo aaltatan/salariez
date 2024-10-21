@@ -1,0 +1,76 @@
+{% load i18n %}
+
+<c-layout.table-container>
+  <form hx-get="{{ bulk_path }}" x-data="{ selectedRows: [] }">
+
+    <div class="m-2 flex items-center justify-end">
+      <c-inputs.sort-by />
+    </div>
+
+    <c-table.container>
+
+      <c-table.table>
+        <thead>
+          <c-table.header-row>
+            
+            <c-table.th>
+              {% if can_delete %}
+              <c-table.check data_check="all" />
+              {% endif %}
+            </c-table.th>
+
+            <c-table.th name="{% translate 'id' %}" />
+            <c-table.th name="{% translate 'name' %}" />
+            <c-table.th name="{% translate 'accounting id' %}" />
+            <c-table.th name="{% translate 'description' %}" />
+            <c-table.th />
+
+          </c-table.header-row>
+
+          {% if can_delete %}
+          <c-table.unselect-all colspan="4">
+            {% if can_delete %}
+            <c-table.action-input
+              name="bulk_delete"
+              value="{% translate 'delete'|title %}"
+              title="{% translate 'delete'|title %}"
+            />
+            {% endif %} {% if user.is_superuser %}
+            <c-table.action-input
+              name="bulk_reslugify"
+              value="{% translate 'reslugify'|title %}"
+              title="{% translate 'reslugify'|title %}"
+            />
+            {% endif %}
+          </c-table.unselect-all>
+          {% endif %}
+        </thead>
+        <!-- end header -->
+
+        <!-- start rows -->
+        <c-table.tbody>
+          {% for obj in qs %}
+          <c-table.tr>
+            <c-table.check />
+            <c-table.td data-header="{% translate 'id' %}">{{ obj.pk }}</c-table.td>
+            {% if can_update %}
+            <c-table.td data-header="{% translate 'name' %}" href="{{ obj.get_update_path }}">
+              {{ obj.name }}
+            </c-table.td>
+            {% else %}
+            <c-table.td data-header="{% translate 'name' %}">{{ obj.name }}</c-table.td>
+            {% endif %}
+            <c-table.td data-header="{% translate 'accounting id' %}">{{ obj.cost_center_accounting_id }}</c-table.td>
+            <c-table.td data-header="{% translate 'description' %}">{{ obj.description }}</c-table.td>
+            <c-table.td><c-context.context /></c-table.td>
+          </c-table.tr>
+          {% empty %}
+          <c-table.empty-tr colspan="3" />
+          {% endfor %}
+        </c-table.tbody>
+        <!-- end rows -->
+      </c-table.table>
+    </c-table.container>
+  </form>
+  {% include 'partials/pagination/base.html' %}
+</c-layout.table-container>
