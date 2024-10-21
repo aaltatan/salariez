@@ -26,7 +26,8 @@ class ListTableView(
     
     permission_required = 'exchange_rates.view_exchangerate'
     sortable_by = OrderList([
-        OrderItem(_('date'), '-date', checked=True),
+        OrderItem(_('date'), 'date', checked=True),
+        OrderItem(_('id'), 'pk', checked=True),
         OrderItem(_('currency'), 'currency__name'),
     ])
     filter_class = filters.ExchangeRateFilterSet
@@ -34,6 +35,9 @@ class ListTableView(
         'hx-get': reverse_lazy('exchange_rates:index'),
         'hx-target': '#exchange-rates-table #container > div',
     }
+
+    def get_queryset(self):
+        return super().get_queryset().select_related('currency')
 
 
 class ExportView(

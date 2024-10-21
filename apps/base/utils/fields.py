@@ -135,11 +135,15 @@ def get_textarea_field(rows: int = 1, **kwargs) -> Textarea:
     })
 
 
-def get_money_field(required: bool = False, **kwargs) -> TextInput:
+def get_money_field(
+    required: bool = False, 
+    decimal_places: int = 2, 
+    **kwargs
+) -> TextInput:
 
     attrs = {
         'type': 'text',
-        'x-mask:dynamic': '$money($input, ".", ",", 2)',
+        'x-mask:dynamic': f'$money($input, ".", ",", {decimal_places})',
         **kwargs
     }
 

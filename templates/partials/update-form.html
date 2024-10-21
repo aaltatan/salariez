@@ -2,7 +2,7 @@
 
 <form hx-post="{{ instance.get_update_path }}" hx-target="this">
   <div>
-    <c-forms.form title="{{ instance.name }}">
+    <c-forms.form title="{{ instance }}">
       <c-slot name="btns">
         <c-btns.btn
           datatype="input"

@@ -14,7 +14,6 @@ class CurrencyForm(forms.ModelForm):
             'name', 
             'short_name', 
             'fraction_name', 
-            'is_local', 
             'description',
         ]
         widgets = {
@@ -31,7 +30,6 @@ class CurrencyForm(forms.ModelForm):
                 'autocomplete': 'off',
                 'placeholder': _('fraction name'),
             }),
-            'is_local': forms.Select(choices=models.IS_LOCAL_CHOICES),
             "description": get_textarea_field(
                 placeholder=_("currency's description")
             ),

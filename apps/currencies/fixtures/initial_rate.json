@@ -1,0 +1,16 @@
+[
+  {
+    "model": "exchange_rates.exchangerate",
+    "pk": 1,
+    "fields": {
+      "currency": 1,
+      "input_rate": "1.00000000",
+      "is_inverse": false,
+      "rate": "1.00000000",
+      "date": "2000-01-01",
+      "bulletin_number": "11111",
+      "notes": "",
+      "slug": "e1730de3-d5be-4d81-ab7c-938f80b90369"
+    }
+  }
+]

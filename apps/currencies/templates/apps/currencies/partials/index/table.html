@@ -24,6 +24,8 @@
             <c-table.th name="{% translate 'short name' %}" />
             <c-table.th name="{% translate 'fraction' %}" />
             <c-table.th name="{% translate 'local' %}" />
+            <c-table.th name="{% translate 'rate' %}" />
+            <c-table.th name="{% translate 'date' %}" />
             <c-table.th name="{% translate 'description' %}" />
             <c-table.th />
 
@@ -75,6 +77,8 @@
               </c-layout.badge>
               {% endif %}
             </c-table.td>
+            <c-table.td data-header="{% translate 'rate' %}">{{ obj.rate }}</c-table.td>
+            <c-table.td data-header="{% translate 'date' %}">{{ obj.date }}</c-table.td>
             <c-table.td data-header="{% translate 'description' %}">{{ obj.description }}</c-table.td>
             <c-table.td fixed><c-context.context /></c-table.td>
           </c-table.tr>

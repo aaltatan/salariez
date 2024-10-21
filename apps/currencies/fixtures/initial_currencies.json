@@ -1,14 +1,14 @@
 [
   {
     "model": "currencies.currency",
-    "pk": 3,
+    "pk": 1,
     "fields": {
-      "name": "mother currency",
+      "name": "syrian pound",
       "description": "",
-      "slug": "mother-currency",
-      "search": "mother currency mother currency",
-      "short_name": "mc",
-      "fraction_name": "mc",
+      "slug": "syrian-pound",
+      "search": "syrian pound syrian pound",
+      "short_name": "s.p.",
+      "fraction_name": "korsh",
       "is_local": true
     }
   }
