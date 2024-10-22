@@ -19,18 +19,23 @@ class HelperMixin:
             return app_label.replace('_', '-')
         return app_label
     
-    def _get_success_save_update_response(self):
+    def _get_success_save_update_response(self, obj = None):
         """
         to use it inside create and update mixins.
         """
         hx_location = {
-            'path': reverse(self._get_success_path()),
             'target': '#app',
             'select': '#app',
         }
+        hx_location['path'] = reverse(self._get_success_path())
+
+        if obj is not None:
+            hx_location['path'] = obj.get_update_path
+
         response = HttpResponse('')
         response['HX-Location'] = json.dumps(hx_location)
         response['HX-Trigger'] = 'get-messages'
+        
         return response
 
     def _get_instance_kwargs(self, **kwargs):

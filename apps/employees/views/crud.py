@@ -132,6 +132,7 @@ class CreateView(
     permission_required = 'employees.add_employee'
     form_class = forms.EmployeeForm
     form_template_name = 'apps/employees/partials/forms/create.html'
+    continue_updating = True
     
 
 class UpdateView(

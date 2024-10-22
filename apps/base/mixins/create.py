@@ -30,6 +30,7 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
     - `form_template_name: str` like: `'partials/create-form.html'`
     - `index_template_name: str` like: `'apps/<app_name>/index.html'`  
     - `success_path: str` like: `'<app_name>:index'` 
+    - `continue_updating: bool`  
      
     also you need to implement `get_create_path` property in the model which the `form_class` inherit from.
     """
@@ -98,7 +99,10 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
             )
             
             if request.POST.get('save'):
-                return self._get_success_save_update_response()
+                if getattr(self, 'continue_updating', None) is not None and self.continue_updating:
+                    return self._get_success_save_update_response(obj)
+                else:
+                    return self._get_success_save_update_response()
             
             if request.POST.get('save_and_add_another'):
                 context = {'form': self.form_class()}
