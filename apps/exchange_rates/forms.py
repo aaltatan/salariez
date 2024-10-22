@@ -8,6 +8,11 @@ from apps.base.utils.fields import (
 )
 
 
+IS_INVERSE_CHOICES = (
+    (False, _('regular').title()),
+    (True, _('inverse').title()),
+)
+
 class ExchangeRateForm(forms.ModelForm):
 
     currency = forms.ModelChoiceField(
@@ -25,6 +30,7 @@ class ExchangeRateForm(forms.ModelForm):
             'notes',
         ]
         widgets = {
+            "is_inverse": forms.widgets.Select(choices=IS_INVERSE_CHOICES),
             "date": get_date_field(),
             "notes": get_textarea_field(
                 placeholder=_("notes")
