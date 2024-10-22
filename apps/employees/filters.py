@@ -16,6 +16,7 @@ from apps.base.widgets import ComboboxWidget
 from apps.educational_degrees.models import EducationalDegree
 from apps.specializations.models import Specialization
 from apps.schools.models import School
+from apps.groups.models import Group
 
 from apps.base.mixins.filters import FiltersMixin
 from apps.base.utils.filters import (
@@ -79,6 +80,13 @@ class EmployeeFilterSet(FiltersMixin, filters.FilterSet):
     #     method="filter_combobox",
     #     widget=ComboboxWidget({'data-name': _('cost center')}),
     # )
+    groups = filters.ModelMultipleChoiceFilter(
+        queryset=Group.objects.all(),
+        field_name='groups',
+        label=_('groups'),
+        method="filter_combobox",
+        widget=ComboboxWidget({'data-name': _('groups')}),
+    )
     education_degree = filters.ModelMultipleChoiceFilter(
         queryset=EducationalDegree.objects.all(),
         field_name='education_degree',

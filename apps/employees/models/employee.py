@@ -12,6 +12,7 @@ from apps.base.validators import (
 )
 from apps.nationalities.models import Nationality
 from apps.areas.models import Area
+from apps.groups.models import Group
 
 
 class Employee(models.Model):
@@ -156,6 +157,9 @@ class Employee(models.Model):
     )
     identity_document = models.FileField(
         upload_to='identities', null=True, blank=True
+    )
+    groups = models.ManyToManyField(
+        Group, related_name='employees', blank=True
     )
     slug = models.SlugField(
         unique=True,

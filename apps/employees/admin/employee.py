@@ -45,6 +45,7 @@ class EmployeeAdmin(admin.ModelAdmin):
         ('martial_status', 'military_status', 'religion',),
         ('nationality', 'area', 'current_address',),
         ('hire_date',),
+        ('groups',),
         ('slug',),
         ('notes',),
     ]
