@@ -3,7 +3,7 @@ from django.forms import widgets
 
 import django_filters as filters
 
-from .proxies import EmployeeProxy
+from .models import Employee
 
 from apps.base.widgets import ComboboxWidget
 
@@ -116,5 +116,5 @@ class EmployeeFilterSet(FiltersMixin, filters.FilterSet):
     hire_date_gte, hire_date_lte = get_date_filters('hire_date')
 
     class Meta:
-        model = EmployeeProxy
+        model = Employee
         fields = ["firstname", "gender"]

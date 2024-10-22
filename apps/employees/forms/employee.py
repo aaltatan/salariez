@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import gettext as _
 
-from ..proxies import EmployeeProxy
+from ..models import Employee
 
 from apps.base.widgets import SearchWidget
 from apps.base.utils.fields import (
@@ -15,7 +15,7 @@ from apps.base.utils.fields import (
 class EmployeeForm(forms.ModelForm):
     
     class Meta:
-        model = EmployeeProxy
+        model = Employee
         fields = '__all__'
         widgets = {
             'address': forms.widgets.TextInput({

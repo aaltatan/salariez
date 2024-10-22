@@ -10,7 +10,7 @@ from braces.views import (
     SuperuserRequiredMixin,
 )
 
-from ..proxies import EmployeeProxy
+from ..models import Employee
 from .. import (
     forms, filters, mixins, resources, utils
 )
@@ -39,7 +39,7 @@ prefetch_related: list[str] = [
 
 class EmployeeDetailView(DetailView):
 
-    model = EmployeeProxy
+    model = Employee
     template_name = 'apps/employees/details.html'
 
     def get_queryset(self):
@@ -53,7 +53,7 @@ class EmployeeDetailView(DetailView):
 
 class SearchView(LoginRequiredMixin, SearchMixin, View):
     
-    model = EmployeeProxy
+    model = Employee
     input_placeholder = _('search employee')
 
 
@@ -111,7 +111,7 @@ class BulkDeleteView(
 ):
     
     permission_required = 'employees:delete_employee'
-    model = EmployeeProxy
+    model = Employee
 
 
 class BulkReslugifyView(
@@ -121,7 +121,7 @@ class BulkReslugifyView(
     ReslugifyModalMixin,
     View
 ):
-    model = EmployeeProxy
+    model = Employee
     bulk_path = 'employees:bulk-reslugify'
 
 
@@ -149,5 +149,5 @@ class DeleteView(
 ):
 
     permission_required = 'employees.delete_employee'
-    model = EmployeeProxy
+    model = Employee
     deleter = utils.Deleter

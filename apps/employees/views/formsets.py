@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from braces.views import MultiplePermissionsRequiredMixin
 
 from .. import forms
-from ..proxies import EmployeeProxy
+from ..models import Employee
 
 from apps.base.mixins import FormSetMixin
 
@@ -22,7 +22,7 @@ class MobileFormSetView(
             'employees.delete_mobile',
         ),
     }
-    parent_model = EmployeeProxy
+    parent_model = Employee
     form_class = forms.MobileForm
 
     def post_save(self, instance):
@@ -41,7 +41,7 @@ class EmailFormSetView(
             'employees.delete_email',
         ),
     }
-    parent_model = EmployeeProxy
+    parent_model = Employee
     form_class = forms.EmailForm
 
     def post_save(self, instance):
@@ -60,7 +60,7 @@ class PhoneFormSetView(
             'employees.delete_phone',
         ),
     }
-    parent_model = EmployeeProxy
+    parent_model = Employee
     form_class = forms.PhoneForm
 
     def post_save(self, instance):
@@ -79,7 +79,7 @@ class EducationalTransactionFormSetView(
             'employees.delete_educationtransaction',
         ),
     }
-    parent_model = EmployeeProxy
+    parent_model = Employee
     form_class = forms.EducationTransactionForm
     
     def post_save(self, instance):
@@ -108,7 +108,7 @@ class ContractFormSetView(
             'employees.delete_contract',
         ),
     }
-    parent_model = EmployeeProxy
+    parent_model = Employee
     form_class = forms.ContractForm
     
     def post_save(self, instance):

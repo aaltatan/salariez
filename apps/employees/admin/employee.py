@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from ..models import Employee
 from .tabular import (
     MobileTabular, 
     EmailTabular, 
@@ -7,10 +8,9 @@ from .tabular import (
     EducationTransactionTabular,
     ContractTabular,
 )
-from ..proxies import EmployeeProxy
 
 
-@admin.register(EmployeeProxy)
+@admin.register(Employee)
 class EmployeeAdmin(admin.ModelAdmin):
     
     inlines = [

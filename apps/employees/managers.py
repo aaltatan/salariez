@@ -1,7 +1,5 @@
 from typing import Literal
 
-from .models import EducationTransaction
-
 from django.db import models
 from django.db.models import (
     Case, When, Q, Value, F, ExpressionWrapper, Count, Subquery, OuterRef
@@ -102,6 +100,8 @@ class EmployeeManager(models.Manager):
         return self.get_queryset().filter(is_today_job_anniversary=True)
 
     def get_queryset(self) -> models.QuerySet:
+
+        from .models import EducationTransaction
 
         education = (
             EducationTransaction

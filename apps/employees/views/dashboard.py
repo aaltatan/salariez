@@ -6,14 +6,14 @@ from django.contrib.auth.decorators import (
 )
 from django.shortcuts import render
 
-from ..proxies import EmployeeProxy
+from ..models import Employee
 
 
 @login_required
 @permission_required('employees.view_employee')
 def male_female_card(request: HttpRequest) -> HttpResponse:
     
-    counts = EmployeeProxy.objects.get_male_female_count()
+    counts = Employee.objects.get_male_female_count()
     template_name = 'apps/employees/partials/dashboard/male-female-count.html'
 
     context = {'data': json.dumps(counts)}
