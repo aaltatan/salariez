@@ -73,6 +73,15 @@
         </p>
       </div>
       <ul class="text-neutral-500 flex items-center flex-wrap gap-1">
+        {% for group in object.groups.all %}
+          <li>
+            <a target="_blank" class="hover:underline rounded text-xs bg-blue-500 text-white px-2 py-1" href="{{ group.get_absolute_path }}">
+              {{ group }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+      <ul class="text-neutral-500 flex items-center flex-wrap gap-1">
         {% comment %}
         {% for department in object|ancestors %}
           <li>
