@@ -5,6 +5,6 @@ class Deleter(views.Deleter):
   
     def can_delete_condition(self):
         conditions = [
-            not self.instance.employees.all().exists(),
+            True,
         ]
         return all(conditions)

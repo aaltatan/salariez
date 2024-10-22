@@ -1,3 +1,5 @@
+from django.utils.translation import gettext as _
+
 from apps.base.utils import views
 
 
@@ -5,10 +7,11 @@ class Deleter(views.Deleter):
     def can_delete_condition(self):
         conditions = [
             not self.instance.children.all().exists(),
-            not self.instance.employees.all().exists(),
         ]
         return all(conditions)
 
+    def get_cannot_delete_message(self):
+        return _('you can\'t delete {} department because it has children belong to it.').format(self.instance)
 
 def generate_department_id(instance):
     
