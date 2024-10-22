@@ -33,6 +33,7 @@ urlpatterns = [
     path('schools/', include('apps.schools.urls')),
     ####################
     path('employees/', include('apps.employees.urls')),
+    path('groups/', include('apps.groups.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

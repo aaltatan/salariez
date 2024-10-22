@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     "apps.schools",
     ##########################
     "apps.employees",
+    "apps.groups",
     ##########################
 ]
 

@@ -2,6 +2,7 @@
 {% get_current_language as LANGUAGE_CODE %} 
 
 {% with perms.employees.view_employee as can_employee %}
+{% with perms.groups.view_group as can_group %}
 
 {% with perms.areas.view_area as can_area %}
 {% with perms.cities.view_city as can_city %}
@@ -106,7 +107,7 @@ class="relative top-0 start-0 z-[400] w-fit transition-all duration-150 ease-out
                 </c-menubar.submenu-container>
                 {% endif %}
 
-                {% if can_employee %}
+                {% if can_employee or can_group %}
                 <c-menubar.submenu-container>
 
                   <c-menubar.submenu-button>
@@ -118,6 +119,12 @@ class="relative top-0 start-0 z-[400] w-fit transition-all duration-150 ease-out
                     {% if can_employee %}
                     <c-menubar.sublink href="{% url 'employees:index' %}">
                       {% translate 'employees' %}
+                    </c-menubar.sublink>
+                    {% endif %}
+
+                    {% if can_group %}
+                    <c-menubar.sublink href="{% url 'groups:index' %}">
+                      {% translate 'groups' %}
                     </c-menubar.sublink>
                     {% endif %}
 
@@ -344,6 +351,7 @@ class="relative top-0 start-0 z-[400] w-fit transition-all duration-150 ease-out
 </div>
 </div>
 
+{% endwith %}
 {% endwith %}
 
 {% endwith %}

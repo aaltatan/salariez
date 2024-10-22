@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% translate 'groups'|title %}{% endblock %}
+
+{% block body %}
+
+<span
+class="hidden"
+x-init="breadCrumbs.push({
+    text: '{% translate 'groups' %}', 
+    href: '{% url 'groups:index' %}'
+})"></span>
+
+<c-layout.app-container id="groups-table" app_title="{% translate 'groups' %}">
+
+    <c-slot name="filters">
+        {% include 'partials/filters/base.html' %}
+    </c-slot>
+    
+    <c-slot name="table">
+        {% include 'apps/groups/partials/index/table.html' %}
+    </c-slot>
+    
+</c-layout.app-container>
+
+{% endblock %}
