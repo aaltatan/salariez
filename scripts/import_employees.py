@@ -10,23 +10,15 @@ import openpyxl
 from openpyxl.worksheet.worksheet import Worksheet
 from openpyxl.cell.cell import Cell
 
-from apps.nationalities.models import Nationality
 from apps.areas.models import Area
-from apps.departments.models import Department
-from apps.job_subtypes.models import JobSubtype
-from apps.statuses.models import Status
-from apps.positions.models import Position
+from apps.nationalities.models import Nationality
 from apps.employees.models import Employee, Mobile
 
 
 @dataclass
 class EmployeeData:
 
-    position_id: InitVar[str]
-    department_id: InitVar[str]
-    nationality_id: InitVar[str]
     area_id: InitVar[str]
-    job_subtype_id: InitVar[str]
     mobile_number: InitVar[str]
 
     firstname: str = ''
@@ -46,34 +38,17 @@ class EmployeeData:
     religion: str = ''
     hire_date: date | None = None
 
-    salary: int = field(init=False)
-    status: str = field(init=False)
-    position: str = field(init=False)
-    department: str = field(init=False)
-    nationality: str = field(init=False)
     area: str = field(init=False)
-    job_subtype: str = field(init=False)
+    nationality: str = field(init=False)
     slug: str = field(init=False)
     
     def get_image_name(self, extension: str):
         return self.fullname.strip().replace(' ', '_') + '.' + extension
     
-    def __post_init__(
-        self, 
-        position_id, 
-        department_id, 
-        nationality_id, 
-        area_id, 
-        job_subtype_id, 
-        mobile_number, 
-    ):
+    def __post_init__(self, area_id, mobile_number):
 
-        self.nationality = Nationality.objects.get(id=int(nationality_id))
         self.area = Area.objects.get(id=int(area_id))
-        self.department = Department.objects.get(id=int(department_id))
-        self.job_subtype = JobSubtype.objects.get(id=int(job_subtype_id))
-        self.position = Position.objects.get(id=int(position_id))
-        self.status = Status.objects.get(id=1)
+        self.nationality = Nationality.objects.get(id=1)
 
         self.gender = 'M' if self.gender == 'ذكر' else 'F'
         self.religion = 'M' if self.religion == 'مسلم' else 'C'
@@ -106,12 +81,18 @@ class EmployeeData:
 
 def get_employees_data() -> list[EmployeeData]:
     
-    file_path = Path('D:').resolve() / 'OneDrive' / 'financial' / 'In_Progress' / 'employees.xlsx'
+    file_path = (
+        Path('D:').resolve() / 
+        'OneDrive' / 
+        'financial' / 
+        'In_Progress' / 
+        'employees.xlsx'
+    )
     
     wb = openpyxl.load_workbook(file_path)
     ws: Worksheet = wb['employees']
     lr = ws.max_row
-    table: tuple[tuple[Cell]] = ws[f'A1:V{lr}']
+    table: tuple[tuple[Cell]] = ws[f'A1:R{lr}']
 
     data = [[cell.value for cell in row] for row in table ]
     
@@ -125,7 +106,9 @@ def get_employees_data() -> list[EmployeeData]:
 
 
 def get_onedrive_images() -> dict[str, Path]:
-    onedrive_path = Path('D:/onedrive').resolve() / 'financial' / 'PhotosWPU' / 'Profile'
+    onedrive_path = (
+        Path('D:/onedrive').resolve() / 'financial' / 'PhotosWPU' / 'Profile'
+    )
 
     images_list = os.listdir(onedrive_path)
     images_pathes = [onedrive_path / img for img in images_list]
