@@ -3,7 +3,7 @@ from django.utils.translation import gettext as _
 
 from ..models import Employee
 
-from apps.base.widgets import SearchWidget
+from apps.base.widgets import SearchWidget, MultipleSelectWidget
 from apps.base.utils.fields import (
     get_date_field, 
     get_numeric_field, 
@@ -18,6 +18,7 @@ class EmployeeForm(forms.ModelForm):
         model = Employee
         fields = '__all__'
         widgets = {
+            'groups': MultipleSelectWidget(),
             'address': forms.widgets.TextInput({
                 'autocomplete': 'off'
             }),

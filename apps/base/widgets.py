@@ -1,5 +1,11 @@
-from django.forms.widgets import ChoiceWidget, SelectMultiple
+from django.forms.widgets import (
+    ChoiceWidget, SelectMultiple
+)
 
+
+class MultipleSelectWidget(SelectMultiple):
+    template_name = "widgets/multiple.html"
+    checked_attribute = {"checked": True}
 
 
 class ComboboxWidget(SelectMultiple):

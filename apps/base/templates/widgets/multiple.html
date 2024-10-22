@@ -1,0 +1,22 @@
+<div class="flex items-center flex-wrap gap-1 ~p-1/2">
+{% for group_name, group_choices, group_index in widget.optgroups %}
+  {% for option in group_choices %}
+    <div>
+      <input
+      type="checkbox"
+      class="hidden peer"
+      value="{{ option.value|stringformat:'s' }}"
+      name="{{ widget.name }}"
+      id="{{ widget.name }}-{{ option.value }}"
+      {% for name, value in option.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %}
+      >
+      <label 
+      title="{{ option.label }}"
+      class="rounded-md hover:opacity-90 duration-150 text-xs cursor-pointer p-2 bg-neutral-100 dark:bg-neutral-800 peer-checked:bg-blue-500 peer-checked:text-white"
+      for="{{ widget.name }}-{{ option.value }}">
+        {{ option.label }}
+      </label>
+    </div>
+  {% endfor %}
+{% endfor %}
+</div>
