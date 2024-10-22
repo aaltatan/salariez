@@ -33,7 +33,7 @@ select_related: list[str] = [
     'area',
 ]
 prefetch_related: list[str] = [
-    'mobiles', 'phones', 'emails', 'education_transactions'
+    'mobiles', 'phones', 'emails', 'education_transactions', 'groups'
 ]
 
 

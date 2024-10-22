@@ -21,6 +21,7 @@
             <c-table.th name="{% translate 'education degree' %}" />
             <c-table.th name="{% translate 'specialization' %}" />
             <c-table.th name="{% translate 'is specialist' %}" />
+            <c-table.th name="{% translate 'groups' %}" />
 
             <c-table.th />
           </c-table.header-row>
@@ -61,6 +62,14 @@
             <c-table.td data-header="{% translate 'degree' %}">{{ obj.education_degree }}</c-table.td>
             <c-table.td data-header="{% translate 'specialization' %}">{{ obj.specialization }}</c-table.td>
             <c-table.td data-header="{% translate 'specialist' %}">{{ obj.is_specialist }}</c-table.td>
+            <c-table.td data-header="{% translate 'groups' %}">
+              {% for group in obj.groups.all %}
+                 <span>{{ group }}</span>
+                 {% if not forloop.last %}
+                 <span>{% translate ', ' %}</span>
+                 {% endif %}
+              {% endfor %}
+            </c-table.td>
             <c-table.td fixed><c-context.context /></c-table.td>
           </c-table.tr>
           {% empty %}
