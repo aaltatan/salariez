@@ -33,7 +33,7 @@ class FiltersMixin:
         if not value:
             return qs
         lookup = {f'{name}__in': value}
-        return qs.filter(**lookup)
+        return qs.filter(**lookup).distinct()
 
     def filter_decimals(self, qs, name, value):
         if value:
