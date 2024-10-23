@@ -1,11 +1,8 @@
 from django.db import models
-from django.db.models import Window, RowRange, F
-from django.db.models.functions import LastValue
 from django.utils.translation import gettext as _
 from django.utils import timezone
 from django.core.exceptions import ValidationError
-
-from icecream import ic
+# from django.db.models.signals import pre_save
 
 from .employee import Employee
 
@@ -13,6 +10,7 @@ from apps.departments.models import Department
 from apps.job_subtypes.models import JobSubtype
 from apps.statuses.models import Status
 from apps.positions.models import Position
+# from apps.currencies.models import Currency
 
 from apps.base.validators import numeric_validator
 
@@ -55,9 +53,10 @@ class Contract(models.Model):
     salary = models.DecimalField(
         decimal_places=2, max_digits=12, default=0
     )
-    start_date = models.DateField(
-        default=timezone.now
-    )
+    # currency = models.ForeignKey(
+    #     Currency, related_name='contracts', on_delete=models.PROTECT
+    # )
+    start_date = models.DateField(default=timezone.now)
     end_date = models.DateField(null=True, blank=True)
     institution_id = models.CharField(
         max_length=255,
@@ -73,6 +72,19 @@ class Contract(models.Model):
         default='',
         blank=True
     )
+
+    @property
+    def has_salary(self) -> bool:
+        
+        if self.status.has_salary is False:
+            return False
+
+        if self.end_date is not None:
+            today = timezone.datetime.today().date()
+            if self.end_date < today:
+                return False
+        
+        return True
 
     def clean(self) -> None:
 
@@ -101,21 +113,16 @@ class Contract(models.Model):
                 _('the new start date must be greater than the previous ones')
             )
         
-        if self.pk is not None and end_date is not None:
-            qs = self.__class__.objects.annotate(
-                next_start_date=Window(
-                    expression=LastValue('start_date'),
-                    frame=RowRange(start=None, end=1),
-                    order_by=F('pk').asc()
+        if self.pk is not None:
+            qs = self.__class__.objects.filter(
+                employee=self.employee, 
+                start_date__lte=start_date,
+                pk__gt=self.pk
+            )
+            if qs.exists():
+                raise ValidationError(
+                    _('the new start date must be less than the next ones')
                 )
-            ).filter(employee=self.employee).order_by('pk')
-            for obj in qs:
-                if obj == self:
-                    ic(obj, obj.next_start_date)
-                    if obj.next_start_date < end_date:
-                        raise ValidationError(
-                            _('end date must be less than the next\'s contract start date')
-                        )
 
     def __str__(self) -> str:
         return (
