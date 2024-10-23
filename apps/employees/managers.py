@@ -1,4 +1,5 @@
 from typing import Literal
+from decimal import Decimal
 
 from django.db import models
 from django.db.models import (
@@ -101,7 +102,19 @@ class EmployeeManager(models.Manager):
 
     def get_queryset(self) -> models.QuerySet:
 
-        from .models import EducationTransaction
+        from .models import EducationTransaction, Contract
+        from apps.exchange_rates.models import ExchangeRate
+
+        contracts = (
+            Contract
+            .objects
+            .select_related(
+                "employee", "department", "job_subtype", 
+                "status", "position", "currency"
+            )
+            .filter(employee=OuterRef('pk'))
+            .order_by("-start_date")
+        )
 
         education = (
             EducationTransaction
@@ -117,22 +130,135 @@ class EmployeeManager(models.Manager):
             super()
             .get_queryset()
             .annotate(
+                # ------ contract information ------#
+                department=Coalesce(
+                    Subquery(
+                        contracts.values('department__name')[:1]
+                    ), Value('-')
+                ),
+                # department_pk=Coalesce(
+                #     Subquery(
+                #         contracts.values('department__pk')[:1]
+                #     ), Value('-')
+                # ),
+                cost_center=Coalesce(
+                    Subquery(
+                        contracts.values('department__cost_center__name')[:1]
+                    ), Value('-')
+                ),
+                # cost_center_pk=Coalesce(
+                #     Subquery(
+                #         contracts.values('department__cost_center__pk')[:1]
+                #     ), Value('-')
+                # ),
+                job_type=Coalesce(
+                    Subquery(
+                        contracts.values('job_subtype__job_type__name')[:1]
+                    ), Value('-')
+                ),
+                # job_type_pk=Coalesce(
+                #     Subquery(
+                #         contracts.values('job_subtype__job_type__pk')[:1]
+                #     ), Value('-')
+                # ),
+                job_subtype=Coalesce(
+                    Subquery(
+                        contracts.values('job_subtype__name')[:1]
+                    ), Value('-')
+                ),
+                # job_subtype_pk=Coalesce(
+                #     Subquery(
+                #         contracts.values('job_subtype__pk')[:1]
+                #     ), Value('-')
+                # ),
+                status=Coalesce(
+                    Subquery(
+                        contracts.values('status__name')[:1]
+                    ), Value('-')
+                ),
+                # status_pk=Coalesce(
+                #     Subquery(
+                #         contracts.values('status__pk')[:1]
+                #     ), Value('-')
+                # ),
+                position=Coalesce(
+                    Subquery(
+                        contracts.values('position__name')[:1]
+                    ), Value('-')
+                ),
+                # position_pk=Coalesce(
+                #     Subquery(
+                #         contracts.values('position__pk')[:1]
+                #     ), Value('-')
+                # ),
+                salary=Coalesce(
+                    Subquery(
+                        contracts.values('salary')[:1]
+                    ), Value(Decimal(0))
+                ),
+                currency=Coalesce(
+                    Subquery(
+                        contracts.values('currency__name')[:1]
+                    ), Value('-')
+                ),
+                # currency_pk=Coalesce(
+                #     Subquery(
+                #         contracts.values('currency__pk')[:1]
+                #     ), Value('-')
+                # ),
+                currency_short=Coalesce(
+                    Subquery(
+                        contracts.values('currency__short_name')[:1]
+                    ), Value('-')
+                ),
+                currency_fraction=Coalesce(
+                    Subquery(
+                        contracts.values('currency__fraction_name')[:1]
+                    ), Value('-')
+                ),
+                exchange_rate=Coalesce(
+                    Subquery(
+                        ExchangeRate.objects.filter(
+                            currency__name=OuterRef('currency')
+                        ).order_by('-date').values('rate')[:1]
+                    ),
+                    Value(Decimal(1)),
+                    output_field=models.DecimalField(
+                        max_digits=20, decimal_places=2
+                    )
+                ),
+                local_salary=F('exchange_rate') * F('salary'),
                 # ------ education information ------#
                 school=Coalesce(
                     Subquery(
                         education.values('school__name')[:1]
                     ), Value('-')
                 ),
+                # school_pk=Coalesce(
+                #     Subquery(
+                #         education.values('school__pk')[:1]
+                #     ), Value('-')
+                # ),
                 specialization=Coalesce(
                     Subquery(
                         education.values('specialization__name')[:1]
                     ), Value('-')
                 ),
+                # specialization_pk=Coalesce(
+                #     Subquery(
+                #         education.values('specialization__pk')[:1]
+                #     ), Value('-')
+                # ),
                 education_degree=Coalesce(
                     Subquery(
                         education.values('degree__name')[:1]
                     ), Value('-')
                 ),
+                # education_degree_pk=Coalesce(
+                #     Subquery(
+                #         education.values('degree__pk')[:1]
+                #     ), Value('-')
+                # ),
                 education_order=Coalesce(
                     Subquery(
                         education.values('degree__order')[:1]

@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import gettext as _
 from django.utils import timezone
 from django.core.exceptions import ValidationError
-from django.db.models.signals import post_init
+from django.db.models.signals import post_init, pre_save
 
 from .employee import Employee
 
@@ -139,7 +139,7 @@ class Contract(models.Model):
         )
 
 
-def contract_post_init(sender, instance: Contract, *args, **kwargs):
+def calculate_local_price(instance: Contract):
     
     rate = (
         instance
@@ -156,4 +156,12 @@ def contract_post_init(sender, instance: Contract, *args, **kwargs):
         instance.local_salary = 0
         instance.salary = 0
 
+
+def contract_post_init(sender, instance: Contract, *args, **kwargs):
+    calculate_local_price(instance)
+
+def contract_pre_save(sender, instance: Contract, *args, **kwargs):
+    calculate_local_price(instance)
+
 post_init.connect(contract_post_init, Contract)
+pre_save.connect(contract_pre_save, Contract)

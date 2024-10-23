@@ -1,4 +1,4 @@
-{% load i18n static format_numbers%}
+{% load i18n static format_numbers %}
 
 <c-layout.table-container>
   <form hx-get="{{ bulk_path }}" x-data="{ selectedRows: [] }">
@@ -22,6 +22,10 @@
             <c-table.th name="{% translate 'specialization' %}" />
             <c-table.th name="{% translate 'is specialist' %}" />
             <c-table.th name="{% translate 'groups' %}" />
+            <c-table.th name="{% translate 'department' %}" />
+            <c-table.th name="{% translate 'salary' %}" />
+            <c-table.th name="{% translate 'exchange rate' %}" />
+            <c-table.th name="{% translate 'local salary' %}" />
 
             <c-table.th />
           </c-table.header-row>
@@ -70,6 +74,10 @@
                  {% endif %}
               {% endfor %}
             </c-table.td>
+            <c-table.td data-header="{% translate 'department' %}">{{ obj.department }}</c-table.td>
+            <c-table.td data-header="{% translate 'salary' %}">{{ obj.salary|money }} {{ obj.currency_short }}</c-table.td>
+            <c-table.td data-header="{% translate 'exchange rate' %}">{{ obj.exchange_rate|money }}</c-table.td>
+            <c-table.td data-header="{% translate 'local salary' %}">{{ obj.local_salary|money }}</c-table.td>
             <c-table.td fixed><c-context.context /></c-table.td>
           </c-table.tr>
           {% empty %}
