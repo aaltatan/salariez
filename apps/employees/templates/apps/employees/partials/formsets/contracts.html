@@ -27,6 +27,7 @@
           <c-table.th>{% translate 'type' %}</c-table.th>
           <c-table.th>{% translate 'ownership' %}</c-table.th>
           <c-table.th>{% translate 'salary' %}</c-table.th>
+          <c-table.th>{% translate 'currency' %}</c-table.th>
           <c-table.th>{% translate 'start date' %}</c-table.th>
           <c-table.th>{% translate 'end date' %}</c-table.th>
           <c-table.th>
@@ -80,6 +81,12 @@
           <c-table.td data-header="{% translate 'salary' %}">
             {% render_field form.salary|add_class:'input w-full text-xs' %} 
             {% for error in form.salary.errors %}
+              <c-forms.error-li>{{ error }}</c-forms.error-li>
+            {% endfor %}
+          </c-table.td>
+          <c-table.td data-header="{% translate 'currency' %}">
+            {% render_field form.currency|add_class:'input w-full text-xs' %} 
+            {% for error in form.currency.errors %}
               <c-forms.error-li>{{ error }}</c-forms.error-li>
             {% endfor %}
           </c-table.td>

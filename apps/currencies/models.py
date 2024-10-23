@@ -26,7 +26,7 @@ class CurrencyManager(models.Manager):
             super().get_queryset().annotate(
                 rate=Coalesce(
                     Subquery(rates.values('rate')[:1]), 
-                    Value(0),
+                    Value(1),
                     output_field=models.DecimalField(
                         max_digits=20,
                         decimal_places=8,
@@ -57,6 +57,19 @@ class Currency(base_models.AbstractNameModel):
     )
 
     objects = CurrencyManager()
+
+    @classmethod
+    def get_default_pk(cls):
+        currency, created = cls.objects.get_or_create(
+            is_local=True,
+            defaults={
+                'name': 'Syrian Pound',
+                'short_name': 's.p.',
+                'fraction_name': 'Korsh',
+                'is_local': True
+            }
+        )
+        return currency.pk
 
     class Meta:
         ordering = ['is_local', 'name']

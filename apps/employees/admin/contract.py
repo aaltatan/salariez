@@ -21,6 +21,7 @@ class ContractAdmin(admin.ModelAdmin):
         'contract_type', 
         'ownership', 
         'salary', 
+        'currency', 
         'start_date', 
         'end_date', 
         'institution_id', 

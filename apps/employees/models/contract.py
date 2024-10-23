@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import gettext as _
 from django.utils import timezone
 from django.core.exceptions import ValidationError
-# from django.db.models.signals import pre_save
+from django.db.models.signals import post_init
 
 from .employee import Employee
 
@@ -10,7 +10,7 @@ from apps.departments.models import Department
 from apps.job_subtypes.models import JobSubtype
 from apps.statuses.models import Status
 from apps.positions.models import Position
-# from apps.currencies.models import Currency
+from apps.currencies.models import Currency
 
 from apps.base.validators import numeric_validator
 
@@ -53,9 +53,15 @@ class Contract(models.Model):
     salary = models.DecimalField(
         decimal_places=2, max_digits=12, default=0
     )
-    # currency = models.ForeignKey(
-    #     Currency, related_name='contracts', on_delete=models.PROTECT
-    # )
+    local_salary = models.DecimalField(
+        decimal_places=2, max_digits=12, default=0
+    )
+    currency = models.ForeignKey(
+        Currency, 
+        related_name='contracts', 
+        on_delete=models.PROTECT,
+        default=Currency.get_default_pk
+    )
     start_date = models.DateField(default=timezone.now)
     end_date = models.DateField(null=True, blank=True)
     institution_id = models.CharField(
@@ -76,6 +82,9 @@ class Contract(models.Model):
     @property
     def has_salary(self) -> bool:
         
+        if getattr(self, 'status', None) is None:
+            return False
+
         if self.status.has_salary is False:
             return False
 
@@ -128,3 +137,23 @@ class Contract(models.Model):
         return (
           f'{self.employee.fullname} - {self.position.name} in {self.department.name}'
         )
+
+
+def contract_post_init(sender, instance: Contract, *args, **kwargs):
+    
+    rate = (
+        instance
+        .currency
+        .rates
+        .filter(date__lte=timezone.datetime.today().date())
+        .order_by('date')
+        .last()
+        .rate
+    )
+    instance.local_salary = instance.salary * rate
+
+    if not instance.has_salary:
+        instance.local_salary = 0
+        instance.salary = 0
+
+post_init.connect(contract_post_init, Contract)
