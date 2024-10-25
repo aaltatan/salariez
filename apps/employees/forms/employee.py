@@ -21,7 +21,9 @@ class EmployeeForm(forms.ModelForm):
         model = Employee
         fields = '__all__'
         widgets = {
-            'firstname': get_input_datalist(Employee, 'firstname'),
+            'firstname': get_input_datalist(
+                Employee, 'firstname', {'autofocus': 'true'}
+            ),
             'lastname': get_input_datalist(Employee, 'lastname'),
             'father_name': get_input_datalist(Employee, 'father_name'),
             'mother_name': get_input_datalist(Employee, 'mother_name'),

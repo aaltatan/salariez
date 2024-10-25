@@ -1,7 +1,8 @@
 {% load i18n %}
 {% load static %}
 
-<div class="p-3 lg:p-6" id="employee-update-form-container">
+<div class="p-3 lg:p-6" id="employee-update-form-container"
+hx-target="#employee-update-form-container">
   <div class="@container">
 
     <h1
@@ -12,8 +13,7 @@
 
     <form 
     hx-post="{{ instance.get_update_path }}" 
-    hx-encoding="multipart/form-data"
-    hx-target="#employee-update-form-container">
+    hx-encoding="multipart/form-data">
 
       <div>
 
@@ -51,7 +51,6 @@
         <c-btns.btn
           datatheme="secondary"
           hx-delete="{{ instance.get_update_path }}"
-          hx-target="closest form"
           hx-indicator="#reset-spinner"
           hx-disabled-elt="*[data-disabled]"
           data-disabled
