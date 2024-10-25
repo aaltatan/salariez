@@ -5,8 +5,6 @@ import django_filters as filters
 
 from .models import Employee
 
-from apps.base.widgets import ComboboxWidget
-
 from apps.educational_degrees.models import EducationalDegree
 from apps.specializations.models import Specialization
 from apps.job_subtypes.models import JobSubtype
@@ -22,7 +20,8 @@ from apps.base.mixins.filters import FiltersMixin
 from apps.base.utils.filters import (
     get_decimal_filters, 
     get_date_filters,
-    get_number_filters
+    get_number_filters,
+    get_combobox_filters,
 )
 
 
@@ -38,75 +37,56 @@ class EmployeeFilterSet(FiltersMixin, filters.FilterSet):
             "data-disabled": "",
         }),
     )
-    status = filters.ModelMultipleChoiceFilter(
-        queryset=Status.objects.all(),
+    status, status_reversed = get_combobox_filters(
+        qs=Status.objects.all(),
         field_name='status_pk',
         label=_('status'),
-        method="filter_combobox",
-        widget=ComboboxWidget({'data-name': _('status')}),
     )
-    job_type = filters.ModelMultipleChoiceFilter(
-        queryset=JobType.objects.all(),
+    job_type, job_type_reversed = get_combobox_filters(
+        qs=JobType.objects.all(),
         field_name='job_type_pk',
         label=_('job type'),
-        method="filter_combobox",
-        widget=ComboboxWidget({'data-name': _('job type')}),
     )
-    job_subtype = filters.ModelMultipleChoiceFilter(
-        queryset=JobSubtype.objects.all(),
+    job_subtype, job_subtype_reversed = get_combobox_filters(
+        qs=JobSubtype.objects.all(),
         field_name='job_subtype_pk',
         label=_('job subtype'),
-        method="filter_combobox",
-        widget=ComboboxWidget({'data-name': _('job subtype')}),
     )
-    position = filters.ModelMultipleChoiceFilter(
-        queryset=Position.objects.all(),
+    position, position_reversed = get_combobox_filters(
+        qs=Position.objects.all(),
         field_name='position_pk',
         label=_('position'),
-        method="filter_combobox",
-        widget=ComboboxWidget({'data-name': _('position')}),
     )
-    department = filters.ModelMultipleChoiceFilter(
-        queryset=Department.objects.all(),
+    department, department_reversed = get_combobox_filters(
+        qs=Department.objects.all(),
         field_name='department_pk',
         label=_('department'),
-        method="filter_combobox",
-        widget=ComboboxWidget({'data-name': _('department')}),
     )
-    cost_center = filters.ModelMultipleChoiceFilter(
-        queryset=CostCenter.objects.all(),
+    cost_center, cost_center_reversed = get_combobox_filters(
+        qs=CostCenter.objects.all(),
         field_name='cost_center_pk',
         label=_('cost center'),
-        method="filter_combobox",
-        widget=ComboboxWidget({'data-name': _('cost center')}),
     )
-    groups = filters.ModelMultipleChoiceFilter(
-        queryset=Group.objects.all(),
+    groups, groups_reversed = get_combobox_filters(
+        qs=Group.objects.all(),
         field_name='groups',
         label=_('groups'),
-        method="filter_combobox",
-        widget=ComboboxWidget({'data-name': _('groups')}),
+        reversed_method_name='filter_groups_reversed'
     )
-    education_degree = filters.ModelMultipleChoiceFilter(
-        queryset=EducationalDegree.objects.all(),
+    education_degree, education_degree_reversed = get_combobox_filters(
+        qs=EducationalDegree.objects.all(),
         field_name='education_degree_pk',
         label=_('education degree'),
-        method="filter_combobox",
-        widget=ComboboxWidget({'data-name': _('education degree')}),
     )
-    specialization = filters.ModelMultipleChoiceFilter(
-        queryset=Specialization.objects.all(),
+    specialization, specialization_reversed = get_combobox_filters(
+        qs=Specialization.objects.all(),
         field_name='specialization_pk',
         label=_('specialization'),
-        method="filter_combobox",
-        widget=ComboboxWidget({'data-name': _('specialization')}),
     )
-    school = filters.ModelMultipleChoiceFilter(
-        queryset=School.objects.all(),
+    school, school_reversed = get_combobox_filters(
+        qs=School.objects.all(),
         field_name='school_pk',
         label=_('school'),
-        method="filter_combobox",
-        widget=ComboboxWidget({'data-name': _('school')}),
     )
     specialty = filters.BooleanFilter(
         field_name='is_specialist',

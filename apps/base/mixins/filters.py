@@ -38,10 +38,35 @@ class FiltersMixin:
         return stmt
     
     def filter_combobox(self, qs, name, value):
+
         if not value:
             return qs
-        lookup = {f'{name}__in': value}
-        return qs.filter(**lookup).distinct()
+        
+        stmt = Q(**{f'{name}__in': value})
+
+        return qs.filter(stmt).distinct()
+    
+    def filter_combobox_reversed(self, qs, name, value):
+
+        if not value:
+            return qs
+        
+        stmt = (
+            Q(**{f'{name}__isnull': True}) | ~Q(**{f'{name}__in': value})
+        )
+
+        return qs.filter(stmt).distinct()
+    
+    def filter_groups_reversed(self, qs, name, value):
+
+        if not value:
+            return qs
+        
+        stmt = (
+            Q(**{f'{name}__isnull': True}) | ~Q(**{f'{name}__in': value})
+        )
+
+        return qs.filter(stmt).exclude(**{f'{name}__in': value}).distinct()
 
     def filter_decimals(self, qs, name, value):
         if value:

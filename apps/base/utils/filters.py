@@ -1,10 +1,12 @@
 from django.forms import widgets
+from django.db.models import QuerySet
 from django.utils.translation import gettext as _
 
 import django_filters as filters
 from django_filters import NumberFilter, CharFilter
 
 from apps.base.utils.fields import get_date_field
+from apps.base.widgets import ComboboxWidget
 
 
 def get_number_filters(field: str) -> tuple[NumberFilter, NumberFilter]:
@@ -74,3 +76,42 @@ def get_decimal_filters(field: str) -> tuple[CharFilter, CharFilter]:
     )
 
     return gte, lte
+
+
+def get_combobox_filter(
+    qs: QuerySet, 
+    field_name: str, 
+    label: str, 
+    method_name: str = 'filter_combobox',
+) -> filters.ModelMultipleChoiceFilter:
+    return filters.ModelMultipleChoiceFilter(
+        queryset=qs,
+        field_name=field_name,
+        label=label,
+        method=method_name,
+        widget=ComboboxWidget({'data-name': label}),
+    )
+
+
+def get_combobox_filters(
+    qs: QuerySet, 
+    field_name: str, 
+    label: str, 
+    method_name: str = 'filter_combobox',
+    reversed_method_name: str = 'filter_combobox_reversed'
+) -> tuple[
+    filters.ModelMultipleChoiceFilter, filters.ModelMultipleChoiceFilter
+]:
+    combobox = get_combobox_filter(
+        qs=qs, 
+        field_name=field_name, 
+        label=label, 
+        method_name=method_name
+    )
+    combobox_reversed = get_combobox_filter(
+        qs=qs, 
+        field_name=field_name, 
+        label="!" + label, 
+        method_name=reversed_method_name
+    )
+    return combobox, combobox_reversed

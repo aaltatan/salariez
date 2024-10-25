@@ -8,7 +8,7 @@ from . import models
 from apps.nationalities.models import Nationality
 from apps.school_types.models import SchoolType
 from apps.base.mixins.filters import FiltersMixin
-from apps.base.widgets import ComboboxWidget
+from apps.base.utils.filters import get_combobox_filters
 
 
 class SchoolFilterSet(FiltersMixin, filters.FilterSet):
@@ -25,21 +25,15 @@ class SchoolFilterSet(FiltersMixin, filters.FilterSet):
             }
         ),
     )
-    nationality = filters.ModelMultipleChoiceFilter(
-        queryset=Nationality.objects.all(),
+    nationality, nationality_reversed = get_combobox_filters(
+        qs=Nationality.objects.all(),
         field_name='nationality',
-        lookup_expr='in',
         label=_('nationality'),
-        method="filter_combobox",
-        widget=ComboboxWidget({'data-name': _('nationality')}),
     )
-    school_type = filters.ModelMultipleChoiceFilter(
-        queryset=SchoolType.objects.all(),
+    school_type, school_type_reversed = get_combobox_filters(
+        qs=SchoolType.objects.all(),
         field_name='school_type',
-        lookup_expr='in',
         label=_('type'),
-        method="filter_combobox",
-        widget=ComboboxWidget({'data-name': _('school type')}),
     )
     description = filters.CharFilter(
         label=_('description'),
@@ -56,4 +50,4 @@ class SchoolFilterSet(FiltersMixin, filters.FilterSet):
 
     class Meta:
         model = models.School
-        fields = ["name", "nationality", "school_type", "description"]
+        fields = ["name", "description"]

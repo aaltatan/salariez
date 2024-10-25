@@ -7,7 +7,7 @@ from . import models
 
 from apps.base.widgets import ComboboxWidget
 from apps.base.mixins.filters import FiltersMixin
-
+from apps.base.utils.filters import get_combobox_filters
 
 class DepartmentFilterSet(FiltersMixin, filters.FilterSet):
 
@@ -31,13 +31,10 @@ class DepartmentFilterSet(FiltersMixin, filters.FilterSet):
             "data-disabled": "",
         }),
     )
-    cost_center = filters.ModelMultipleChoiceFilter(
-        queryset=models.cc_models.CostCenter.objects.all(),
+    cost_center, cost_center_reversed = get_combobox_filters(
+        qs=models.cc_models.CostCenter.objects.all(),
         field_name='cost_center',
-        lookup_expr='in',
         label=_('cost center'),
-        method="filter_combobox",
-        widget=ComboboxWidget({'data-name': _('cost center')}),
     )
     parent = filters.ModelMultipleChoiceFilter(
         queryset=models.Department.objects.all(),
@@ -70,4 +67,4 @@ class DepartmentFilterSet(FiltersMixin, filters.FilterSet):
 
     class Meta:
         model = models.Department
-        fields = ["name", "cost_center", "parent"]
+        fields = ["name", "parent"]

@@ -7,8 +7,8 @@ import django_filters as filters
 
 from . import models
 
-from apps.base.widgets import ComboboxWidget
 from apps.base.mixins.filters import FiltersMixin
+from apps.base.utils.filters import get_combobox_filters
 
 
 class AreaFilterSet(FiltersMixin, filters.FilterSet):
@@ -23,13 +23,10 @@ class AreaFilterSet(FiltersMixin, filters.FilterSet):
             "data-disabled": "",
         }),
     )
-    city = filters.ModelMultipleChoiceFilter(
-        queryset=models.City.objects.all(),
+    city, city_reversed = get_combobox_filters(
+        qs=models.City.objects.all(),
         field_name='city',
-        lookup_expr='in',
         label=_('city'),
-        method="filter_combobox",
-        widget=ComboboxWidget({'data-name': _('city')}),
     )
     description = filters.CharFilter(
         label=_('description'),
@@ -44,4 +41,4 @@ class AreaFilterSet(FiltersMixin, filters.FilterSet):
 
     class Meta:
         model = models.Area
-        fields = ["name", "city", "description"]
+        fields = ["name", "description"]

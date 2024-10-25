@@ -5,9 +5,8 @@ import django_filters as filters
 
 from . import models
 
-from apps.base.widgets import ComboboxWidget
 from apps.base.mixins.filters import FiltersMixin
-
+from apps.base.utils.filters import get_combobox_filters
 
 class JobSubtypeFilterSet(FiltersMixin, filters.FilterSet):
 
@@ -21,13 +20,10 @@ class JobSubtypeFilterSet(FiltersMixin, filters.FilterSet):
             "data-disabled": "",
         }),
     )
-    job_type = filters.ModelMultipleChoiceFilter(
-        queryset=models.JobType.objects.all(),
+    job_type, job_type_reversed = get_combobox_filters(
+        qs=models.JobType.objects.all(),
         field_name='job_type',
-        lookup_expr='in',
         label=_('job type'),
-        method="filter_combobox",
-        widget=ComboboxWidget({'data-name': _('job type')})
     )
     description = filters.CharFilter(
         label=_('description'),
@@ -43,4 +39,4 @@ class JobSubtypeFilterSet(FiltersMixin, filters.FilterSet):
 
     class Meta:
         model = models.JobSubtype
-        fields = ["name", "job_type", "description"]
+        fields = ["name", "description"]
