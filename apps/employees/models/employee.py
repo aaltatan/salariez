@@ -22,7 +22,7 @@ class Employee(models.Model):
         CHRISTIAN = 'C', _('christian').title()
         JEWISH = 'J', _('jewish').title()
         OTHER = 'O', _('other').title()
-    
+
     class GenderChoices(models.TextChoices):
         MALE = 'M', _('male').title()
         FEMALE = 'F', _('female').title()

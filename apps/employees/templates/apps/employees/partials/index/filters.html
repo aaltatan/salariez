@@ -98,6 +98,22 @@
       class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
     />
     <c-forms.filter-field
+      :field="filter.offices"
+      class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+    />
+    <c-forms.filter-field
+      :field="filter.offices_reversed"
+      class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+    />
+    <c-forms.filter-field
+      :field="filter.registry"
+      class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+    />
+    <c-forms.filter-field
+      :field="filter.registry_reversed"
+      class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+    />
+    <c-forms.filter-field
       :field="filter.education_degree"
       class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
     />
@@ -204,6 +220,31 @@
         title="off"
       />
     </div>
+
+    <c-forms.filter-field
+      :field="filter.religion"
+      class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+    />
+    <c-forms.filter-field
+      :field="filter.religion_reversed"
+      class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+    />
+    <c-forms.filter-field
+      :field="filter.military"
+      class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+    />
+    <c-forms.filter-field
+      :field="filter.military_reversed"
+      class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+    />
+    <c-forms.filter-field
+      :field="filter.martial"
+      class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+    />
+    <c-forms.filter-field
+      :field="filter.martial_reversed"
+      class="input w-full ~@md/lg:~py-1/2 ~@md/lg:~px-2/4 ~@md/lg:~text-sm/base"
+    />
 
   </div>
 </c-forms.filters>
