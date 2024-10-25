@@ -12,9 +12,9 @@ class FiltersMixin:
         self, qs, value, field, db_method: METHOD = 'contains'
     ):
         
-        reversed: bool = value.startswith('!')
+        is_reversed: bool = value.startswith('!')
 
-        if reversed:
+        if is_reversed:
             value = value[1:]
 
         kwargs = ' & '.join([
@@ -22,7 +22,7 @@ class FiltersMixin:
             for k in value.split(" ")
         ])
 
-        stmt = ~Q(eval(kwargs)) if reversed else Q(eval(kwargs))
+        stmt = ~Q(eval(kwargs)) if is_reversed else Q(eval(kwargs))
 
         return qs.filter(stmt)
     
