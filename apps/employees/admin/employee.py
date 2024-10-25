@@ -23,6 +23,10 @@ class EmployeeAdmin(admin.ModelAdmin):
     raw_id_fields = ['area']
     list_per_page = 10
     search_fields = ['firstname', 'lastname', 'father_name']
+    list_filter = [
+        'gender',
+        'nationality',
+    ]
     list_display = [
         'firstname',
         'lastname',

@@ -64,6 +64,8 @@ class ListTableView(
     permission_required = 'employees.view_employee'
 
     sortable_by = OrderList([
+        OrderItem(_('position'), 'position_order', checked=True),
+        OrderItem(_('department'), 'department', checked=True),
         OrderItem(_('firstname'), 'firstname', checked=True),
         OrderItem(_('gender'), 'gender'),
         OrderItem(_('hire date'), 'hire_date'),

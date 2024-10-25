@@ -7,6 +7,7 @@ from .models import Employee
 
 from apps.educational_degrees.models import EducationalDegree
 from apps.specializations.models import Specialization
+from apps.nationalities.models import Nationality
 from apps.job_subtypes.models import JobSubtype
 from apps.cost_centers.models import CostCenter
 from apps.departments.models import Department
@@ -15,6 +16,8 @@ from apps.job_types.models import JobType
 from apps.statuses.models import Status
 from apps.schools.models import School
 from apps.groups.models import Group
+from apps.cities.models import City
+from apps.areas.models import Area
 
 from apps.base.mixins.filters import FiltersMixin
 from apps.base.utils.filters import (
@@ -82,6 +85,21 @@ class EmployeeFilterSet(FiltersMixin, filters.FilterSet):
         qs=Specialization.objects.all(),
         field_name='specialization_pk',
         label=_('specialization'),
+    )
+    nationality, nationality_reversed = get_combobox_filters(
+        qs=Nationality.objects.all(),
+        field_name='nationality',
+        label=_('nationality'),
+    )
+    area, area_reversed = get_combobox_filters(
+        qs=Area.objects.all(),
+        field_name='area',
+        label=_('area'),
+    )
+    city, city_reversed = get_combobox_filters(
+        qs=City.objects.all(),
+        field_name='area__city',
+        label=_('city'),
     )
     school, school_reversed = get_combobox_filters(
         qs=School.objects.all(),

@@ -142,6 +142,13 @@ class EmployeeManager(models.Manager):
                         contracts.values('department__cost_center__name')[:1]
                     ), Value('-')
                 ),
+                cost_center_accounting_id=Coalesce(
+                    Subquery(
+                        contracts.values(
+                            'department__cost_center__cost_center_accounting_id'
+                        )[:1]
+                    ), Value('-')
+                ),
                 cost_center_pk=Subquery(
                     contracts.values('department__cost_center__pk')[:1]
                 ),
@@ -173,6 +180,11 @@ class EmployeeManager(models.Manager):
                     Subquery(
                         contracts.values('position__name')[:1]
                     ), Value('-')
+                ),
+                position_order=Coalesce(
+                    Subquery(
+                        contracts.values('position__order')[:1]
+                    ), Value(1000)
                 ),
                 position_pk=Subquery(
                     contracts.values('position__pk')[:1]
@@ -284,6 +296,8 @@ class EmployeeManager(models.Manager):
                 ),
                 search=Concat(
                     models.F("full_name"),
+                    models.Value(" "),
+                    models.F("national_id"),
                     models.Value(" "),
                     models.F("full_name"),
                 ),
