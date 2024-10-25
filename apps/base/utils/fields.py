@@ -9,6 +9,8 @@ from django.forms.widgets import (
     DateInput, TextInput, Widget, Textarea, FileInput
 )
 
+from ..widgets import TextWithDataListInput
+
 
 @dataclass
 class Object:
@@ -164,3 +166,14 @@ def get_avatar_field(
     }
 
     return FileInput(attrs)
+
+def get_input_datalist(
+    model: models.Model, field_name: str, attrs=None
+) -> TextWithDataListInput:
+
+    return TextWithDataListInput(
+        attrs=attrs,
+        datalist=list(set(
+            model.objects.values_list(field_name, flat=True)
+        ))
+    )

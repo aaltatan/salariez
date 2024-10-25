@@ -1,6 +1,24 @@
+from typing import Iterable
+
 from django.forms.widgets import (
-    ChoiceWidget, SelectMultiple
+    ChoiceWidget, SelectMultiple, Input
 )
+
+
+class TextWithDataListInput(Input):
+    input_type = "text"
+    template_name = "widgets/text_datalist.html"
+
+    def __init__(
+        self, attrs=None, datalist: Iterable | None = None
+    ) -> None:
+        self.datalist = datalist
+        super().__init__(attrs)
+    
+    def get_context(self, *args, **kwargs) -> dict:
+        context = super().get_context(*args, **kwargs)
+        context['datalist'] = self.datalist
+        return context
 
 
 class MultipleSelectWidget(SelectMultiple):
