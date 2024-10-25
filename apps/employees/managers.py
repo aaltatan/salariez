@@ -45,9 +45,7 @@ def get_age(field_name: str) -> ExpressionWrapper:
 class EmployeeManager(models.Manager):
     
     def get_ages(
-        self,
-        age: int,
-        lookup: LOOKUPS = "",
+        self, age: int, lookup: LOOKUPS = "",
     ) -> models.QuerySet:
         key = f"age__{lookup}" if lookup else "age"
         return self.get_queryset().filter(**{key: age})
@@ -136,61 +134,49 @@ class EmployeeManager(models.Manager):
                         contracts.values('department__name')[:1]
                     ), Value('-')
                 ),
-                # department_pk=Coalesce(
-                #     Subquery(
-                #         contracts.values('department__pk')[:1]
-                #     ), Value('-')
-                # ),
+                department_pk=Subquery(
+                    contracts.values('department__pk')[:1]
+                ),
                 cost_center=Coalesce(
                     Subquery(
                         contracts.values('department__cost_center__name')[:1]
                     ), Value('-')
                 ),
-                # cost_center_pk=Coalesce(
-                #     Subquery(
-                #         contracts.values('department__cost_center__pk')[:1]
-                #     ), Value('-')
-                # ),
+                cost_center_pk=Subquery(
+                    contracts.values('department__cost_center__pk')[:1]
+                ),
                 job_type=Coalesce(
                     Subquery(
                         contracts.values('job_subtype__job_type__name')[:1]
                     ), Value('-')
                 ),
-                # job_type_pk=Coalesce(
-                #     Subquery(
-                #         contracts.values('job_subtype__job_type__pk')[:1]
-                #     ), Value('-')
-                # ),
+                job_type_pk=Subquery(
+                    contracts.values('job_subtype__job_type__pk')[:1]
+                ),
                 job_subtype=Coalesce(
                     Subquery(
                         contracts.values('job_subtype__name')[:1]
                     ), Value('-')
                 ),
-                # job_subtype_pk=Coalesce(
-                #     Subquery(
-                #         contracts.values('job_subtype__pk')[:1]
-                #     ), Value('-')
-                # ),
+                job_subtype_pk=Subquery(
+                    contracts.values('job_subtype__pk')[:1]
+                ),
                 status=Coalesce(
                     Subquery(
                         contracts.values('status__name')[:1]
                     ), Value('-')
                 ),
-                # status_pk=Coalesce(
-                #     Subquery(
-                #         contracts.values('status__pk')[:1]
-                #     ), Value('-')
-                # ),
+                status_pk=Subquery(
+                    contracts.values('status__pk')[:1]
+                ),
                 position=Coalesce(
                     Subquery(
                         contracts.values('position__name')[:1]
                     ), Value('-')
                 ),
-                # position_pk=Coalesce(
-                #     Subquery(
-                #         contracts.values('position__pk')[:1]
-                #     ), Value('-')
-                # ),
+                position_pk=Subquery(
+                    contracts.values('position__pk')[:1]
+                ),
                 salary=Coalesce(
                     Subquery(
                         contracts.values('salary')[:1]
@@ -201,11 +187,9 @@ class EmployeeManager(models.Manager):
                         contracts.values('currency__name')[:1]
                     ), Value('-')
                 ),
-                # currency_pk=Coalesce(
-                #     Subquery(
-                #         contracts.values('currency__pk')[:1]
-                #     ), Value('-')
-                # ),
+                currency_pk=Subquery(
+                    contracts.values('currency__pk')[:1]
+                ),
                 currency_short=Coalesce(
                     Subquery(
                         contracts.values('currency__short_name')[:1]
@@ -234,31 +218,25 @@ class EmployeeManager(models.Manager):
                         education.values('school__name')[:1]
                     ), Value('-')
                 ),
-                # school_pk=Coalesce(
-                #     Subquery(
-                #         education.values('school__pk')[:1]
-                #     ), Value('-')
-                # ),
+                school_pk=Subquery(
+                    education.values('school__pk')[:1]
+                ),
                 specialization=Coalesce(
                     Subquery(
                         education.values('specialization__name')[:1]
                     ), Value('-')
                 ),
-                # specialization_pk=Coalesce(
-                #     Subquery(
-                #         education.values('specialization__pk')[:1]
-                #     ), Value('-')
-                # ),
+                specialization_pk=Subquery(
+                    education.values('specialization__pk')[:1]
+                ),
                 education_degree=Coalesce(
                     Subquery(
                         education.values('degree__name')[:1]
                     ), Value('-')
                 ),
-                # education_degree_pk=Coalesce(
-                #     Subquery(
-                #         education.values('degree__pk')[:1]
-                #     ), Value('-')
-                # ),
+                education_degree_pk=Subquery(
+                    education.values('degree__pk')[:1]
+                ),
                 education_order=Coalesce(
                     Subquery(
                         education.values('degree__order')[:1]
