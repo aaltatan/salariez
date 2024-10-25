@@ -11,11 +11,19 @@ class FiltersMixin:
     def _get_qs(
         self, qs, value, field, db_method: METHOD = 'contains'
     ):
-        keywords = value.split(" ")
-        stmt = Q()
-        for keyword in keywords:
-            kwargs = {f'{field}__{db_method}': keyword}
-            stmt &= Q(**kwargs)
+        
+        reversed: bool = value.startswith('!')
+
+        if reversed:
+            value = value[1:]
+
+        kwargs = ' & '.join([
+            f'Q({field}__{db_method}="{k}")'
+            for k in value.split(" ")
+        ])
+
+        stmt = ~Q(eval(kwargs)) if reversed else Q(eval(kwargs))
+
         return qs.filter(stmt)
     
     def filter_parent(self, qs, name, value):
