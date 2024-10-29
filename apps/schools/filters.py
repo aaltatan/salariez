@@ -5,10 +5,8 @@ import django_filters as filters
 
 from . import models
 
-from apps.nationalities.models import Nationality
-from apps.school_types.models import SchoolType
 from apps.base.mixins.filters import FiltersMixin
-from apps.base.utils.filters import get_combobox_filters
+from apps.base.utils.filters import get_combobox_choices_filter
 
 
 class SchoolFilterSet(FiltersMixin, filters.FilterSet):
@@ -25,14 +23,14 @@ class SchoolFilterSet(FiltersMixin, filters.FilterSet):
             }
         ),
     )
-    nationality, nationality_reversed = get_combobox_filters(
-        qs=Nationality.objects.all(),
-        field_name='nationality',
+    nationality = get_combobox_choices_filter(
+        model=models.School,
+        field_name='nationality__name',
         label=_('nationality'),
     )
-    school_type, school_type_reversed = get_combobox_filters(
-        qs=SchoolType.objects.all(),
-        field_name='school_type',
+    school_type = get_combobox_choices_filter(
+        model=models.School,
+        field_name='school_type__name',
         label=_('type'),
     )
     description = filters.CharFilter(

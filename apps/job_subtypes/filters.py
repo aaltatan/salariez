@@ -6,7 +6,7 @@ import django_filters as filters
 from . import models
 
 from apps.base.mixins.filters import FiltersMixin
-from apps.base.utils.filters import get_combobox_filters
+from apps.base.utils.filters import get_combobox_choices_filter
 
 class JobSubtypeFilterSet(FiltersMixin, filters.FilterSet):
 
@@ -20,9 +20,9 @@ class JobSubtypeFilterSet(FiltersMixin, filters.FilterSet):
             "data-disabled": "",
         }),
     )
-    job_type, job_type_reversed = get_combobox_filters(
-        qs=models.JobType.objects.all(),
-        field_name='job_type',
+    job_type = get_combobox_choices_filter(
+        model=models.JobSubtype,
+        field_name='job_type__name',
         label=_('job type'),
     )
     description = filters.CharFilter(

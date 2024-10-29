@@ -120,6 +120,23 @@
         {% endfor %}
       />
 
+      <div class="flex items-center justify-end gap-2 text-xs p-2">
+        <span 
+        @click="options.map(e => {
+          e.selected = false;
+          return e;
+        })"
+        class="capitalize" 
+        role="button">{% translate 'clear' %}</span>
+        <span 
+        @click="options.map(e => {
+          e.selected = true;
+          return e;
+        })"
+        class="capitalize text-blue-500" 
+        role="button">{% translate 'select all' %}</span>
+      </div>
+
       <ul class="text-sm max-h-32 overflow-y-auto scrollbar p-1">
         <template x-for="option in options" :key="option.value">
           <li

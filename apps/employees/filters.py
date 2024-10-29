@@ -5,27 +5,12 @@ import django_filters as filters
 
 from .models import Employee
 
-from apps.educational_degrees.models import EducationalDegree
-from apps.specializations.models import Specialization
-from apps.nationalities.models import Nationality
-from apps.job_subtypes.models import JobSubtype
-from apps.cost_centers.models import CostCenter
-from apps.departments.models import Department
-from apps.positions.models import Position
-from apps.job_types.models import JobType
-from apps.statuses.models import Status
-from apps.schools.models import School
-from apps.groups.models import Group
-from apps.cities.models import City
-from apps.areas.models import Area
-
 from apps.base.mixins.filters import FiltersMixin
 from apps.base.utils.filters import (
     get_decimal_filters,
     get_date_filters,
     get_number_filters,
-    get_combobox_filters,
-    get_combobox_choices_filters,
+    get_combobox_choices_filter,
 )
 
 
@@ -43,80 +28,79 @@ class EmployeeFilterSet(FiltersMixin, filters.FilterSet):
             }
         ),
     )
-    status, status_reversed = get_combobox_filters(
-        qs=Status.objects.all(),
-        field_name="status_pk",
-        label=_("status"),
+    status = get_combobox_choices_filter(
+        model=Employee,
+        field_name='status',
+        label=_("status")
     )
-    job_type, job_type_reversed = get_combobox_filters(
-        qs=JobType.objects.all(),
-        field_name="job_type_pk",
-        label=_("job type"),
+    job_type = get_combobox_choices_filter(
+        model=Employee,
+        field_name='job_type',
+        label=_("job type")
     )
-    job_subtype, job_subtype_reversed = get_combobox_filters(
-        qs=JobSubtype.objects.all(),
-        field_name="job_subtype_pk",
-        label=_("job subtype"),
+    job_subtype = get_combobox_choices_filter(
+        model=Employee,
+        field_name='job_subtype',
+        label=_("job subtype")
     )
-    position, position_reversed = get_combobox_filters(
-        qs=Position.objects.all(),
-        field_name="position_pk",
-        label=_("position"),
+    position = get_combobox_choices_filter(
+        model=Employee,
+        field_name='position',
+        label=_("position")
     )
-    department, department_reversed = get_combobox_filters(
-        qs=Department.objects.all(),
-        field_name="department_pk",
-        label=_("department"),
+    department = get_combobox_choices_filter(
+        model=Employee,
+        field_name='department',
+        label=_("department")
     )
-    cost_center, cost_center_reversed = get_combobox_filters(
-        qs=CostCenter.objects.all(),
-        field_name="cost_center_pk",
-        label=_("cost center"),
+    cost_center = get_combobox_choices_filter(
+        model=Employee,
+        field_name='cost_center',
+        label=_("cost center")
     )
-    groups, groups_reversed = get_combobox_filters(
-        qs=Group.objects.all(),
-        field_name="groups",
-        label=_("groups"),
-        reversed_method_name="filter_groups_reversed",
+    groups = get_combobox_choices_filter(
+        model=Employee,
+        field_name='groups__name',
+        label=_("groups")
     )
-    offices, offices_reversed = get_combobox_choices_filters(
+    offices = get_combobox_choices_filter(
         model=Employee,
         field_name='civil_registry_office',
         label=_("offices")
     )
-    registry, registry_reversed = get_combobox_choices_filters(
+    registry = get_combobox_choices_filter(
         model=Employee,
         field_name='registry_office_name',
         label=_("registry")
     )
-    education_degree, education_degree_reversed = get_combobox_filters(
-        qs=EducationalDegree.objects.all(),
-        field_name="education_degree_pk",
+    education_degree = get_combobox_choices_filter(
+        model=Employee,
+        field_name='education_degree',
         label=_("education degree"),
     )
-    specialization, specialization_reversed = get_combobox_filters(
-        qs=Specialization.objects.all(),
-        field_name="specialization_pk",
+    specialization = get_combobox_choices_filter(
+        model=Employee,
+        field_name='specialization',
         label=_("specialization"),
     )
-    nationality, nationality_reversed = get_combobox_filters(
-        qs=Nationality.objects.all(),
-        field_name="nationality",
+    nationality = get_combobox_choices_filter(
+        model=Employee,
+        field_name='nationality__name',
         label=_("nationality"),
     )
-    area, area_reversed = get_combobox_filters(
-        qs=Area.objects.all(),
-        field_name="area",
+    area = get_combobox_choices_filter(
+        model=Employee,
+        field_name='area__name',
         label=_("area"),
     )
-    city, city_reversed = get_combobox_filters(
-        qs=City.objects.all(),
-        field_name="area__city",
+    city = get_combobox_choices_filter(
+        model=Employee,
+        field_name='area__city__name',
         label=_("city"),
     )
-    school, school_reversed = get_combobox_filters(
-        qs=School.objects.all(),
-        field_name="school_pk",
+    school = get_combobox_choices_filter(
+        model=Employee,
+        field_name='school',
         label=_("school"),
     )
     specialty = filters.BooleanFilter(
@@ -137,19 +121,19 @@ class EmployeeFilterSet(FiltersMixin, filters.FilterSet):
     age_gte, age_lte = get_number_filters("age")
     hire_date_gte, hire_date_lte = get_date_filters("hire_date")
 
-    religion, religion_reversed = get_combobox_choices_filters(
+    religion = get_combobox_choices_filter(
         model=Employee,
         field_name='religion',
         label=_("religion"),
         choices=Employee.ReligionChoices.choices,
     )
-    martial, martial_reversed = get_combobox_choices_filters(
+    martial = get_combobox_choices_filter(
         model=Employee,
         field_name='martial_status',
         label=_("martial"),
         choices=Employee.MartialStatusChoices.choices,
     )
-    military, military_reversed = get_combobox_choices_filters(
+    military = get_combobox_choices_filter(
         model=Employee,
         field_name='military_status',
         label=_("military"),
