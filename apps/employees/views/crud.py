@@ -29,27 +29,10 @@ from apps.base.mixins import (
 )
 
 
-select_related: list[str] = [
-    'area',
-]
-prefetch_related: list[str] = [
-    'mobiles', 'phones', 'emails', 'education_transactions', 'groups'
-]
-
-
 class EmployeeDetailView(DetailView):
 
     model = Employee
     template_name = 'apps/employees/details.html'
-
-    def get_queryset(self):
-        return (
-            super()
-            .get_queryset()
-            .select_related(*select_related)
-            .prefetch_related(*prefetch_related)
-        )
-
 
 class SearchView(LoginRequiredMixin, SearchMixin, View):
     
@@ -77,14 +60,6 @@ class ListTableView(
         'hx-get': reverse_lazy('employees:index'),
         'hx-target': '#employees-table #container > div',
     }
-
-    def get_queryset(self):
-        return (
-            super()
-            .get_queryset()
-            .select_related(*select_related)
-            .prefetch_related(*prefetch_related)
-        )
 
 
 class ExportView(

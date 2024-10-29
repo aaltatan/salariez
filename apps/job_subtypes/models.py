@@ -22,7 +22,7 @@ class JobSubtype(base_models.AbstractNameModel):
         verbose_name=_('job type')
     )
 
-    managers = JobSubType()
+    objects = JobSubType()
 
     class Meta:
         ordering = ['name']

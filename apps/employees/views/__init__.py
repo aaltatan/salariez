@@ -18,9 +18,7 @@ from .formsets import (
   EducationalTransactionFormSetView,
   ContractFormSetView,
 )
-from .dashboard import (
-  male_female_card,
-)
+from .dashboard import counts_card
 
 __all__ = [
   ListTableView,
@@ -41,5 +39,5 @@ __all__ = [
   EducationalTransactionFormSetView,
   ContractFormSetView,
   # dashboard
-  male_female_card,
+  counts_card,
 ]

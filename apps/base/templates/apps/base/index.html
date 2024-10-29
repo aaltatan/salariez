@@ -6,10 +6,17 @@
 {% block body %}
 
 <div class="grid grid-cols-4 ~gap-1/2">
+
   <c-skeletons.card 
   hx-trigger="revealed"
   hx-indicator="#no-content"
-  hx-get="{% url 'employees:dashboard-male-female' %}"/>
+  hx-get="{% url 'employees:dashboard-group-by-counts' group_by='gender' %}"/>
+
+  <c-skeletons.card 
+  hx-trigger="revealed"
+  hx-indicator="#no-content"
+  hx-get="{% url 'employees:dashboard-group-by-counts' group_by='martial_status' %}"/>
+
 </div>
 
 {% endblock %}
