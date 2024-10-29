@@ -38,9 +38,6 @@ class ListTableView(
         'hx-get': reverse_lazy('job_subtypes:index'),
         'hx-target': '#job-subtypes-table #container > div',
     }
-    
-    def get_queryset(self):
-        return super().get_queryset().select_related('job_type')
 
 
 class ExportView(

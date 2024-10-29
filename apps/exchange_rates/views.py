@@ -36,9 +36,6 @@ class ListTableView(
         'hx-target': '#exchange-rates-table #container > div',
     }
 
-    def get_queryset(self):
-        return super().get_queryset().select_related('currency')
-
 
 class ExportView(
     LoginRequiredMixin, PermissionRequiredMixin, ExportMixin, View

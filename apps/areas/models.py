@@ -6,6 +6,12 @@ from apps.base import models as base_models, utils
 from apps.cities.models import City
 
 
+class AreaManager(models.Manager):
+
+    def get_queryset(self) -> models.QuerySet:
+        return super().get_queryset().select_related('city')
+
+
 class Area(base_models.AbstractNameModel):
 
     city = models.ForeignKey(
@@ -15,6 +21,8 @@ class Area(base_models.AbstractNameModel):
         help_text=_('city'),
         verbose_name=_('city')
     )
+
+    objects = AreaManager()
 
     class Meta:
         ordering = ['city__name', 'name']

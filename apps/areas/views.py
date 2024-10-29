@@ -41,9 +41,6 @@ class ListTableView(
         'hx-target': '#areas-table #container > div',
     }
 
-    def get_queryset(self):
-        return super().get_queryset().select_related('city')
-
 
 class ExportView(
     LoginRequiredMixin, PermissionRequiredMixin, ExportMixin, View

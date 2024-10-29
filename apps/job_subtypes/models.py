@@ -6,6 +6,12 @@ from apps.job_types.models import JobType
 from apps.base import models as base_models, utils
 
 
+class JobSubType(models.Manager):
+
+    def get_queryset(self):
+        return super().get_queryset().select_related('job_type')
+
+
 class JobSubtype(base_models.AbstractNameModel):
     
     job_type = models.ForeignKey(
@@ -15,6 +21,8 @@ class JobSubtype(base_models.AbstractNameModel):
         help_text=_('primary job type'),
         verbose_name=_('job type')
     )
+
+    managers = JobSubType()
 
     class Meta:
         ordering = ['name']

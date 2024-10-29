@@ -66,13 +66,6 @@ class ListTableView(
         'hx-get': reverse_lazy('departments:index'),
         'hx-target': '#departments-table #container > div',
     }
-    
-    def get_queryset(self):
-        return (
-            super()
-            .get_queryset()
-            .select_related('cost_center', 'parent')
-        )
 
 
 class CreateView(

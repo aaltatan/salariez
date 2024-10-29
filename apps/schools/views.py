@@ -41,11 +41,6 @@ class ListTableView(
         'hx-target': '#schools-table #container > div',
     }
 
-    def get_queryset(self):
-        return super().get_queryset().select_related(
-            'school_type', 'nationality'
-        )
-
 
 class ExportView(
     LoginRequiredMixin, PermissionRequiredMixin, ExportMixin, View

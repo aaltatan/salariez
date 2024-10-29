@@ -4,12 +4,20 @@ from django.db.models.signals import pre_save
 from django.db.models.fields.generated import GeneratedField
 from django.db.models.functions import Concat
 
-from mptt.models import MPTTModel, TreeForeignKey
+from mptt.models import MPTTModel, TreeForeignKey, TreeManager
 
 from . import utils
 
 from apps.base import validators, utils as base_utils, models as base_models
 from apps.cost_centers import models as cc_models
+
+
+class DepartmentManager(TreeManager):
+
+    def get_queryset(self, *args, **kwargs):
+        return super().get_queryset(*args, **kwargs).select_related(
+            'cost_center', 'parent'
+        )
 
 
 class Department(MPTTModel, base_models.AbstractNameModel):
@@ -51,6 +59,8 @@ class Department(MPTTModel, base_models.AbstractNameModel):
         output_field=models.CharField(max_length=255),
         db_persist=False,
     )
+
+    objects = DepartmentManager()
     
     class MPTTMeta:
         level_attr = 'level'

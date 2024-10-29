@@ -7,6 +7,14 @@ from apps.school_types.models import SchoolType
 from apps.nationalities.models import Nationality
 
 
+class SchoolManager(models.Manager):
+
+    def get_queryset(self):
+        return super().get_queryset().select_related(
+            'school_type', 'nationality'
+        )
+
+
 class School(base_models.AbstractNameModel):
 
     school_type = models.ForeignKey(
@@ -23,6 +31,8 @@ class School(base_models.AbstractNameModel):
         help_text=_('nationality'),
         verbose_name=_('nationality'),
     )
+
+    objects = SchoolManager()
 
     class Meta:
         ordering = ['school_type', 'nationality__is_local', 'name']

@@ -9,6 +9,12 @@ from django.utils.translation import gettext as _
 from apps.currencies.models import Currency
 
 
+class ExchangeRateManager(models.Manager):
+
+    def get_queryset(self) -> models.QuerySet:
+        return super().get_queryset().select_related('currency')
+
+
 class ExchangeRate(models.Model):
 
     currency = models.ForeignKey(
@@ -35,6 +41,8 @@ class ExchangeRate(models.Model):
         null=True,
         blank=True,
     )
+
+    objects = ExchangeRateManager()
 
     def _get_app_label(self):
         return self.__class__._meta.app_label
