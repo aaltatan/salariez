@@ -174,6 +174,6 @@ def get_input_datalist(
     return TextWithDataListInput(
         attrs=attrs,
         datalist=list(set(
-            model.objects.values_list(field_name, flat=True)
+            model.objects.values_list(field_name, flat=True).order_by(field_name)
         ))
     )
