@@ -19,6 +19,7 @@
   class="relative w-full"
   x-data="{ 
     open: false,
+    checkAll: false,
     name: $refs.comboBoxSearch.dataset.name,
     optionsConcat: '',
     textsConcat: '',
@@ -120,24 +121,24 @@
         {% endfor %}
       />
 
-      <div class="flex items-center justify-end gap-2 text-xs p-2">
-        <span 
-        @click="options.map(e => {
-          e.selected = false;
-          return e;
-        })"
-        class="capitalize" 
-        role="button">{% translate 'clear' %}</span>
-        <span 
-        @click="options.map(e => {
-          e.selected = true;
-          return e;
-        })"
-        class="capitalize text-blue-500" 
-        role="button">{% translate 'select all' %}</span>
-      </div>
-
       <ul class="text-sm max-h-32 overflow-y-auto scrollbar p-1">
+        <li
+          class="~px-2/4 ~py-1/2 rounded flex items-center gap-2 hover:dark:bg-neutral-900 hover:bg-neutral-200"
+        >
+          <input 
+          @change="
+          checkAll = !checkAll;
+          options = options.map(e => {
+            e.selected = e.show && checkAll;
+            return e;
+          })
+          "
+          id="check-all-options" type="checkbox" class="check"/>
+          <label
+            for="check-all-options"
+            class="w-full block first-letter:capitalize text-xs"
+          >{% translate 'select all' %}</label>
+        </li>
         <template x-for="option in options" :key="option.value">
           <li
             class="~px-2/4 ~py-1/2 rounded flex items-center gap-2 hover:dark:bg-neutral-900 hover:bg-neutral-200"
