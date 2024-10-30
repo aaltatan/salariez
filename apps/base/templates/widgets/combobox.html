@@ -133,9 +133,9 @@
             return e;
           })
           "
-          id="check-all-options" type="checkbox" class="check"/>
+          :id="`check-all-options-${name}`" type="checkbox" class="check"/>
           <label
-            for="check-all-options"
+            :for="`check-all-options-${name}`"
             class="w-full block first-letter:capitalize text-xs"
           >{% translate 'select all' %}</label>
         </li>
