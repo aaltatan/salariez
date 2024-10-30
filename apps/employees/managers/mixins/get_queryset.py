@@ -1,8 +1,8 @@
 from decimal import Decimal
 
 from django.db import models
-from django.db.models import F, ExpressionWrapper
-from django.db.models.functions import Floor
+from django.db.models import F, ExpressionWrapper, Value, Subquery
+from django.db.models.functions import Floor, Coalesce
 from django.utils import timezone
 
 from .utils import join_db
@@ -94,13 +94,16 @@ class QuerySetManagerMixin(ManagerHelperMixin):
                 exchange_rates, 
                 'rate', 
                 default_value=1, 
-                output_field=models.DecimalField(max_digits=20, decimal_places=2)
+                output_field=models.DecimalField(
+                    max_digits=20, decimal_places=2
+                )
             )
         )
 
         qs = qs.annotate(
-            salary=self._get_subquery(
-                contracts, "salary", default_value=Decimal(0)
+            salary=Coalesce(
+                Subquery(contracts.values('salary')[:1]),
+                Value(Decimal(0))
             ),
             local_salary=F("exchange_rate") * F("salary"),
         )

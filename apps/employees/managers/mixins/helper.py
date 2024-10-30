@@ -18,7 +18,11 @@ class ManagerHelperMixin:
             subquery = Subquery(manager.values(args)[:1])
 
             if default_value:
-                return Coalesce(subquery, Value(default_value), output_field=output_field)
+                return Coalesce(
+                     subquery, 
+                     Value(default_value), 
+                     output_field=output_field
+                )
             
             return subquery
     
