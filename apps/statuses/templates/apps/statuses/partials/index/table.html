@@ -1,86 +1,194 @@
 {% load i18n %}
 
-<c-layout.table-container>
+<div 
+  x-data="{
+    exportPath: '{{ export_path }}',
+    bulkPath: '{{ bulk_path }}',
+    createPath: '{{ create_path }}',
+    objects: [
+      {% for obj in qs %}
+        {
+            data: {
+                name: {
+                  name: '{% translate 'name' %}', 
+                  value: '{{ obj.name }}'
+                },
+                description: {
+                  name: '{% translate 'description' %}', 
+                  value: '{{ obj.description }}',
+                },
+                hasSalary: {
+                  name: '{% translate 'has a salary' %}', 
+                  value: '{{ obj.has_salary }}' === 'True',
+                }
+            },
+            deletePath: '{{ obj.get_delete_path }}',
+            updatePath: '{{ obj.get_update_path }}',
+            show: true,
+            selected: false,
+          },
+      {% endfor %}
+    ],
+    headers: [],
+    headersNames: [],
+    checkAll: false,
+    selectedObjects: 0,
+    setSelectedObjects() {
+      this.selectedObjects = this.objects.filter(e => el.selected).length;
+    },
+    handleCheckAll() {
+      this.objects = this.objects.map(e => {
+        e.selected = e.show ? !this.checkAll : e.selected;
+        return e;
+      });
+      this.checkAll = !this.checkAll
+    },
+    handleInputChange(keywords, header) {
+      this.objects.map(e => {
+        e.show = false;
+        if (String(e.data[header].value).includes(keywords)) {
+          e.show = true;
+        }
+        return e;
+      })
+    },
+    generateHeadersNames() {
+      this.headersNames = this.headers.filter(e => e.at(-1)).map(e => e[0]);
+    },
+    init() {
+      let firstObject = this.objects.length && this.objects[0]?.data;
+      this.headers = Object.entries(firstObject).map(e => {
+        e = [...e, true];
+        return e;
+      });
+      this.generateHeadersNames();
+    }
+  }"
+  class="hx-swap:opacity-20 hx-swap:cursor-no-drop hx-settle:opacity-20 hx-settle:cursor-no-drop"
+>
   <form hx-get="{{ bulk_path }}" x-data="{ selectedRows: [] }">
 
-    <div class="m-2 flex items-center justify-end">
+    <div class="m-2 flex items-center justify-end gap-2">
       <c-inputs.sort-by />
-    </div>
-    
-    <c-table.container>
+      <div 
+        class="w-fit relative" 
+        x-init="canOpen = Boolean(headers.length)"
+        x-data="{
+          canOpen: true,
+          dropdownOpen: false, 
+          selectedCount: 0,
+      }">
 
-      <c-table.table>
-        <thead>
-          <c-table.header-row>
+        <span
+          @click="dropdownOpen = canOpen"
+          :class="{'!border-blue-500 !outline-none': dropdownOpen}"
+          class="flex items-center justify-center gap-2 rounded-md border border-neutral-200 dark:border-neutral-800 py-2 px-4 text-sm font-medium transition-colors focus:outline-none  disabled:pointer-events-none disabled:opacity-50"
+          role="button"
+        >
+          <span x-text="selectedCount ?  selectedCount + '{% translate ' selected' %}' : '{% translate 'columns' %}'" class="translate-y-px leading-none capitalize">
             
-            <c-table.th>
-              {% if can_delete %}
-              <c-table.check data_check="all" />
-              {% endif %}
-            </c-table.th>
+          </span>
+          <span class="rotate-90">
+            <c-icons.double-arrow ratio="0.75rem" />
+          </span>
+        </span>
 
-            <c-table.th name="{% translate 'id' %}" />
-            <c-table.th name="{% translate 'name' %}" />
-            <c-table.th name="{% translate 'has salary' %}" />
-            <c-table.th name="{% translate 'description' %}" />
-            <c-table.th />
+        <div
+          x-show="dropdownOpen"
+          @click.away="dropdownOpen=false"
+          x-transition:enter="ease-out duration-200"
+          x-transition:enter-start="-translate-y-2"
+          x-transition:enter-end="translate-y-0"
+          class="absolute top-0 z-50 mt-8 end-2 min-w-56"
+          x-cloak
+        >
+          <div
+            class="mt-1 rounded-md bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-800  p-1 shadow-md"
+          >
+            <template x-for="(header, idx) in headers" :key="header[0]">
+              <div
+              class="relative flex select-none gap-2 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-900 cursor-pointer"
+              x-data="{ id: $id('select-column')}"
+              >
+                  <input 
+                  :id="id"
+                  type="checkbox" 
+                  class="check" 
+                  x-model="header[2]">
+                  <label 
+                  :for="id" 
+                  x-text="header[1].name" 
+                  class="first-letter:capitalize whitespace-nowrap block">
+                  </label>
+              </div>
+            </template>
+          </div>
 
-          </c-table.header-row>
+        </div>
+      </div>
+    </div>
 
-          {% if can_delete %}
-          <c-table.unselect-all colspan="5">
-            {% if can_delete %}
-            <c-table.action-input
-              name="bulk_delete"
-              value="{% translate 'delete'|title %}"
-              title="{% translate 'delete'|title %}"
-            />
-            {% endif %} {% if user.is_superuser %}
-            <c-table.action-input
-              name="bulk_reslugify"
-              value="{% translate 'reslugify'|title %}"
-              title="{% translate 'reslugify'|title %}"
-            />
-            {% endif %}
-          </c-table.unselect-all>
-          {% endif %}
-        </thead>
-        <!-- end header -->
+    <div 
+    class="overflow-x-auto overflow-y-auto max-h-[50vh] md:max-h-[60vh] lg:max-h-[66vh] scrollbar-thin overflow-hidden m-2 border border-neutral-200 dark:border-neutral-800 rounded-md">
 
-        <!-- start rows -->
-        <c-table.tbody>
-          {% for obj in qs %}
-          <c-table.tr>
-            <c-table.check />
-            <c-table.td data-header="{% translate 'id' %}">{{ obj.pk }}</c-table.td>
-            {% if can_update %}
-            <c-table.td data-header="{% translate 'name' %}" href="{{ obj.get_update_path }}">
-              {{ obj.name }}
-            </c-table.td>
-            {% else %}
-            <c-table.td data-header="{% translate 'name' %}">{{ obj.name }}</c-table.td>
-            {% endif %}
-            <c-table.td data-header="{% translate 'has salary' %}">
-              {% if obj.has_salary %}
-              <c-layout.badge theme="green">
-                {% translate 'has salary' %}
-              </c-layout.badge>
-              {% else %}
-              <c-layout.badge theme="red">
-                {% translate 'has not salary' %}
-              </c-layout.badge>
-              {% endif %}
-            </c-table.td>
-            <c-table.td data-header="{% translate 'description' %}">{{ obj.description }}</c-table.td>
-            <c-table.td fixed><c-context.context /></c-table.td>
-          </c-table.tr>
-          {% empty %}
-          <c-table.empty-tr colspan="4" />
-          {% endfor %}
-        </c-table.tbody>
-        <!-- end rows -->
-      </c-table.table>
-    </c-table.container>
+      <table class="table-auto relative w-full ~text-xs/sm border-collapse rounded-md">
+        <tr class="max-md:hidden p-2">
+          <th colspan="2" class="sticky top-0 z-20 left-0 bg-white dark:bg-neutral-900 first-letter:capitalize font-semibold tracking-tight">
+            <input 
+            @change="handleCheckAll()" 
+            type="checkbox" 
+            class="block mx-auto check" 
+            id="checkAll">
+          </th>
+          <template x-for="header in headers" :key="header.at(1).name">
+            <th 
+            class="sticky top-0 z-20 left-0 bg-white dark:bg-neutral-900 first-letter:capitalize font-semibold tracking-tight text-start"
+            x-show="header.at(-1)">
+              <span x-text="header.at(1).name"></span>
+              <input 
+              autocomplete="on"
+              @search="handleInputChange($el.value, header.at(0))"
+              class="input w-full font-normal text-sm my-1"
+              type="search" 
+              :id="header[0]">
+            </th>
+          </template>
+          <th class="sticky top-0 z-20 left-0 bg-white dark:bg-neutral-900 first-letter:capitalize font-semibold tracking-tight"></th>
+        </tr>
+        <template x-for="(obj, idx) in objects" :key="obj.data.name.value">
+          <tr 
+          class="tr"
+          x-show="obj.show" 
+          x-transition:enter="opacity-50"
+          x-transition:leave="opacity-50"
+          x-data="{
+            objectHeaders: Object.entries(obj.data).map(e => e[0]),
+            checkId: $id('check-input'),
+          }">
+            <td class="p-1">
+              <input 
+              type="checkbox" 
+              class="block mx-auto check" 
+              :checked="obj.selected" 
+              :id="checkId">
+            </td>
+            <td class="p-1 font-semibold" x-text="idx + 1"></td>
+            <template x-for="h in objectHeaders" :key="h">
+              <td 
+              class="max-md:grid max-md:grid-cols-3 max-md:gap-2 max-md:items-center max-md:px-2 max-md:py-1 max-md:before:content-[attr(data-header)] max-md:before:font-medium max-md:before:capitalize p-1"
+              :data-header="obj.data[h].name"
+              x-show="headersNames.includes(h)" 
+              x-transition:enter="opacity-50"
+              x-transition:leave="opacity-50"
+              x-text="obj.data[h].value"></td>
+            </template>
+            <td class="p-1">...</td>
+          </tr>
+        </template>
+      </table>
+
+    </div>
+
   </form>
   {% include 'partials/pagination/base.html' %}
-</c-layout.table-container>
+</div>
