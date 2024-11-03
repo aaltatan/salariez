@@ -16,9 +16,8 @@
         @apply rounded overflow-hidden p-1 fixed w-[8rem] dark:bg-neutral-800 border border-neutral-200 bg-white custom-shadow dark:border-none dark:shadow-none dark:border-neutral-800 z-50;
     }
     .tr {
-        @apply duration-150 hover:bg-[rgb(235,235,235)] hover:dark:bg-[rgba(10,10,10)]
+        @apply duration-150 hover:bg-[rgb(235,235,235)] hover:dark:bg-[rgba(10,10,10)] [&:not(:last-of-type)_td]:border-b [&_td]:border-neutral-200 [&_td]:dark:border-neutral-800
         has-checked:bg-blue-100 has-checked:dark:bg-blue-900 has-checked:border-blue-200 has-checked:dark:border-blue-950 has-checked:hover:bg-blue-200 has-checked:dark:hover:bg-blue-950 has-delete-checked:bg-red-200 dark:has-delete-checked:bg-red-900
-        even:dark:bg-[rgba(15,15,15)] even:bg-[rgb(242,242,242)]
     }
     .input {
         @apply block placeholder-neutral-500 rounded-md border border-neutral-200 bg-white ltr:~pl-2/4 ltr:~pr-4/6 ~py-1/2 text-neutral-700 focus:border-blue-500 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:focus:border-blue-300 outline-none duration-75 aria-[invalid]:!border-[red] placeholder:capitalize disabled:opacity-90 dark:disabled:opacity-50 disabled:text-blue-500;

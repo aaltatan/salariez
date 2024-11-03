@@ -106,7 +106,7 @@ module.exports = {
     plugin(function ({ addVariant }) {
       addVariant(
         "has-checked", 
-        ['&:has(input[type="checkbox"][name$="-selected"]:checked)']
+        ['&:has(input[type="checkbox"]:checked)']
       );
     }),
     plugin(function ({ addVariant }) {

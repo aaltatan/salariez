@@ -65,6 +65,7 @@
     headersNames: [],
     checkAll: false,
     selectedObjects: 0,
+    headerRowClass: 'sticky top-0 z-20 left-0 bg-white dark:bg-neutral-800/60 border-b border-neutral-300 dark:backdrop-blur-sm dark:border-none first-letter:capitalize font-semibold tracking-tight ~p-1/2',
     setSelectedObjects() {
       this.selectedObjects = this.objects.filter(e => el.selected).length;
     },
@@ -174,9 +175,9 @@
     <div 
     class="overflow-x-auto overflow-y-auto max-h-[50vh] md:max-h-[60vh] lg:max-h-[66vh] scrollbar-thin overflow-hidden m-2 border border-neutral-200 dark:border-neutral-800 rounded-md">
 
-      <table class="table-auto relative w-full ~text-xs/sm border-collapse rounded-md">
+      <table class="table-auto relative w-full ~text-xs/sm border-separate rounded-md border-spacing-0">
         <tr class="max-md:hidden p-2">
-          <th colspan="2" class="sticky top-0 z-20 left-0 bg-white dark:bg-neutral-900 first-letter:capitalize font-semibold tracking-tight">
+          <th colspan="2" :class="headerRowClass">
             <input 
             @change="handleCheckAll()" 
             type="checkbox" 
@@ -185,7 +186,7 @@
           </th>
           <template x-for="header in headers" :key="header.at(1).name">
             <th 
-            class="sticky top-0 z-20 left-0 bg-white dark:bg-neutral-900 first-letter:capitalize font-semibold tracking-tight text-start"
+            :class="headerRowClass"
             x-show="header.at(-1)">
               <span x-text="header.at(1).name"></span>
               <input 
@@ -196,7 +197,7 @@
               :id="header[0]">
             </th>
           </template>
-          <th class="sticky top-0 z-20 left-0 bg-white dark:bg-neutral-900 first-letter:capitalize font-semibold tracking-tight"></th>
+          <th :class="headerRowClass"></th>
         </tr>
         <template x-for="(obj, idx) in objects" :key="obj.data.name.value">
           <tr 
@@ -238,7 +239,9 @@
                   role="button"
                   :class="openContext && '!bg-neutral-300 dark:!bg-neutral-700'"
                 >
-                  <div class="size-4 flex items-center justify-center">...</div>
+                  <div class="size-4 flex items-center justify-center">
+                    <c-icons.ellipsis ratio="1rem" />
+                  </div>
                 </c-btns.icon>
 
                 <ul
