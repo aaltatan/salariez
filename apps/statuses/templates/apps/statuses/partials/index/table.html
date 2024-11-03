@@ -63,6 +63,7 @@
     ],
     headers: [],
     headersNames: [],
+    datalistData: {},
     checkAll: false,
     selectedObjects: 0,
     headerRowClass: 'sticky top-0 z-20 left-0 bg-white dark:bg-neutral-800/60 border-b border-neutral-300 dark:backdrop-blur-sm dark:border-none first-letter:capitalize font-semibold tracking-tight ~p-1/2',
@@ -88,6 +89,12 @@
     generateHeadersNames() {
       this.headersNames = this.headers.filter(e => e.at(-1)).map(e => e[0]);
     },
+    generateDatalistData() {
+      this.headersNames.map(header => {
+          let data = this.objects.map(obj => obj.data[header].value);
+          this.datalistData[header] = [...new Set(data)];
+      });
+    },
     setContextAttributes(element, attrs) {
       attrs.forEach(e => {
         let [key, value] = Object.entries(e)[0];
@@ -106,6 +113,7 @@
         return e;
       });
       this.generateHeadersNames();
+      this.generateDatalistData();
     }
   }"
   class="hx-swap:opacity-20 hx-swap:cursor-no-drop hx-settle:opacity-20 hx-settle:cursor-no-drop"
@@ -192,9 +200,16 @@
               <input 
               autocomplete="on"
               @search="handleInputChange($el.value, header.at(0))"
+              @change="handleInputChange($el.value, header.at(0))"
               class="input w-full font-normal text-sm my-1"
               type="search" 
+              :list="header.at(0) + '-list'"
               :id="header[0]">
+              <datalist :id="header.at(0) + '-list'">
+                <template x-for="datalist in datalistData[header.at(0)]">
+                  <option :value="datalist"></option>
+                </template>
+              </datalist>
             </th>
           </template>
           <th :class="headerRowClass"></th>
@@ -278,5 +293,31 @@
     </div>
 
   </form>
-  {% include 'partials/pagination/base.html' %}
+
+  <c-table.pagination url="{{ index_path }}" target="{{ target }}">
+
+    {% if can_export %}
+    <c-btns.icon
+      hx-post="{{ export_path }}"
+      hx-target="#modal"
+      @click="modalOpen = true"
+      title="{% translate 'export'|title %}"
+      hx-include="[data-include]"
+    >
+      <c-icons.download ratio="1.5rem"></c-icons.download>
+    </c-btns.icon>
+    {% endif %} 
+    
+    {% if can_create %}
+    <c-btns.icon
+      datatype="href"
+      title="{% translate 'add new record'|title %}"
+      href="{{ create_path }}"
+    >
+      <c-icons.plus ratio="1.25rem"></c-icons.plus>
+    </c-btns.icon>
+    {% endif %}
+  
+  </c-table.pagination>
+  
 </div>
