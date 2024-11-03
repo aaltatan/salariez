@@ -1,6 +1,10 @@
-from .get_queryset import QuerySetManagerMixin
+from .aggregations import AggregationsMixin
+from .annotations import AnnotationsMixin
+from .optimizations import OptimizationsMixin
 
 
 __all__ = [
-  QuerySetManagerMixin,
+  AggregationsMixin,
+  AnnotationsMixin,
+  OptimizationsMixin,
 ]
