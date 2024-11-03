@@ -24,6 +24,38 @@
             },
             deletePath: '{{ obj.get_delete_path }}',
             updatePath: '{{ obj.get_update_path }}',
+            activityPath: '{{ obj.get_activity_path }}',
+            get contextActions() {
+              return [
+                {
+                  name: '{% translate 'delete' %}', 
+                  isButton: true,
+                  attrs: [
+                    {'hx-get': this.deletePath},
+                    {'hx-vals': `js:{page: '{{ page_obj.number }}'}`},
+                    {'hx-target': '#modal'},
+                    {'x-on:click': 'modalOpen = true'},
+                  ]
+                },
+                {
+                  name: '{% translate 'update' %}', 
+                  isButton: false,
+                  attrs: [
+                    {'href': this.updatePath}
+                  ]
+                },
+                {
+                  name: '{% translate 'activity' %}', 
+                  isButton: true,
+                  attrs: [
+                    {'hx-get': this.activityPath},
+                    {'hx-vals': `js:{page: '{{ page_obj.number }}'}`},
+                    {'hx-target': '#modal'},
+                    {'x-on:click': 'modalOpen = true'},
+                  ]
+                },
+              ]
+            },
             show: true,
             selected: false,
           },
@@ -54,6 +86,17 @@
     },
     generateHeadersNames() {
       this.headersNames = this.headers.filter(e => e.at(-1)).map(e => e[0]);
+    },
+    setContextAttributes(element, attrs) {
+      attrs.forEach(e => {
+        let [key, value] = Object.entries(e)[0];
+        if (key.startsWith('x-on')) {
+            let event = key.split(':').at(-1);
+            element.addEventListener(event, () => eval(value));
+        } else {
+            element.setAttribute(key, value);
+        }
+      })
     },
     init() {
       let firstObject = this.objects.length && this.objects[0]?.data;
@@ -182,7 +225,49 @@
               x-transition:leave="opacity-50"
               x-text="obj.data[h].value"></td>
             </template>
-            <td class="p-1">...</td>
+            <td class="p-1">
+              <div
+                data-container
+                class="relative inline-block"
+                @click.outside="openContext = false"
+                @scroll.window="openContext = false"
+                x-data="{openContext: false}"
+              >
+                <c-btns.icon
+                  @click="openContext = true; setOffsetContextMenu($event)"
+                  role="button"
+                  :class="openContext && '!bg-neutral-300 dark:!bg-neutral-700'"
+                >
+                  <div class="size-4 flex items-center justify-center">...</div>
+                </c-btns.icon>
+
+                <ul
+                  role="menu" x-cloak class="contextmenu" x-show="openContext"
+                  x-transition:enter="transition ease-linear duration-100"
+                  x-transition:enter-start="-translate-y-1 opacity-90"
+                  x-transition:enter-end="translate-y-0 opacity-100">
+                    <template x-for="action in obj.contextActions" :key="action.name">
+                      <li>
+                        <template x-if="action.isButton">
+                          <span 
+                          role="button" 
+                          class="capitalize block dark:hover:bg-neutral-900 hover:bg-neutral-100 rounded duration-100 px-2 py-1 text-start" 
+                          x-text="action.name"
+                          x-init="setContextAttributes($el, action.attrs)">
+                          </span>
+                        </template>
+                        <template x-if="!action.isButton">
+                          <a 
+                          class="capitalize block dark:hover:bg-neutral-900 hover:bg-neutral-100 rounded duration-100 px-2 py-1 text-start" 
+                          x-text="action.name"
+                          x-init="setContextAttributes($el, action.attrs)">
+                          </a>
+                        </template>
+                      </li>
+                    </template>
+                </ul>
+              </div>
+            </td>
           </tr>
         </template>
       </table>
