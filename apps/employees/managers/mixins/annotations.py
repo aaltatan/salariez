@@ -122,6 +122,7 @@ class AnnotationsMixin:
         qs = qs.annotate(
             status_pk=self.__get_subquery(contracts, "status", "pk"),
             status=self.__get_subquery(contracts, "status", "name", default_value="-"),
+            has_salary=self.__get_subquery(contracts, "status", "has_salary", default_value=False),
         )
         return qs
 

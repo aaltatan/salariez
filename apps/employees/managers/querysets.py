@@ -4,6 +4,9 @@ from django.utils import timezone
 
 class EmployeeQuerySet(models.QuerySet):
 
+    def has_salary(self):
+        return self.filter(has_salary=True)
+
     def today_birthdays(self):
         return self.filter(
             birth_date__day=timezone.now().day,
