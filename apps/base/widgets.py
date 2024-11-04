@@ -1,11 +1,24 @@
 from typing import Iterable
 
 from django.forms.widgets import (
-    ChoiceWidget, SelectMultiple, Input
+    ChoiceWidget, SelectMultiple, Input, DateInput
 )
 
 
-class TextWithDataListInput(Input):
+class DynamicDateInputWidget(DateInput):
+    template_name = 'widgets/date.html'
+
+    def __init__(self, attrs = None, format = None, fill_on_focus: bool = True):
+        self.fill_on_focus = fill_on_focus
+        super().__init__(attrs, format)
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        context['fill_on_focus'] = self.fill_on_focus
+        return context
+
+
+class TextWithDataListInputWidget(Input):
     input_type = "text"
     template_name = "widgets/text_datalist.html"
 

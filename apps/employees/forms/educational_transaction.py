@@ -2,8 +2,7 @@ from django import forms
 
 from ..models import EducationTransaction
 
-from apps.base.widgets import SearchWidget
-from apps.base.utils.fields import get_date_field
+from apps.base.widgets import SearchWidget, DynamicDateInputWidget
 
 
 class EducationTransactionForm(forms.ModelForm):
@@ -22,7 +21,7 @@ class EducationTransactionForm(forms.ModelForm):
             'degree': SearchWidget(),
             'specialization': SearchWidget(),
             'school': SearchWidget(),
-            'graduation_date': get_date_field(
-                required=False, fill_on_focus=False
+            'graduation_date': DynamicDateInputWidget(
+                {'required': False}, fill_on_focus=False
             ),
         }
