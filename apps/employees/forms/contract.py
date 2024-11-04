@@ -4,9 +4,9 @@ from django.utils.translation import gettext as _
 
 from ..models import Contract
 
-from apps.base.widgets import SearchWidget
+from apps.base.widgets import SearchWidget, DynamicDateInputWidget
 from apps.base.utils.generic import parse_decimals
-from apps.base.utils.fields import get_date_field, get_money_field
+from apps.base.utils.fields import get_money_field
 
 
 class ContractForm(forms.ModelForm):
@@ -32,9 +32,9 @@ class ContractForm(forms.ModelForm):
             'status': SearchWidget(),
             'position': SearchWidget(),
             'salary': get_money_field(required=True),
-            'start_date': get_date_field(required=False),
-            'end_date': get_date_field(
-                required=False, fill_on_focus=False
+            'start_date': DynamicDateInputWidget({'required': False}),
+            'end_date': DynamicDateInputWidget(
+                {'required': False}, fill_on_focus=False
             ),
         }
 

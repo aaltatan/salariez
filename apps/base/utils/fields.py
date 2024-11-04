@@ -4,12 +4,11 @@ from django import forms
 from django.db import models
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404
-from django.utils.translation import gettext as _
 from django.forms.widgets import (
-    DateInput, TextInput, Widget, Textarea, FileInput
+    TextInput, Widget, Textarea, FileInput
 )
 
-from ..widgets import TextWithDataListInput
+from ..widgets import TextWithDataListInputWidget
 
 
 @dataclass
@@ -77,35 +76,6 @@ def get_search_field(
     return widget(attributes)
 
 
-def get_date_field(
-    required: bool = True,
-    fill_on_focus: bool = True,
-    placeholder: str = 'YYYY-MM-DD',
-    **kwargs: dict[str, str],
-) -> DateInput:
-    
-    attrs: dict[str, str] = {
-        "x-mask": "9999-99-99",
-        "placeholder": placeholder,
-        "minlength": "10",
-        "@keydown.Alt.Down.prevent": 'handleDateInputAltKeyDown($el, "up")',
-        "@keydown.Alt.Up.prevent": 'handleDateInputAltKeyDown($el, "down")',
-        "@keydown.Down.prevent": 'handleDateInputKeyDown($el, "up")',
-        "@keydown.Up.prevent": 'handleDateInputKeyDown($el, "down")',
-        "@dblclick": 'handleDateInputDblClick',
-        "title": _("use down/up arrows to increase/decrease days\nuse Alt key + down/up arrows to increase/decrease years\nclick double to insert date of today"),
-        **kwargs
-    }
-
-    if fill_on_focus:
-        attrs["@focus"] = 'handleDateInputFocus'
-
-    if required:
-        attrs['required'] = ''
-
-    return DateInput(attrs, format="%Y-%m-%d")
-
-
 def get_numeric_field(
     count: int, required: bool = True, **kwargs: dict[str, str]
 ) -> TextInput:
@@ -169,9 +139,9 @@ def get_avatar_field(
 
 def get_input_datalist(
     model: models.Model, field_name: str, attrs=None
-) -> TextWithDataListInput:
+) -> TextWithDataListInputWidget:
 
-    return TextWithDataListInput(
+    return TextWithDataListInputWidget(
         attrs=attrs,
         datalist=list(set(
             model.objects.values_list(field_name, flat=True).order_by(field_name)

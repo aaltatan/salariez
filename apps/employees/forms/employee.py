@@ -4,10 +4,9 @@ from django.utils.translation import gettext as _
 from ..models import Employee
 
 from apps.base.widgets import (
-    SearchWidget, MultipleSelectWidget
+    SearchWidget, MultipleSelectWidget, DynamicDateInputWidget
 )
 from apps.base.utils.fields import (
-    get_date_field, 
     get_numeric_field, 
     get_textarea_field,
     get_avatar_field,
@@ -52,9 +51,9 @@ class EmployeeForm(forms.ModelForm):
             # --- search fields ----
             'area': SearchWidget(),
             # --- date fields ----
-            'birth_date': get_date_field(),
-            'card_date': get_date_field(required=False),
-            'hire_date': get_date_field(),
+            'birth_date': DynamicDateInputWidget(),
+            'card_date': DynamicDateInputWidget({'required': False}),
+            'hire_date': DynamicDateInputWidget(),
             # --- numeric fields ----
             'national_id': get_numeric_field(
                 20, placeholder=_('national id').title()

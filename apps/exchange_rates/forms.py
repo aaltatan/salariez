@@ -3,9 +3,8 @@ from django.utils.translation import gettext_lazy as _
 
 from . import models
 
-from apps.base.utils.fields import (
-    get_textarea_field, get_date_field
-)
+from apps.base.widgets import DynamicDateInputWidget
+from apps.base.utils.fields import get_textarea_field
 
 
 IS_INVERSE_CHOICES = (
@@ -31,7 +30,7 @@ class ExchangeRateForm(forms.ModelForm):
         ]
         widgets = {
             "is_inverse": forms.widgets.Select(choices=IS_INVERSE_CHOICES),
-            "date": get_date_field(),
+            "date": DynamicDateInputWidget(),
             "notes": get_textarea_field(
                 placeholder=_("notes")
             ),
