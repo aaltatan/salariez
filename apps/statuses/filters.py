@@ -10,7 +10,14 @@ from ..base.mixins.filters import FiltersMixin
 
 
 class StatusFilterSet(FiltersMixin, filters.FilterSet):
-
+    
+    advanced_search = filters.CharFilter(
+        method='filter_djangoql', 
+        label=_('advanced search'),
+        widget=widgets.TextInput({
+            "placeholder": _("search by djangoQL"),
+        })
+    )
     name = filters.CharFilter(
         label=_('name'),
         method="filter_name",

@@ -1,6 +1,12 @@
 from typing import Literal
 
 from django.db.models import Q
+
+from djangoql.queryset import apply_search
+from djangoql.exceptions import (
+    DjangoQLParserError, DjangoQLSchemaError, DjangoQLLexerError
+)
+
 from ..utils.generic import parse_decimals
 
 
@@ -25,6 +31,18 @@ class FiltersMixin:
         stmt = ~Q(eval(kwargs)) if is_reversed else Q(eval(kwargs))
 
         return qs.filter(stmt)
+
+    def filter_djangoql(self, qs, name, value):
+        if not value:
+            return qs
+        try:
+            return apply_search(qs, value)
+        except (
+            DjangoQLParserError, 
+            DjangoQLSchemaError, 
+            DjangoQLLexerError,
+        ):
+            return qs.none()
     
     def filter_parent(self, qs, name, value):
 

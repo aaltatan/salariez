@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "widget_tweaks",
     "import_export",
     "mptt",
+    "djangoql",
     # apps
     "apps.activities",
     "apps.base",
