@@ -2,7 +2,6 @@
 
 <div 
 x-effect="checkedItem = data.filter(e => e.checked)[0].label"
-x-init="items = data"
 x-data="{
   open: false,
   checkedItem: '',
@@ -22,21 +21,35 @@ x-data="{
       },
     {% endfor %}
   {% endfor %}
-  ]
+  ],
+  init() {
+    this.items = this.data
+  },
+  handleKeyPressDebounce(el) {
+    this.open = true; 
+    this.items = this.data;
+    this.items = this.items.filter(e => {
+      let searchName = e.label + ' ' + e.label;
+      let pattern = new RegExp(el.value.split(' ').join('.+'));
+      return searchName.match(pattern);
+    })
+  },
+  handleItemSelect(item) {
+      this.open = false; 
+      this.showSelected = true;
+      this.data = this.data.map(e => {
+        e.checked = false;
+        if (item === e) { e.checked = true }
+        return e;
+      })
+      $refs.search.focus();
+  }
 }" 
 @click.outside="open = false" 
 class="relative">
 
   <input
-  @keypress.debounce.100="
-  open = true; 
-  items = data;
-  items = items.filter(e => {
-  let searchName = e.label + ' ' + e.label;
-  let pattern = new RegExp($el.value.split(' ').join('.+'));
-  return searchName.match(pattern);
-  })
-  "
+  @keypress.debounce.100="handleKeyPressDebounce($el)"
   x-model="checkedItem"
   x-ref="search"
   :title="checkedItem"
@@ -64,18 +77,7 @@ class="relative">
   class="absolute left-0 top-full w-full z-[200] rounded-lg max-h-48 overflow-auto bg-white shadow-lg dark:shadow-none border border-neutral-200 dark:border-none dark:bg-neutral-800 my-4 scrollbar p-1">
     <template x-for="(item, idx) in items" :key="item.value">
       <a 
-      @click="
-      open = false; 
-      showSelected = true;
-      data = data.map(e => {
-        e.checked = false;
-        if (item === e) {
-          e.checked = true;
-        }
-        return e;
-      })
-      $refs.search.focus();
-      "
+      @click="handleItemSelect(item)"
       href="#{{ widget.attrs.id }}" 
       class="flex items-center gap-1 w-full p-1.5 hover:bg-neutral-200 hover:dark:bg-neutral-900 focus:outline-none focus:bg-neutral-200 focus:dark:bg-neutral-900 rounded">
 
