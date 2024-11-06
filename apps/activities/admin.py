@@ -4,10 +4,11 @@ from django.utils.html import format_html
 from .models import Activity
 
 from apps.base.utils.generic import dict_to_css
+from apps.base.admin import CustomDjangoQLSearchMixin
 
 
 @admin.register(Activity)
-class ActivityAdmin(admin.ModelAdmin):
+class ActivityAdmin(CustomDjangoQLSearchMixin, admin.ModelAdmin):
 
     @admin.display(description='formatted type')
     def formatted_type(self, obj):

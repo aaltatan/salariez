@@ -9,9 +9,11 @@ from .tabular import (
     ContractTabular,
 )
 
+from apps.base.admin import CustomDjangoQLSearchMixin
+
 
 @admin.register(Employee)
-class EmployeeAdmin(admin.ModelAdmin):
+class EmployeeAdmin(CustomDjangoQLSearchMixin, admin.ModelAdmin):
     
     inlines = [
         ContractTabular,

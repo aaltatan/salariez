@@ -5,6 +5,7 @@ from import_export.admin import ImportExportModelAdmin
 from . import models
 
 from apps.base import admin_actions
+from apps.base.admin import CustomDjangoQLSearchMixin
 
 
 @admin.action(description="Reslugify selected schools")
@@ -13,7 +14,9 @@ def reslugify_action(modeladmin, request, queryset):
 
 
 @admin.register(models.School)
-class SchoolAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+class SchoolAdmin(
+    CustomDjangoQLSearchMixin, ImportExportModelAdmin, admin.ModelAdmin
+):
     list_display = ["id", "name", "school_type", "nationality", "slug"]
     search_fields = ["name"]
     list_per_page = 20

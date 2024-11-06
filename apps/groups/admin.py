@@ -5,6 +5,7 @@ from import_export.admin import ImportExportModelAdmin
 from . import models
 
 from apps.base import admin_actions
+from apps.base.admin import CustomDjangoQLSearchMixin
 
 
 @admin.action(description="Reslugify selected groups")
@@ -13,7 +14,9 @@ def reslugify_action(modeladmin, request, queryset):
 
 
 @admin.register(models.Group)
-class GroupAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+class GroupAdmin(
+    CustomDjangoQLSearchMixin, ImportExportModelAdmin, admin.ModelAdmin
+):
     list_display = ["id", "name", "slug"]
     search_fields = ["name"]
     list_per_page = 20

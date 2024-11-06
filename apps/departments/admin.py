@@ -5,6 +5,7 @@ from mptt.admin import MPTTModelAdmin
 from . import models
 
 from apps.base import admin_actions
+from apps.base.admin import CustomDjangoQLSearchMixin
 
 
 @admin.action(description="Reslugify selected departments")
@@ -13,7 +14,7 @@ def reslugify_action(modeladmin, request, queryset):
 
 
 @admin.register(models.Department)
-class DepartmentAdmin(MPTTModelAdmin):
+class DepartmentAdmin(CustomDjangoQLSearchMixin, MPTTModelAdmin):
     
     ordering = ['department_id']
     list_display = [

@@ -5,6 +5,7 @@ from import_export.admin import ImportExportModelAdmin
 from . import models
 
 from apps.base import admin_actions
+from apps.base.admin import CustomDjangoQLSearchMixin
 
 
 @admin.action(description="Reslugify selected faculties")
@@ -13,7 +14,9 @@ def reslugify_action(modeladmin, request, queryset):
 
 
 @admin.register(models.JobSubtype)
-class JobSubtypeAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+class JobSubtypeAdmin(
+    CustomDjangoQLSearchMixin, ImportExportModelAdmin, admin.ModelAdmin
+):
     list_display = ["id", "name", "job_type", "slug"]
     search_fields = ["name"]
     list_per_page = 20

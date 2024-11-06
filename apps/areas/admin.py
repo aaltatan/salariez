@@ -5,6 +5,7 @@ from import_export.admin import ImportExportModelAdmin
 from . import models
 
 from apps.base import admin_actions
+from apps.base.admin import CustomDjangoQLSearchMixin
 
 
 @admin.action(description="Reslugify selected cities")
@@ -13,7 +14,9 @@ def reslugify_action(modeladmin, request, queryset):
 
 
 @admin.register(models.Area)
-class AreaAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+class AreaAdmin(
+    CustomDjangoQLSearchMixin, ImportExportModelAdmin, admin.ModelAdmin
+):
     list_display = ["id", "name", "city", "slug"]
     search_fields = ["name"]
     list_per_page = 20

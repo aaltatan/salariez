@@ -5,6 +5,7 @@ from import_export.admin import ImportExportModelAdmin
 from . import models
 
 from apps.base import admin_actions
+from apps.base.admin import CustomDjangoQLSearchMixin
 
 
 @admin.action(description="Reslugify selected exchange rate")
@@ -13,7 +14,9 @@ def reslugify_action(modeladmin, request, queryset):
 
 
 @admin.register(models.ExchangeRate)
-class ExchangeRateAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+class ExchangeRateAdmin(
+    CustomDjangoQLSearchMixin, ImportExportModelAdmin, admin.ModelAdmin
+):
     list_display = [
         "id", "currency", "rate", "date", "bulletin_number"
     ]

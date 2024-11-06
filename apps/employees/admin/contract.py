@@ -2,9 +2,14 @@ from django.contrib import admin
 
 from ..models import Contract
 
+from import_export.admin import ImportExportActionModelAdmin
+from apps.base.admin import CustomDjangoQLSearchMixin
+
 
 @admin.register(Contract)
-class ContractAdmin(admin.ModelAdmin):
+class ContractAdmin(
+    CustomDjangoQLSearchMixin, ImportExportActionModelAdmin, admin.ModelAdmin
+):
     raw_id_fields = [
         'employee', 
         'department', 

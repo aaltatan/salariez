@@ -2,9 +2,14 @@ from django.contrib import admin
 
 from ..models import EducationTransaction
 
+from import_export.admin import ImportExportActionModelAdmin
+from apps.base.admin import CustomDjangoQLSearchMixin
+
 
 @admin.register(EducationTransaction)
-class EducationTransactionAdmin(admin.ModelAdmin):
+class EducationTransactionAdmin(
+    CustomDjangoQLSearchMixin, ImportExportActionModelAdmin, admin.ModelAdmin
+):
     raw_id_fields = [
         'employee', 
         'degree',
