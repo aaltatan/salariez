@@ -11,7 +11,8 @@
             data: {
                 name: {
                   name: '{% translate 'name' %}', 
-                  value: '{{ obj.name }}'
+                  value: '{{ obj.name }}',
+                  link: '{{ obj.get_update_path }}'
                 },
                 description: {
                   name: '{% translate 'description' %}', 
@@ -19,7 +20,7 @@
                 },
                 hasSalary: {
                   name: '{% translate 'has a salary' %}', 
-                  value: '{{ obj.has_salary }}' === 'True',
+                  value: '{{ obj.has_salary }}' === 'True' ? '{% translate 'has salary' %}' : '{% translate 'has no salary' %}',
                 }
             },
             deletePath: '{{ obj.get_delete_path }}',
@@ -66,6 +67,7 @@
     datalistData: {},
     checkAll: false,
     selectedObjects: 0,
+    selectedColumns: 0,
     headerRowClass: 'sticky top-0 z-20 left-0 bg-white dark:bg-neutral-800/60 border-b border-neutral-300 dark:backdrop-blur-sm dark:border-none first-letter:capitalize font-semibold tracking-tight ~p-1/2',
     setSelectedObjects() {
       this.selectedObjects = this.objects.filter(e => el.selected).length;
@@ -88,6 +90,9 @@
     },
     generateHeadersNames() {
       this.headersNames = this.headers.filter(e => e.at(-1)).map(e => e[0]);
+    },
+    generateSelectedColumns() {
+      this.selectedColumns = this.headers.filter(e => e.at(-1)).map(e => e[0]).length;
     },
     generateDatalistData() {
       this.headersNames.map(header => {
@@ -114,6 +119,11 @@
       });
       this.generateHeadersNames();
       this.generateDatalistData();
+      this.generateSelectedColumns();
+      $watch('headers', () => {
+        this.generateHeadersNames();
+        this.generateSelectedColumns();
+      })
     }
   }"
   class="hx-swap:opacity-20 hx-swap:cursor-no-drop hx-settle:opacity-20 hx-settle:cursor-no-drop"
@@ -128,8 +138,7 @@
         x-data="{
           canOpen: true,
           dropdownOpen: false, 
-          selectedCount: 0,
-      }">
+       }">
 
         <span
           @click="dropdownOpen = canOpen"
@@ -137,9 +146,9 @@
           class="flex items-center justify-center gap-2 rounded-md border border-neutral-200 dark:border-neutral-800 py-2 px-4 text-sm font-medium transition-colors focus:outline-none  disabled:pointer-events-none disabled:opacity-50"
           role="button"
         >
-          <span x-text="selectedCount ?  selectedCount + '{% translate ' selected' %}' : '{% translate 'columns' %}'" class="translate-y-px leading-none capitalize">
-            
-          </span>
+          <span 
+          x-text="selectedColumns ?  selectedColumns + '{% translate ' selected' %}' : '{% translate 'columns' %}'" 
+          class="translate-y-px leading-none capitalize"></span>
           <span class="rotate-90">
             <c-icons.double-arrow ratio="0.75rem" />
           </span>
@@ -233,13 +242,15 @@
             </td>
             <td class="p-1 font-semibold" x-text="idx + 1"></td>
             <template x-for="h in objectHeaders" :key="h">
-              <td 
-              class="max-md:grid max-md:grid-cols-3 max-md:gap-2 max-md:items-center max-md:px-2 max-md:py-1 max-md:before:content-[attr(data-header)] max-md:before:font-medium max-md:before:capitalize p-1"
-              :data-header="obj.data[h].name"
-              x-show="headersNames.includes(h)" 
-              x-transition:enter="opacity-50"
-              x-transition:leave="opacity-50"
-              x-text="obj.data[h].value"></td>
+                <td 
+                class="max-md:grid max-md:grid-cols-3 max-md:gap-2 max-md:items-center max-md:px-2 max-md:py-1 max-md:before:content-[attr(data-header)] max-md:before:font-medium max-md:before:capitalize p-1"
+                :data-header="obj.data[h].name"
+                x-show="headersNames.includes(h)" 
+                x-transition:enter="opacity-50"
+                x-transition:leave="opacity-50"
+                x-html="obj.data[h].link 
+                ? `<a :href='obj.data[h].link' class='hover:underline' x-text='obj.data[h].value'></a>` 
+                : `<span :href='obj.data[h].link' x-text='obj.data[h].value'></span>`"></td>
             </template>
             <td class="p-1">
               <div
