@@ -5,10 +5,19 @@
     exportPath: '{{ export_path }}',
     bulkPath: '{{ bulk_path }}',
     createPath: '{{ create_path }}',
+    bulkActions: [
+      {'name': '{% translate 'delete' %}', 'btnName': 'bulk_delete'},
+      {'name': '{% translate 'reslugify' %}', 'btnName': 'bulk_reslugify'},
+    ],
     objects: [
       {% for obj in qs %}
         {
             data: {
+                pk: {
+                  name: '{% translate 'id' %}', 
+                  codeName: 'id',
+                  value: '{{ obj.pk }}',
+                },
                 name: {
                   name: '{% translate 'name' %}', 
                   codeName: 'name',
@@ -133,9 +142,9 @@
   }"
   class="hx-swap:opacity-20 hx-swap:cursor-no-drop hx-settle:opacity-20 hx-settle:cursor-no-drop"
 >
-  <form hx-get="{{ bulk_path }}" x-data="{ selectedRows: [] }">
+  <form hx-get="{{ bulk_path }}">
 
-    <div class="m-2 flex items-center justify-end gap-2">
+    <div class="m-2 flex items-center justify-end gap-2 flex-wrap">
       <c-inputs.sort-by />
       <div 
         class="w-fit relative" 
@@ -192,6 +201,60 @@
 
         </div>
       </div>
+      <div 
+        class="w-fit relative" 
+        x-show="selectedObjects"
+        x-transition:enter="ease-out duration-200"
+        x-transition:enter-start="opacity-0 duration-300"
+        x-transition:enter-end="opacity-100 duration-300"
+        x-init="canOpen = Boolean(headers.length)"
+        x-data="{
+          canOpen: true,
+          dropdownOpen: false, 
+        }">
+
+        <span
+          @click="dropdownOpen = canOpen"
+          :class="{'!border-blue-500 !outline-none': dropdownOpen}"
+          class="flex items-center justify-center gap-2 rounded-md border border-neutral-200 dark:border-neutral-800 py-2 px-4 text-sm font-medium transition-colors focus:outline-none  disabled:pointer-events-none disabled:opacity-50"
+          role="button"
+        >
+          <span 
+          x-text="selectedObjects + ' {% translate ' selected' %}'"
+          class="translate-y-px leading-none capitalize">
+          </span>
+          <span>
+            <c-icons.check ratio="1rem" />
+          </span>
+        </span>
+
+        <div
+          x-show="dropdownOpen"
+          @click.away="dropdownOpen=false"
+          x-transition:enter="ease-out duration-200"
+          x-transition:enter-start="-translate-y-2"
+          x-transition:enter-end="translate-y-0"
+          class="absolute top-0 z-50 mt-8 end-2 min-w-56"
+          x-cloak
+        >
+          <ul
+            class="mt-1 rounded-md bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-800 p-1 shadow-md"
+          >
+            <template x-for="action in bulkActions" :key="action.btnName">
+              <li>
+                <input 
+                type="submit" 
+                :name="action.btnName" 
+                :value="action.name" 
+                @click="modalOpen = true"
+                class="w-full text-start capitalize relative flex select-none gap-2 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-900 cursor-pointer" 
+                >
+              </li>
+            </template>
+          </ul>
+
+        </div>
+      </div>
     </div>
 
     <div 
@@ -243,6 +306,7 @@
               <input 
               type="checkbox" 
               class="block mx-auto check" 
+              :name="obj.data.pk.value + '-selected'"
               x-model="obj.selected" 
               :id="checkId">
             </td>
