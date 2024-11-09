@@ -1,0 +1,52 @@
+<div
+  data-container
+  class="relative inline-block"
+  @click.outside="openContext = false"
+  @scroll.window="openContext = false"
+  x-data="{
+  openContext: false,
+  canOpen: Boolean(obj.contextActions.length),
+}"
+>
+  <c-btns.icon
+    @click="openContext = canOpen; setOffsetContextMenu($event)"
+    role="button"
+    :class="openContext && '!bg-neutral-300 dark:!bg-neutral-700'"
+  >
+    <div class="flex size-4 items-center justify-center">
+      <c-icons.ellipsis ratio="1rem" />
+    </div>
+  </c-btns.icon>
+
+  <ul
+    role="menu"
+    class="contextmenu"
+    x-cloak
+    x-show="openContext"
+    x-transition:enter="transition ease-linear duration-100"
+    x-transition:enter-start="-translate-y-1 opacity-90"
+    x-transition:enter-end="translate-y-0 opacity-100"
+  >
+    <template x-for="action in obj.contextActions" :key="action.name">
+      <li>
+        <template x-if="action.isButton">
+          <span
+            role="button"
+            class="block rounded px-2 py-1 text-start capitalize duration-100 hover:bg-neutral-100 dark:hover:bg-neutral-900"
+            x-text="action.name"
+            x-init="setContextAttributes($el, action.attrs)"
+          >
+          </span>
+        </template>
+        <template x-if="!action.isButton">
+          <a
+            class="block rounded px-2 py-1 text-start capitalize duration-100 hover:bg-neutral-100 dark:hover:bg-neutral-900"
+            x-text="action.name"
+            x-init="setContextAttributes($el, action.attrs)"
+          >
+          </a>
+        </template>
+      </li>
+    </template>
+  </ul>
+</div>
