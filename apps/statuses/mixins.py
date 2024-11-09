@@ -1,5 +1,3 @@
-from django.utils.translation import gettext_lazy as _
-
 from .utils import Deleter
 
 from apps.base.mixins.bulk import BulkActionMixin

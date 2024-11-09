@@ -67,7 +67,7 @@ class BulkDeleteView(
     View
 ):
     
-    permission_required = 'areas:delete_area'
+    permission_required = 'areas.delete_area'
     model = models.Area
 
 

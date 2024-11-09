@@ -64,7 +64,7 @@ class BulkDeleteView(
     View
 ):
     
-    permission_required = 'groups:delete_group'
+    permission_required = 'groups.delete_group'
     model = models.Group
 
 

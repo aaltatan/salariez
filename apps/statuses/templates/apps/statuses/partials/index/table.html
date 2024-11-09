@@ -1,13 +1,17 @@
 {% load i18n %}
 
-<div 
+<div
   x-data="{
     exportPath: '{{ export_path }}',
     bulkPath: '{{ bulk_path }}',
     createPath: '{{ create_path }}',
     bulkActions: [
+     {% if can_delete %}
       {'name': '{% translate 'delete' %}', 'btnName': 'bulk_delete'},
+     {% endif %}
+     {% if user.is_superuser %}
       {'name': '{% translate 'reslugify' %}', 'btnName': 'bulk_reslugify'},
+     {% endif %}
     ],
     objects: [
       {% for obj in qs %}
@@ -22,7 +26,9 @@
                   name: '{% translate 'name' %}', 
                   codeName: 'name',
                   value: '{{ obj.name }}',
+                  {% if can_update %}
                   link: '{{ obj.get_update_path }}'
+                  {% endif %}
                 },
                 description: {
                   name: '{% translate 'description' %}', 
@@ -37,6 +43,7 @@
             },
             get contextActions() {
               return [
+                {% if can_delete %}
                 {
                   name: '{% translate 'delete' %}', 
                   isButton: true,
@@ -47,6 +54,8 @@
                     {'x-on:click': 'modalOpen = true'},
                   ]
                 },
+                {% endif %}
+                {% if can_update %}
                 {
                   name: '{% translate 'update' %}', 
                   isButton: false,
@@ -54,6 +63,8 @@
                     {'href': '{{ obj.get_update_path }}'}
                   ]
                 },
+                {% endif %}
+                {% if can_activity %}
                 {
                   name: '{% translate 'activity' %}', 
                   isButton: true,
@@ -64,6 +75,7 @@
                     {'x-on:click': 'modalOpen = true'},
                   ]
                 },
+                {% endif %}
               ]
             },
           },
@@ -140,29 +152,29 @@
       });
     }
   }"
-  class="hx-swap:opacity-20 hx-swap:cursor-no-drop hx-settle:opacity-20 hx-settle:cursor-no-drop"
+  class="hx-swap:cursor-no-drop hx-swap:opacity-20 hx-settle:cursor-no-drop hx-settle:opacity-20"
 >
   <form hx-get="{{ bulk_path }}">
-
-    <div class="m-2 flex items-center justify-end gap-2 flex-wrap">
+    <div class="m-2 flex flex-wrap items-center justify-end gap-2">
       <c-inputs.sort-by />
-      <div 
-        class="w-fit relative" 
+      <div
+        class="relative w-fit"
         x-init="canOpen = Boolean(headers.length)"
         x-data="{
           canOpen: true,
           dropdownOpen: false, 
-       }">
-
+       }"
+      >
         <span
           @click="dropdownOpen = canOpen"
           :class="{'!border-blue-500 !outline-none': dropdownOpen}"
-          class="flex items-center justify-center gap-2 rounded-md border border-neutral-200 dark:border-neutral-800 py-2 px-4 text-sm font-medium transition-colors focus:outline-none  disabled:pointer-events-none disabled:opacity-50"
+          class="flex items-center justify-center gap-2 rounded-md border border-neutral-200 px-4 py-2 text-sm font-medium transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-800"
           role="button"
         >
-          <span 
-          x-text="selectedColumns ?  selectedColumns + '{% translate ' selected' %}' : '{% translate 'columns' %}'" 
-          class="translate-y-px leading-none capitalize"></span>
+          <span
+            x-text="selectedColumns ?  selectedColumns + '{% translate ' selected' %}' : '{% translate 'columns' %}'"
+            class="translate-y-px capitalize leading-none"
+          ></span>
           <span>
             <c-icons.columns ratio="1rem" />
           </span>
@@ -174,54 +186,55 @@
           x-transition:enter="ease-out duration-200"
           x-transition:enter-start="-translate-y-2"
           x-transition:enter-end="translate-y-0"
-          class="absolute top-0 z-50 mt-8 end-2 min-w-56"
+          class="absolute end-2 top-0 z-50 mt-8 min-w-56"
           x-cloak
         >
           <div
-            class="mt-1 rounded-md bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-800  p-1 shadow-md"
+            class="mt-1 rounded-md border border-neutral-200 bg-white p-1 shadow-md dark:border-neutral-800 dark:bg-neutral-800"
           >
             <template x-for="(header, idx) in headers" :key="header[0]">
               <div
-              class="relative flex select-none gap-2 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-900 cursor-pointer"
-              x-data="{ id: $id('select-column')}"
+                class="relative flex cursor-pointer select-none items-center gap-2 rounded px-2 py-1.5 text-sm outline-none transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-900"
+                x-data="{ id: $id('select-column')}"
               >
-                  <input 
+                <input
                   :id="id"
-                  type="checkbox" 
-                  class="check" 
-                  x-model="header[2]">
-                  <label 
-                  :for="id" 
-                  x-text="header[1].name" 
-                  class="first-letter:capitalize whitespace-nowrap block">
-                  </label>
+                  type="checkbox"
+                  class="check"
+                  x-model="header[2]"
+                />
+                <label
+                  :for="id"
+                  x-text="header[1].name"
+                  class="block whitespace-nowrap first-letter:capitalize"
+                >
+                </label>
               </div>
             </template>
           </div>
-
         </div>
       </div>
-      <div 
-        class="w-fit relative" 
+      <div
+        class="relative w-fit"
         x-show="selectedObjects"
         x-transition:enter="ease-out duration-200"
         x-transition:enter-start="opacity-0 duration-300"
         x-transition:enter-end="opacity-100 duration-300"
-        x-init="canOpen = Boolean(headers.length)"
         x-data="{
-          canOpen: true,
+          canOpen: Boolean(bulkActions.length),
           dropdownOpen: false, 
-        }">
-
+        }"
+      >
         <span
           @click="dropdownOpen = canOpen"
           :class="{'!border-blue-500 !outline-none': dropdownOpen}"
-          class="flex items-center justify-center gap-2 rounded-md border border-neutral-200 dark:border-neutral-800 py-2 px-4 text-sm font-medium transition-colors focus:outline-none  disabled:pointer-events-none disabled:opacity-50"
+          class="flex items-center justify-center gap-2 rounded-md border border-neutral-200 px-4 py-2 text-sm font-medium transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-800"
           role="button"
         >
-          <span 
-          x-text="selectedObjects + ' {% translate ' selected' %}'"
-          class="translate-y-px leading-none capitalize">
+          <span
+            x-text="selectedObjects + ' {% translate ' selected' %}'"
+            class="translate-y-px capitalize leading-none"
+          >
           </span>
           <span>
             <c-icons.check ratio="1rem" />
@@ -230,59 +243,63 @@
 
         <div
           x-show="dropdownOpen"
-          @click.away="dropdownOpen=false"
+          @click.away="dropdownOpen = false"
           x-transition:enter="ease-out duration-200"
           x-transition:enter-start="-translate-y-2"
           x-transition:enter-end="translate-y-0"
-          class="absolute top-0 z-50 mt-8 end-2 min-w-56"
+          class="absolute end-2 top-0 z-50 mt-8 min-w-56"
           x-cloak
         >
           <ul
-            class="mt-1 rounded-md bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-800 p-1 shadow-md"
+            class="mt-1 rounded-md border border-neutral-200 bg-white p-1 shadow-md dark:border-neutral-800 dark:bg-neutral-800"
           >
             <template x-for="action in bulkActions" :key="action.btnName">
               <li>
-                <input 
-                type="submit" 
-                :name="action.btnName" 
-                :value="action.name" 
-                @click="modalOpen = true"
-                class="w-full text-start capitalize relative flex select-none gap-2 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-900 cursor-pointer" 
-                >
+                <input
+                  type="submit"
+                  :name="action.btnName"
+                  :value="action.name"
+                  @click="modalOpen = true"
+                  class="relative flex w-full cursor-pointer select-none items-center gap-2 rounded px-2 py-1.5 text-start text-sm capitalize outline-none transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-900"
+                />
               </li>
             </template>
           </ul>
-
         </div>
       </div>
     </div>
 
-    <div 
-    class="overflow-x-auto overflow-y-auto max-h-[50vh] md:max-h-[60vh] lg:max-h-[66vh] scrollbar-thin overflow-hidden m-2 border border-neutral-200 dark:border-neutral-800 rounded-md">
-
-      <table class="table-auto relative w-full ~text-xs/sm border-separate rounded-md border-spacing-0">
-        <tr class="max-md:hidden p-2">
+    <div
+      class="m-2 max-h-[50vh] overflow-hidden overflow-x-auto overflow-y-auto rounded-md border border-neutral-200 scrollbar-thin dark:border-neutral-800 md:max-h-[60vh] lg:max-h-[66vh]"
+    >
+      <table
+        class="relative w-full table-auto border-separate border-spacing-0 rounded-md ~text-xs/sm"
+      >
+        <tr class="p-2 max-md:hidden">
           <th colspan="2" :class="headerRowClass">
-            <input 
-            @change="handleCheckAll()" 
-            type="checkbox" 
-            class="block mx-auto check" 
-            id="checkAll">
+            <input
+              @change="handleCheckAll()"
+              type="checkbox"
+              class="check mx-auto block"
+              id="checkAll"
+            />
           </th>
           <template x-for="header in headers" :key="header.at(1).name">
-            <th 
-            :class="headerRowClass"
-            :title="header.at(1)?.codeName"
-            x-show="header.at(-1)">
+            <th
+              :class="headerRowClass"
+              :title="header.at(1)?.codeName"
+              x-show="header.at(-1)"
+            >
               <span x-text="header.at(1).name"></span>
-              <input 
-              autocomplete="on"
-              @search="handleInputChange($el.value, header.at(0))"
-              @change="handleInputChange($el.value, header.at(0))"
-              class="input w-full font-normal text-sm my-1"
-              type="search" 
-              :list="header.at(0) + '-list'"
-              :id="header[0]">
+              <input
+                autocomplete="on"
+                @search="handleInputChange($el.value, header.at(0))"
+                @change="handleInputChange($el.value, header.at(0))"
+                class="input my-1 w-full text-sm font-normal"
+                type="search"
+                :list="header.at(0) + '-list'"
+                :id="header[0]"
+              />
               <datalist :id="header.at(0) + '-list'">
                 <template x-for="datalist in datalistData[header.at(0)]">
                   <option :value="datalist"></option>
@@ -293,34 +310,37 @@
           <th :class="headerRowClass"></th>
         </tr>
         <template x-for="(obj, idx) in objects" :key="obj.data.name.value">
-          <tr 
-          class="tr"
-          x-show="obj.show" 
-          x-transition:enter="opacity-50"
-          x-transition:leave="opacity-50"
-          x-data="{
-            objectHeaders: Object.entries(obj.data).map(e => e[0]),
-            checkId: $id('check-input'),
-          }">
+          <tr
+            class="tr"
+            x-show="obj.show"
+            x-transition:enter="opacity-50"
+            x-transition:leave="opacity-50"
+            x-data="{
+              objectHeaders: Object.entries(obj.data).map(e => e[0]),
+              checkId: $id('check-input'),
+            }"
+          >
             <td class="p-1">
-              <input 
-              type="checkbox" 
-              class="block mx-auto check" 
-              :name="obj.data.pk.value + '-selected'"
-              x-model="obj.selected" 
-              :id="checkId">
+              <input
+                type="checkbox"
+                class="check mx-auto block"
+                :name="obj.data.pk.value + '-selected'"
+                x-model="obj.selected"
+                :id="checkId"
+              />
             </td>
             <td class="p-1 font-semibold" x-text="idx + 1"></td>
             <template x-for="h in objectHeaders" :key="h">
-                <td 
-                class="max-md:grid max-md:grid-cols-3 max-md:gap-2 max-md:items-center max-md:px-2 max-md:py-1 max-md:before:content-[attr(data-header)] max-md:before:font-medium max-md:before:capitalize p-1"
+              <td
+                class="p-1 max-md:grid max-md:grid-cols-3 max-md:items-center max-md:gap-2 max-md:px-2 max-md:py-1 max-md:before:font-medium max-md:before:capitalize max-md:before:content-[attr(data-header)]"
                 :data-header="obj.data[h].name"
-                x-show="headersNames.includes(h)" 
+                x-show="headersNames.includes(h)"
                 x-transition:enter="opacity-50"
                 x-transition:leave="opacity-50"
                 x-html="obj.data[h].link 
                 ? `<a :href='obj.data[h].link' class='hover:underline' x-text='obj.data[h].value'></a>` 
-                : `<span :href='obj.data[h].link' x-text='obj.data[h].value'></span>`"></td>
+                : `<span :href='obj.data[h].link' x-text='obj.data[h].value'></span>`"
+              ></td>
             </template>
             <td class="p-1">
               <div
@@ -328,55 +348,64 @@
                 class="relative inline-block"
                 @click.outside="openContext = false"
                 @scroll.window="openContext = false"
-                x-data="{openContext: false}"
+                x-data="{
+                  openContext: false,
+                  canOpen: Boolean(obj.contextActions.length),
+                }"
               >
                 <c-btns.icon
-                  @click="openContext = true; setOffsetContextMenu($event)"
+                  @click="openContext = canOpen; setOffsetContextMenu($event)"
                   role="button"
                   :class="openContext && '!bg-neutral-300 dark:!bg-neutral-700'"
                 >
-                  <div class="size-4 flex items-center justify-center">
+                  <div class="flex size-4 items-center justify-center">
                     <c-icons.ellipsis ratio="1rem" />
                   </div>
                 </c-btns.icon>
 
                 <ul
-                  role="menu" x-cloak class="contextmenu" x-show="openContext"
+                  role="menu"
+                  class="contextmenu"
+                  x-cloak
+                  x-show="openContext"
                   x-transition:enter="transition ease-linear duration-100"
                   x-transition:enter-start="-translate-y-1 opacity-90"
-                  x-transition:enter-end="translate-y-0 opacity-100">
-                    <template x-for="action in obj.contextActions" :key="action.name">
-                      <li>
-                        <template x-if="action.isButton">
-                          <span 
-                          role="button" 
-                          class="capitalize block dark:hover:bg-neutral-900 hover:bg-neutral-100 rounded duration-100 px-2 py-1 text-start" 
+                  x-transition:enter-end="translate-y-0 opacity-100"
+                >
+                  <template
+                    x-for="action in obj.contextActions"
+                    :key="action.name"
+                  >
+                    <li>
+                      <template x-if="action.isButton">
+                        <span
+                          role="button"
+                          class="block rounded px-2 py-1 text-start capitalize duration-100 hover:bg-neutral-100 dark:hover:bg-neutral-900"
                           x-text="action.name"
-                          x-init="setContextAttributes($el, action.attrs)">
-                          </span>
-                        </template>
-                        <template x-if="!action.isButton">
-                          <a 
-                          class="capitalize block dark:hover:bg-neutral-900 hover:bg-neutral-100 rounded duration-100 px-2 py-1 text-start" 
+                          x-init="setContextAttributes($el, action.attrs)"
+                        >
+                        </span>
+                      </template>
+                      <template x-if="!action.isButton">
+                        <a
+                          class="block rounded px-2 py-1 text-start capitalize duration-100 hover:bg-neutral-100 dark:hover:bg-neutral-900"
                           x-text="action.name"
-                          x-init="setContextAttributes($el, action.attrs)">
-                          </a>
-                        </template>
-                      </li>
-                    </template>
+                          x-init="setContextAttributes($el, action.attrs)"
+                        >
+                        </a>
+                      </template>
+                    </li>
+                  </template>
                 </ul>
               </div>
             </td>
           </tr>
         </template>
       </table>
-
     </div>
-
   </form>
 
   <c-table.pagination url="{{ index_path }}" target="{{ target }}">
-
     {% if can_export %}
     <c-btns.icon
       hx-post="{{ export_path }}"
@@ -388,7 +417,6 @@
       <c-icons.download ratio="1.5rem"></c-icons.download>
     </c-btns.icon>
     {% endif %} 
-    
     {% if can_create %}
     <c-btns.icon
       datatype="href"
@@ -398,7 +426,5 @@
       <c-icons.plus ratio="1.25rem"></c-icons.plus>
     </c-btns.icon>
     {% endif %}
-  
   </c-table.pagination>
-  
 </div>

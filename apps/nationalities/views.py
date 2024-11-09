@@ -65,7 +65,7 @@ class BulkDeleteView(
     View
 ):
     
-    permission_required = 'nationalities:delete_nationality'
+    permission_required = 'nationalities.delete_nationality'
     model = models.Nationality
 
 

@@ -65,7 +65,7 @@ class BulkDeleteView(
     View
 ):
     
-    permission_required = 'statuses:delete_status'
+    permission_required = 'statuses.delete_status'
     model = models.Status
 
 

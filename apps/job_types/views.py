@@ -64,7 +64,7 @@ class BulkDeleteView(
     View
 ):
     
-    permission_required = 'job_types:delete_jobtype'
+    permission_required = 'job_types.delete_jobtype'
     model = models.JobType
 
 

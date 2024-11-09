@@ -66,7 +66,7 @@ class BulkDeleteView(
     View
 ):
     
-    permission_required = 'educational_degrees:delete_educationaldegree'
+    permission_required = 'educational_degrees.delete_educationaldegree'
     model = models.EducationalDegree
 
 

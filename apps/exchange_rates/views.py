@@ -62,7 +62,7 @@ class BulkDeleteView(
     View
 ):
     
-    permission_required = 'exchange_rates:delete_exchangerate'
+    permission_required = 'exchange_rates.delete_exchangerate'
     model = models.ExchangeRate
 
 

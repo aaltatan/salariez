@@ -65,7 +65,7 @@ class BulkDeleteView(
     View
 ):
     
-    permission_required = 'positions:delete_position'
+    permission_required = 'positions.delete_position'
     model = models.Position
 
 

@@ -67,7 +67,7 @@ class BulkDeleteView(
     View
 ):
     
-    permission_required = 'currencies:delete_currency'
+    permission_required = 'currencies.delete_currency'
     model = models.Currency
 
 

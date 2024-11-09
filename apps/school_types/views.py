@@ -64,7 +64,7 @@ class BulkDeleteView(
     View
 ):
     
-    permission_required = 'school_types:delete_schooltype'
+    permission_required = 'school_types.delete_schooltype'
     model = models.SchoolType
 
 

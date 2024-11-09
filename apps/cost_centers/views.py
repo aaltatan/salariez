@@ -65,7 +65,7 @@ class BulkDeleteView(
     View
 ):
     
-    permission_required = 'cost_centers:delete_costcenter'
+    permission_required = 'cost_centers.delete_costcenter'
     model = models.CostCenter
 
 

@@ -87,7 +87,7 @@ class BulkDeleteView(
     View
 ):
     
-    permission_required = 'employees:delete_employee'
+    permission_required = 'employees.delete_employee'
     model = Employee
 
 

@@ -65,7 +65,7 @@ class BulkDeleteView(
     View
 ):
     
-    permission_required = 'specializations:delete_specialization'
+    permission_required = 'specializations.delete_specialization'
     model = models.Specialization
 
 

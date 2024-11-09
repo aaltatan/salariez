@@ -106,12 +106,13 @@ class ListMixin(HelperMixin, AbstractList):
         context = super().get_context_data(
             object_list=self.get_queryset(), **kwargs
         )
+        request: HttpRequest = self.request
 
         app_label = self._get_app_label()
 
         context = {
             **context,
-            'filter': self.filter_class(self.request.GET).form, 
+            'filter': self.filter_class(request.GET).form, 
             'qs': self.get_paginator_queryset(),
             'pagination_form': self.get_pagination_form(),
             ######
@@ -125,13 +126,14 @@ class ListMixin(HelperMixin, AbstractList):
             'can_update': self._has_perm('update'),
             'can_export': self._has_perm('export'),
             'can_log': self._has_perm('log'),
+            'can_activity': request.user.has_perm('activities.view_activity'),
             ######
             'ordering': self.get_ordering().get_order_json() ,
             ######
             'target': self.paginate_by_form_attributes['hx-target'],
             'filter_form': self._get_filter_form_id()
         }
-        
+
         return context
     
     def _get_filter_form_id(self):
@@ -149,7 +151,7 @@ class ListMixin(HelperMixin, AbstractList):
         object_name = self._get_object_name()
 
         perms = {
-            'create': f'{app_label}.create_{object_name}',
+            'create': f'{app_label}.add_{object_name}',
             'update': f'{app_label}.change_{object_name}',
             'delete': f'{app_label}.delete_{object_name}',
             'export': 'can_export',
@@ -158,7 +160,7 @@ class ListMixin(HelperMixin, AbstractList):
 
         perm = perms[perm]
 
-        return request.user.has_perm(f'{app_label}.{perm}')
+        return request.user.has_perm(perm)
 
     def get_paginator_queryset(self):
         

@@ -65,7 +65,7 @@ class BulkDeleteView(
     View
 ):
     
-    permission_required = 'cities:delete_city'
+    permission_required = 'cities.delete_city'
     model = models.City
 
 
