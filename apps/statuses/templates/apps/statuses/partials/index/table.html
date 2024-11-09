@@ -231,10 +231,9 @@
           class="flex items-center justify-center gap-2 rounded-md border border-neutral-200 px-4 py-2 text-sm font-medium transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-800"
           role="button"
         >
-          <span
-            x-text="selectedObjects + ' {% translate ' selected' %}'"
-            class="translate-y-px capitalize leading-none"
-          >
+          <span class="translate-y-px capitalize leading-none">
+            <span>{% translate 'actions' %}</span>
+            <span class="text-xs" x-text="`(${selectedObjects})`"></span>
           </span>
           <span>
             <c-icons.check ratio="1rem" />
