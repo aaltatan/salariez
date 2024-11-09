@@ -1,86 +1,85 @@
 {% load i18n %}
 
 <div
-  x-data="{
-    exportPath: '{{ export_path }}',
-    bulkPath: '{{ bulk_path }}',
-    createPath: '{{ create_path }}',
-    bulkActions: [
-     {% if can_delete %}
-      {'name': '{% translate 'delete' %}', 'btnName': 'bulk_delete'},
-     {% endif %}
-     {% if user.is_superuser %}
-      {'name': '{% translate 'reslugify' %}', 'btnName': 'bulk_reslugify'},
-     {% endif %}
+  data-server='{
+    "exportPath": "{{ export_path }}",
+    "bulkPath": "{{ bulk_path }}",
+    "createPath": "{{ create_path }}",
+    "bulkActions": [
+      {% if can_delete %}
+        {"name": "{% translate "delete" %}", "btnName": "bulk_delete"},
+      {% endif %}
+      {% if user.is_superuser %}
+        {"name": "{% translate "reslugify" %}", "btnName": "bulk_reslugify"}
+      {% endif %}
     ],
-    objects: [
+    "objects": [
       {% for obj in qs %}
         {
-            data: {
-                pk: {
-                  name: '{% translate 'id' %}', 
-                  codeName: 'id',
-                  value: '{{ obj.pk }}',
-                },
-                name: {
-                  name: '{% translate 'name' %}', 
-                  codeName: 'name',
-                  value: '{{ obj.name }}',
-                  {% if can_update %}
-                  link: '{{ obj.get_update_path }}'
-                  {% endif %}
-                },
-                description: {
-                  name: '{% translate 'description' %}', 
-                  codeName: 'description',
-                  value: '{{ obj.description }}',
-                },
-                hasSalary: {
-                  name: '{% translate 'has a salary' %}', 
-                  codeName: 'has_salary', 
-                  value: '{{ obj.has_salary }}' === 'True' ? '{% translate 'has salary' %}' : '{% translate 'has no salary' %}',
-                }
-            },
-            get contextActions() {
-              return [
-                {% if can_delete %}
-                {
-                  name: '{% translate 'delete' %}', 
-                  isButton: true,
-                  attrs: [
-                    {'hx-get': '{{ obj.get_delete_path }}'},
-                    {'hx-vals': `js:{page: '{{ page_obj.number }}'}`},
-                    {'hx-target': '#modal'},
-                    {'x-on:click': 'modalOpen = true'},
-                  ]
-                },
-                {% endif %}
+          "data": {
+              "pk": {
+                "name": "{% translate "id" %}", 
+                "codeName": "id",
+                "value": "{{ obj.pk }}"
+              },
+              "name": {
                 {% if can_update %}
-                {
-                  name: '{% translate 'update' %}', 
-                  isButton: false,
-                  attrs: [
-                    {'href': '{{ obj.get_update_path }}'}
-                  ]
-                },
+                "link": "{{ obj.get_update_path }}",
                 {% endif %}
-                {% if can_activity %}
-                {
-                  name: '{% translate 'activity' %}', 
-                  isButton: true,
-                  attrs: [
-                    {'hx-get': '{{ obj.get_activity_path }}'},
-                    {'hx-vals': `js:{page: '{{ page_obj.number }}'}`},
-                    {'hx-target': '#modal'},
-                    {'x-on:click': 'modalOpen = true'},
-                  ]
-                },
-                {% endif %}
+                "name": "{% translate "name" %}", 
+                "codeName": "name",
+                "value": "{{ obj.name }}"
+              },
+              "description": {
+                "name": "{% translate "description" %}",
+                "codeName": "description",
+                "value": "{{ obj.description }}"
+              },
+              "hasSalary": {
+                "name": "{% translate "has a salary" %}",
+                "codeName": "has_salary",
+                "value": "{% if has_salary %}{% translate "has salary" %}{% else %}{% translate "has no salary" %}{% endif %}"
+              }
+          },
+          "contextActions": [
+            {% if can_delete %}
+            {
+              "name": "{% translate "delete" %}", 
+              "isButton": true,
+              "attrs": [
+                {"hx-get": "{{ obj.get_delete_path }}"},
+                {"hx-target": "#modal"},
+                {"x-on:click": "modalOpen = true"}
               ]
             },
-          },
+            {% endif %}
+            {% if can_update %}
+            {
+              "name": "{% translate "update" %}", 
+              "isButton": false,
+              "attrs": [
+                {"href": "{{ obj.get_update_path }}"}
+              ]
+            },
+            {% endif %}
+            {% if can_activity %}
+            {
+              "name": "{% translate "activity" %}", 
+              "isButton": true,
+              "attrs": [
+                {"hx-get": "{{ obj.get_activity_path }}"},
+                {"hx-target": "#modal"},
+                {"x-on:click": "modalOpen = true"}
+              ]
+            }
+            {% endif %}
+          ]
+        }{% if not forloop.last %},{% endif %}
       {% endfor %}
-    ],
+    ]
+  }'
+  x-data="{
+    ...JSON.parse($el.dataset.server),
     headers: [],
     headersNames: [],
     datalistData: {},
