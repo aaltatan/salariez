@@ -213,12 +213,6 @@ class Employee(models.Model):
             f'{self._get_app_label()}:delete', kwargs={'slug': self.slug}
         )
     
-    @property
-    def get_contextmenu_path(self):
-        return reverse(
-            f'{self._get_app_label()}:index', kwargs={'id': self.pk}
-        )
-    
     def __str__(self) -> str:
         return self.fullname
 

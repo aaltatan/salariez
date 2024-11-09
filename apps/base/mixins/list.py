@@ -1,7 +1,7 @@
 from typing import Any
 from abc import ABC, abstractmethod
 
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest
 from django.core.paginator import Paginator
 from django.urls import reverse
@@ -66,17 +66,6 @@ class ListMixin(HelperMixin, AbstractList):
         response = render(request, template_name, context)
         response['Hx-Trigger'] = 'get-messages'
         return response
-    
-    # get contextmenu list
-    def post(self, request: HttpRequest, id: int):
-
-        model = self._get_model_class()
-        object = get_object_or_404(model, id=id)
-
-        context = self.get_context_data()
-        context['obj'] = object
-
-        return render(request, 'partials/context/base.html', context)
     
     def get_template_name(self) -> str:
 

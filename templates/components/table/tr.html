@@ -1,3 +1,11 @@
+{% load i18n %}
+
 <tr {{ attrs }} class="tr">
-  {{ slot }}
+  {% if empty %}
+    <td class="p-4 first-letter:capitalize" {{ attrs }}>
+      {% translate 'no records' %}
+    </td>
+  {% else %}
+    {{ slot }}
+  {% endif %}
 </tr>

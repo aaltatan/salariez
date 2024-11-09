@@ -1,0 +1,44 @@
+{% load i18n %}
+
+<div
+  class="relative w-fit"
+  x-show="selectedRows.length"
+  x-transition:enter="ease-out duration-200"
+  x-transition:enter-start="opacity-0 duration-300"
+  x-transition:enter-end="opacity-100 duration-300"
+  x-data="{
+  canOpen: Boolean(selectedRows.length),
+  dropdownOpen: false, 
+}"
+>
+  <span
+    @click="dropdownOpen = true"
+    :class="{'!border-blue-500 !outline-none': dropdownOpen}"
+    class="flex items-center justify-center gap-2 rounded-md border border-neutral-200 px-4 py-2 text-sm font-medium transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-800"
+    role="button"
+  >
+    <span class="translate-y-px capitalize leading-none">
+      <span>{% translate 'actions' %}</span>
+      <span class="text-xs" x-text="`(${selectedRows.length})`"></span>
+    </span>
+    <span>
+      <c-icons.check ratio="1rem" />
+    </span>
+  </span>
+
+  <div
+    x-show="dropdownOpen"
+    @click.away="dropdownOpen = false"
+    x-transition:enter="ease-out duration-200"
+    x-transition:enter-start="-translate-y-2"
+    x-transition:enter-end="translate-y-0"
+    class="absolute end-2 top-0 z-50 mt-8 min-w-56"
+    x-cloak
+  >
+    <ul
+      class="mt-1 rounded-md border border-neutral-200 bg-white p-1 shadow-md dark:border-neutral-800 dark:bg-neutral-800"
+    >
+      {{ slot }}
+    </ul>
+  </div>
+</div>

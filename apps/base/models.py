@@ -70,12 +70,6 @@ class AbstractNameModel(models.Model):
         )
     
     @property
-    def get_contextmenu_path(self):
-        return reverse(
-            f'{self._get_app_label()}:index', kwargs={'id': self.pk}
-        )
-    
-    @property
     def get_delete_path(self):
         return reverse(
             f'{self._get_app_label()}:delete', kwargs={'slug': self.slug}

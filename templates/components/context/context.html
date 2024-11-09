@@ -8,15 +8,11 @@
   x-data="{openContext: false}"
 >
   <c-btns.icon
-    hx-post="{{ obj.get_contextmenu_path }}"
-    hx-target="next ul"
-    hx-swap="innerHTML"
-    hx-indicator="#no-content"
     @click="openContext = true; setOffsetContextMenu($event)"
     role="button"
     :class="openContext && '!bg-neutral-300 dark:!bg-neutral-700'"
   >
-    <div class="size-4 flex items-center justify-center">...</div>
+    <c-icons.ellipsis ratio="1rem" />
   </c-btns.icon>
 
   <ul
@@ -24,6 +20,6 @@
     x-transition:enter="transition ease-linear duration-100"
     x-transition:enter-start="-translate-y-1 opacity-90"
     x-transition:enter-end="translate-y-0 opacity-100">
-    <span class="p-4 capitalize">{% translate 'loading' %}</span>
+      {{ slot }}
   </ul>
 </div>

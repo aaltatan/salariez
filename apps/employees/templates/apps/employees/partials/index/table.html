@@ -1,56 +1,43 @@
 {% load i18n static format_numbers %}
 
-<c-layout.table-container>
+<c-table.outer-container>
   <form hx-get="{{ bulk_path }}" x-data="{ selectedRows: [] }">
-    <div class="m-2 flex items-center justify-end">
-      <c-inputs.sort-by />
+
+    <div class="m-2 flex flex-wrap items-center justify-end gap-2">
+      <c-table.sort-by />
+      <c-table.bulk-actions>
+        {% if can_delete %}
+        <c-table.bulk-action
+          name="bulk_delete"
+          value="{% translate 'delete' %}"
+        />
+        {% endif %}
+      </c-table.bulk-actions>
     </div>
 
     <c-table.container>
       <c-table.table>
-        <thead>
-          <c-table.header-row>
-            <c-table.th>
-              {% if can_delete %}
-              <c-table.check data_check="all" />
-              {% endif %}
-            </c-table.th>
-
-            <c-table.th name="{% translate 'id' %}" />
-            <c-table.th name="{% translate 'fullname' %}" />
-            <c-table.th name="{% translate 'education degree' %}" />
-            <c-table.th name="{% translate 'specialization' %}" />
-            <c-table.th name="{% translate 'is specialist' %}" />
-            <c-table.th name="{% translate 'groups' %}" />
-            <c-table.th name="{% translate 'department' %}" />
-            <c-table.th name="{% translate 'salary' %}" />
-            <c-table.th name="{% translate 'exchange rate' %}" />
-            <c-table.th name="{% translate 'local salary' %}" />
-
-            <c-table.th />
-          </c-table.header-row>
-
-          {% if can_delete %}
-          <c-table.unselect-all colspan="10">
+        <c-table.thead>
+          <c-table.th>
             {% if can_delete %}
-            <c-table.action-input
-              name="bulk_delete"
-              value="{% translate 'delete'|title %}"
-              title="{% translate 'delete'|title %}"
-            />
+            <c-table.check data_check="all" />
             {% endif %}
-          </c-table.unselect-all>
-          {% endif %}
-        </thead>
-        <!-- end header -->
-
-        <!-- start rows -->
+          </c-table.th>
+          <c-table.th name="{% translate 'id' %}" />
+          <c-table.th name="{% translate 'fullname' %}" />
+          <c-table.th name="{% translate 'groups' %}" />
+          <c-table.th name="{% translate 'department' %}" />
+          <c-table.th name="{% translate 'salary' %}" />
+          <c-table.th />
+        </c-table.thead>
         <c-table.tbody>
           {% for obj in qs %}
           <c-table.tr>
             <c-table.check />
 
-            <c-table.td data-header="{% translate 'id' %}">{{ obj.pk }}</c-table.td>
+            <c-table.td data-header="{% translate 'id' %}">
+              {{ obj.pk }}
+            </c-table.td>
             {% if can_update %}
             <c-table.td
               @click="setQueryString"
@@ -60,33 +47,36 @@
               {{ obj.fullname }}
             </c-table.td>
             {% else %}
-            <c-table.td data-header="{% translate 'fullname' %}">{{ obj.fullname }}</c-table.td>
+            <c-table.td data-header="{% translate 'fullname' %}">
+              {{ obj.fullname }}
+            </c-table.td>
             {% endif %}
-
-            <c-table.td data-header="{% translate 'degree' %}">{{ obj.education_degree }}</c-table.td>
-            <c-table.td data-header="{% translate 'specialization' %}">{{ obj.specialization }}</c-table.td>
-            <c-table.td data-header="{% translate 'specialist' %}">{{ obj.is_specialist }}</c-table.td>
             <c-table.td data-header="{% translate 'groups' %}">
               {% for group in obj.groups.all %}
-                 <span>{{ group }}</span>
-                 {% if not forloop.last %}
-                 <span>{% translate ', ' %}</span>
-                 {% endif %}
+                <span>{{ group }}</span>
+                {% if not forloop.last %}
+                <span>{% translate ', ' %}</span>
+                {% endif %} 
               {% endfor %}
             </c-table.td>
-            <c-table.td data-header="{% translate 'department' %}">{{ obj.department }}</c-table.td>
-            <c-table.td data-header="{% translate 'salary' %}">{{ obj.salary|money }} {{ obj.currency_short }}</c-table.td>
-            <c-table.td data-header="{% translate 'exchange rate' %}">{{ obj.exchange_rate|money }}</c-table.td>
-            <c-table.td data-header="{% translate 'local salary' %}">{{ obj.local_salary|money }}</c-table.td>
-            <c-table.td fixed><c-context.context /></c-table.td>
+            <c-table.td data-header="{% translate 'department' %}">
+              {{ obj.department }}
+            </c-table.td>
+            <c-table.td data-header="{% translate 'salary' %}">
+              {{ obj.salary|money }} {{ obj.currency_short }}
+            </c-table.td>
+            <c-table.td fixed>
+              <c-context.context>
+                {% include 'partials/context/base.html' %}
+              </c-context.context>
+            </c-table.td>
           </c-table.tr>
           {% empty %}
-          <c-table.empty-tr colspan="3" />
+          <c-table.tr empty colspan="3" />
           {% endfor %}
         </c-table.tbody>
-        <!-- end rows -->
       </c-table.table>
     </c-table.container>
   </form>
   {% include 'partials/pagination/base.html' %}
-</c-layout.table-container>
+</c-table.outer-container>

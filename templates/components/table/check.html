@@ -7,14 +7,14 @@
 />
 {% else %}
 <td class="p-2">
-  <div class="flex items-center">
+  <div class="flex items-center gap-2">
     <input
-    type="checkbox"
-    class="check"
-    name="obj-{{ obj.id }}-selected"
-    data-check
-    id="{{ obj.id }}"
-    @change="
+      type="checkbox"
+      class="check"
+      name="obj-{{ obj.id }}-selected"
+      data-check
+      id="{{ obj.id }}"
+      @change="
       let targetId = $event.target.getAttribute('id');
       let criteria = selectedRows.filter(el => el === targetId).length;
       if (criteria) {
@@ -22,7 +22,8 @@
       } else {
           selectedRows.push(targetId);
       }"
-  />
+    />
+    <span class="font-semibold">{{ forloop.counter }}</span>
   </div>
 </td>
 {% endif %}
