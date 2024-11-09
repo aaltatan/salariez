@@ -62,6 +62,7 @@ hx-target="#employee-update-form-container">
           <span>{% translate 'reset' %}</span>
         </c-btns.btn>
 
+        {% if can_delete %}
         <c-btns.btn
           datatheme="danger"
           datatype="input"
@@ -73,6 +74,7 @@ hx-target="#employee-update-form-container">
           data-disabled
           type="submit"
         />
+        {% endif %}
       </div>
     </form>
   </div>

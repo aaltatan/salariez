@@ -47,25 +47,25 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
 
         instance = get_object_or_404(self._get_model_class(), slug=slug)
         template_name = self._get_template_name_create_update('update')
-        context = {
-            'form': self.form_class(instance=instance),
-            'instance': instance
-        }
+        context = self.get_context_data(instance)
 
         return render(request, template_name, context)
     
+    # handle reset button
     def delete(self, request: HttpRequest, slug: str, *args, **kwargs) -> HttpResponse:
 
         instance = get_object_or_404(self._get_model_class(), slug=slug)
-        
-        context = {
-            'form': self.form_class(instance=instance),
-            'instance': instance
-        }
-        
+        context = self.get_context_data(instance)
         form_template_name = self._get_form_template_name('update')
         
         return render(request, form_template_name, context)
+    
+    def get_context_data(self, instance):
+        return {
+            'form': self.form_class(instance=instance),
+            'instance': instance,
+            'can_delete': self._has_perm('delete'),
+        }
     
     def _add_activity(
         self, obj, old_data: dict | None = None,
@@ -90,6 +90,29 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
 
         Activity(**activity).save()
 
+    def _delete_handler(self, request: HttpRequest, instance) -> HttpResponse:
+        perms = (
+            request
+            .user
+            .user_permissions
+            .filter(codename__startswith="delete_")
+        )
+
+        can_delete_models = [
+            p.content_type.model_class() for p in perms
+        ]
+
+        model = self._get_model_class()
+
+        if model in can_delete_models or request.user.is_superuser:
+            self.deleter(instance, request).delete()
+        else:
+            messages.error(
+                request, 
+                _('you can\'t delete this ({}) because you don\'t have permission to do so').format(instance)
+            )
+        return self._get_success_save_update_response() 
+
     def post(
         self, request: HttpRequest, slug: str, *args, **kwargs
     ) -> HttpResponse:
@@ -101,24 +124,7 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
         )
         
         if request.POST.get('delete'):
-            perms = (
-                request
-                .user
-                .user_permissions
-                .filter(codename__startswith="delete_")
-            )
-            can_delete_models = [
-                p.content_type.model_class() for p in perms
-            ]
-            model = self._get_model_class()
-            if model in can_delete_models:
-                self.deleter(instance, request).delete()
-            else:
-                messages.error(
-                    request, 
-                    _('you can\'t delete this ({}) because you don\'t have permission to do so').format(instance)
-                )
-            return self._get_success_save_update_response() 
+            return self._delete_handler(request, instance)
         
         if form.is_valid():
             try:

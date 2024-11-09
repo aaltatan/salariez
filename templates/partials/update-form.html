@@ -30,6 +30,7 @@
           <span>{% translate 'reset' %}</span>
         </c-btns.btn>
 
+        {% if can_delete %}
         <c-btns.btn
           datatheme="danger"
           datatype="input"
@@ -41,6 +42,7 @@
           data-disabled
           type="submit"
         />
+        {% endif %}
       </c-slot>
     </c-forms.form>
   </div>

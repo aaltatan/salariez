@@ -2,7 +2,10 @@ import json
 from typing import Literal
 
 from django.urls import reverse
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpRequest
+
+
+PERMS = Literal['create', 'update', 'delete', 'export', 'log']
 
 
 class HelperMixin:
@@ -37,7 +40,25 @@ class HelperMixin:
         response['HX-Trigger'] = 'get-messages'
         
         return response
+    
+    def _has_perm(self, perm: PERMS) -> bool:
 
+        request: HttpRequest = self.request
+        app_label = self._get_app_label()
+        object_name = self._get_object_name()
+
+        perms = {
+            'create': f'{app_label}.add_{object_name}',
+            'update': f'{app_label}.change_{object_name}',
+            'delete': f'{app_label}.delete_{object_name}',
+            'export': 'can_export',
+            'log': 'can_log',
+        }
+
+        perm = perms[perm]
+
+        return request.user.has_perm(perm)
+    
     def _get_instance_kwargs(self, **kwargs):
 
         slug = kwargs.get('slug')

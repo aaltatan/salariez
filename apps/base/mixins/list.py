@@ -1,4 +1,4 @@
-from typing import Any, Literal
+from typing import Any
 from abc import ABC, abstractmethod
 
 from django.shortcuts import get_object_or_404, render
@@ -11,8 +11,6 @@ from ..utils.generic import OrderItem, OrderList
 
 from apps.base import forms as base_forms
 
-
-PERMS = Literal['create', 'update', 'delete', 'export', 'log']
 
 
 class AbstractList(ABC):
@@ -143,24 +141,6 @@ class ListMixin(HelperMixin, AbstractList):
 
         app_label = self._get_app_label()
         return f'{app_label}-filter-form'
-
-    def _has_perm(self, perm: PERMS) -> bool:
-
-        request: HttpRequest = self.request
-        app_label = self._get_app_label()
-        object_name = self._get_object_name()
-
-        perms = {
-            'create': f'{app_label}.add_{object_name}',
-            'update': f'{app_label}.change_{object_name}',
-            'delete': f'{app_label}.delete_{object_name}',
-            'export': 'can_export',
-            'log': 'can_log',
-        }
-
-        perm = perms[perm]
-
-        return request.user.has_perm(perm)
 
     def get_paginator_queryset(self):
         
