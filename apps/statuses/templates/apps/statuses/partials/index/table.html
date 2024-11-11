@@ -1,81 +1,80 @@
 {% load i18n %}
 
-<c-data-table.table
-  data_server='{
-    "exportPath": "{{ export_path }}",
-    "bulkPath": "{{ bulk_path }}",
-    "createPath": "{{ create_path }}",
-    "bulkActions": [
-      {% if can_delete %}
-        {"name": "{% translate "delete" %}", "btnName": "bulk_delete"},
-      {% endif %}
-      {% if user.is_superuser %}
-        {"name": "{% translate "reslugify" %}", "btnName": "bulk_reslugify"}
-      {% endif %}
-    ],
-    "objects": [
-      {% for obj in qs %}
-        {
-          "data": {
-              "pk": {
-                "name": "{% translate "id" %}", 
-                "codeName": "id",
-                "value": "{{ obj.pk }}"
-              },
-              "name": {
-                {% if can_update %}
-                "link": "{{ obj.get_update_path }}",
-                {% endif %}
-                "name": "{% translate "name" %}", 
-                "codeName": "name",
-                "value": "{{ obj.name }}"
-              },
-              "description": {
-                "name": "{% translate "description" %}",
-                "codeName": "description",
-                "value": "{{ obj.description }}"
-              },
-              "hasSalary": {
-                "name": "{% translate "has a salary" %}",
-                "codeName": "has_salary",
-                "value": "{% if has_salary %}{% translate "has salary" %}{% else %}{% translate "has no salary" %}{% endif %}"
-              }
-          },
-          "contextActions": [
+<c-table.outer-container>
+  <form hx-get="{{ bulk_path }}" x-data="{ selectedRows: [] }">
+    <c-table.actions-wrapper>
+      <c-table.sort-by />
+      <c-table.bulk-actions>
+        {% if can_delete %}
+        <c-table.bulk-action
+          name="bulk_delete"
+          value="{% translate 'delete' %}"
+        />
+        {% endif %} {% if user.is_superuser %}
+        <c-table.bulk-action
+          name="bulk_reslugify"
+          value="{% translate 'reslugify' %}"
+        />
+        {% endif %}
+      </c-table.bulk-actions>
+    </c-table.actions-wrapper>
+
+    <c-table.container>
+      <c-table.table>
+        <c-table.thead>
+          <c-table.th>
             {% if can_delete %}
-            {
-              "name": "{% translate "delete" %}", 
-              "isButton": true,
-              "attrs": [
-                {"hx-get": "{{ obj.get_delete_path }}"},
-                {"hx-target": "#modal"},
-                {"x-on:click": "modalOpen = true"}
-              ]
-            },
+            <c-table.check data_check="all" />
             {% endif %}
-            {% if can_update %}
-            {
-              "name": "{% translate "update" %}", 
-              "isButton": false,
-              "attrs": [
-                {"href": "{{ obj.get_update_path }}"}
-              ]
-            },
-            {% endif %}
-            {% if can_activity %}
-            {
-              "name": "{% translate "activity" %}", 
-              "isButton": true,
-              "attrs": [
-                {"hx-get": "{{ obj.get_activity_path }}"},
-                {"hx-target": "#modal"},
-                {"x-on:click": "modalOpen = true"}
-              ]
-            }
-            {% endif %}
-          ]
-        }{% if not forloop.last %},{% endif %}
-      {% endfor %}
-    ]
-  }'
-/>
+          </c-table.th>
+          <c-table.th name="{% translate 'name' %}" />
+          <c-table.th name="{% translate 'has salary' %}" />
+          <c-table.th name="{% translate 'description' %}" />
+          <c-table.th />
+        </c-table.thead>
+        <c-table.tbody>
+          {% for obj in qs %}
+          <c-table.tr>
+            <c-table.check />
+
+            <c-table.td
+              @click="setQueryString"
+              data-header="{% translate 'name' %}"
+            >
+              {% if can_update %}
+              <a class="hover:underline" href="{{ obj.get_update_path }}">
+                {{ obj.name }}
+              </a>
+              {% else %}
+              <span>{{ obj.name }}</span>
+              {% endif %}
+            </c-table.td>
+            <c-table.td data-header="{% translate 'has salary' %}">
+              {% if obj.has_salary %}
+              <c-layout.badge theme="green">
+                {% translate 'yes' %}
+              </c-layout.badge>
+              {% else %}
+              <c-layout.badge theme="red">
+                {% translate 'no' %}
+              </c-layout.badge>
+              {% endif %}
+            </c-table.td>
+            <c-table.td data-header="{% translate 'description' %}">
+              {{ obj.description }}
+            </c-table.td>
+            <c-table.td fixed>
+              <c-context.context>
+                {% include 'partials/context/base.html' %}
+              </c-context.context>
+            </c-table.td>
+          </c-table.tr>
+          {% empty %}
+          <c-table.tr empty colspan="3" />
+          {% endfor %}
+        </c-table.tbody>
+      </c-table.table>
+    </c-table.container>
+  </form>
+  {% include 'partials/pagination/base.html' %}
+</c-table.outer-container>

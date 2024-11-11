@@ -10,12 +10,12 @@
     <c-slot name="body">
       <c-table.container>
         <c-table.table>
-          <c-table.header-row>
+          <c-table.thead>
             <c-table.td>{% translate 'since' %}</c-table.td>
             <c-table.td>{% translate 'user' %}</c-table.td>
             <c-table.td>{% translate 'type' %}</c-table.td>
             <c-table.td>{% translate 'old data' %}</c-table.td>
-          </c-table.header-row>
+          </c-table.thead>
           {% for obj in qs %}
              <c-table.tr title="obj.created_at">
                 <c-table.td>{{ obj.created_at|timesince }}</c-table.td>
@@ -45,7 +45,7 @@
                 </c-table.td>
              </c-table.tr>
           {% empty %}
-             <c-table.empty-tr />
+             <c-table.tr empty colspan="4" />
           {% endfor %}
         </c-table.table>
       </c-table.container>

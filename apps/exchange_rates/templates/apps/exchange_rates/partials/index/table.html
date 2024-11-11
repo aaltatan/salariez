@@ -1,72 +1,76 @@
 {% load i18n %}
 
-<c-layout.table-container>
+<c-table.outer-container>
   <form hx-get="{{ bulk_path }}" x-data="{ selectedRows: [] }">
-
-    <div class="m-2 flex items-center justify-end">
-      <c-inputs.sort-by />
-    </div>
+    <c-table.actions-wrapper>
+      <c-table.sort-by />
+      <c-table.bulk-actions>
+        {% if can_delete %}
+        <c-table.bulk-action
+          name="bulk_delete"
+          value="{% translate 'delete' %}"
+        />
+        {% endif %} {% if user.is_superuser %}
+        <c-table.bulk-action
+          name="bulk_reslugify"
+          value="{% translate 'reslugify' %}"
+        />
+        {% endif %}
+      </c-table.bulk-actions>
+    </c-table.actions-wrapper>
 
     <c-table.container>
-
       <c-table.table>
-        <thead>
-          <c-table.header-row>
-            
-            <c-table.th>
-              {% if can_delete %}
-              <c-table.check data_check="all" />
-              {% endif %}
-            </c-table.th>
-
-            <c-table.th name="{% translate 'id' %}" />
-            <c-table.th name="{% translate 'currency' %}" />
-            <c-table.th name="{% translate 'rate' %}" />
-            <c-table.th name="{% translate 'date' %}" />
-            <c-table.th name="{% translate 'bulletin' %}" />
-            <c-table.th />
-
-          </c-table.header-row>
-
-          {% if can_delete %}
-          <c-table.unselect-all colspan="4">
+        <c-table.thead>
+          <c-table.th>
             {% if can_delete %}
-            <c-table.action-input
-              name="bulk_delete"
-              value="{% translate 'delete'|title %}"
-              title="{% translate 'delete'|title %}"
-            />
-            {% endif %} 
-          </c-table.unselect-all>
-          {% endif %}
-        </thead>
-        <!-- end header -->
-
-        <!-- start rows -->
+            <c-table.check data_check="all" />
+            {% endif %}
+          </c-table.th>
+          <c-table.th name="{% translate 'currency' %}" />
+          <c-table.th name="{% translate 'date' %}" />
+          <c-table.th name="{% translate 'rate' %}" />
+          <c-table.th name="{% translate 'bulletin' %}" />
+          <c-table.th />
+        </c-table.thead>
         <c-table.tbody>
           {% for obj in qs %}
           <c-table.tr>
             <c-table.check />
-            <c-table.td data-header="{% translate 'id' %}">{{ obj.pk }}</c-table.td>
-            {% if can_update %}
-            <c-table.td data-header="{% translate 'currency' %}" href="{{ obj.get_update_path }}">
-              {{ obj.currency }}
+
+            <c-table.td
+              @click="setQueryString"
+              data-header="{% translate 'currency' %}"
+            >
+              {% if can_update %}
+              <a class="hover:underline" href="{{ obj.get_update_path }}">
+                {{ obj.currency }}
+              </a>
+              {% else %}
+              <span>{{ obj.currency }}</span>
+              {% endif %}
             </c-table.td>
-            {% else %}
-            <c-table.td data-header="{% translate 'currency' %}">{{ obj.currency }}</c-table.td>
-            {% endif %}
-            <c-table.td data-header="{% translate 'rate' %}">{{ obj.rate }}</c-table.td>
-            <c-table.td data-header="{% translate 'date' %}">{{ obj.date }}</c-table.td>
-            <c-table.td data-header="{% translate 'bulletin' %}">{{ obj.bulletin_number }}</c-table.td>
-            <c-table.td><c-context.context /></c-table.td>
+            <c-table.td data-header="{% translate 'date' %}">
+              {{ obj.date }}
+            </c-table.td>
+            <c-table.td data-header="{% translate 'rate' %}">
+              {{ obj.rate }}
+            </c-table.td>
+            <c-table.td data-header="{% translate 'bulletin' %}">
+              {{ obj.bulletin }}
+            </c-table.td>
+            <c-table.td fixed>
+              <c-context.context>
+                {% include 'partials/context/base.html' %}
+              </c-context.context>
+            </c-table.td>
           </c-table.tr>
           {% empty %}
-          <c-table.empty-tr colspan="3" />
+          <c-table.tr empty colspan="3" />
           {% endfor %}
         </c-table.tbody>
-        <!-- end rows -->
       </c-table.table>
     </c-table.container>
   </form>
   {% include 'partials/pagination/base.html' %}
-</c-layout.table-container>
+</c-table.outer-container>

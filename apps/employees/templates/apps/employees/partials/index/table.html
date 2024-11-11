@@ -2,8 +2,7 @@
 
 <c-table.outer-container>
   <form hx-get="{{ bulk_path }}" x-data="{ selectedRows: [] }">
-
-    <div class="m-2 flex flex-wrap items-center justify-end gap-2">
+    <c-table.actions-wrapper>
       <c-table.sort-by />
       <c-table.bulk-actions>
         {% if can_delete %}
@@ -13,7 +12,7 @@
         />
         {% endif %}
       </c-table.bulk-actions>
-    </div>
+    </c-table.actions-wrapper>
 
     <c-table.container>
       <c-table.table>
@@ -23,7 +22,6 @@
             <c-table.check data_check="all" />
             {% endif %}
           </c-table.th>
-          <c-table.th name="{% translate 'id' %}" />
           <c-table.th name="{% translate 'fullname' %}" />
           <c-table.th name="{% translate 'groups' %}" />
           <c-table.th name="{% translate 'department' %}" />
@@ -35,29 +33,24 @@
           <c-table.tr>
             <c-table.check />
 
-            <c-table.td data-header="{% translate 'id' %}">
-              {{ obj.pk }}
-            </c-table.td>
-            {% if can_update %}
             <c-table.td
               @click="setQueryString"
-              href="{{ obj.get_absolute_path }}"
               data-header="{% translate 'fullname' %}"
             >
-              {{ obj.fullname }}
+              {% if can_update %}
+              <a class="hover:underline" href="{{ obj.get_absolute_path }}">
+                {{ obj.fullname }}
+              </a>
+              {% else %}
+              <span>{{ obj.fullname }}</span>
+              {% endif %}
             </c-table.td>
-            {% else %}
-            <c-table.td data-header="{% translate 'fullname' %}">
-              {{ obj.fullname }}
-            </c-table.td>
-            {% endif %}
             <c-table.td data-header="{% translate 'groups' %}">
               {% for group in obj.groups.all %}
-                <span>{{ group }}</span>
-                {% if not forloop.last %}
-                <span>{% translate ', ' %}</span>
-                {% endif %} 
-              {% endfor %}
+              <span>{{ group }}</span>
+              {% if not forloop.last %}
+              <span>{% translate ', ' %}</span>
+              {% endif %} {% endfor %}
             </c-table.td>
             <c-table.td data-header="{% translate 'department' %}">
               {{ obj.department }}
