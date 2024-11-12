@@ -19,7 +19,7 @@
     <div class="table-inner @container border border-neutral-200 dark:border-neutral-800 rounded-lg w-full">
       <c-table.table>
 
-        <c-table.header-row>
+        <c-table.thead>
           <c-table.th>{% translate 'department' %}</c-table.th>
           <c-table.th>{% translate 'job subtype' %}</c-table.th>
           <c-table.th>{% translate 'status' %}</c-table.th>
@@ -33,7 +33,7 @@
           <c-table.th>
             {% translate 'delete' %}
           </c-table.th>
-        </c-table.header-row>
+        </c-table.thead>
 
         {% for form in formset %}
         <c-table.tr>

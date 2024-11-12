@@ -13,7 +13,7 @@
     <div class="table-inner border border-neutral-200 dark:border-neutral-800 rounded-lg">
       <c-table.table>
 
-        <c-table.header-row>
+        <c-table.thead>
           <c-table.th>
             {% translate 'number' %}
           </c-table.th>
@@ -26,7 +26,7 @@
           <c-table.th>
             {% translate 'delete' %}
           </c-table.th>
-        </c-table.header-row>
+        </c-table.thead>
 
         {% for form in formset %}
         <c-table.tr>

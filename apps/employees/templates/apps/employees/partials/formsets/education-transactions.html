@@ -19,7 +19,7 @@
     <div class="table-inner @container border border-neutral-200 dark:border-neutral-800 rounded-lg">
       <c-table.table>
 
-        <c-table.header-row>
+        <c-table.thead>
           <c-table.th>{% translate 'degree' %}</c-table.th>
           <c-table.th>{% translate 'school' %}</c-table.th>
           <c-table.th>{% translate 'specialization' %}</c-table.th>
@@ -29,7 +29,7 @@
           <c-table.th>
             {% translate 'delete' %}
           </c-table.th>
-        </c-table.header-row>
+        </c-table.thead>
 
         {% for form in formset %}
         <c-table.tr>
