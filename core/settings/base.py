@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     "import_export",
     "mptt",
     "djangoql",
+    "rest_framework",
+    "rest_framework_simplejwt",
     # apps
     "apps.activities",
     "apps.base",
@@ -201,3 +203,16 @@ LOGOUT_REDIRECT_URL = "/accounts/login/"
 LOCALE_PATHS = [BASE_DIR / "locale"]
 
 MPTT_ADMIN_LEVEL_INDENT = 20
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissions',
+    ],
+    'DEFAULT_FILTER_BACKENDS': [
+      'django_filters.rest_framework.DjangoFilterBackend',
+    ],
+}

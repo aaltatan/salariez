@@ -8,6 +8,9 @@ django-import-export[xlsx]
 django-mptt
 django-braces
 djangoql
+djangorestframework
+djangorestframework-simplejwt
 mysqlclient
 python-dotenv
 Pillow
+httpx
