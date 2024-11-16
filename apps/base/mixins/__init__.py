@@ -10,6 +10,7 @@ from .update import UpdateMixin
 from .export import ExportMixin
 from .debug_required import DebugRequiredMixin
 from .formset import FormSetMixin
+from .viewset import ViewSetMixin
 
 
 __all__ = [
@@ -26,4 +27,5 @@ __all__ = [
     ExportMixin,
     ListMixin,
     FormSetMixin,
+    ViewSetMixin,
 ]
