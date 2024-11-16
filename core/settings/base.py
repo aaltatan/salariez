@@ -51,6 +51,9 @@ INSTALLED_APPS = [
     "import_export",
     "mptt",
     "djangoql",
+    "ninja",
+    "ninja_jwt",
+    "ninja_extra",
     "rest_framework",
     "rest_framework_simplejwt",
     # apps

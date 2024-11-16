@@ -10,6 +10,8 @@ django-braces
 djangoql
 djangorestframework
 djangorestframework-simplejwt
+django-ninja
+django-ninja-jwt
 mysqlclient
 python-dotenv
 Pillow
