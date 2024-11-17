@@ -60,7 +60,7 @@ class Contract(models.Model):
         Currency, 
         related_name='contracts', 
         on_delete=models.PROTECT,
-        default=Currency.get_default_pk
+        # default=Currency.get_default_pk
     )
     start_date = models.DateField(default=timezone.now)
     end_date = models.DateField(null=True, blank=True)

@@ -55,7 +55,7 @@ class AbstractNameModel(models.Model):
         kwargs = {
             'app_label': self._get_app_label(),
             'model_name': self.__class__.__name__,
-            'object_id': self.id,
+            'object_id': self.pk,
         }
         return reverse('activities:index', kwargs=kwargs)
 

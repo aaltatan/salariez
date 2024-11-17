@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             model_name="contract",
             name="currency",
             field=models.ForeignKey(
-                default=apps.currencies.models.Currency.get_default_pk,
+                # default=apps.currencies.models.Currency.get_default_pk,
                 on_delete=django.db.models.deletion.PROTECT,
                 related_name="contracts",
                 to="currencies.currency",

@@ -58,18 +58,18 @@ class Currency(base_models.AbstractNameModel):
 
     objects = CurrencyManager()
 
-    @classmethod
-    def get_default_pk(cls):
-        currency, created = cls.objects.get_or_create(
-            is_local=True,
-            defaults={
-                'name': 'Syrian Pound',
-                'short_name': 's.p.',
-                'fraction_name': 'Korsh',
-                'is_local': True
-            }
-        )
-        return currency.pk
+    # @classmethod
+    # def get_default_pk(cls):
+    #     currency, created = cls.objects.get_or_create(
+    #         is_local=True,
+    #         defaults={
+    #             'name': 'Syrian Pound',
+    #             'short_name': 's.p.',
+    #             'fraction_name': 'Korsh',
+    #             'is_local': True
+    #         }
+    #     )
+    #     return currency.pk
 
     class Meta:
         ordering = ['is_local', 'name']

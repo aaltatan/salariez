@@ -1,8 +1,8 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path
 from django.contrib.auth.decorators import login_required
+from django.urls import include, path
 from ninja_extra import NinjaExtraAPI
 
 from apps.base.views import logout_after_change_password
@@ -10,6 +10,7 @@ from apps.base.views import logout_after_change_password
 api = NinjaExtraAPI(
     title="Salariez API",
     description="Salariez API",
+    urls_namespace="api",
     version="1.0.0",
     docs_decorator=login_required,
 )

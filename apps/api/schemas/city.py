@@ -2,15 +2,17 @@ from ninja import ModelSchema, FilterSchema
 
 from apps.cities.models import City
 
-from .utils import FiltersMixin
+from .. import mixins
 
 
-class CityFilterSchema(FiltersMixin, FilterSchema):
+class CityFilterSchema(mixins.FiltersMixin, FilterSchema):
     name: str | None = None
     description: str | None = None
 
 
-class CityCreateSchema(ModelSchema):
+class CityCreateSchema(mixins.NameValidatorMixin, ModelSchema):
+    name: str
+
     class Meta:
         model = City
         fields = ["name", "description"]

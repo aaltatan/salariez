@@ -141,6 +141,10 @@ DATABASES = {
         "OPTIONS": {
             "sql_mode": "traditional",
         },
+        'TEST': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': ':memory:',  # Use in-memory SQLite database for testing
+        },
     }
 }
 

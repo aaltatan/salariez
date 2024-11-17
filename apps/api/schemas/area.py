@@ -3,7 +3,7 @@ from ninja import ModelSchema, FilterSchema
 
 from apps.areas.models import Area
 
-from .utils import FiltersMixin
+from ..mixins import FiltersMixin
 from .city import CitySchema
 
 
