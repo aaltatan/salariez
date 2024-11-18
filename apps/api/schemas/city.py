@@ -1,8 +1,9 @@
-from ninja import ModelSchema, FilterSchema
+from ninja import FilterSchema, ModelSchema
 
 from apps.cities.models import City
 
 from .. import mixins
+from ..validators.name import NameValidatorMixin
 
 
 class CityFilterSchema(mixins.FiltersMixin, FilterSchema):
@@ -10,9 +11,7 @@ class CityFilterSchema(mixins.FiltersMixin, FilterSchema):
     description: str | None = None
 
 
-class CityCreateSchema(mixins.NameValidatorMixin, ModelSchema):
-    name: str
-
+class CityCreateSchema(NameValidatorMixin, ModelSchema):
     class Meta:
         model = City
         fields = ["name", "description"]

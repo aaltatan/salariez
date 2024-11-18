@@ -22,6 +22,11 @@ class ListWrapperSchema[T](Schema):
     results: T
 
 
+class BulkWrapperSchema[T](Schema):
+    status: int
+    results: list[T]
+
+
 class DetailWrapperSchema[T](Schema):
     status: int
     results: T

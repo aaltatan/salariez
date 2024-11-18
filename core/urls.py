@@ -1,23 +1,11 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.contrib.auth.decorators import login_required
 from django.urls import include, path
-from ninja_extra import NinjaExtraAPI
 
 from apps.base.views import logout_after_change_password
+from apps.api import api
 
-api = NinjaExtraAPI(
-    title="Salariez API",
-    description="Salariez API",
-    urls_namespace="api",
-    version="1.0.0",
-    docs_decorator=login_required,
-)
-
-# register routers
-api.add_router("cities/", "apps.api.routers.city.router")
-api.add_router("areas/", "apps.api.routers.area.router")
 
 urlpatterns = [
     path("admin/", admin.site.urls),

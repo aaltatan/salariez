@@ -1,6 +1,15 @@
+from uuid import uuid4
+
 from django.db.models import Model
 from django.http import HttpRequest
+from django.utils.text import slugify
 from django.shortcuts import get_object_or_404
+from djangoql.exceptions import (
+    DjangoQLLexerError,
+    DjangoQLParserError,
+    DjangoQLSchemaError,
+)
+from djangoql.queryset import apply_search
 from ninja import FilterSchema, Schema
 from ninja_extra import status
 
@@ -14,6 +23,7 @@ def get_list[T](
     pagination: PaginationSchema,
     filters: FilterSchema,
     order_by: OrderBySchema[T],
+    djangoql_filter: bool = True,
 ) -> dict:
     """
     Get a list of objects.
@@ -22,6 +32,16 @@ def get_list[T](
     qs = model.objects.all()
 
     filtered_qs = filters.filter(qs)
+
+    if djangoql_filter and getattr(filters, "djangoql", None):
+        try:
+            filtered_qs = apply_search(filtered_qs, getattr(filters, "djangoql", None))
+        except (
+            DjangoQLParserError,
+            DjangoQLSchemaError,
+            DjangoQLLexerError,
+        ):
+            filtered_qs = qs.none()
 
     qs = filtered_qs.order_by(*order_by.fields)[pagination.offset : pagination.limit]
 
@@ -45,6 +65,30 @@ def create_object(model: type[Model], data: Schema) -> tuple[int, dict]:
     }
 
 
+def create_objects(
+    model: type[Model],
+    data: list[Schema],
+    slugify_field: str = "name",
+    default_slug: None = None,
+) -> tuple[int, dict]:
+    """
+    Create multiple objects.
+    """
+    default_slug = default_slug or uuid4().hex
+    objs = [
+        model(
+            **m.model_dump(),
+            slug=slugify(getattr(m, slugify_field, default_slug), allow_unicode=True),
+        )
+        for m in data
+    ]
+    objs = model.objects.bulk_create(objs)
+    return status.HTTP_201_CREATED, {
+        "status": status.HTTP_201_CREATED,
+        "results": objs,
+    }
+
+
 def get_detail(model: type[Model], slug: str) -> dict:
     """
     Get a detail of an object.
@@ -54,23 +98,6 @@ def get_detail(model: type[Model], slug: str) -> dict:
         "status": status.HTTP_200_OK,
         "results": obj,
     }
-
-
-# def update_object(model: type[Model], slug: str, data: PatchDict[Schema]) -> dict:
-#     """
-#     Update an object.
-#     """
-#     obj = get_object_or_404(model, slug=slug)
-    
-#     for k, v in data.items():
-#         setattr(obj, k, v)
-
-#     obj.save()
-
-#     return {
-#         "status": status.HTTP_202_ACCEPTED,
-#         "results": obj,
-#     }
 
 
 def delete_object(
@@ -83,12 +110,10 @@ def delete_object(
     deleter = Deleter(obj, request, False, False)
 
     if not deleter.can_delete_condition():
-        return status.HTTP_406_NOT_ACCEPTABLE, {
-            "message": "object can't be deleted"
-        }
-    
+        return status.HTTP_406_NOT_ACCEPTABLE, {"message": "object can't be deleted"}
+
     deleter.delete()
 
-    return status.HTTP_204_NO_CONTENT ,{
+    return status.HTTP_204_NO_CONTENT, {
         "message": "object has been deleted successfully"
     }

@@ -39,44 +39,39 @@ def create_object(request, payload: schemas.CityCreateSchema):
     return controllers.create_object(City, payload)
 
 
+@router.post(
+    path="/bulk/",
+    response={
+        status.HTTP_201_CREATED: utils_schemas.BulkWrapperSchema[schemas.CitySchema]
+    },
+)
+def create_objects(request, payload: list[schemas.CityCreateSchema]):
+    return controllers.create_objects(City, payload)
+
+
 @router.get(
-    path="/{slug}",
-    response=utils_schemas.DetailWrapperSchema[schemas.CitySchema]
+    path="/{slug}", response=utils_schemas.DetailWrapperSchema[schemas.CitySchema]
 )
 def get_detail(request, slug: str):
     return controllers.get_detail(City, slug)
 
 
-# @router.put(
-#     path="/{slug}",
-#     response={
-#         status.HTTP_202_ACCEPTED: PatchDict[utils_schemas.DetailWrapperSchema[schemas.CitySchema]],
-#         status.HTTP_404_NOT_FOUND: status.HTTP_404_NOT_FOUND,
-#     },
-# )
-# def update_object(request, slug: str, payload: schemas.CityCreateSchema):
-#     return controllers.update_object(City, slug, payload)
-
-
 @router.delete(
-    path="/{slug}", 
+    path="/{slug}",
     response={
         status.HTTP_204_NO_CONTENT: utils_schemas.HttpError,
         status.HTTP_406_NOT_ACCEPTABLE: utils_schemas.HttpError,
-    }
+    },
 )
 def delete_object(request, slug: str):
-
     obj = get_object_or_404(City, slug=slug)
     deleter = Deleter(obj, request, False, False)
 
     if deleter.can_delete_condition():
         deleter.delete()
     else:
-        return status.HTTP_406_NOT_ACCEPTABLE, {
-            "message": "object can't be deleted"
-        }
+        return status.HTTP_406_NOT_ACCEPTABLE, {"message": "object can't be deleted"}
 
-    return status.HTTP_204_NO_CONTENT ,{
+    return status.HTTP_204_NO_CONTENT, {
         "message": "object has been deleted successfully"
     }
