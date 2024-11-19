@@ -14,10 +14,16 @@ class CityFilterSchema(mixins.FiltersMixin, FilterSchema):
 class CityCreateSchema(NameValidatorMixin, ModelSchema):
     class Meta:
         model = City
-        fields = ["name", "description"]
+        fields = "name", "description"
+
+
+class CityUpdateSchema(NameValidatorMixin, ModelSchema):
+    class Meta:
+        model = City
+        exclude = "id", "search"
 
 
 class CitySchema(ModelSchema):
     class Meta:
         model = City
-        fields = ["id", "name", "slug", "description"]
+        exclude = "search",

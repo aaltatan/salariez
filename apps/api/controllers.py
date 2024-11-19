@@ -3,6 +3,7 @@ from uuid import uuid4
 from django.db.models import Model
 from django.http import HttpRequest
 from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
 from django.shortcuts import get_object_or_404
 from djangoql.exceptions import (
     DjangoQLLexerError,
@@ -10,7 +11,7 @@ from djangoql.exceptions import (
     DjangoQLSchemaError,
 )
 from djangoql.queryset import apply_search
-from ninja import FilterSchema, Schema
+from ninja import FilterSchema, PatchDict, Schema
 from ninja_extra import status
 
 from apps.base.utils.views import Deleter
@@ -100,20 +101,39 @@ def get_detail(model: type[Model], slug: str) -> dict:
     }
 
 
+def update_object(
+    model: type[Model], payload: PatchDict[Schema], slug: str
+) -> tuple[int, dict]:
+    """
+    Update an object.
+    """
+    obj = get_object_or_404(model, slug=slug)
+    
+    for attr, value in payload.items():
+        value = value if value is not None else getattr(obj, attr)
+        setattr(obj, attr, value)
+
+    obj.save()
+    return {
+        "status": status.HTTP_200_OK,
+        "results": obj,
+    }
+
+
 def delete_object(
-    request: HttpRequest, model: type[Model], slug: str, deleter: Deleter
+    request: HttpRequest, model: type[Model], slug: str, deleter_class: type[Deleter]
 ) -> tuple[int, dict]:
     """
     Delete an object.
     """
     obj = get_object_or_404(model, slug=slug)
-    deleter = Deleter(obj, request, False, False)
+    deleter_class = deleter_class(obj, request, False, False)
 
-    if not deleter.can_delete_condition():
-        return status.HTTP_406_NOT_ACCEPTABLE, {"message": "object can't be deleted"}
-
-    deleter.delete()
+    if deleter_class.can_delete_condition():
+        deleter_class.delete()
+    else:
+        return status.HTTP_406_NOT_ACCEPTABLE, {"message": _("{} can't be deleted").format(obj)}
 
     return status.HTTP_204_NO_CONTENT, {
-        "message": "object has been deleted successfully"
+        "message": _("{} has been deleted successfully").format(obj)
     }

@@ -1,9 +1,10 @@
 from django.db.models import Q
-from ninja import ModelSchema, FilterSchema
+from ninja import ModelSchema, FilterSchema, Schema
 
 from apps.areas.models import Area
 
 from ..mixins import FiltersMixin
+from ..validators.name import NameValidatorMixin
 from .city import CitySchema
 
 
@@ -16,16 +17,12 @@ class AreaFilterSchema(FiltersMixin, FilterSchema):
         return self._filter_list(value, "city__name")
 
 
-class AreaCreateSchema(ModelSchema):
-    class Meta:
-        model = Area
-        fields = ["name", "description"]
+class AreaCreateSchema(NameValidatorMixin, Schema):
 
-
-class AreaInSchema(ModelSchema):
-    class Meta:
-        model = Area
-        fields = ["name", "city", "description"]
+    name: str
+    city_id: int
+    description: str = ""
+    
 
 
 class AreaSchema(ModelSchema):
@@ -33,4 +30,4 @@ class AreaSchema(ModelSchema):
 
     class Meta:
         model = Area
-        fields = ["id", "name", "city", "slug", "description"]
+        exclude = ("search",)

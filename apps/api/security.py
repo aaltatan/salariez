@@ -1,5 +1,4 @@
-from dataclasses import dataclass, field
-from typing import Any, Literal
+from typing import Any
 from pprint import pprint
 
 from django.http import HttpRequest
@@ -10,26 +9,16 @@ from jwt import ExpiredSignatureError, decode
 from ninja.security import SessionAuth
 
 
-@dataclass
-class Permission:
-    app_label: str
-    object_name: str 
-    action: Literal["view", "add", "change", "delete", "export"] = "view"
-    perm: str = field(init=False)
-
-    def __post_init__(self):
-
-        self.perm = f"{self.app_label}.{self.action}_{self.object_name}"
-
 
 class PermissionAuth(SessionAuth):
     """
-    django-ninja-extra's APIKeyCookie with permissions
+    django auth with permissions
     """
 
-    def __init__(self, csrf: bool = True, perms: list[Permission] = []) -> None:
-        self.perms = [p.perm for p in perms]
-        pprint(self.perms)
+    param_name: str = settings.SESSION_COOKIE_NAME
+
+    def __init__(self, csrf: bool = True, perms: list[str] = []) -> None:
+        self.perms = perms
         super().__init__(csrf)
 
     def _get_token(self, request: HttpRequest) -> dict | None:
