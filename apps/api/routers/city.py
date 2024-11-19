@@ -10,6 +10,8 @@ from apps.cities.utils import Deleter
 from .. import controllers
 from ..schemas import city as schemas
 from ..schemas import utils as utils_schemas
+from ..security import Permission, PermissionAuth
+
 
 router = Router(tags=["City"])
 
@@ -19,6 +21,7 @@ ORDER = Literal["id", "-id", "name", "-name", "description", "-description"]
 @router.get(
     path="/",
     response=utils_schemas.ListWrapperSchema[list[schemas.CitySchema]],
+    auth=PermissionAuth(perms=[Permission("cities", "city", "view")]),
 )
 def get_list(
     request,

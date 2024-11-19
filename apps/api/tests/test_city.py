@@ -1,6 +1,6 @@
 import json
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from django.test import TestCase
 
 from apps.cities.models import City
@@ -8,12 +8,21 @@ from apps.cities.models import City
 
 class CityTestCase(TestCase):
     def setUp(self):
-        user = User.objects.create_user(
+        user_with_perms = User.objects.create_user(
             username="testuser",
             email="testuser@test.com",
             password="testuser",
         )
-        self.client.force_login(user)
+        view_cities = Permission.objects.get(codename="view_city")
+        user_with_perms.user_permissions.add(view_cities)
+        User.objects.create_user(
+            username="testuser2",
+            email="testuser2@test.com",
+            password="testuser2",
+        )
+        logged_in: bool = self.client.login(
+            username="testuser", password="testuser"
+        )
         cities = [
             City(name="City 1", description="Description 1"),
             City(name="City 2", description="Description 2"),
@@ -35,6 +44,13 @@ class CityTestCase(TestCase):
         self.assertEqual(len(response_2.json()["results"]), 2)
 
         self.assertEqual(response.json()["results"], response_2.json()["results"])
+
+    def test_authorization(self):
+        self.client.logout()
+        self.client.login(username="testuser2", password="testuser2")
+        response = self.client.get("/api/cities/")
+
+        self.assertEqual(response.status_code, 401)
 
     def test_get_list(self):
         response = self.client.get("/api/cities/")
