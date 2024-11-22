@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 from apps.base.views import logout_after_change_password
-from apps.api import api
+from apps.api import router
 
 
 urlpatterns = [
@@ -17,7 +17,7 @@ urlpatterns = [
         name="password_change_done",
     ),
     # api
-    path("api/", api.urls),
+    path("api/", include(router.urls)),
     # apps
     path("", include("apps.base.urls")),
     path("job-types/", include("apps.job_types.urls")),
