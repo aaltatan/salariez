@@ -199,6 +199,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 COTTON_DIR = "components"
+COTTON_SNAKE_CASED_NAMES = False
 
 LOGIN_URL = "/accounts/login/"
 LOGIN_REDIRECT_URL = "/"
