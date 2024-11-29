@@ -4,7 +4,7 @@
   <div>
     <c-forms.form title="{{ instance }}">
       <c-slot name="btns">
-        <c-btns.btn
+        <c-buttons.button
           datatype="input"
           name="update"
           value="{% translate 'update' %}"
@@ -15,7 +15,7 @@
           type="submit"
         />
 
-        <c-btns.btn
+        <c-buttons.button
           variant="secondary"
           hx-delete="{{ instance.get_update_path }}"
           hx-target="closest form"
@@ -28,10 +28,10 @@
             <c-icons.reset ratio="1rem" />
           </div>
           <span>{% translate 'reset' %}</span>
-        </c-btns.btn>
+        </c-buttons.button>
 
         {% if can_delete %}
-        <c-btns.btn
+        <c-buttons.button
           variant="danger"
           datatype="input"
           name="delete"

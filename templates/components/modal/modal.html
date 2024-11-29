@@ -22,7 +22,7 @@ class=" rounded-lg overflow-hidden bg-white dark:bg-neutral-900 dark:border dark
 
     <footer class="p-4 flex items-center">
         <div class="ltr:ml-auto rtl:mr-auto flex items-center gap-1">
-            <c-btns.btn 
+            <c-buttons.button 
                 autofocus
                 datatype="button"
                 type="button"
@@ -30,7 +30,7 @@ class=" rounded-lg overflow-hidden bg-white dark:bg-neutral-900 dark:border dark
                 @click="modalOpen = false"
                 @click.debounce.200="handleClickAfterDebouncing">
                 {% translate 'close' %}
-            </c-btns.btn>
+            </c-buttons.button>
             {{ footer }}
         </div>
     </footer>

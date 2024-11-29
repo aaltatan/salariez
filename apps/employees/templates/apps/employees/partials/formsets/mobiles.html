@@ -66,23 +66,23 @@
 
     <div class="my-2 flex items-center justify-center gap-1">
 
-      <c-btns.btn 
+      <c-buttons.button 
       @click="handleConfirmMessage" 
       data-confirm="{% translate 'are you sure you want to continue?' %}"
       datatype="button" 
       type="submit">
         {% translate 'save' %}
-      </c-btns.btn>
+      </c-buttons.button>
 
-      <c-btns.btn 
+      <c-buttons.button 
       hx-get="{{ url }}?add_new_row=true" 
       hx-select="#formset-container">
           {% translate 'add new' %}
-      </c-btns.btn>
+      </c-buttons.button>
       
-      <c-btns.btn datatype="href" variant="secondary" type="reset" hx-target="body" href="{{ url }}">
+      <c-buttons.button datatype="href" variant="secondary" type="reset" hx-target="body" href="{{ url }}">
         {% translate 'reset' %}
-      </c-btns.btn>
+      </c-buttons.button>
 
     </div>
     

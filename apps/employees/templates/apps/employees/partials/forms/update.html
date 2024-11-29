@@ -37,7 +37,7 @@ hx-target="#employee-update-form-container">
       <div
         class="flex items-center max-sm:flex-wrap max-sm:justify-center justify-end gap-x-1 gap-y-2 my-6"
       >
-        <c-btns.btn
+        <c-buttons.button
           datatype="input"
           name="update"
           value="{% translate 'update' %}"
@@ -48,7 +48,7 @@ hx-target="#employee-update-form-container">
           type="submit"
         />
 
-        <c-btns.btn
+        <c-buttons.button
           variant="secondary"
           hx-delete="{{ instance.get_update_path }}"
           hx-indicator="#reset-spinner"
@@ -60,10 +60,10 @@ hx-target="#employee-update-form-container">
             <c-icons.reset ratio="1rem" />
           </div>
           <span>{% translate 'reset' %}</span>
-        </c-btns.btn>
+        </c-buttons.button>
 
         {% if can_delete %}
-        <c-btns.btn
+        <c-buttons.button
           variant="danger"
           datatype="input"
           name="delete"

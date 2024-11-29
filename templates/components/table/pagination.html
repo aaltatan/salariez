@@ -8,7 +8,7 @@ class="flex max-md:flex-col items-center justify-between gap-2 ~px-2/4 ~my-2/4">
 
     <div class="flex items-center justify-between">
       {% if page_obj.has_previous %}
-      <c-btns.icon
+      <c-buttons.icon
         hx-get="{{ url }}?page=1"
         hx-target="{{ target }}"
         hx-headers='{"partial": true}'
@@ -17,7 +17,7 @@ class="flex max-md:flex-col items-center justify-between gap-2 ~px-2/4 ~my-2/4">
         title="{% translate 'first page'|title %}"
       >
         <c-icons.arrow-double-left ratio="1.25rem"></c-icons.arrow-double-left>
-      </c-btns.icon>
+      </c-buttons.icon>
       {% else %}
       <span class="text-xl p-1 opacity-45">
         <c-icons.arrow-double-left ratio="1.25rem"></c-icons.arrow-double-left>
@@ -25,7 +25,7 @@ class="flex max-md:flex-col items-center justify-between gap-2 ~px-2/4 ~my-2/4">
       {% endif %} 
       
       {% if page_obj.has_previous %}
-      <c-btns.icon
+      <c-buttons.icon
         hx-get="{{ url }}?page={{ page_obj.previous_page_number }}"
         hx-target="{{ target }}"
         hx-headers='{"partial": true}'
@@ -34,7 +34,7 @@ class="flex max-md:flex-col items-center justify-between gap-2 ~px-2/4 ~my-2/4">
         title="{% translate 'previous page'|title %}"
       >
         <c-icons.arrow-left ratio="1.25rem"></c-icons.arrow-left>
-      </c-btns.icon>
+      </c-buttons.icon>
       {% else %}
       <span class="text-xl p-1 opacity-45">
         <c-icons.arrow-left ratio="1.25rem"></c-icons.arrow-left>
@@ -52,7 +52,7 @@ class="flex max-md:flex-col items-center justify-between gap-2 ~px-2/4 ~my-2/4">
       <!--  -->
       
       {% if page_obj.has_next %}
-      <c-btns.icon
+      <c-buttons.icon
         hx-get="{{ url }}?page={{ page_obj.next_page_number }}"
         hx-target="{{ target }}"
         hx-headers='{"partial": true}'
@@ -61,14 +61,14 @@ class="flex max-md:flex-col items-center justify-between gap-2 ~px-2/4 ~my-2/4">
         title="{% translate 'next page'|title %}"
       >
         <c-icons.arrow-right ratio="1.25rem"></c-icons.arrow-right>
-      </c-btns.icon>
+      </c-buttons.icon>
       {% else %}
       <span class="text-xl p-1 opacity-45">
         <c-icons.arrow-right ratio="1.25rem"></c-icons.arrow-right>
       </span>
       {% endif %} 
       {% if page_obj.has_next %}
-      <c-btns.icon
+      <c-buttons.icon
         hx-get="{{ url }}?page={{ page_obj.paginator.num_pages }}"
         hx-target="{{ target }}"
         hx-headers='{"partial": true}'
@@ -77,7 +77,7 @@ class="flex max-md:flex-col items-center justify-between gap-2 ~px-2/4 ~my-2/4">
         title="{% translate 'last page'|title %}"
       >
         <c-icons.arrow-double-right ratio="1.25rem"></c-icons.arrow-double-right>
-      </c-btns.icon>
+      </c-buttons.icon>
       {% else %}
       <span class="p-1 opacity-45">
         <c-icons.arrow-double-right ratio="1.25rem"></c-icons.arrow-double-right>
@@ -91,14 +91,14 @@ class="flex max-md:flex-col items-center justify-between gap-2 ~px-2/4 ~my-2/4">
     >
       {{ pagination_form }}
       <span class="lg:hidden">
-        <c-btns.icon 
+        <c-buttons.icon 
         @click="showFilters = !showFilters"
         id="page-filter-show"
         title="{% translate 'show filters'|title %}">
           <c-icons.filters ratio="1.25rem" />
-        </c-btns.icon>
+        </c-buttons.icon>
       </span>
-      <c-btns.icon 
+      <c-buttons.icon 
       hx-get="{{ url }}"
       hx-target="body"
       hx-replace-url="true"
@@ -106,7 +106,7 @@ class="flex max-md:flex-col items-center justify-between gap-2 ~px-2/4 ~my-2/4">
       id="page-reset-btn"
       title="{% translate 'reset'|title %}">
         <c-icons.reset ratio="1.25rem" />
-      </c-btns.icon>
+      </c-buttons.icon>
       {{ slot }}
       <!--  -->
     </div>

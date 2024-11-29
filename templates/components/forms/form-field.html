@@ -15,7 +15,7 @@
       <span class="hidden text-[red]" title="{% translate 'required'|title %}">*</span>
 
       {% if user|has_perm:field.field.widget.attrs.data_permission %}
-      <c-btns.icon
+      <c-buttons.icon
       title="{% translate 'add new'|title %}">
           {% if field.field.widget.attrs.data_hx_target %}
           <div
@@ -46,7 +46,7 @@
               <c-icons.plus ratio="1rem" />
           </a>
           {% endif %}
-      </c-btns.icon>
+      </c-buttons.icon>
       {% endif %}
   </div>
 

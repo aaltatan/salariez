@@ -7,13 +7,13 @@
   @scroll.window="openContext = false"
   x-data="{openContext: false}"
 >
-  <c-btns.icon
+  <c-buttons.icon
     @click="openContext = true; setOffsetContextMenu($event)"
     role="button"
     :class="openContext && '!bg-neutral-300 dark:!bg-neutral-700'"
   >
     <c-icons.ellipsis ratio="1rem" />
-  </c-btns.icon>
+  </c-buttons.icon>
 
   <ul
     role="menu" x-cloak class="contextmenu" x-show="openContext"
