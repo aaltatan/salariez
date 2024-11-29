@@ -15,7 +15,7 @@ x-init="breadCrumbs.push({
 <c-layout.app-container id="educational-degrees-table" app_title="{% translate 'educational degrees' %}">
 
     <c-slot name="filters">
-        {% include 'partials/filters/base.html' %}
+        <c-base.filter-form/>
     </c-slot>
     
     <c-slot name="table">
