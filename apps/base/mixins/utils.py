@@ -123,7 +123,7 @@ class HelperMixin:
         if hasattr(self, 'form_template_name'):
             return self.form_template_name
         
-        return f'partials/{view}-form.html'
+        return f'components/base/{view}-form.html'
     
     def _get_success_path(self):
         """
