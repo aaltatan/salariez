@@ -49,7 +49,7 @@
         <div class="ltr:ml-auto rtl:mr-auto">
           <c-buttons.icon>
             <a href="{{ object.get_update_path }}">
-              <c-icons.pencil ratio="1.25rem" />
+              <c-icons.pencil />
             </a>
           </c-buttons.icon>
         </div>
@@ -58,14 +58,14 @@
       <div 
       title="{{ object.hire_date }}"
       class="flex items-center gap-1">
-        <c-icons.calendar ratio="1rem" />
+        <c-icons.calendar />
         <span>{% translate 'since'|title %}</span>
         <p>
           {{ object.hire_date|timesince }}
         </p>
       </div>
       <div class="flex items-center gap-1">
-        <c-icons.education ratio="1rem" />
+        <c-icons.education />
         <p>
           <span>{{ object.education_degree }}</span>
           <span>{% translate 'in' %}</span>
@@ -89,7 +89,7 @@
               {{ department }}
               {% if not forloop.last %}
               <span class="ltr:rotate-180">
-                <c-icons.arrow-left ratio="1rem" />
+                <c-icons.arrow-left />
               </span>
               {% endif %}
             </div>

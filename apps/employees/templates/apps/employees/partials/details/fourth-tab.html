@@ -4,7 +4,7 @@
 {% for mobile in object.mobiles.all %}
   <li class="py-2">
     <div class="flex items-center gap-2">
-      <c-icons.mobile ratio="1rem" />
+      <c-icons.mobile />
       <span class="capitalize">
         {% translate 'mobile' %}:
       </span>
@@ -13,7 +13,7 @@
       </a>
       {% if mobile.has_whatsapp %}
       <a target="_blank" href="{{ mobile.get_whatsapp_path }}" class="hover:underline">
-        <c-icons.whatsapp ratio="1rem" />
+        <c-icons.whatsapp />
       </a>
       {% endif %}
     </div>
@@ -22,7 +22,7 @@
 {% for phone in object.phones.all %}
   <li class="py-2">
     <div class="flex items-center gap-2">
-      <c-icons.phone ratio="1rem" />
+      <c-icons.phone />
       <span class="capitalize">
         {% translate 'phone' %}:
       </span>
@@ -35,7 +35,7 @@
 {% for email in object.emails.all %}
   <li class="py-2">
     <div class="flex items-center gap-2">
-      <c-icons.email ratio="1rem" />
+      <c-icons.email />
       <span class="capitalize">
         {% translate 'email' %}:
       </span>

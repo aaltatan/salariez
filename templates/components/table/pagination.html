@@ -16,11 +16,11 @@ class="flex max-md:flex-col items-center justify-between gap-2 ~px-2/4 ~my-2/4">
         hx-replace-url="true"
         title="{% translate 'first page'|title %}"
       >
-        <c-icons.arrow-double-left ratio="1.25rem"></c-icons.arrow-double-left>
+        <c-icons.arrow-double-left />
       </c-buttons.icon>
       {% else %}
       <span class="text-xl p-1 opacity-45">
-        <c-icons.arrow-double-left ratio="1.25rem"></c-icons.arrow-double-left>
+        <c-icons.arrow-double-left />
       </span>
       {% endif %} 
       
@@ -33,11 +33,11 @@ class="flex max-md:flex-col items-center justify-between gap-2 ~px-2/4 ~my-2/4">
         hx-replace-url="true"
         title="{% translate 'previous page'|title %}"
       >
-        <c-icons.arrow-left ratio="1.25rem"></c-icons.arrow-left>
+        <c-icons.arrow-left />
       </c-buttons.icon>
       {% else %}
       <span class="text-xl p-1 opacity-45">
-        <c-icons.arrow-left ratio="1.25rem"></c-icons.arrow-left>
+        <c-icons.arrow-left />
       </span>
       {% endif %} 
 
@@ -60,11 +60,11 @@ class="flex max-md:flex-col items-center justify-between gap-2 ~px-2/4 ~my-2/4">
         hx-replace-url="true"
         title="{% translate 'next page'|title %}"
       >
-        <c-icons.arrow-right ratio="1.25rem"></c-icons.arrow-right>
+        <c-icons.arrow-right />
       </c-buttons.icon>
       {% else %}
       <span class="text-xl p-1 opacity-45">
-        <c-icons.arrow-right ratio="1.25rem"></c-icons.arrow-right>
+        <c-icons.arrow-right />
       </span>
       {% endif %} 
       {% if page_obj.has_next %}
@@ -76,11 +76,11 @@ class="flex max-md:flex-col items-center justify-between gap-2 ~px-2/4 ~my-2/4">
         hx-replace-url="true"
         title="{% translate 'last page'|title %}"
       >
-        <c-icons.arrow-double-right ratio="1.25rem"></c-icons.arrow-double-right>
+        <c-icons.arrow-double-right />
       </c-buttons.icon>
       {% else %}
       <span class="p-1 opacity-45">
-        <c-icons.arrow-double-right ratio="1.25rem"></c-icons.arrow-double-right>
+        <c-icons.arrow-double-right />
       </span>
       {% endif %}
     </div>
@@ -95,7 +95,7 @@ class="flex max-md:flex-col items-center justify-between gap-2 ~px-2/4 ~my-2/4">
         @click="showFilters = !showFilters"
         id="page-filter-show"
         title="{% translate 'show filters'|title %}">
-          <c-icons.filters ratio="1.25rem" />
+          <c-icons.filters />
         </c-buttons.icon>
       </span>
       <c-buttons.icon 
@@ -105,7 +105,7 @@ class="flex max-md:flex-col items-center justify-between gap-2 ~px-2/4 ~my-2/4">
       type="reset"
       id="page-reset-btn"
       title="{% translate 'reset'|title %}">
-        <c-icons.reset ratio="1.25rem" />
+        <c-icons.reset />
       </c-buttons.icon>
       {{ slot }}
       <!--  -->
