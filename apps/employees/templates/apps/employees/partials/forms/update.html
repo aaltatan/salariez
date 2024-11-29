@@ -49,7 +49,7 @@ hx-target="#employee-update-form-container">
         />
 
         <c-btns.btn
-          datatheme="secondary"
+          variant="secondary"
           hx-delete="{{ instance.get_update_path }}"
           hx-indicator="#reset-spinner"
           hx-disabled-elt="*[data-disabled]"
@@ -64,7 +64,7 @@ hx-target="#employee-update-form-container">
 
         {% if can_delete %}
         <c-btns.btn
-          datatheme="danger"
+          variant="danger"
           datatype="input"
           name="delete"
           value="{% translate 'delete' %}"

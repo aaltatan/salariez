@@ -16,7 +16,7 @@
         />
 
         <c-btns.btn
-          datatheme="secondary"
+          variant="secondary"
           hx-delete="{{ instance.get_update_path }}"
           hx-target="closest form"
           hx-indicator="#reset-spinner"
@@ -32,7 +32,7 @@
 
         {% if can_delete %}
         <c-btns.btn
-          datatheme="danger"
+          variant="danger"
           datatype="input"
           name="delete"
           value="{% translate 'delete' %}"

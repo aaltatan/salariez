@@ -1,14 +1,17 @@
 <c-vars 
 base="cursor-pointer sm:w-auto rounded-md ~text-xs/sm ~px-2/3 ~py-1/1.5 capitalize duration-150 tracking-tight focus:ring-2 outline-none flex items-center justify-center gap-1 hover:opacity-85 disabled:opacity-50 disabled:cursor-no-drop"
-primary="text-white bg-blue-500 dark:bg-blue-600 focus:ring-blue-400"
-secondary="focus:ring-neutral-200 hover:bg-neutral-200 hover:dark:bg-neutral-800 dark:text-white text-black"
-danger="text-white bg-[red] focus:ring-red-400"
+variant="primary"
+:variants="{
+    'primary': 'text-white bg-blue-500 dark:bg-blue-600 focus:ring-blue-400',
+    'secondary': 'focus:ring-neutral-200 hover:bg-neutral-200 hover:dark:bg-neutral-800 dark:text-white text-black',
+    'danger': 'text-white bg-[red] focus:ring-red-400',
+}"
 />
 
 {% if datatype == 'href' %}
 
     <a {{ attrs }}
-    class="{{ base }} {% include 'components/btns/includes/logic.html' %}" >
+    class="{{ base }} {{ variants|get_item:variant }}" >
         {{ slot }}
     </a>
 
@@ -16,12 +19,12 @@ danger="text-white bg-[red] focus:ring-red-400"
 
     <input {{ attrs }}
     type="button"
-    class="{{ base }} {% include 'components/btns/includes/logic.html' %}" >
+    class="{{ base }} {{ variants|get_item:variant }}" >
 
 {% elif datatype == 'button' %}
 
     <button {{ attrs }} 
-    class="{{ base }} {% include 'components/btns/includes/logic.html' %}">
+    class="{{ base }} {{ variants|get_item:variant }}">
         {{ slot }}
     </button>
 
@@ -29,7 +32,7 @@ danger="text-white bg-[red] focus:ring-red-400"
 
     <span {{ attrs }} 
     role="button" 
-    class="{{ base }} [&[disabled]]:opacity-50 [&[disabled]]:cursor-no-drop {% include 'components/btns/includes/logic.html' %}" >
+    class="{{ base }} [&[disabled]]:opacity-50 [&[disabled]]:cursor-no-drop {{ variants|get_item:variant }}" >
         {{ slot }}
     </span>
     
