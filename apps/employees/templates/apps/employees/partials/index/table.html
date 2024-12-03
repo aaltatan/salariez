@@ -47,10 +47,11 @@
             </c-table.td>
             <c-table.td data-header="{% translate 'groups' %}">
               {% for group in obj.groups.all %}
-              <span>{{ group }}</span>
-              {% if not forloop.last %}
-              <span>{% translate ', ' %}</span>
-              {% endif %} {% endfor %}
+                <span>{{ group }}</span>
+                {% if not forloop.last %}
+                  <span>{% translate ', ' %}</span>
+                {% endif %} 
+              {% endfor %}
             </c-table.td>
             <c-table.td data-header="{% translate 'department' %}">
               {{ obj.department }}
@@ -58,9 +59,7 @@
             <c-table.td data-header="{% translate 'salary' %}">
               {{ obj.salary|money }} {{ obj.currency_short }}
             </c-table.td>
-            <c-table.td fixed>
-<c-base.context />
-            </c-table.td>
+            <c-table.td fixed><c-base.context /></c-table.td>
           </c-table.tr>
           {% empty %}
           <c-table.tr empty colspan="3" />

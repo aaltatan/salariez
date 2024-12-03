@@ -10,7 +10,8 @@
           name="bulk_delete"
           value="{% translate 'delete' %}"
         />
-        {% endif %} {% if user.is_superuser %}
+        {% endif %} 
+        {% if user.is_superuser %}
         <c-table.bulk-action
           name="bulk_reslugify"
           value="{% translate 'reslugify' %}"
@@ -51,9 +52,7 @@
             <c-table.td data-header="{% translate 'description' %}">
               {{ obj.description }}
             </c-table.td>
-            <c-table.td fixed>
-<c-base.context />
-            </c-table.td>
+            <c-table.td fixed><c-base.context /></c-table.td>
           </c-table.tr>
           {% empty %}
           <c-table.tr empty colspan="3" />

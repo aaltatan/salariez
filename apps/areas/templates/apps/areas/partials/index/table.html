@@ -10,7 +10,8 @@
           name="bulk_delete"
           value="{% translate 'delete' %}"
         />
-        {% endif %} {% if user.is_superuser %}
+        {% endif %} 
+        {% if user.is_superuser %}
         <c-table.bulk-action
           name="bulk_reslugify"
           value="{% translate 'reslugify' %}"
@@ -42,7 +43,7 @@
               data-header="{% translate 'name' %}"
             >
               {% if can_update %}
-              <a class="hover:underline" href="{{ obj.get_absolute_path }}">
+              <a class="hover:underline" href="{{ obj.get_update_path }}">
                 {{ obj.name }}
               </a>
               {% else %}
@@ -61,9 +62,7 @@
             <c-table.td data-header="{% translate 'description' %}">
               {{ obj.description }}
             </c-table.td>
-            <c-table.td fixed>
-              <c-base.context />
-            </c-table.td>
+            <c-table.td fixed><c-base.context /></c-table.td>
           </c-table.tr>
           {% empty %}
           <c-table.tr empty colspan="3" />
