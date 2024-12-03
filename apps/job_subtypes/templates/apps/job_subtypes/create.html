@@ -7,20 +7,6 @@
 
 {% block body %}
 
-    <template 
-    x-init="let hrefs = [
-        {
-            text: '{% translate 'job subtypes' %}', 
-            href: '{% url 'job_subtypes:index' %}'
-        },
-        {
-            text: '{% translate 'add new' %}', 
-            href: '{% url 'job_subtypes:create' %}'
-        },
-    ];
-    breadCrumbs = [...breadCrumbs, ...hrefs]"
-    ></template>
-
     <c-base.create-form/>
 
 {% endblock %}

@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest
 from django.core.paginator import Paginator
+from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 
 from .utils import HelperMixin
@@ -102,6 +103,7 @@ class ListMixin(HelperMixin, AbstractList):
             'filter': self.filter_class(request.GET).form, 
             'qs': self.get_paginator_queryset(),
             'pagination_form': self.get_pagination_form(),
+            'breadcrumbs': self._get_breadcrumbs(),
             ######
             'index_path': reverse(f'{app_label}:index'),
             'bulk_path': reverse(f'{app_label}:bulk'),
@@ -122,6 +124,25 @@ class ListMixin(HelperMixin, AbstractList):
         }
 
         return context
+    
+    def _get_breadcrumbs(self) -> list:
+        if getattr(self, 'breadcrumbs', None):
+            return self.breadcrumbs
+        
+        app_label = self._get_app_label()
+
+        return [
+            {
+                'text': _('Home'),
+                'href': reverse('base:index'),
+                'active': False,
+            },
+            {
+                'text': self._get_model_class()._meta.verbose_name_plural,
+                'href': reverse(f'{app_label}:index'),
+                'active': True,
+            },
+        ]
     
     def _get_filter_form_id(self):
 

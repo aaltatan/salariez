@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.http import HttpRequest, HttpResponse
 from django.contrib import messages
@@ -45,7 +46,11 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
                 f'you need to implement get_create_path property in {model_name} model'
             )
         
-        context = {'form': self.form_class(), 'instance': model_class}
+        context = {
+            'form': self.form_class(), 
+            'instance': model_class,
+            'breadcrumbs': self._get_breadcrumbs(),
+        }
 
         if request.GET.get('modal'):
             template_name = self._get_template_name_create_update_partial()
@@ -85,6 +90,30 @@ class CreateMixin(utils.HelperMixin, AbstractCreate):
             activity['new_data'] = new_data
 
         Activity(**activity).save()
+
+    def _get_breadcrumbs(self) -> list:
+        if getattr(self, 'breadcrumbs', None):
+            return self.breadcrumbs
+        
+        app_label = self._get_app_label()
+
+        return [
+            {
+                'text': _('Home'),
+                'href': reverse('base:index'),
+                'active': False,
+            },
+            {
+                'text': self._get_model_class()._meta.verbose_name_plural,
+                'href': reverse(f'{app_label}:index'),
+                'active': False,
+            },
+            {
+                'text': _('Add new'),
+                'href': reverse(f'{app_label}:create'),
+                'active': True,
+            },
+        ]
 
     def _base_post(self, request: HttpRequest) -> HttpResponse:
 

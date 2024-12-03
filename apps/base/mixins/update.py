@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.http import HttpRequest, HttpResponse
 from django.contrib import messages
@@ -65,7 +66,32 @@ class UpdateMixin(utils.HelperMixin, AbstractUpdate):
             'form': self.form_class(instance=instance),
             'instance': instance,
             'can_delete': self._has_perm('delete'),
+            'breadcrumbs': self._get_breadcrumbs(instance),
         }
+    
+    def _get_breadcrumbs(self, instance) -> list:
+        if getattr(self, 'breadcrumbs', None):
+            return self.breadcrumbs
+        
+        app_label = self._get_app_label()
+
+        return [
+            {
+                'text': _('Home'),
+                'href': reverse('base:index'),
+                'active': False,
+            },
+            {
+                'text': self._get_model_class()._meta.verbose_name_plural,
+                'href': reverse(f'{app_label}:index'),
+                'active': False,
+            },
+            {
+                'text': _('Update {}').format(instance),
+                'href': reverse(f'{app_label}:update', args=[instance.slug]),
+                'active': True,
+            },
+        ]
     
     def _add_activity(
         self, obj, old_data: dict | None = None,

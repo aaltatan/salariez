@@ -5,13 +5,6 @@
 
 {% block body %}
 
-<span
-class="hidden"
-x-init="breadCrumbs.push({
-    text: '{% translate 'educational degrees' %}', 
-    href: '{% url 'educational_degrees:index' %}'
-})"></span>
-
 <c-layout.app-container id="educational-degrees-table" app_title="{% translate 'educational degrees' %}">
 
     <c-slot name="filters">

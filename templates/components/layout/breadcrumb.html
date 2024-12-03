@@ -1,23 +1,19 @@
 {% load i18n %}
 
-<nav x-cloak class="flex justify-center items-center rounded-md" x-show="breadCrumbs.length >= 2">
+<nav x-cloak class="flex justify-center items-center rounded-md">
   <ol class="inline-flex flex-wrap items-center space-x-1 ~text-xs/sm text-neutral-500 dark:text-neutral-400 [&_.active-breadcrumb]:font-semibold [&_.active-breadcrumb]:text-neutral-600 [&_.active-breadcrumb]:dark:text-neutral-400 [&_.active-breadcrumb]:tracking-tighter">
-    <template x-for="(breadCrumb, idx) in breadCrumbs" :key="breadCrumb.text">
+    {% for breadcrumb in breadcrumbs %}
       <li class="flex items-center">
         <a
-          class="inline-flex items-center font-normal hover:text-neutral-900 hover:dark:text-neutral-300 focus:outline-none capitalize duration-100 whitespace-nowrap"
-          :class="(idx === breadCrumbs.length - 1) && 'active-breadcrumb'"
-          :href="breadCrumb.href"
-          x-text="breadCrumb.text"
+          class="inline-flex items-center font-normal hover:text-neutral-900 hover:dark:text-neutral-300 focus:outline-none capitalize duration-100 whitespace-nowrap {% if breadcrumb.active %}active-breadcrumb{% endif %}"
+          href="{{ breadcrumb.href }}"
         >
+          {{ breadcrumb.text }}
         </a>
-
-        <template x-if="idx !== breadCrumbs.length - 1">
-          <span class="rtl:rotate-180">
-            <c-icons.arrow-right />
-          </span>
-        </template>
+          {% if not forloop.last %}
+          <c-icons.arrow-right />
+          {% endif %}
       </li>
-    </template>
+    {% endfor %}
   </ol>
 </nav>

@@ -5,20 +5,6 @@
 
 {% block body %}
 
-    <template 
-    x-init="let hrefs = [
-        {
-            text: '{% translate 'cost center' %}', 
-            href: '{% url 'cost_centers:index' %}'
-        },
-        {
-            text: '{% translate 'add new' %}', 
-            href: '{% url 'cost_centers:create' %}'
-        },
-    ];
-    breadCrumbs = [...breadCrumbs, ...hrefs]"
-    ></template>
-
     <c-base.create-form/>
 
 {% endblock %}

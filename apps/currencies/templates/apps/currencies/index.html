@@ -5,14 +5,6 @@
 
 {% block body %}
 
-<span
-class="hidden"
-x-init="breadCrumbs.push({
-    text: '{% translate 'currencies' %}', 
-    href: '{% url 'currencies:index' %}'
-})"></span>
-
-
 <c-layout.app-container id="currencies-table" app_title="{% translate 'currencies' %}">
 
     <c-slot name="filters">

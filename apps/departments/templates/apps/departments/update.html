@@ -5,20 +5,6 @@
 
 {% block body %}
 
-    <template 
-    x-init="let hrefs = [
-        {
-            text: '{% translate 'departments' %}', 
-            href: '{% url 'departments:index' %}'
-        },
-        {
-            text: '{{ instance.name }}', 
-            href: '{% url 'departments:update' slug=instance.slug %}'
-        },
-    ];
-    breadCrumbs = [...breadCrumbs, ...hrefs]"
-    ></template>
-
     <c-base.update-form/>
 
 {% endblock %}
