@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 
 from django.forms import inlineformset_factory
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.contrib import messages
 from django.http import HttpResponse
@@ -19,6 +20,10 @@ class FormsetMixinAbstract(ABC):
 
     @abstractmethod
     def post_save(self, instance): ...
+
+    @property
+    @abstractmethod
+    def title(self) -> str: ...
     
 
 
@@ -28,6 +33,7 @@ class FormSetMixin(FormsetMixinAbstract):
     ### required attributes:  
     - `parent_model: Model`
     - `form_class: ModelForm`
+    - `title: str`
     ### required methods:  
     - `post_save: Callable`: to perform an action after formset has been saved.  
     ### optional attributes:  
@@ -49,6 +55,35 @@ class FormSetMixin(FormsetMixinAbstract):
 
         return self.get_response(template_name, context)
     
+    def _get_breadcrumbs(self, instance) -> list:
+
+        if getattr(self, 'breadcrumbs', None):
+            return self.breadcrumbs
+        
+        app_label = self.parent_model._meta.app_label
+
+        return [
+            {
+                'text': _('Home'),
+                'href': reverse('base:index'),
+                'active': False,
+            },
+            {
+                'text': self.parent_model._meta.verbose_name,
+                'href': reverse(f'{app_label}:index'),
+                'active': False,
+            },
+            {
+                'text': _('Update {}').format(instance),
+                'href': reverse(f'{app_label}:update', kwargs={'slug': instance.slug}),
+                'active': False,
+            },
+            {
+                'text': self.title,
+                'active': True
+            }
+        ]
+    
     def get_context_data(self, slug: str) -> dict:
 
         instance = get_object_or_404(self.parent_model, slug=slug)
@@ -64,7 +99,11 @@ class FormSetMixin(FormsetMixinAbstract):
             messages.success(self.request, _('done'))
             formset = Formset(instance=instance)
 
-        return {'instance': instance, 'formset': formset}
+        return {
+            'instance': instance, 
+            'formset': formset, 
+            'breadcrumbs': self._get_breadcrumbs(instance),
+        }
 
     def get_response(self, template_name, context) -> HttpResponse:
         
