@@ -110,6 +110,7 @@ class CreateView(
     form_class = forms.EmployeeForm
     form_template_name = 'apps/employees/partials/forms/create.html'
     continue_updating = True
+    template_name = 'apps/employees/create.html'
     
 
 class UpdateView(
@@ -120,6 +121,7 @@ class UpdateView(
     form_class = forms.EmployeeForm
     deleter = utils.Deleter
     form_template_name = 'apps/employees/partials/forms/update.html'
+    template_name = 'apps/employees/update.html'
 
 
 class DeleteView(

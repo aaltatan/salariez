@@ -165,8 +165,7 @@ class HelperMixin:
         if getattr(self, 'template_name', None) is not None:
             return self.template_name
         
-        app_label = self._get_app_label()
-        return f'apps/{app_label}/{view}.html'
+        return f'pages/{view}.html'
     
     def _get_template_name_create_update_partial(
         self, view: Literal['update', 'create'] = 'create'

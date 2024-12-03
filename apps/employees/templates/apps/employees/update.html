@@ -7,24 +7,6 @@
 
 {% block body %}
 
-<template
-  x-init="let hrefs = [
-        {
-            text: '{% translate 'employees' %}', 
-            href: '{% url 'employees:index' %}'
-        },
-        {
-            text: '{{ instance.fullname }}', 
-            href: '{{ instance.get_update_path }}'
-        },
-    ];
-    breadCrumbs = [...breadCrumbs, ...hrefs]
-    if (breadCrumbs.length > 2 && sessionStorage.getItem('query')) {
-      breadCrumbs.at(1).href += sessionStorage.getItem('query')
-    }
-    "
-></template>
-
 <div>
 
   {% include 'apps/employees/partials/formsets/header.html' %}
